@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace 'com.example.healthkeeperapp'
-    compileSdk 34
+    namespace 'com.example.healthkeeper'
+    compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.healthkeeperapp"
+        applicationId "com.example.healthkeeper"
         minSdk 24
-        targetSdk 34
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
