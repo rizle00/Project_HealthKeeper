@@ -1,13 +1,13 @@
-package kr.co.healthkeeperweb;
+package kr.co.healthkeeper;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HealthKeeperWebApplicationTests {
+class HealthkeeperApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+	@Test
+	void contextLoads() {
+	}
 
 }
