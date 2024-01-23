@@ -1,6 +1,7 @@
-package com.example.healthkeeperapp;
+package com.example.healthkeeper;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.example.healthkeeperapp;
+package com.example.healthkeeper;
 
 import org.junit.Test;
 
