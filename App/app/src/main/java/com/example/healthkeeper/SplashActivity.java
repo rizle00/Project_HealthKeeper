@@ -8,16 +8,16 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
-import com.example.healthkeeper.databinding.ActivityMainBinding;
+import com.example.healthkeeper.databinding.ActivitySplashBinding;
 
 
 public class SplashActivity extends AppCompatActivity implements View.OnClickListener{
-    private final String TAG = "MainActivity";
-    private ActivityMainBinding binding;
+    private final String TAG = "SplashActivity";
+    private ActivitySplashBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         Log.d(TAG, "onCreate");
