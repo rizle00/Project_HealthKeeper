@@ -15,6 +15,7 @@ import com.example.healthkeeper.databinding.FragmentHomeBinding;
 
 
 public class HomeFragment extends Fragment {
+    //FragmentHomeBinding binding;
     FragmentHomeBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
