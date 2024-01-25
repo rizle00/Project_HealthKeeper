@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
         View childview=getLayoutInflater().inflate(R.layout.fragment_home,null);
         binding.container.addView(childview);
 
-
     }
     public void changeFragment(Fragment fragment){
         getSupportFragmentManager().beginTransaction().replace(R.id.container , fragment).commit();

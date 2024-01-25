@@ -8,7 +8,6 @@
     tools:context=".MainActivity"
     android:orientation="vertical"
     >
-
     <!-- menu 리소스 , drawble : 선택 색상 -->
     <FrameLayout
         android:id="@+id/container"
