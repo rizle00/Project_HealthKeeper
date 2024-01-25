@@ -1,9 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".login.MemberJoinActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_marginVertical="30dp"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Smart HomeKeeper!!"
+            android:textColor="#2A877E"
+            android:fontFamily="@font/fontmain"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원정보를 입력해주세요"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"/>
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/user_id"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint=" 아이디 (8~16자)"
+            android:background="@drawable/edittext_rounded"
+            />
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:id="@+id/tv_warning_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이디를 8~16자로 입력하세요"
+            android:textColor="#FF5B5B"
+            android:visibility="gone"/>
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/user_pw"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint=" 비밀번호 "
+            android:background="@drawable/edittext_rounded"
+            android:inputType="textPassword"
+            />
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/user_pw_check"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint=" 비밀번호 확인"
+            android:background="@drawable/edittext_rounded"
+            />
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/user_name"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint=" 이름"
+            android:background="@drawable/edittext_rounded"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <RadioGroup
+                android:layout_marginLeft="20dp"
+                android:id="@+id/radioGroup"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <RadioButton
+                    android:text="남"
+                    android:id="@+id/rg_btn1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <RadioButton
+                    android:layout_marginStart="30dp"
+                    android:text="여"
+                    android:id="@+id/rg_btn2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
