@@ -9,15 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.healthkeeper.R;
-import com.example.healthkeeper.databinding.ActivityMain2Binding;
+import com.example.healthkeeper.databinding.ActivityMainBinding;
+import com.example.healthkeeper.databinding.ActivityMainBinding;
+import com.example.healthkeeper.databinding.FragmentHomeBinding;
 
 
 public class HomeFragment extends Fragment {
-    ActivityMain2Binding binding;
+    FragmentHomeBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        binding=FragmentHomeBinding.inflate(inflater,container,false);
 
-        return inflater.inflate(R.layout.fragment_home, container, false);
+
+
+        return binding.getRoot();
     }
 }
