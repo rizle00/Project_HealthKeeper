@@ -1,24 +1,489 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    >
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:text="aaaaaaaa"
+        android:textColor="#5E8F26"
         android:textSize="50dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Smart HomeKeeper!!"
-        android:textColor="#2A877E"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:fontFamily="@font/fontmain"
         android:textAlignment="center"
         />
 
+<HorizontalScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="none"
+    >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#6C7F92"
+        android:layout_margin="20dp"
+        >
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#D6E7F9"
+            app:cardCornerRadius="20dp"
+            android:layout_margin="5dp"
+            >
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="110dp"
+                android:src="@drawable/ic_add"/>
+
+
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#D6E7F9"
+            app:cardCornerRadius="20dp"
+            android:layout_margin="5dp"
+            >
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="110dp"
+                android:src="@drawable/ic_add"/>
+
+
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#D6E7F9"
+            app:cardCornerRadius="20dp"
+            android:layout_margin="5dp"
+            >
+
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="110dp"
+                android:src="@drawable/ic_add" />
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#D6E7F9"
+            app:cardCornerRadius="20dp"
+            android:layout_margin="5dp"
+            >
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="110dp"
+                android:src="@drawable/ic_add"/>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#D6E7F9"
+            app:cardCornerRadius="20dp"
+            android:layout_margin="5dp"
+            >
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="110dp"
+                android:src="@drawable/ic_add"/>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#D6E7F9"
+            app:cardCornerRadius="20dp"
+            android:layout_margin="5dp"
+            >
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="110dp"
+                android:src="@drawable/ic_add"/>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+
+    </LinearLayout>
+</HorizontalScrollView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+
+
+
+            <FrameLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                >
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="150dp"
+                        android:layout_height="200dp"
+                        app:cardCornerRadius="15dp"
+                        android:layout_gravity="center"
+                        >
+
+                        <FrameLayout
+                            android:background="@drawable/ic_launcher_background"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <!--CardView의 투명도를 나타내며, 값이 1.0이면 완전 불투명, 0.0이면 완전 투명-->
+                            <androidx.cardview.widget.CardView
+                                android:alpha="0.6"
+                                android:layout_width="150dp"
+                                android:layout_height="200dp"
+                                app:cardCornerRadius="15dp"
+                                >
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/ic_add" />
+                            </androidx.cardview.widget.CardView>
+
+
+                        </FrameLayout>
+                    </androidx.cardview.widget.CardView>
+                </FrameLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+
+                    <TextView
+
+                        android:layout_centerHorizontal="true"
+                        android:textSize="15dp"
+                        android:textStyle="bold"
+                        android:textColor="#fff"
+                        android:text=" 심박 \namaunt"
+                        android:layout_alignParentBottom="true"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+
+
+                </RelativeLayout>
+
+            </FrameLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <FrameLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                >
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="150dp"
+                        android:layout_height="200dp"
+                        app:cardCornerRadius="15dp"
+                        android:layout_gravity="center"
+
+                        >
+
+                        <FrameLayout
+                            android:background="@drawable/ic_launcher_background"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <!--CardView의 투명도를 나타내며, 값이 1.0이면 완전 불투명, 0.0이면 완전 투명-->
+                            <androidx.cardview.widget.CardView
+                                android:alpha="0.6"
+                                android:layout_width="150dp"
+                                android:layout_height="200dp"
+                                app:cardCornerRadius="15dp"
+                                >
+
+                                <ImageView
+
+                                    android:id="@+id/imgv_profile1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/ic_add" />
+                            </androidx.cardview.widget.CardView>
+
+
+                        </FrameLayout>
+                    </androidx.cardview.widget.CardView>
+                </FrameLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+
+                    <TextView
+                        android:layout_centerHorizontal="true"
+                        android:textSize="15dp"
+                        android:textStyle="bold"
+                        android:textColor="#fff"
+                        android:text="대쉬보드"
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+
+
+                </RelativeLayout>
+
+            </FrameLayout>
+
+
+
+
+
+
+
+
+
+
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+
+
+
+        <FrameLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            >
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"
+                    app:cardCornerRadius="15dp"
+                    android:layout_gravity="center"
+                    >
+
+                    <FrameLayout
+                        android:background="@drawable/ic_launcher_background"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <!--CardView의 투명도를 나타내며, 값이 1.0이면 완전 불투명, 0.0이면 완전 투명-->
+                        <androidx.cardview.widget.CardView
+                            android:alpha="0.6"
+                            android:layout_width="150dp"
+                            android:layout_height="200dp"
+                            app:cardCornerRadius="15dp"
+                            >
+
+                            <ImageView
+
+                                android:id="@+id/img1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_add" />
+                        </androidx.cardview.widget.CardView>
+
+
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+            </FrameLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <TextView
+
+                    android:layout_centerHorizontal="true"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:textColor="#fff"
+                    android:text=" 심박 \namaunt"
+                    android:layout_alignParentBottom="true"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+
+
+            </RelativeLayout>
+
+        </FrameLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <FrameLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            >
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"
+                    app:cardCornerRadius="15dp"
+                    android:layout_gravity="center"
+
+                    >
+
+                    <FrameLayout
+                        android:background="@drawable/ic_launcher_background"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <!--CardView의 투명도를 나타내며, 값이 1.0이면 완전 불투명, 0.0이면 완전 투명-->
+                        <androidx.cardview.widget.CardView
+                            android:alpha="0.6"
+                            android:layout_width="150dp"
+                            android:layout_height="200dp"
+                            app:cardCornerRadius="15dp"
+                            >
+
+                            <ImageView
+
+
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_add" />
+                        </androidx.cardview.widget.CardView>
+
+
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+            </FrameLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <TextView
+                    android:layout_centerHorizontal="true"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:textColor="#fff"
+                    android:text="질문"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+
+
+            </RelativeLayout>
+
+        </FrameLayout>
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+</LinearLayout>
