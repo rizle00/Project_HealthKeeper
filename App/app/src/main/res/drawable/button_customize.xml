@@ -2,6 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
         <shape>
+            <solid android:color="#2A877E" />
             <padding android:bottom="0dp"
                 android:left="0dp"
                 android:right="0dp"
@@ -16,6 +17,7 @@
 
     <item android:state_pressed="false">
         <shape>
+            <solid android:color="#2A877E" />
             <padding android:bottom="0dp"
                 android:left="0dp"
                 android:right="0dp"
@@ -26,7 +28,4 @@
                 android:topRightRadius="5dp" />
         </shape>
     </item>
-    <item
-        android:backgroundTint="#2A877E"
-    />
 </selector>
