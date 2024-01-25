@@ -2,9 +2,12 @@ package com.example.healthkeeper.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.healthkeeper.R;
+import com.example.healthkeeper.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -16,9 +19,18 @@ public class LoginActivity extends AppCompatActivity {
     https://developer.android.com/training/transitions/start-activity?hl=ko
     intent animation
     */
+
+    ActivityLoginBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+
+        binding.tvJoin.setOnClickListener(v -> {
+            Intent  intent = new Intent(this, MemberJoinActivity.class);
+            startActivity(intent);
+        });
+
+        setContentView(binding.getRoot());
     }
 }
