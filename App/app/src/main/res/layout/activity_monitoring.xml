@@ -6,5 +6,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".main.MonitoringActivity">
-
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="심박, 체온 시각화 조회.. 등 기능"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
