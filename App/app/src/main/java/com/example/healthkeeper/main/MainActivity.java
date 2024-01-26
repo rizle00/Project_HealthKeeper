@@ -1,4 +1,4 @@
-package com.example.healthkeeper;
+package com.example.healthkeeper.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +9,7 @@ import com.example.healthkeeper.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-     binding;
+    ActivityMainBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

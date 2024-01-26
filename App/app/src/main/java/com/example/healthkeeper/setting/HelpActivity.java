@@ -1,16 +1,14 @@
-package com.example.healthkeeper.login;
+package com.example.healthkeeper.setting;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import com.example.healthkeeperapp.R;
+import com.example.healthkeeper.R;
 
-
-public class LoginActivity extends AppCompatActivity {
+public class HelpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_help);
     }
 }
