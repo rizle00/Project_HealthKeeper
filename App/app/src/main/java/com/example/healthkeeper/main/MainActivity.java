@@ -1,4 +1,4 @@
-package com.example.healthkeeper;
+package com.example.healthkeeper.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -10,6 +10,7 @@ import com.example.healthkeeper.databinding.ActivityMainBinding;
 import com.example.healthkeeper.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
+
     ActivityMainBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

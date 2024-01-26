@@ -1,10 +1,11 @@
-package com.example.healthkeeper.login;
+package com.example.healthkeeper.member;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import com.example.healthkeeperapp.R;
 
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.ActivityLoginBinding;

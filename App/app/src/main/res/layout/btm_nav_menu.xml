@@ -9,8 +9,6 @@
     android:orientation="vertical"
     >
 
-
-
     <!-- menu 리소스 , drawble : 선택 색상 -->
     <FrameLayout
         android:id="@+id/container"
@@ -23,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:labelVisibilityMode="labeled"
-        app:menu="@menu/btm_nav_manu"
+        app:menu="@menu/menu_nav_btm"
         app:itemIconTint="@drawable/btm_menu_selector"
         app:itemTextColor="@drawable/btm_menu_selector"
         />
