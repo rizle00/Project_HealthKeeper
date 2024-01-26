@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.ActivityMainBinding;
 import com.example.healthkeeper.databinding.ActivityMainBinding;
 
