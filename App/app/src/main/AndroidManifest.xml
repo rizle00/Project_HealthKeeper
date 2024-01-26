@@ -13,8 +13,11 @@
             android:theme="@style/Theme.HealthKeeper"
             tools:targetApi="31">
         <activity
-                android:name=".main.ScheduleActivity"
-                android:exported="false"/>
+            android:name=".login.MemberJoinActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
         <activity
                 android:name=".main.ChatActivity"
                 android:exported="false"/>
