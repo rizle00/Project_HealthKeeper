@@ -13,13 +13,46 @@
             android:theme="@style/Theme.HealthKeeper"
             tools:targetApi="31">
         <activity
-                android:name="com.example.healthkeeper.setting.Setting"
+                android:name=".main.ScheduleActivity"
                 android:exported="false"/>
         <activity
-                android:name=".MainActivity"
+                android:name=".main.ChatActivity"
                 android:exported="false"/>
         <activity
-                android:name=".SplashActivity"
+                android:name=".main.CommunityActivity"
+                android:exported="false"/>
+        <activity
+                android:name=".main.QAActivity"
+                android:exported="false"/>
+        <activity
+                android:name=".main.CCTVActivity"
+                android:exported="false"/>
+        <activity
+                android:name=".main.ConditionActivity"
+                android:exported="false"/>
+        <activity
+                android:name=".main.MonitoringActivity"
+                android:exported="false"/>
+        <activity
+                android:name=".member.JoinActivity"
+                android:exported="false"/>
+        <activity
+                android:name=".member.FindActivity"
+                android:exported="false"/>
+        <activity
+                android:name=".setting.NoticeActivity"
+                android:exported="false"/>
+        <activity
+                android:name=".setting.HelpActivity"
+                android:exported="false"/>
+        <activity
+                android:name=".setting.SettingActivity"
+                android:exported="false"/>
+        <activity
+                android:name=".main.MainActivity"
+                android:exported="false"/>
+        <activity
+                android:name=".main.SplashActivity"
                 android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
