@@ -1,4 +1,4 @@
-package com.example.healthkeeper;
+package com.example.healthkeeper.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
