@@ -1,13 +1,14 @@
-package com.example.healthkeeper.login;
+package com.example.healthkeeper.member;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Spinner;
 
-import com.example.healthkeeper.R;
+
+
 import com.example.healthkeeper.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -28,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
 
         binding.tvJoin.setOnClickListener(v -> {
-            Intent  intent = new Intent(this, MemberJoinActivity.class);
+            Intent  intent = new Intent(this, com.example.healthkeeper.login.MemberJoinActivity.class);
             startActivity(intent);
         });
 
