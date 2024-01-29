@@ -26,15 +26,30 @@
             android:text="회원정보를 입력해주세요"
             android:textStyle="bold"
             android:layout_marginLeft="20dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
         <EditText
             android:layout_marginTop="10dp"
-            android:id="@+id/user_id"
+            android:id="@+id/edt_user_id"
             android:layout_marginHorizontal="20dp"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="7"
             android:layout_height="40dp"
             android:hint=" 아이디 (8~16자)"
             android:background="@drawable/edittext_rounded"
             />
+            <Button
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:background="@drawable/button_customize"
+                android:id="@+id/btn_id_check"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="40dp"
+                android:text="중복확인"/>
+        </LinearLayout>
         <TextView
             android:layout_marginLeft="20dp"
             android:id="@+id/tv_warning_id"
@@ -45,7 +60,7 @@
             android:visibility="gone"/>
         <EditText
             android:layout_marginTop="10dp"
-            android:id="@+id/user_pw"
+            android:id="@+id/edt_user_pw"
             android:layout_marginHorizontal="20dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -55,7 +70,7 @@
             />
         <EditText
             android:layout_marginTop="10dp"
-            android:id="@+id/user_pw_check"
+            android:id="@+id/edt_user_pw_check"
             android:layout_marginHorizontal="20dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -64,7 +79,7 @@
             />
         <EditText
             android:layout_marginTop="10dp"
-            android:id="@+id/user_name"
+            android:id="@+id/edt_user_name"
             android:layout_marginHorizontal="20dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -99,5 +114,21 @@
             </RadioGroup>
 
         </LinearLayout>
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/edt_user_phone"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint=" 휴대전화"
+            android:background="@drawable/edittext_rounded"
+            />
+        <Spinner
+            android:layout_marginTop="10dp"
+            android:id="@+id/spn_bloodType"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+
     </LinearLayout>
 </ScrollView>
