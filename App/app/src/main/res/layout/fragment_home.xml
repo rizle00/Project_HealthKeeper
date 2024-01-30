@@ -35,7 +35,7 @@
         android:layout_height="90dp"
         android:text="Smart \nHealthKeepper"
         android:textColor="#5E8F26"
-        android:textSize="50dp"
+        android:textSize="30dp"
         android:textAlignment="center"
         />
 
@@ -192,8 +192,10 @@
                             >
 
                             <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+
+                                android:layout_width="150dp"
+                                android:layout_height="150dp"
+                                android:layout_marginLeft="15dp"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/heart_1" />
 
@@ -273,8 +275,9 @@
                             >
 
                             <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_width="130dp"
+                                android:layout_height="130dp"
+                                android:layout_marginLeft="15dp"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/statistics_2" />
                         </androidx.cardview.widget.CardView>
@@ -361,8 +364,9 @@
                             >
 
                             <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_width="130dp"
+                                android:layout_height="130dp"
+                                android:layout_marginLeft="15dp"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/phone_119" />
                         </androidx.cardview.widget.CardView>
@@ -443,8 +447,9 @@
                             >
 
                             <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_width="130dp"
+                                android:layout_height="130dp"
+                                android:layout_marginLeft="15dp"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/question" />
                         </androidx.cardview.widget.CardView>
