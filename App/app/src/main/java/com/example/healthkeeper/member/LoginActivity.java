@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Spinner;
 
 
 
@@ -31,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent  intent = new Intent(this, com.example.healthkeeper.login.MemberJoinActivity.class);
             startActivity(intent);
         });
+
 
         setContentView(binding.getRoot());
     }
