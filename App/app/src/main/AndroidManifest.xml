@@ -2,6 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!--
+BLUETOOTH : 커넥션 요구, 커넥션 수락, 데이터 전송 등의 블루투스 통신을 하기 위해 필요한 권한
+    BLUETOOTH_ADMIN : 디바이스 검색 시작, 블루투스 설정을 조작하기 위해 필요
+    -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
             android:allowBackup="true"
             android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,11 +24,14 @@
             android:theme="@style/Theme.HealthKeeper"
             tools:targetApi="31">
         <activity
-            android:name=".login.MemberJoinActivity"
-            android:exported="false" />
+                android:name=".bt.BTtestActivity"
+                android:exported="false"/>
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+                android:name=".login.MemberJoinActivity"
+                android:exported="false"/>
+        <activity
+                android:name=".MainActivity"
+                android:exported="false"/>
         <activity
                 android:name=".main.ChatActivity"
                 android:exported="false"/>
