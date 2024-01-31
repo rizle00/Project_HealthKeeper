@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.MemberJoinActivity">
+    tools:context=".member.MemberJoinActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -100,7 +100,7 @@
 
                 <RadioButton
                     android:text="남"
-                    android:id="@+id/rg_btn1"
+                    android:id="@+id/rg_"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -124,11 +124,20 @@
             android:background="@drawable/edittext_rounded"
             />
         <Spinner
+
             android:layout_marginTop="10dp"
             android:id="@+id/spn_bloodType"
             android:layout_marginHorizontal="20dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"/>
+
+        <Button
+            android:id="@+id/btn_join"
+            android:layout_gravity="bottom"
+            android:text="회원가입"
+            android:background="@drawable/button_customize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 </ScrollView>
