@@ -10,6 +10,7 @@ import android.content.*;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
@@ -39,6 +40,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public class BTtestActivity extends AppCompatActivity {
+    private static final int BLUETOOTH_SETTINGS_REQUEST_CODE = 1001;
     private final String TAG = this.getClass().getSimpleName();
 
     private static final int REQUEST_ENABLE_BT = 10; // 블루투스 활성화상태
@@ -52,6 +54,12 @@ public class BTtestActivity extends AppCompatActivity {
     private byte[] readBuffer; // 수신 된 문자열을 저장하기 위한 버퍼
     private int readBufferPosition; // 버퍼 내 문자 저장 위치
     int pariedDeviceCount;
+
+    IntentFilter stateFilter;
+    int isConnect = 0;
+    int isContinue = 0;
+    int connCount = 0;
+    CountDownTimer CDT;
     ActivityBttestBinding binding;
 
     @Override
@@ -61,7 +69,6 @@ public class BTtestActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         checkPermission();
         SetBluetooth();
-
 
     }
 
@@ -92,13 +99,54 @@ public class BTtestActivity extends AppCompatActivity {
 
         }
     }
+
+    public void bluetoothPairing(BluetoothAdapter bluetoothAdapter,Set<BluetoothDevice> pairedDevices ){
+//        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+//        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+
+        boolean isPairedDeviceFound = false;
+        for (BluetoothDevice device : pairedDevices) {
+            if (device.getName().equals("YourDeviceName")) { // 여기에 페어링된 기기의 이름을 지정하세요
+                isPairedDeviceFound = true;
+                // 페어링된 기기가 발견되었을 때의 처리
+                // 여기에서는 해당 기기의 연결 상태를 확인할 수 있습니다.
+                int connectionState = device.getBondState();
+                if (connectionState == BluetoothDevice.BOND_BONDED) {
+                    // 기기가 연결되어 있음을 나타내는 처리
+                    // 여기에서는 연결된 상태의 기기와 통신할 수 있습니다.
+                } else {
+                    // 기기가 페어링되었지만 아직 연결되지 않음을 나타내는 처리
+                }
+                break;
+            }
+        }
+
+        if (!isPairedDeviceFound) {
+            // 페어링된 기기가 발견되지 않았을 때의 처리
+        }
+
+    }
     public void bluetoothSetting(){
         Intent intent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
 //        intent.setData(Uri.parse("package:"+getApplicationContext().getPackageName()));
-        startActivity(intent);
+        startActivityForResult(intent, BLUETOOTH_SETTINGS_REQUEST_CODE);
 
 
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == BLUETOOTH_SETTINGS_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                // Bluetooth 설정이 성공적으로 완료됨
+                // 여기에서 메인화면으로 돌아가는 등의 작업을 수행할 수 있습니다.
+            } else {
+                // Bluetooth 설정이 취소됨 또는 실패함
+                // 처리할 작업을 수행합니다.
+            }
+        }
+    }
+
 
 //    boolean foundDevice = false;
 //
@@ -238,6 +286,7 @@ public class BTtestActivity extends AppCompatActivity {
             // 페어링을 하기위한 함수 호출
             Toast.makeText(getApplicationContext(), "먼저 Bluetooth 설정에 들어가 페어링 해주세요", Toast.LENGTH_SHORT).show();
             bluetoothSetting();
+
         }
 
 //        // 페어링 되어있는 장치가 있는 경우
