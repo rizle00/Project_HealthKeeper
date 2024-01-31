@@ -52,13 +52,7 @@ public class note extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTvBluetoothStatus = (TextView)findViewById(R.id.tvBluetoothStatus);
-        mTvReceiveData = (TextView)findViewById(R.id.tvReceiveData);
-        mTvSendData =  (EditText) findViewById(R.id.tvSendData);
-        mBtnBluetoothOn = (Button)findViewById(R.id.btnBluetoothOn);
-        mBtnBluetoothOff = (Button)findViewById(R.id.btnBluetoothOff);
-        mBtnConnect = (Button)findViewById(R.id.btnConnect);
-        mBtnSendData = (Button)findViewById(R.id.btnSendData);
+
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
