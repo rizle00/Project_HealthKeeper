@@ -42,7 +42,8 @@ void loop() {
     Serial.println("♥  A HeartBeat Happened ! "); // 심박 발생 메시지 출력
     Serial.print("BPM: "); // "BPM: " 출력
     Serial.println(myBPM); // 심박수 출력
-
+     BT.print("BPM: ");
+    BT.println(myBPM);
     // 온도 측정 및 출력
     
     for (int i = 0; i < 5; i++) {
@@ -52,20 +53,22 @@ void loop() {
     averageTemp /= 5; // 평균 온도 계산
     Serial.print("Average Temp: "); // "Average Temp: " 출력
     Serial.println(averageTemp); // 평균 온도 출력
+     BT.print("Temp: "); 
+    BT.println(averageTemp);
   }
   delay(1500);
  
-  if(BT.available()){
-    Serial.write(BT.read());
-    Serial.print(myBPM);
-  }
-  if(Serial.available()){
-    BT.write(Serial.read());
-    BT.print("BPM: ");
-    BT.println(myBPM);
-    BT.print("Temp: "); 
-    BT.println(averageTemp);
-  }
+  // if(BT.available()){
+  //   Serial.write(BT.read());
+  //   Serial.print(myBPM);
+  // }
+  // if(Serial.available()){
+  //   BT.write(Serial.read());
+  //   BT.print("BPM: ");
+  //   BT.println(myBPM);
+  //   BT.print("Temp: "); 
+  //   BT.println(averageTemp);
+  // }
    
   // BT.write(myBPM);
   //  if(buttonstate == HIGH)

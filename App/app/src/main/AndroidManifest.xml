@@ -3,10 +3,15 @@
           xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <!--
-BLUETOOTH : 커넥션 요구, 커넥션 수락, 데이터 전송 등의 블루투스 통신을 하기 위해 필요한 권한
-    BLUETOOTH_ADMIN : 디바이스 검색 시작, 블루투스 설정을 조작하기 위해 필요
-    -->
+
+<!--    블루투스 권한 추가-->
+    <uses-feature
+        android:name="android.hardware.bluetooth"
+        android:required="false" />
+    <uses-feature
+            android:name="android.hardware.bluetooth_le"
+            android:required="false" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
@@ -24,7 +29,7 @@ BLUETOOTH : 커넥션 요구, 커넥션 수락, 데이터 전송 등의 블루�
             android:theme="@style/Theme.HealthKeeper"
             tools:targetApi="31">
         <activity
-                android:name=".bt.BTtestActivity"
+                android:name=".main.SplashActivity"
                 android:exported="false"/>
         <activity
                 android:name=".login.MemberJoinActivity"
@@ -69,7 +74,7 @@ BLUETOOTH : 커넥션 요구, 커넥션 수락, 데이터 전송 등의 블루�
                 android:name=".main.MainActivity"
                 android:exported="false"/>
         <activity
-                android:name=".main.SplashActivity"
+                android:name=".bt.BTtestActivity"
                 android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
