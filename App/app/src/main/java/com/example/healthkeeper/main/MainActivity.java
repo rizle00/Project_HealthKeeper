@@ -9,6 +9,7 @@ import android.view.View;
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.ActivityMainBinding;
 import com.example.healthkeeper.databinding.ActivityMainBinding;
+import com.example.healthkeeper.home.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +23,31 @@ public class MainActivity extends AppCompatActivity {
         View childview=getLayoutInflater().inflate(R.layout.fragment_home,null);
         binding.container.addView(childview);
 
+
+        changeFragment(new HomeFragment());
+
+        binding.bottomNav.setOnNavigationItemSelectedListener(item -> {//nav 클릭시 화면선택!
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.nav_home) {
+                changeFragment(new HomeFragment());
+                return true;
+            } else if (itemId == R.id.nav_119) {
+
+                return true;
+            } else if (itemId == R.id.nav_commu) {
+
+                return true;
+            } else if (itemId == R.id.nav_schedule) {
+
+                return true;
+            } else if (itemId == R.id.nav_setting) {
+
+                return true;
+            }
+
+            return false;
+        });
     }
     public void changeFragment(Fragment fragment){
         getSupportFragmentManager().beginTransaction().replace(R.id.container , fragment).commit();
