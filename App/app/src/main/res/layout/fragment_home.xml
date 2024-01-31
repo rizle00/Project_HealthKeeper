@@ -185,6 +185,7 @@
 
                         <!--CardView의 투명도를 나타내며, 값이 1.0이면 완전 불투명, 0.0이면 완전 투명-->
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/currentState"
                             android:alpha="0.6"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -209,10 +210,10 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
+                                    android:layout_marginBottom="20dp"
                                     android:text="심박"
                                     android:textColor="#0F0E0E"
                                     android:textSize="30dp"
-                                    android:layout_marginBottom="20dp"
                                     android:textStyle="bold" />
 
 
@@ -268,6 +269,7 @@
 
                         <!--CardView의 투명도를 나타내며, 값이 1.0이면 완전 불투명, 0.0이면 완전 투명-->
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/board"
                             android:alpha="0.6"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -357,6 +359,7 @@
 
                         <!--CardView의 투명도를 나타내며, 값이 1.0이면 완전 불투명, 0.0이면 완전 투명-->
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/phone_119"
                             android:alpha="0.6"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -440,6 +443,7 @@
 
                         <!--CardView의 투명도를 나타내며, 값이 1.0이면 완전 불투명, 0.0이면 완전 투명-->
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/que"
                             android:alpha="0.6"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
