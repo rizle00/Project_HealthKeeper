@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -15,7 +16,7 @@ import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.ActivityMemberJoinBinding;
 
 public class MemberJoinActivity extends AppCompatActivity {
-    MemberVO vo;
+    MemberVO vo = new MemberVO();
     ActivityMemberJoinBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,9 @@ public class MemberJoinActivity extends AppCompatActivity {
         ArrayAdapter bloodAdapter = ArrayAdapter.createFromResource(this,R.array.bloodType, android.R.layout.simple_spinner_item);
         bloodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         bloodTypeSpn.setAdapter(bloodAdapter);
+
+        /*혈액형 선택되었는지 확인*/
+        bloodCheck();
 
         /* 아이디 글자수 확인 */
        IdLength();
@@ -83,18 +87,42 @@ public class MemberJoinActivity extends AppCompatActivity {
     }
 
     public void bloodCheck() {
-        Spinner bloodType = (Spinner) binding.spnBloodType;
-        String blood = bloodType.getSelectedItem().toString();
-        if (blood.equals("혈액형")) {
-            Log.d("실패", blood);
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("").setMessage("혈액형을 확인해주세요");
-            builder.show();
 
-        }
-        else{
-            Log.d("성공", blood);
-            vo.setBlood(blood);
-        }
+        binding.spnBloodType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String blood = binding.spnBloodType.getSelectedItem().toString();
+                Log.d("change", blood);
+                if (blood.equals("혈액형")) {
+                    binding.tvWarningBlood.setVisibility(View.VISIBLE);
+                }else {
+                    binding.tvWarningBlood.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
+
+    }
+
+    public void joinType(){
+        binding.rgUserGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            int userGroup = binding.rgUserGroup.getCheckedRadioButtonId();
+            if(userGroup==0){
+                Log.d("userType", "환자 ");
+                binding.spnBloodType.setVisibility(View.VISIBLE);
+
+            }else{
+                Log.d("userType", "보호자 ");
+                binding.spnBloodType.setVisibility(View.GONE);
+            }
+        });
+        binding.rdbGuardian.setOnClickListener(v -> {
+
+        });
     }
 }

@@ -13,10 +13,7 @@
             android:theme="@style/Theme.HealthKeeper"
             tools:targetApi="31">
         <activity
-            android:name=".login.MemberJoinActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
+            android:name=".main.ConditionActivity"
             android:exported="false" />
         <activity
                 android:name=".main.ChatActivity"
@@ -55,7 +52,7 @@
                 android:name=".main.MainActivity"
                 android:exported="false"/>
         <activity
-                android:name=".main.ConditionActivity"
+                android:name=".member.MemberJoinActivity"
                 android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

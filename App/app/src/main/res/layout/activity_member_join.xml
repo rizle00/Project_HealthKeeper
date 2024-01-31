@@ -26,6 +26,27 @@
             android:text="회원정보를 입력해주세요"
             android:textStyle="bold"
             android:layout_marginLeft="20dp"/>
+            <RadioGroup
+                android:layout_marginLeft="20dp"
+                android:id="@+id/rg_userGroup"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RadioButton
+                    android:text="환자"
+                    android:id="@+id/rdb_patient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <RadioButton
+                    android:layout_marginStart="30dp"
+                    android:text="보호자"
+                    android:id="@+id/rdb_guardian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RadioGroup>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -124,12 +145,21 @@
             android:background="@drawable/edittext_rounded"
             />
         <Spinner
-
+            android:accessibilityPaneTitle="혈액형?"
             android:layout_marginTop="10dp"
             android:id="@+id/spn_bloodType"
             android:layout_marginHorizontal="20dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"/>
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:id="@+id/tv_warning_blood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="혈액형을 확인해주세요"
+            android:textColor="#FF5B5B"
+            android:visibility="visible"/>
 
         <Button
             android:id="@+id/btn_join"
