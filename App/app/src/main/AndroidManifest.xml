@@ -31,7 +31,7 @@
                 android:name=".main.CCTVActivity"
                 android:exported="false"/>
         <activity
-                android:name=".main.ConditionActivity"
+                android:name=".main.SplashActivity"
                 android:exported="false"/>
         <activity
                 android:name=".main.MonitoringActivity"
@@ -55,7 +55,7 @@
                 android:name=".main.MainActivity"
                 android:exported="false"/>
         <activity
-                android:name=".main.SplashActivity"
+                android:name=".main.ConditionActivity"
                 android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

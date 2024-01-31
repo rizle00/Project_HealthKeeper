@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="350dp"
+
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#D9FDF9"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:src="@drawable/heart_1"
+            />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="현재 심박수"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:layout_marginTop="100dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="30dp"
+                android:textSize="25dp"   />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="112"
+                    android:textColor="@color/main_color"
+                    android:textStyle="bold"
+                    android:textSize="40dp"
+                    android:layout_marginLeft="30dp"/>
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:text=" BPM"
+                    android:textStyle="bold"
+                    android:textSize="25dp"
+                    android:paddingBottom="20dp"
+
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+    <View
+        style="@style/gray_view_line1dp"
+        android:layout_height="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="양 호"
+        android:textStyle="bold"
+        android:textSize="40dp"
+        android:textAlignment="center"
+        android:textColor="@color/main_color"
+        />
+
+
+</LinearLayout>
