@@ -9,7 +9,7 @@ import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.ActivityConditionBinding; // 바인딩 클래스 import 추가
 
 public class ConditionActivity extends AppCompatActivity {
-    ActivityConditionBinding binding; // 바인딩 객체 추가
+    ActivityConditionBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

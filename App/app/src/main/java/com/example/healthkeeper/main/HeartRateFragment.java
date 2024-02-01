@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.healthkeeper.databinding.FragmentConditionBinding;
+
 import com.example.healthkeeper.databinding.FragmentHeartRateBinding;
 
 public class HeartRateFragment extends Fragment {
