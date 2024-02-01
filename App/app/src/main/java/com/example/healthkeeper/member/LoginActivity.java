@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
 
         binding.tvJoin.setOnClickListener(v -> {
-            Intent  intent = new Intent(this, com.example.healthkeeper.member.MemberJoinActivity.class);
+            Intent  intent = new Intent(this, JoinTypeActivity.class);
             startActivity(intent);
         });
 
