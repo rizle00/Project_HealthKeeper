@@ -3,13 +3,16 @@ package com.example.healthkeeper.main;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.ActivityMainBinding;
 import com.example.healthkeeper.databinding.ActivityMainBinding;
 import com.example.healthkeeper.home.HomeFragment;
+import com.example.healthkeeper.member.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
             return false;
         });
+
+
     }
     public void changeFragment(Fragment fragment){
         getSupportFragmentManager().beginTransaction().replace(R.id.container , fragment).commit();

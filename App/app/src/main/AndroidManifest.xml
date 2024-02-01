@@ -16,10 +16,10 @@
             android:name=".main.ConditionActivity"
             android:exported="false" />
         <activity
-            android:name=".login.MemberJoinActivity"
+            android:name=".member.MemberJoinActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".member.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".main.ChatActivity"
@@ -34,7 +34,7 @@
             android:name=".main.CCTVActivity"
             android:exported="false" />
         <activity
-            android:name=".main.SplashActivity"
+            android:name=".main.MainActivity"
             android:exported="false" />
         <activity
             android:name=".main.MonitoringActivity"
@@ -55,7 +55,7 @@
             android:name=".setting.SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".main.MainActivity"
+            android:name=".main.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
