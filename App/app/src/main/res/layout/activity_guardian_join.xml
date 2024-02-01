@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".member.GuardianJoinActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_marginVertical="30dp"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Smart HomeKeeper!!"
+            android:textColor="#2A877E"
+            android:fontFamily="@font/fontmain"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="보호자 회원가입"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/edt_user_id"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="0dp"
+            android:layout_weight="7"
+            android:layout_height="40dp"
+            android:hint=" 아이디 (8~16자)"
+            android:background="@drawable/edittext_rounded"
+            />
+            <Button
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:background="@drawable/button_customize"
+                android:id="@+id/btn_id_check"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="40dp"
+                android:text="중복확인"/>
+        </LinearLayout>
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:id="@+id/tv_warning_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이디를 8~16자로 입력하세요"
+            android:textColor="#FF5B5B"
+            android:visibility="gone"/>
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/edt_user_pw"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint=" 비밀번호 "
+            android:background="@drawable/edittext_rounded"
+            android:inputType="textPassword"
+            />
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/edt_user_pw_check"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint=" 비밀번호 확인"
+            android:inputType="textPassword"
+            android:background="@drawable/edittext_rounded"
+            />
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/edt_user_name"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint=" 이름"
+            android:background="@drawable/edittext_rounded"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <RadioGroup
+                android:layout_marginLeft="20dp"
+                android:id="@+id/radioGroup"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RadioButton
+                    android:text="남"
+                    android:id="@+id/rg_"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <RadioButton
+                    android:layout_marginStart="30dp"
+                    android:text="여"
+                    android:id="@+id/rg_btn2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/edt_user_phone"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint=" 휴대전화"
+            android:background="@drawable/edittext_rounded"
+            />
+
+        <Button
+            android:id="@+id/btn_join"
+            android:layout_gravity="bottom"
+            android:text="회원가입"
+            android:background="@drawable/button_customize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</ScrollView>
