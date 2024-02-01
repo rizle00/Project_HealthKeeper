@@ -100,7 +100,8 @@ public class BTtestActivity extends AppCompatActivity {
         }
     }
 
-    public void bluetoothPairing(BluetoothAdapter bluetoothAdapter,Set<BluetoothDevice> pairedDevices ){
+    @SuppressLint("MissingPermission")
+    public void bluetoothPairing(BluetoothAdapter bluetoothAdapter, Set<BluetoothDevice> pairedDevices ){
 //        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 //        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
 
