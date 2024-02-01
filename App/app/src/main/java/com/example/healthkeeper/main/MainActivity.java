@@ -1,10 +1,13 @@
 package com.example.healthkeeper.main;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -23,39 +26,37 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        View childview=getLayoutInflater().inflate(R.layout.fragment_home,null);
-        binding.container.addView(childview);
-
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setElevation(0f);
+            actionBar.setTitle("healthkeeper");
+        }
 
         changeFragment(new HomeFragment());
 
-        binding.bottomNav.setOnNavigationItemSelectedListener(item -> {//nav 클릭시 화면선택!
-            int itemId = item.getItemId();
 
-            if (itemId == R.id.nav_home) {
+        binding.bottomNav.setOnNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.nav_home) {
                 changeFragment(new HomeFragment());
-                return true;
-            } else if (itemId == R.id.nav_119) {
+            } else if (item.getItemId() == R.id.nav_119) {
 
-                return true;
-            } else if (itemId == R.id.nav_commu) {
+            } else if (item.getItemId() == R.id.nav_commu) {
 
-                return true;
-            } else if (itemId == R.id.nav_schedule) {
+            } else if (item.getItemId() == R.id.nav_schedule) {
 
-                return true;
-            } else if (itemId == R.id.nav_setting) {
+            } else if (item.getItemId() == R.id.nav_setting) {
 
-                return true;
             }
+            actionBar.setTitle(item.getTitle());
 
-            return false;
+            return true;
+
         });
-
-
-    }
-    public void changeFragment(Fragment fragment){
-        getSupportFragmentManager().beginTransaction().replace(R.id.container , fragment).commit();
     }
 
+
+    public void changeFragment(Fragment fragment) {
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+    }
 }
