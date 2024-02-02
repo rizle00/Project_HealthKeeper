@@ -1,4 +1,4 @@
-package com.example.healthkeeper.home;
+package com.example.healthkeeper.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,17 +8,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import com.example.healthkeeper.R;
-import com.example.healthkeeper.databinding.ActivityMainBinding;
-import com.example.healthkeeper.databinding.ActivityMainBinding;
 import com.example.healthkeeper.databinding.FragmentHomeBinding;
-import com.example.healthkeeper.main.ConditionActivity;
-import com.example.healthkeeper.main.MainActivity;
 import com.example.healthkeeper.member.LoginActivity;
 
-
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link BlankFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
 public class HomeFragment extends Fragment {
 
     FragmentHomeBinding binding;
