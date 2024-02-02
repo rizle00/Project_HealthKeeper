@@ -2,14 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/> <!-- 블루투스 권한 추가 -->
+    <!-- 블루투스 권한 추가 -->
     <uses-feature
             android:name="android.hardware.bluetooth"
             android:required="false"/>
     <uses-feature
             android:name="android.hardware.bluetooth_le"
             android:required="true"/>
-
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
