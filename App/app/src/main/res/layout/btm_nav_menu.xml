@@ -22,8 +22,9 @@
         android:layout_height="wrap_content"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_nav_btm"
-        app:itemIconTint="@drawable/btm_menu_selector"
-        app:itemTextColor="@drawable/btm_menu_selector"
+        app:itemIconTint="#F0F7F6"
+        app:itemTextColor="#FDFEFF"
+        android:background="#406461"
         />
     <!--app:itemBackground:#FFFFFF-->
 
