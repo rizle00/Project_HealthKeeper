@@ -1,21 +1,16 @@
-package com.example.healthkeeper.home;
+package com.example.healthkeeper.main;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import com.example.healthkeeper.R;
-import com.example.healthkeeper.databinding.ActivityMainBinding;
-import com.example.healthkeeper.databinding.ActivityMainBinding;
 import com.example.healthkeeper.databinding.FragmentHomeBinding;
-import com.example.healthkeeper.main.ConditionActivity;
-import com.example.healthkeeper.main.MainActivity;
 import com.example.healthkeeper.member.LoginActivity;
 
 
@@ -44,7 +39,7 @@ public class HomeFragment extends Fragment {
 
     }
     private void changeConditionFragment() {
-
+        Log.d("HomeFragment", "Changing to ConditionActivity");
         Intent intent = new Intent(getActivity(), ConditionActivity.class);
         startActivity(intent);
     }
