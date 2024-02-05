@@ -8,10 +8,13 @@
     tools:context=".main.MainActivity"
     android:orientation="vertical"
     >
-
-
-
-    <!-- menu 리소스 , drawble : 선택 색상 -->
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:backgroundTint="#D3D9F7"
+        app:titleTextColor="#223A38"
+        android:id="@+id/toolbar"/>
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
@@ -22,11 +25,14 @@
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemIconTint="@drawable/btm_menu_selector"
-        app:itemTextColor="@drawable/btm_menu_selector"
         app:labelVisibilityMode="labeled"
-        app:menu="@menu/menu_nav_btm" />
-    <!--app:itemBackground:#FFFFFF-->
+        app:menu="@menu/menu_nav_btm"
+        app:itemIconTint="#F0F7F6"
+        app:itemTextColor="#FDFEFF"
+        android:background="#406461"
+        />
+
+
 
 
 </LinearLayout>

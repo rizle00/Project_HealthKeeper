@@ -11,29 +11,29 @@
 
     <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/ic_add"
-        app:showAsAction="ifRoom"
-        android:title="nav1"/>
+        android:icon="?android:attr/listChoiceIndicatorSingle"
+        android:title="nav1"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/nav_119"
-        android:icon="@drawable/ic_add"
-        app:showAsAction="ifRoom"
-        android:title="nav2"/>
+        android:icon="@android:drawable/stat_sys_phone_call"
+        android:title="nav2"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/nav_commu"
-        android:icon="@drawable/ic_add"
-        app:showAsAction="ifRoom"
-        android:title="nav3"/>
+        android:icon="@android:drawable/btn_star"
+        android:title="nav3"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/nav_schedule"
-        android:icon="@drawable/ic_add"
-        app:showAsAction="ifRoom"
-        android:title="nav2"/>
+        android:icon="@android:drawable/ic_popup_reminder"
+        android:title="nav2"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/nav_setting"
-        android:icon="@drawable/ic_add"
-        app:showAsAction="ifRoom"
-        android:title="nav2"/>
+        android:icon="@android:drawable/stat_notify_sdcard_prepare"
+        android:title="nav2"
+        app:showAsAction="ifRoom" />
 
 
 </menu>
