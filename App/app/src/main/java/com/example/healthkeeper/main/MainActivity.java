@@ -15,6 +15,8 @@ import com.example.healthkeeper.home.HomeFragment;
 import com.example.healthkeeper.member.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
+    /*다른 액티비티에서 MainActivity 종료를 위한 선언*/
+    public static MainActivity _mainActivity;
 
     ActivityMainBinding binding;
     @Override

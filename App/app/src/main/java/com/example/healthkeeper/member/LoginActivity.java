@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.healthkeeper.databinding.ActivityLoginBinding;
+import com.example.healthkeeper.main.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -30,7 +32,18 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
+        binding.btnLogin.setOnClickListener(v -> {
+            if(1==1){
+                /*로그인 성공 */
+                MainActivity ma = (MainActivity)MainActivity._mainActivity;
+                ma.finish();
+                Intent intent = new Intent(this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }else{
+                Toast.makeText(this, "아이디 혹은 비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
+            }
+        });
         setContentView(binding.getRoot());
     }
 }
