@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,7 @@ import android.view.ViewGroup;
 import com.example.healthkeeper.databinding.FragmentHomeBinding;
 import com.example.healthkeeper.member.LoginActivity;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link BlankFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class HomeFragment extends Fragment {
 
     FragmentHomeBinding binding;
@@ -42,7 +39,7 @@ public class HomeFragment extends Fragment {
 
     }
     private void changeConditionFragment() {
-
+        Log.d("HomeFragment", "Changing to ConditionActivity");
         Intent intent = new Intent(getActivity(), ConditionActivity.class);
         startActivity(intent);
     }

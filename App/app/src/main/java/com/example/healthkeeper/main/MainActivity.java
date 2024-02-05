@@ -11,19 +11,21 @@ import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.ActivityMainBinding;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
     ActivityMainBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+
         setContentView(binding.getRoot());
+
 
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
-
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -31,28 +33,27 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // 초기 프래그먼트 설정
-        changeFragment(new HomeFragment());
+        changeFragment(new HomeFragment(), "HOME");
 
-        binding.bottomNav.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.nav_home:
-                    changeFragment(new HomeFragment(), "Home");
-                    return true;
-                case R.id.nav_119:
-                    // 처리 추가
-                    return true;
-                case R.id.nav_commu:
-                    // 처리 추가
-                    return true;
-                case R.id.nav_schedule:
-                    // 처리 추가
-                    return true;
-                case R.id.nav_setting:
-                    // 처리 추가
-                    return true;
-                default:
-                    return false;
+       binding.bottomNav.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_home) {
+                changeFragment(new HomeFragment(), "HOME");
+                return true;
+            } else if (itemId == R.id.nav_119) {
+               //
+                return true;
+            } else if (itemId == R.id.nav_commu) {
+                // 처리 추가
+                return true;
+            } else if (itemId == R.id.nav_schedule) {
+                // 처리 추가
+                return true;
+            } else if (itemId == R.id.nav_setting) {
+                // 처리 추가
+                return true;
             }
+            return false;
         });
     }
 
@@ -63,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeFragment(Fragment fragment, String title) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                fragment).commit();
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(title);
