@@ -58,8 +58,8 @@
             android:name=".member.GuardianJoinActivity"
             android:exported="false" />
         <activity
-            android:name=".member.LoginActivity"
-            android:exported="false" />
+            android:name=".member.LoginActivity"/>
+
         <activity
             android:name=".main.SplashActivity"
             android:exported="true">
