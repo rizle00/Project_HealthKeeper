@@ -1,76 +1,63 @@
 package com.example.healthkeeper.main;
 
-import android.os.Bundle;
-import android.view.Menu;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.appcompat.widget.Toolbar;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.ActivityMainBinding;
-
+import com.example.healthkeeper.databinding.ActivityMainBinding;
+import com.example.healthkeeper.home.HomeFragment;
+import com.example.healthkeeper.member.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
-
     /*다른 액티비티에서 MainActivity 종료를 위한 선언*/
     public static MainActivity _mainActivity;
+
     ActivityMainBinding binding;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-
         setContentView(binding.getRoot());
 
+        View childview=getLayoutInflater().inflate(R.layout.fragment_home,null);
+        binding.container.addView(childview);
 
-        Toolbar tb = findViewById(R.id.toolbar);
-        setSupportActionBar(tb);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-        }
 
-        // 초기 프래그먼트 설정
-        changeFragment(new HomeFragment(), "HOME");
+        changeFragment(new HomeFragment());
 
-       binding.bottomNav.setOnNavigationItemSelectedListener(item -> {
+        binding.bottomNav.setOnNavigationItemSelectedListener(item -> {//nav 클릭시 화면선택!
             int itemId = item.getItemId();
+
             if (itemId == R.id.nav_home) {
-                changeFragment(new HomeFragment(), "HOME");
+                changeFragment(new HomeFragment());
                 return true;
             } else if (itemId == R.id.nav_119) {
-               //
+
                 return true;
             } else if (itemId == R.id.nav_commu) {
-                // 처리 추가
+
                 return true;
             } else if (itemId == R.id.nav_schedule) {
-                // 처리 추가
+
                 return true;
             } else if (itemId == R.id.nav_setting) {
-                // 처리 추가
+
                 return true;
             }
+
             return false;
         });
+
+
+    }
+    public void changeFragment(Fragment fragment){
+        getSupportFragmentManager().beginTransaction().replace(R.id.container , fragment).commit();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_nav_btm, menu);
-        return true;
-    }
-
-    private void changeFragment(Fragment fragment, String title) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,
-                fragment).commit();
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(title);
-        }
-    }
 }
