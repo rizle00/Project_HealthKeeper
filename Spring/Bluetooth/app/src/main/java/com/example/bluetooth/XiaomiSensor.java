@@ -2,6 +2,7 @@ package com.example.bluetooth;
 
 public class XiaomiSensor {
     public static final String DEVICE_TYPE = "5b 05";       // LYWSD03MMC
+    //디바이스 타입 체크
 
     public long updateTime = 0;
     public float temperature = 0f;

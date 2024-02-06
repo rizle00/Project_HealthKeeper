@@ -94,10 +94,10 @@ public class MainActivity extends AppCompatActivity implements BtService.OnCheck
 
         // Add Listeners
         btService
-                .setOnCheckModelListener( this)
-                .setOnNotifyValueListener( this);
+                .setOnCheckModelListener( this)// 모델 체크 리스너
+                .setOnNotifyValueListener( this);// 값 체크 리스너
 
-        // Bluetooth System On with permission
+        // 권한 체크
         if( btService.isOn() ) {
             TedPermission.create()
                     .setPermissionListener(permissionListener)
@@ -105,8 +105,9 @@ public class MainActivity extends AppCompatActivity implements BtService.OnCheck
                     .setPermissions(android.Manifest.permission.BLUETOOTH_SCAN, android.Manifest.permission.ACCESS_FINE_LOCATION,  Manifest.permission.BLUETOOTH_CONNECT)
                     .check();
         }
-        else {
+        else {//블루투스 기능 활성 요청
             btService.on(this);
+
         }
 
     }
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements BtService.OnCheck
 
 
     @Override
-    public boolean isChecked(byte[] bytes) {
+    public boolean isChecked(byte[] bytes) {// 원하는 디바이스 세팅
         return XiaomiSensor.isType(bytes);
     }
 

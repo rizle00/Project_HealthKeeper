@@ -47,7 +47,7 @@ public class BtService extends Service {
 
 
     /**
-     * System Bluetooth On Check
+     * 시스템 블루투스 기능 활성 체크
      */
     public boolean isOn()
     {
@@ -84,20 +84,28 @@ public class BtService extends Service {
             adapter.disable();
     }
 
+
+
     /**
-     * Check model for ScanRecodeData
+     * Start Scan
      */
-    public interface OnCheckModelListener {
-        boolean isChecked(byte[] bytes);
-        void scannedDevice(ScanResult result);
-    }
-    private OnCheckModelListener onCheckModelListener;
-    public BtService setOnCheckModelListener(OnCheckModelListener onCheckModelListener) {
-        this.onCheckModelListener = onCheckModelListener;
-        return this;
+    @SuppressLint("MissingPermission")
+    public void scanDevices() { // activity 에서 호출
+        if (!adapter.isEnabled()) return;// 어댑터 활성 체크
+        if (scanning) return; // 스캐닝 중 .. 리턴
+
+        BluetoothLeScanner scanner = adapter.getBluetoothLeScanner();//  스캐너 등록
+
+        mainThreadHandler.postDelayed(() -> {
+            scanning = false; // 2분 후 스캔 중지
+            scanner.stopScan(callback);
+        }, 2 * 60 * 1000);
+
+        scanning = true;// 스캐닝 시작
+        scanner.startScan(callback);
     }
 
-    private final ScanCallback callback = new ScanCallback() {
+    private final ScanCallback callback = new ScanCallback() {//  스캔후 기기 추가
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
             super.onScanResult(callbackType, result);
@@ -122,6 +130,9 @@ public class BtService extends Service {
             }
         }
     };
+
+
+
 
 
     /**
@@ -150,30 +161,12 @@ public class BtService extends Service {
 
 
     /**
-     * Start Scan
-     */
-    @SuppressLint("MissingPermission")
-    public void scanDevices() {
-        if (!adapter.isEnabled()) return;
-        if (scanning) return;
-        BluetoothLeScanner scanner = adapter.getBluetoothLeScanner();
-
-        mainThreadHandler.postDelayed(() -> {
-            scanning = false;
-            scanner.stopScan(callback);
-        }, 2 * 60 * 1000);
-
-        scanning = true;
-        scanner.startScan(callback);
-    }
-
-    /**
      * Connecting Device
      */
     @SuppressLint("MissingPermission")
     public void connGATT(Context context, BluetoothDevice device)
     {
-        gattList.add(device.connectGatt(context, false, gattCallback));
+        gattList.add(device.connectGatt(context, true, gattCallback));
     }
 
 
@@ -296,6 +289,19 @@ public class BtService extends Service {
     private OnReadValueListener onReadValueListener = null;
     public BtService setOnReadValueListener(OnReadValueListener onReadValueListener) {
         this.onReadValueListener = onReadValueListener;
+        return this;
+    }
+
+    /**
+     * Check model for ScanRecodeData
+     */
+    public interface OnCheckModelListener {
+        boolean isChecked(byte[] bytes);
+        void scannedDevice(ScanResult result);
+    }
+    private OnCheckModelListener onCheckModelListener;
+    public BtService setOnCheckModelListener(OnCheckModelListener onCheckModelListener) {
+        this.onCheckModelListener = onCheckModelListener;
         return this;
     }
 }
