@@ -53,7 +53,7 @@ public class ForegroundService extends Service {
             mthread.start();
         }
         Intent btServiceIntent = new Intent(this, BtService.class);
-        bindService(btServiceIntent, ,BIND_AUTO_CREATE);
+//        bindService(btServiceIntent, ,BIND_AUTO_CREATE);
 
         btService = new BtService();
         // 자동 연결 수행
