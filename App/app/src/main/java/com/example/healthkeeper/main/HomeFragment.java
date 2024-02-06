@@ -23,24 +23,22 @@ public class HomeFragment extends Fragment {
         binding=FragmentHomeBinding.inflate(inflater,container,false);
 
 
-        binding.currentState.setOnClickListener(v -> {
-            changeConditionFragment();
+        binding.case1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),ConditionActivity.class));
+            }
         });
-
 
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+                startActivity(new Intent(getActivity(),LoginActivity.class));
+
             }
         });
+
         return binding.getRoot();
-
-
     }
-    private void changeConditionFragment() {
-        Log.d("HomeFragment", "Changing to ConditionActivity");
-        Intent intent = new Intent(getActivity(), ConditionActivity.class);
-        startActivity(intent);
-    }
+
 }
