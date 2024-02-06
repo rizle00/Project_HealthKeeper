@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.healthkeeper.R;
+import com.example.healthkeeper.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     /*다른 액티비티에서 MainActivity 종료를 위한 선언*/

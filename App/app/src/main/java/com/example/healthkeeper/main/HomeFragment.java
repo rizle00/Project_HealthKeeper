@@ -5,17 +5,12 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import com.example.healthkeeper.R;
-import com.example.healthkeeper.databinding.ActivityMainBinding;
-import com.example.healthkeeper.databinding.ActivityMainBinding;
 import com.example.healthkeeper.databinding.FragmentHomeBinding;
-import com.example.healthkeeper.main.ConditionActivity;
-import com.example.healthkeeper.main.MainActivity;
 import com.example.healthkeeper.member.LoginActivity;
 
 
@@ -35,6 +30,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,14 +39,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+
         return binding.getRoot();
-
-
     }
-    private void changeConditionFragment() {
 
-        Intent intent = new Intent(getActivity(), ConditionActivity.class);
-        startActivity(intent);
-    }
+
+
+
 
 }
