@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.ActivityPatientJoinBinding;
@@ -62,10 +63,13 @@ public class PatientJoinActivity extends AppCompatActivity {
     }
 
     public void joinClick(){
-
+        idCheck();
+        mailPatterns();
+        phonePattern();
+        genderPattern();
         int num = binding.tvWarningBlood.getVisibility()+binding.tvWarningId.getVisibility()+binding.tvWarningPw.getVisibility()
-                ;
-        if(num ==24){
+                + binding.tvWarningEmail.getVisibility()+binding.tvWarningGender.getVisibility()+binding.tvWarningPhone.getVisibility();
+        if(num ==48){
             JoinTypeActivity jta = (JoinTypeActivity)JoinTypeActivity.joinTypeActivity;
             jta.finish();
             finish();
@@ -79,6 +83,11 @@ public class PatientJoinActivity extends AppCompatActivity {
 
     /*아이디 길이 확인*/
     public void IdCheck(){
+        int idLength = binding.edtUserId.getText().length();
+        if(idLength <7 || idLength>16){
+            binding.tvWarningId.setText("아이디를 7~20자로 입력해주세요");
+            binding.tvWarningId.setVisibility(View.VISIBLE);
+            binding.btnIdCheck.setVisibility(View.GONE);}
         binding.edtUserId.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -87,7 +96,6 @@ public class PatientJoinActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int idLength = binding.edtUserId.getText().length();
                 if(idLength <7 || idLength>16){
                     binding.tvWarningId.setText("아이디를 7~20자로 입력해주세요");
                     binding.tvWarningId.setVisibility(View.VISIBLE);
@@ -180,21 +188,30 @@ public class PatientJoinActivity extends AppCompatActivity {
         }
     }
 
-    public boolean isMailPatterns(){
+    public void mailPatterns(){
         Pattern mail_pattern = Patterns.EMAIL_ADDRESS;
         if(mail_pattern.matcher(binding.edtUserEmail.getText().toString()).matches()){
-            return true;
+            binding.tvWarningEmail.setVisibility(View.GONE);
         }else {
-            return false;
+            binding.tvWarningEmail.setVisibility(View.VISIBLE);
         }
     }
-    public boolean isPhonePattern(){
+    public void phonePattern(){
         Pattern phone_pattern = Patterns.PHONE;
         if(phone_pattern.matcher(binding.edtUserPhone.getText().toString()).matches()){
-
-            return true;
+            binding.tvWarningPhone.setVisibility(View.GONE);
         }else{
-            return false;
+            binding.tvWarningPhone.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void genderPattern(){
+        TextView tv = binding.tvWarningGender;
+        int i = binding.radioGroup.getCheckedRadioButtonId();
+        if(i == -1){
+            tv.setVisibility(View.VISIBLE);
+        }else{
+            tv.setVisibility(View.GONE);
         }
     }
 

@@ -44,6 +44,16 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "아이디 혹은 비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
             }
         });
+
+        binding.tvFindId.setOnClickListener(v -> {
+            Intent intent = new Intent(this, FindIdActivity.class);
+            startActivity(intent);
+        });
+
+        binding.tvFindPw.setOnClickListener(v -> {
+            Intent intent = new Intent(this, FindPwActivity.class);
+            startActivity(intent);
+        });
         setContentView(binding.getRoot());
     }
 }
