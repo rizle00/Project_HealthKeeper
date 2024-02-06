@@ -8,11 +8,7 @@
     android:orientation="vertical"
     tools:context=".main.ConditionActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="컨디션 관리 예정이며 컨디션 등록과 시각화 기능 필요"
-        />
+
 
 
     <com.google.android.material.chip.ChipGroup
@@ -28,7 +24,7 @@
             android:id="@+id/chipTemperature"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="170dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
             android:checked="true"
@@ -51,7 +47,7 @@
             android:id="@+id/chipHeartRate"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="170dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:text="심박"
@@ -78,7 +74,6 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        />
+        android:layout_weight="1" />
 
 </LinearLayout>
