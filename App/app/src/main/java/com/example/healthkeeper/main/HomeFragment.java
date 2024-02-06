@@ -1,4 +1,4 @@
-package com.example.healthkeeper.home;
+package com.example.healthkeeper.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,17 +28,21 @@ public class HomeFragment extends Fragment {
         binding=FragmentHomeBinding.inflate(inflater,container,false);
 
 
-        binding.currentState.setOnClickListener(v -> {
-            changeConditionFragment();
+        binding.case1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),ConditionActivity.class));
+            }
         });
-
 
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+                startActivity(new Intent(getActivity(),LoginActivity.class));
+
             }
         });
+
         return binding.getRoot();
 
 
@@ -48,4 +52,5 @@ public class HomeFragment extends Fragment {
         Intent intent = new Intent(getActivity(), ConditionActivity.class);
         startActivity(intent);
     }
+
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".home.HomeFragment"
+    tools:context=".main.HomeFragment"
     android:orientation="vertical"
     >
 
@@ -149,40 +149,60 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#DBE6F1"
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        >
 
-
-
-
-
-        <FrameLayout
-            android:layout_width="110dp"
-            android:layout_height="190dp"
-            android:orientation="horizontal"
-            android:layout_margin="10dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
+            android:background="#DBE6F1"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp"
             >
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="#ECF3AA"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginRight="5dp"
+                >
 
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:cardCornerRadius="15dp"
-                    android:layout_gravity="center"
-                    >
+                    app:cardCornerRadius="2dp">
+                <RelativeLayout
+                    android:id="@+id/case1"
+                    android:clickable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:ignore="DuplicateIds">
 
-                    <FrameLayout
-                        android:background="#EDD7B5"
+
+                    <ImageView
+                        android:id="@+id/img1"
+                        android:src="@drawable/baseline_favorite_border_24"
+                        android:layout_above="@id/tv1"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
+                        android:layout_height="120dp"
+                        />
+                    <TextView
+                        android:id="@+id/tv1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:textAlignment="center"
+                        android:textSize="20dp"
+                        android:text="currentStatus"/>
+                </RelativeLayout>
                         <!--CardView의 투명도를 나타내며, 값이 1.0이면 완전 불투명, 0.0이면 완전 투명-->
                         <androidx.cardview.widget.CardView
                             android:id="@+id/currentState"
@@ -223,54 +243,33 @@
 
                     </FrameLayout>
                 </androidx.cardview.widget.CardView>
-            </FrameLayout>
 
-        </FrameLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <FrameLayout
-            android:layout_width="110dp"
-            android:layout_height="190dp"
-            android:orientation="horizontal"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            >
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="#1F9EAF"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginLeft="5dp"
+                >
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:cardCornerRadius="15dp"
-                    android:layout_gravity="center"
-                    >
+                    app:cardCornerRadius="2dp">
 
-                    <FrameLayout
-                        android:background="#EDD7B5"
+
+                    <RelativeLayout
+                        android:id="@+id/case2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <!--CardView의 투명도를 나타내며, 값이 1.0이면 완전 불투명, 0.0이면 완전 투명-->
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/board"
-                            android:alpha="0.6"
+
+                        <ImageView
+                            android:id="@+id/img2"
+                            android:src="@drawable/baseline_favorite_border_24"
+                            android:layout_above="@id/tv2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:cardCornerRadius="15dp"
@@ -301,66 +300,57 @@
                     android:layout_alignParentBottom="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+                            android:layout_height="120dp"
+                            />
+                        <TextView
+                            android:id="@+id/tv2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:textAlignment="center"
+                            android:textSize="20dp"
+                            android:text="2"/>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
 
+            </LinearLayout>
 
+        </LinearLayout>
 
-
-            </RelativeLayout>
-
-        </FrameLayout>
-
-
-
-
-
-
-
-
-
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal">
-
-
-
-
-        <FrameLayout
-            android:layout_width="110dp"
-            android:layout_height="190dp"
-            android:orientation="horizontal"
-            android:layout_margin="10dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
+            android:background="#DBE6F1"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             >
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="#E5A18C"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginRight="5dp"
+                >
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:cardCornerRadius="15dp"
-                    android:layout_gravity="center"
-                    >
+                    app:cardCornerRadius="2dp">
 
-                    <FrameLayout
-                        android:background="#EDD7B5"
+
+                    <RelativeLayout
+                        android:id="@+id/case3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <!--CardView의 투명도를 나타내며, 값이 1.0이면 완전 불투명, 0.0이면 완전 투명-->
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/phone_119"
-                            android:alpha="0.6"
+
+                        <ImageView
+                            android:id="@+id/img3"
+                            android:src="@drawable/baseline_favorite_border_24"
+                            android:layout_above="@id/tv3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:cardCornerRadius="15dp"
@@ -376,75 +366,46 @@
 
 
                     </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/tv3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:textAlignment="center"
+                            android:textSize="20dp"
+                            android:text="3"/>
+                    </RelativeLayout>
                 </androidx.cardview.widget.CardView>
-            </FrameLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp">
-
-                <TextView
-
-                    android:layout_centerHorizontal="true"
-                    android:textSize="15dp"
-                    android:textStyle="bold"
-                    android:textColor="#fff"
-                    android:text=" 심박 \namaunt"
-                    android:layout_alignParentBottom="true"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
 
 
 
-
-            </RelativeLayout>
-
-        </FrameLayout>
+            </LinearLayout>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <FrameLayout
-            android:layout_width="110dp"
-            android:layout_height="190dp"
-            android:orientation="horizontal"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            >
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="#A39626"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginLeft="5dp"
+                >
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:cardCornerRadius="15dp"
-                    android:layout_gravity="center"
-                    >
+                    app:cardCornerRadius="2dp">
 
-                    <FrameLayout
-                        android:background="#EDD7B5"
+                    <RelativeLayout
+                        android:id="@+id/case4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <!--CardView의 투명도를 나타내며, 값이 1.0이면 완전 불투명, 0.0이면 완전 투명-->
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/que"
-                            android:alpha="0.6"
+
+                        <ImageView
+                            android:id="@+id/img4"
+                            android:src="@drawable/baseline_favorite_border_24"
+                            android:layout_above="@id/tv4"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:cardCornerRadius="15dp"
@@ -460,51 +421,24 @@
 
 
                     </FrameLayout>
+=======
+                            android:layout_height="120dp"
+                            />
+                        <TextView
+                            android:id="@+id/tv4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:textAlignment="center"
+                            android:textSize="20dp"
+                            android:text="4"/>
+                    </RelativeLayout>
                 </androidx.cardview.widget.CardView>
-            </FrameLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp">
-
-                <TextView
-                    android:layout_centerHorizontal="true"
-                    android:textSize="15dp"
-                    android:textStyle="bold"
-                    android:textColor="#fff"
-                    android:text="대쉬보드"
-                    android:layout_alignParentBottom="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
 
 
+            </LinearLayout>
 
-
-            </RelativeLayout>
-
-        </FrameLayout>
-
-
-
-
-
-
-
-
-
-
-
-    </LinearLayout>
-
-
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal">
-
+        </LinearLayout>
 
 
     </LinearLayout>
