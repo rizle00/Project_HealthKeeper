@@ -5,15 +5,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.example.healthkeeper.databinding.FragmentDeviceManageBinding;
+import com.example.healthkeeper.R;
+import com.example.healthkeeper.databinding.FragmentMyMenuBinding;
 
-public class DeviceManageFragment extends Fragment {
-    FragmentDeviceManageBinding binding;
+
+public class MyMenuFragment extends Fragment {
+    FragmentMyMenuBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentDeviceManageBinding.inflate(inflater,container,false);
 
-        return binding.getRoot();
+        return inflater.inflate(R.layout.fragment_my_menu, container, false);
     }
 }
