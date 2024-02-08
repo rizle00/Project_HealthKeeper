@@ -1,5 +1,7 @@
 package com.example.bluetooth;
 
+import android.util.Log;
+
 public class XiaomiSensor {
     public static final String DEVICE_TYPE = "5b 05";       // LYWSD03MMC
     //디바이스 타입 체크
@@ -19,6 +21,7 @@ public class XiaomiSensor {
 
     public static boolean isType(byte[] serviceData)
     {
+        Log.d("type", "isType: "+byteArrayToHex(serviceData).toLowerCase().contains(DEVICE_TYPE));
         return byteArrayToHex(serviceData).toLowerCase().contains(DEVICE_TYPE);
     }
 
