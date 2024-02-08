@@ -7,32 +7,34 @@
     tools:context=".setting.MyMenuFragment">
     <TextView
         android:textSize="30dp"
-        android:text="마이 메뉴"
+        android:text="마이 페이지"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <TextView
+        android:textColor="#7D7D7D"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="계정관리"
-        android:textStyle="bold"
+
         android:layout_marginLeft="20dp"/>
-    <View
-        android:layout_marginHorizontal="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#373737"/>
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:paddingStart="20dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/ll_member_modify">
 
         <ImageView
+            android:src="@drawable/ic_mymenu_modify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
         <TextView
+            android:textSize="15dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="정보수정"
