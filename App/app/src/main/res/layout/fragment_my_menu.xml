@@ -6,12 +6,22 @@
     android:orientation="vertical"
     tools:context=".setting.MyMenuFragment">
     <TextView
-        android:textSize="30dp"
+        android:layout_margin="10dp"
+        android:textSize="25dp"
         android:text="마이 페이지"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회원님 안녕하세요"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="15dp"
+        />
+
+    <TextView
+        android:layout_marginVertical="10dp"
         android:textColor="#7D7D7D"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,6 +30,7 @@
         android:layout_marginLeft="20dp"/>
 
     <LinearLayout
+        android:layout_marginBottom="10dp"
         android:paddingStart="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,46 +51,132 @@
             android:text="정보수정"
             />
     </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="기기관리"
-        android:textStyle="bold"
-        android:layout_marginLeft="20dp"/>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:paddingStart="20dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/ll_bluetooth">
+        android:id="@+id/ll_member_register">
+
         <ImageView
+            android:src="@drawable/ic_mymenu_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
         <TextView
+            android:textSize="15dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="환자 / 보호자 등록"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginBottom="10dp"
+        android:paddingStart="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/ll_member_logout">
+
+        <ImageView
+            android:src="@drawable/ic_mymenu_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:textSize="15dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="로그아웃"
+            />
+    </LinearLayout>
+    <TextView
+        android:layout_marginVertical="10dp"
+        android:textColor="#7D7D7D"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="기기관리"
+
+        android:layout_marginLeft="20dp"/>
+
+    <LinearLayout
+        android:layout_marginBottom="10dp"
+        android:paddingStart="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/ll_bluetooth">
+
+        <ImageView
+            android:src="@drawable/ic_mymenu_bluetooth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:textSize="15dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="블루투스 연결"
             />
     </LinearLayout>
     <TextView
+        android:layout_marginVertical="10dp"
+        android:textColor="#7D7D7D"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="고객센터"
-        android:textStyle="bold"
+
         android:layout_marginLeft="20dp"/>
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:paddingStart="20dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/ll_notice">
+
         <ImageView
+            android:src="@drawable/ic_mymenu_notice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
         <TextView
+            android:textSize="15dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="공지사항"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginBottom="10dp"
+        android:paddingStart="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/ll_info">
+
+        <ImageView
+            android:src="@drawable/ic_mymenu_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:textSize="15dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="도움말"
             />
     </LinearLayout>
 
