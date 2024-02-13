@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.ActivityMainBinding;
+import com.example.healthkeeper.setting.MyMenuFragment;
 
 public class MainActivity extends AppCompatActivity {
     /*다른 액티비티에서 MainActivity 종료를 위한 선언*/
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
                 return true;
             } else if (itemId == R.id.nav_setting) {
-
+                changeFragment(new MyMenuFragment());
                 return true;
             }
 
