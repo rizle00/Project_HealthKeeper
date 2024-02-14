@@ -1,70 +1,36 @@
-package com.example.healthkeeper.member;
-
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.util.Patterns;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
+package com.example.healthkeeper.setting;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.healthkeeper.R;
-import com.example.healthkeeper.common.ApiClient;
-import com.example.healthkeeper.common.ApiInterface;
-import com.example.healthkeeper.databinding.ActivityGuardianJoinBinding;
-import com.example.healthkeeper.databinding.ActivityPatientJoinBinding;
-import com.google.gson.Gson;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Patterns;
+import android.view.View;
 
-import java.util.HashMap;
+import com.example.healthkeeper.R;
+import com.example.healthkeeper.databinding.ActivityModifyPatientBinding;
+import com.example.healthkeeper.member.GuardianJoinActivity;
+import com.example.healthkeeper.member.JoinTypeActivity;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class GuardianJoinActivity extends AppCompatActivity {
-
-    ActivityGuardianJoinBinding binding;
-    MemberVO vo;
+public class ModifyPatientActivity extends AppCompatActivity {
+    ActivityModifyPatientBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityGuardianJoinBinding.inflate(getLayoutInflater());
-
-        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        HashMap<String,Object> params = new HashMap<>();
-        String jsonData = new Gson().toJson(vo);
-
-
-        /* 아이디 글자수 메소드 */
-       IdCheck();
-
-       /* 비밀번호 특문 메소드*/
-       pwPattern();
-        binding.btnJoin.setOnClickListener(v -> {
-            pwCheck();
-            joinClick();
-        });
-
-
+        binding = ActivityModifyPatientBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-    }
 
-
-
-    public void idCheck(){
-        binding.btnIdCheck.setOnClickListener(v -> {
-
+        binding.btnModify.setOnClickListener(v -> {
+            joinClick();
+            pwCheck();
         });
-        /* 아이디 중복체크 완료되면 체크표시 */
-        binding.edtUserId.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.img_check,0);
     }
-
     public void joinClick(){
-        idCheck();
         mailPatterns();
         phonePattern();
         int num = binding.tvWarningId.getVisibility()+binding.tvWarningPw.getVisibility()
@@ -80,43 +46,6 @@ public class GuardianJoinActivity extends AppCompatActivity {
         }
 
     }
-
-    /*아이디 길이 확인*/
-    public void IdCheck(){
-        int idLength = binding.edtUserId.getText().length();
-        if(idLength <7 || idLength>16){
-            binding.tvWarningId.setText("아이디를 7~20자로 입력해주세요");
-            binding.tvWarningId.setVisibility(View.VISIBLE);
-            binding.btnIdCheck.setVisibility(View.GONE);}
-        binding.edtUserId.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(idLength <7 || idLength>16){
-                    binding.tvWarningId.setText("아이디를 7~20자로 입력해주세요");
-                    binding.tvWarningId.setVisibility(View.VISIBLE);
-                    binding.btnIdCheck.setVisibility(View.GONE);
-                }else if(!isIdPattern()){
-                    binding.tvWarningId.setText("영어 소문자와 숫자만 가능합니다");
-                    binding.tvWarningId.setVisibility(View.VISIBLE);
-                    binding.btnIdCheck.setVisibility(View.GONE);
-                }else{
-                    binding.tvWarningId.setVisibility(View.GONE);
-                    binding.btnIdCheck.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-    }
-
     public void pwPattern(){
         binding.edtUserPw.addTextChangedListener(new TextWatcher() {
             @Override
@@ -185,19 +114,7 @@ public class GuardianJoinActivity extends AppCompatActivity {
         }
     }
 
-    public boolean isIdPattern(){
-        Pattern id_pattern = Pattern.compile("^[a-z0-9]+$");
-        String id = binding.edtUserId.getText().toString();
-        Matcher matcher = id_pattern.matcher(id);
-        if(matcher.matches()){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
-    public MemberVO Join(String user_id, String user_pw ){
 
-        return null;
-    }
+
 }
