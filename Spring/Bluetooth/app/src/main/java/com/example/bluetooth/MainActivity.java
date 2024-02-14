@@ -20,7 +20,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BtService.OnCheckModelListener, BtService.OnNotifyValueListener<XiaomiSensor> {
 
-    private TextView textView = null;
+    private TextView textView;
     private BtService btService;
     private boolean mBound = false;
 
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements BtService.OnCheck
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        textView = findViewById(R.id.tv);
 
         // Add Listeners
         btService

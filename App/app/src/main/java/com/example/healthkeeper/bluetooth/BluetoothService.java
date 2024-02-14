@@ -43,7 +43,7 @@ public class BluetoothService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // 블루투스 매니저 초기화
-        btService = new BluetoothManager(this, "BluetoothDeviceName");
+//        btService = new BluetoothManager(this, "BluetoothDeviceName");
         // 자동 연결 수행
 
         // START_STICKY를 반환하여 시스템이 서비스를 종료시킨 후에도 자동으로 재시작합니다.

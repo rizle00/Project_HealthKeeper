@@ -1,7 +1,10 @@
-package com.example.bluetooth;
+package com.example.btapplication;
 
 import android.annotation.SuppressLint;
-import android.app.*;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
 import android.bluetooth.*;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
@@ -22,8 +25,9 @@ import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 
-public class BtService extends Service {
-
+public class BTService extends Service {
+    public BTService() {
+    }
 
 
 
@@ -37,17 +41,17 @@ public class BtService extends Service {
 
     private boolean scanning = false;
 
-    private static final String TAG = BtService.class.getSimpleName();
+    private static final String TAG = BTService.class.getSimpleName();
 
-        private Thread mThread;
+    private Thread mThread;
     private int mCount = 0;
 
     private final IBinder binder = new LocalBinder();
 
     public class LocalBinder extends Binder {
 
-        public BtService getService() {
-            return BtService.this;
+        public BTService getService() {
+            return BTService.this;
         }
     }
 
@@ -134,7 +138,7 @@ public class BtService extends Service {
     // Bluetooth 활성화 결과 처리
     public boolean onActivityResult(int requestCode, int resultCode)
     {
-        return requestCode == BtService.INTENT_REQUEST_BLUETOOTH_ENABLE
+        return requestCode == BTService.INTENT_REQUEST_BLUETOOTH_ENABLE
                 && resultCode == RESULT_OK;
     }
 
@@ -166,6 +170,7 @@ public class BtService extends Service {
 
     private final ScanCallback callback = new ScanCallback() {
         // 장치 스캔 결과 처리
+        @SuppressLint("MissingPermission")
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
 
@@ -174,23 +179,29 @@ public class BtService extends Service {
             Map<ParcelUuid, byte[]> serviceDataMap = result.getScanRecord().getServiceData();
             Log.d(TAG, "onScanResult: "+result.getScanRecord().toString());
             Log.d(TAG, "onScanResult: "+result.getScanRecord().getServiceData().toString());
-            if( serviceDataMap == null ) return;
-            if( onCheckModelListener == null ) return;
-            for( ParcelUuid parcelUuid : serviceDataMap.keySet() )
-            {
-                if( onCheckModelListener.isChecked(result.getScanRecord().getServiceData(parcelUuid)))
-                {
-                    if( !hasDevice(result.getDevice().toString()))
-                    {
-                        addDevice(result.getDevice().getAddress(), result.getDevice());
-                        if( onCheckModelListener  != null )
-                        {
-                            onCheckModelListener.scannedDevice(result);
-                        }
-                    }
-                    break;
-                }
+            String name = "HM10";
+//            0000ffe0-0000-1000-8000-00805f9b34fb
+            if(name.equals(result.getDevice().getName())) {
+                BluetoothDevice device = result.getDevice();
+                onCheckModelListener.scannedDevice(result);
             }
+//            if( serviceDataMap == null ) return;
+//            if( onCheckModelListener == null ) return;
+//            for( ParcelUuid parcelUuid : serviceDataMap.keySet() )
+//            {
+//                if( onCheckModelListener.isChecked(result.getScanRecord().getServiceData(parcelUuid)))
+//                {
+//                    if( !hasDevice(result.getDevice().toString()))
+//                    {
+//                        addDevice(result.getDevice().getAddress(), result.getDevice());
+//                        if( onCheckModelListener  != null )
+//                        {
+//                            onCheckModelListener.scannedDevice(result);
+//                        }
+//                    }
+//                    break;
+//                }
+//            }
         }
     };
 
@@ -228,6 +239,7 @@ public class BtService extends Service {
     public void connGATT(Context context, BluetoothDevice device)
     {
         gattList.add(device.connectGatt(context, true, gattCallback));
+        Log.d(TAG, "connGATT: "+gattList.toString());
     }
 
 
@@ -339,14 +351,14 @@ public class BtService extends Service {
     }
     // Bluetooth 알림 값 콜백 설정
     private OnNotifyValueListener onNotifyValueListener = null;
-    public BtService setOnNotifyValueListener(OnNotifyValueListener onNotifyValueListener) {
+    public BTService setOnNotifyValueListener(OnNotifyValueListener onNotifyValueListener) {
         this.onNotifyValueListener = onNotifyValueListener;
         return this;
     }
 
     // Bluetooth 읽기 값 콜백 설정
     private OnReadValueListener onReadValueListener = null;
-    public BtService setOnReadValueListener(OnReadValueListener onReadValueListener) {
+    public BTService setOnReadValueListener(OnReadValueListener onReadValueListener) {
         this.onReadValueListener = onReadValueListener;
         return this;
     }
@@ -357,7 +369,7 @@ public class BtService extends Service {
         void scannedDevice(ScanResult result);
     }
     private OnCheckModelListener onCheckModelListener;
-    public BtService setOnCheckModelListener(OnCheckModelListener onCheckModelListener) {
+    public BTService setOnCheckModelListener(OnCheckModelListener onCheckModelListener) {
         this.onCheckModelListener = onCheckModelListener;
         return this;
     }
