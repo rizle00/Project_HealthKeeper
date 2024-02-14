@@ -33,15 +33,19 @@
             android:layout_marginRight="10dp"
             android:checked="true"
             android:text="체온"
-            android:textColor="@drawable/chip_foreground"
-            app:chipBackgroundColor="@drawable/chip_background"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            app:chipBackgroundColor="#183C60"
             app:chipIconEnabled="true"
             app:chipIconTint="@drawable/chip_foreground"
             app:chipMinHeight="40dp"
             app:iconEndPadding="10dp"
             app:iconStartPadding="10dp"
             app:textEndPadding="5dp"
-            app:textStartPadding="5dp" />
+            app:textStartPadding="5dp"
+            />
 
 
 
@@ -55,8 +59,11 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:text="심박"
-            android:textColor="@drawable/chip_foreground"
-            app:chipBackgroundColor="@drawable/chip_background"
+            android:textColor="#FFFFFF"
+            app:chipBackgroundColor="#C53D33"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
             app:chipIconEnabled="true"
             app:chipIconTint="@drawable/chip_foreground"
             app:chipMinHeight="40dp"
