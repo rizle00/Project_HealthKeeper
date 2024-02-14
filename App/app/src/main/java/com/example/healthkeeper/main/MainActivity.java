@@ -26,8 +26,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        View childview=getLayoutInflater().inflate(R.layout.fragment_home,null);
-        binding.container.addView(childview);
+
 
 
         changeFragment(new HomeFragment());
