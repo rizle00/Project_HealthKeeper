@@ -4,15 +4,11 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.le.ScanResult;
 import android.content.*;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
-import android.os.IBinder;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,7 +18,6 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.*;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,16 +34,12 @@ import com.clj.fastble.scan.BleScanRuleConfig;
 import com.example.btapplication.adapter.DeviceAdapter;
 import com.example.btapplication.comm.ObserverManager;
 import com.example.btapplication.operation.OperationActivity;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.normal.TedPermission;
-import no.nordicsemi.android.ble.PhyRequest;
-import no.nordicsemi.android.ble.callback.FailCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 //    https://github.com/Jasonchenlijian/FastBle
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -93,18 +84,20 @@ public class MainActivity extends AppCompatActivity  {
         BleManager.getInstance().destroy();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_scan:
+//            R.id.btn_scan
+            case 1000013:
                 if (btn_scan.getText().equals(getString(R.string.start_scan))) {
                     checkPermissions();
                 } else if (btn_scan.getText().equals(getString(R.string.stop_scan))) {
                     BleManager.getInstance().cancelScan();
                 }
                 break;
-
-            case R.id.txt_setting:
+//            R.id.txt_setting
+            case 1000028:
                 if (layout_setting.getVisibility() == View.VISIBLE) {
                     layout_setting.setVisibility(View.GONE);
                     txt_setting.setText(getString(R.string.expand_search_settings));
@@ -117,7 +110,7 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     private void initView() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         btn_scan = (Button) findViewById(R.id.btn_scan);
@@ -214,11 +207,11 @@ public class MainActivity extends AppCompatActivity  {
         boolean isAutoConnect = sw_auto.isChecked();
 
         BleScanRuleConfig scanRuleConfig = new BleScanRuleConfig.Builder()
-                .setServiceUuids(serviceUuids)      // 只扫描指定的服务的设备，可选
-                .setDeviceName(true, names)   // 只扫描指定广播名的设备，可选
-                .setDeviceMac(mac)                  // 只扫描指定mac的设备，可选
-                .setAutoConnect(isAutoConnect)      // 连接时的autoConnect参数，可选，默认false
-                .setScanTimeOut(10000)              // 扫描超时时间，可选，默认10秒
+                .setServiceUuids(serviceUuids)      // 지정된 서비스의 장치만 스캔합니다. 선택 사항입니다.
+                .setDeviceName(true, names)   // 지정된 브로드캐스트 이름의 장치만 스캔합니다. 선택 사항입니다.
+                .setDeviceMac(mac)                  // 지정된 MAC 주소의 장치만 스캔합니다. 선택 사항입니다.
+                .setAutoConnect(isAutoConnect)      // 연결 시 autoConnect 매개변수입니다. 선택 사항입니다. 기본값은 false입니다.
+                .setScanTimeOut(10*1000)              // 스캔 타임아웃 시간입니다. 선택 사항입니다. 기본값은 10초입니다.
                 .build();
         BleManager.getInstance().initScanRule(scanRuleConfig);
     }
