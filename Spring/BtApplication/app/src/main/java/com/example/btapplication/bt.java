@@ -41,8 +41,8 @@ public class bt {
                 @Override
                 public void onScanResult(int callbackType, ScanResult result) {
                     super.onScanResult(callbackType, result);
-                    leDeviceListAdapter.addDevice(result.getDevice());
-                    leDeviceListAdapter.notifyDataSetChanged();
+//                    leDeviceListAdapter.addDevice(result.getDevice());
+//                    leDeviceListAdapter.notifyDataSetChanged();
                 }
             };
 }

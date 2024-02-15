@@ -135,7 +135,7 @@ public class CharacteristicListFragment extends Fragment {
                 holder.txt_title = (TextView) convertView.findViewById(R.id.txt_title);
                 holder.txt_uuid = (TextView) convertView.findViewById(R.id.txt_uuid);
                 holder.txt_type = (TextView) convertView.findViewById(R.id.txt_type);
-                holder.img_next = (ImageView) convertView.findViewById(R.id.img_next);
+//                holder.img_next = (ImageView) convertView.findViewById(R.id.img_next);
             }
 
             BluetoothGattCharacteristic characteristic = characteristicList.get(position);

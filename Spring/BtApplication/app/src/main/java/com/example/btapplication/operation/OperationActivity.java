@@ -6,6 +6,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.clj.fastble.BleManager;
 import com.clj.fastble.data.BleDevice;
@@ -14,6 +16,7 @@ import com.example.btapplication.comm.Observer;
 import com.example.btapplication.comm.ObserverManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OperationActivity extends AppCompatActivity implements Observer {
 
