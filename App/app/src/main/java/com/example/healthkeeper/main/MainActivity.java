@@ -41,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
                 showEmergencyDialog();
                 return true;
             } else if (itemId == R.id.nav_commu) {
-
+                //changeScheduleFragment(new ());
                 return true;
             } else if (itemId == R.id.nav_schedule) {
-
+                changeScheduleFragment(new ScheduleFragment());
                 return true;
             } else if (itemId == R.id.nav_setting) {
                 changeFragment(new MyMenuFragment());
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         confirmButton.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent callIntent= new Intent(Intent.ACTION_CALL);
+                Intent callIntent= new Intent(Intent.ACTION_CALL);//???
                 callIntent.setData(Uri.parse("tel:긴급전화번호"));
                 startActivity(callIntent);
 
@@ -97,6 +97,11 @@ public class MainActivity extends AppCompatActivity {
         alertDialog = builder.create();
 
         alertDialog.show();
+    }
+
+
+    public void changeScheduleFragment(ScheduleFragment fragment){
+        getSupportFragmentManager().beginTransaction().replace(R.id.container , fragment).commit();
     }
 
 

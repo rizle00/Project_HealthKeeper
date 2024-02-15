@@ -11,28 +11,31 @@
 
     <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/ic_add"
+        android:icon="@drawable/baseline_home_24"
         app:showAsAction="ifRoom"
-        android:title="nav1"/>
+        android:title="nav1"
+
+        />
     <item
         android:id="@+id/nav_119"
-        android:icon="@drawable/ic_add"
+        android:icon="@drawable/baseline_settings_phone_24"
         app:showAsAction="ifRoom"
         android:title="nav2"/>
     <item
         android:id="@+id/nav_commu"
-        android:icon="@drawable/ic_add"
+        android:icon="@drawable/baseline_people_alt_24"
         app:showAsAction="ifRoom"
         android:title="nav3"/>
     <item
         android:id="@+id/nav_schedule"
-        android:icon="@drawable/ic_add"
+        android:icon="@drawable/baseline_calendar_month_24"
         app:showAsAction="ifRoom"
         android:title="nav2"/>
     <item
         android:id="@+id/nav_setting"
-        android:icon="@drawable/ic_add"
+        android:icon="@drawable/baseline_settings_24"
         app:showAsAction="ifRoom"
+
         android:title="nav2"/>
 
 

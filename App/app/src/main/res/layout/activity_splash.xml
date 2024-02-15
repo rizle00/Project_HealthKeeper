@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.SplashActivity">
+    tools:context=".main.SplashActivity"
+    android:orientation="vertical">
 
     <TextView
         android:textSize="50dp"
@@ -12,13 +14,37 @@
         android:layout_height="wrap_content"
         android:text="Smart HomeKeeper!!"
         android:textColor="#2A877E"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="130dp"
         android:fontFamily="@font/fontmain"
         android:textAlignment="center"
         />
 
+    <FrameLayout
+        android:background="#123"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!--CardView의 투명도를 나타내며, 값이 1.0이면 완전 불투명, 0.0이면 완전 투명-->
+        <androidx.cardview.widget.CardView
+            android:alpha="0.5"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+
+
+            >
+
+            <ImageView
+
+                android:id="@+id/imgv_profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/watch_img4" />
+        </androidx.cardview.widget.CardView>
+
+
+    </FrameLayout>
+
+</LinearLayout>

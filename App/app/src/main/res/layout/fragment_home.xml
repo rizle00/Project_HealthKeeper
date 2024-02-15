@@ -31,10 +31,10 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="80dp"
         android:text="Smart \nHealthKeepper"
         android:textAlignment="center"
-        android:textColor="#5E8F26"
+        android:textColor="#2A877E"
         android:textSize="30dp" />
 
     <HorizontalScrollView
@@ -44,7 +44,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="130dp"
             android:layout_margin="20dp"
             android:background="#EDF2F7"
             android:orientation="horizontal">
@@ -58,7 +58,109 @@
 
                 <ImageView
                     android:layout_width="90dp"
-                    android:layout_height="110dp" />
+                    android:layout_height="110dp"
+                    android:src="@drawable/watch_img1"
+                    android:scaleType="fitXY"
+                    />
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:backgroundTint="#D6E7F9"
+                app:cardCornerRadius="20dp">
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/watch_img2"/>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="110dp"
+                android:layout_marginTop="5dp"
+
+
+                android:backgroundTint="#D6E7F9"
+                app:cardCornerRadius="20dp">
+
+            <FrameLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="115dp"
+                android:background="#0E0F0F"
+                >
+
+            <androidx.cardview.widget.CardView
+                android:alpha="0.4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:src="@drawable/watch_img5"
+                    android:layout_height="115dp"
+                    android:scaleType="fitXY"
+                    android:background="@android:color/transparent"
+                    android:layout_marginBottom="27dp"
+                    android:layout_marginTop="5dp"
+
+
+                    />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="낙상감지시스템!!"
+                        android:textSize="12dp"
+                        android:textStyle="bold"
+                        android:textAlignment="center"
+                        android:textColor="#1010F8"
+                        android:layout_marginTop="85dp"
+                        android:layout_marginLeft="5dp"
+
+
+                        />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+            </FrameLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:backgroundTint="#D6E7F9"
+                app:cardCornerRadius="20dp">
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/watch_img6"
+
+                    />
 
 
             </androidx.cardview.widget.CardView>
@@ -72,7 +174,10 @@
 
                 <ImageView
                     android:layout_width="90dp"
-                    android:layout_height="110dp" />
+                    android:layout_height="110dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/watch_img7"
+                    />
 
 
             </androidx.cardview.widget.CardView>
@@ -86,56 +191,36 @@
 
                 <ImageView
                     android:layout_width="90dp"
-                    android:layout_height="110dp" />
+                    android:layout_height="110dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/watch_img1"
+                    />
 
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:backgroundTint="#D6E7F9"
-                app:cardCornerRadius="20dp">
 
-                <ImageView
-                    android:layout_width="90dp"
-                    android:layout_height="110dp" />
-
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:backgroundTint="#D6E7F9"
-                app:cardCornerRadius="20dp">
-
-                <ImageView
-                    android:layout_width="90dp"
-                    android:layout_height="110dp" />
-
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:backgroundTint="#D6E7F9"
-                app:cardCornerRadius="20dp">
-
-                <ImageView
-                    android:layout_width="90dp"
-                    android:layout_height="110dp" />
-
-
-            </androidx.cardview.widget.CardView>
 
 
         </LinearLayout>
     </HorizontalScrollView>
+
+
+
+    <View
+        style="@style/gray_view_line1dp"
+        android:background="#095B53"
+        android:layout_height="1.5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        />
+    <View
+        style="@style/gray_view_line1dp"
+        android:background="#095B53"
+        android:layout_height="1.5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        />
 
 
     <LinearLayout
