@@ -46,7 +46,7 @@
             android:name=".main.MonitoringActivity"
             android:exported="false" />
         <activity
-            android:name=".member.JoinActivity"
+            android:name=".member.ScheduleActivity"
             android:exported="false" />
         <activity
             android:name=".member.FindIdActivity"

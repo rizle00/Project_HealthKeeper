@@ -7,5 +7,5 @@
         android:layout_height="match_parent"
         tools:context=".main.ChatActivity">
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:text="1대1채팅 예정입니다"/>
+              />
 </androidx.constraintlayout.widget.ConstraintLayout>

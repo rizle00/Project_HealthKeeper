@@ -38,14 +38,15 @@ public class HomeFragment extends Fragment {
         binding.case2.setOnClickListener(new View.OnClickListener() {//최근 통계를 보여주는 엑티비티
             @Override
             public void onClick(View v) {
-             //statistics();
+                startActivity(new Intent(getActivity(),ChatActivity.class));
             }
         });
 
         binding.case3.setOnClickListener(new View.OnClickListener() {//긴급통화(119) 연결 다이얼로그
             @Override
             public void onClick(View v) {
-               showDialogEmergency();
+
+                showDialogEmergency();
             }
         });
 
@@ -53,7 +54,7 @@ public class HomeFragment extends Fragment {
         binding.case4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //cummunity();???
+                        startActivity(new Intent(getActivity(),CCTVActivity.class));
                     }
         });
 
@@ -70,6 +71,8 @@ public class HomeFragment extends Fragment {
 
         return binding.getRoot();
     }
+
+
 
     private void showDialogEmergency() {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
