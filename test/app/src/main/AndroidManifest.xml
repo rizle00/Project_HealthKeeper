@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools">
+
     <uses-feature
             android:name="android.hardware.bluetooth_le"
             android:required="true"/>
@@ -15,7 +16,8 @@
     <uses-permission
             android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/> <!-- 포그라운드 서비스 허용, 배터리 최적화를 위한 종료 방지 -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/> <!-- 서비스 시행시 꺼지지 않게 -->
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/> <!-- 페어링 설정 -->
+    <uses-feature android:name="android.software.companion_device_setup"/>
 
     <application
             android:allowBackup="true"
@@ -27,6 +29,16 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.Test"
             tools:targetApi="31">
+        <activity
+                android:name=".myActivity"
+                android:exported="false"/>
+
+        <service
+                android:name=".MyService"
+                android:enabled="true"
+                android:exported="true">
+        </service>
+
         <activity
                 android:name=".MainActivity"
                 android:exported="true">

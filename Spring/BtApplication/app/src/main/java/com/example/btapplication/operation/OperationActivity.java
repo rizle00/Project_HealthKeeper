@@ -146,7 +146,6 @@ public class OperationActivity extends AppCompatActivity implements Observer {
     public BleDevice getBleDevice() {
         return bleDevice;
     }
-
     public BluetoothGattService getBluetoothGattService() {
         return bluetoothGattService;
     }
