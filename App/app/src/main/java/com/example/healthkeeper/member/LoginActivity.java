@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.healthkeeper.common.CommonConn;
 import com.example.healthkeeper.databinding.ActivityLoginBinding;
 import com.example.healthkeeper.main.MainActivity;
+import com.google.gson.Gson;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -33,16 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         binding.btnLogin.setOnClickListener(v -> {
-            if(1==1){
-                /*로그인 성공 */
-                MainActivity ma = (MainActivity)MainActivity._mainActivity;
-                ma.finish();
-                Intent intent = new Intent(this,MainActivity.class);
-                startActivity(intent);
-                finish();
-            }else{
-                Toast.makeText(this, "아이디 혹은 비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
-            }
+            login(binding.userId.toString(),binding.userPw.toString());
         });
 
         binding.tvFindId.setOnClickListener(v -> {
@@ -56,4 +49,24 @@ public class LoginActivity extends AppCompatActivity {
         });
         setContentView(binding.getRoot());
     }
+
+    public void login(String user_id,String user_pw){
+        CommonConn conn = new CommonConn("http://192.168.0.49/web/and",this);
+        conn.addParamMap("user_id" , user_id);
+        conn.addParamMap("user_pw",user_pw);
+
+        conn.onExcute((isResult, data) -> {
+            MemberVO vo = new Gson().fromJson(data,MemberVO.class);
+            if(vo ==null){
+                Toast.makeText(this,"아이디 또는 패스워드 틀림",Toast.LENGTH_SHORT).show();
+                MainActivity ma = (MainActivity)MainActivity._mainActivity;
+                ma.finish();
+                Intent intent = new Intent(this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
+        });
+    }
+
 }

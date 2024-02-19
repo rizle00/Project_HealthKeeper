@@ -3,22 +3,16 @@ package com.example.healthkeeper.member;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.healthkeeper.R;
-import com.example.healthkeeper.common.ApiClient;
-import com.example.healthkeeper.common.ApiInterface;
+import com.example.healthkeeper.common.CommonClient;
+import com.example.healthkeeper.common.CommonService;
 import com.example.healthkeeper.databinding.ActivityGuardianJoinBinding;
-import com.example.healthkeeper.databinding.ActivityPatientJoinBinding;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -34,7 +28,7 @@ public class GuardianJoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityGuardianJoinBinding.inflate(getLayoutInflater());
 
-        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        CommonService apiInterface = CommonClient.getRetrofit().create(CommonService.class);
         HashMap<String,Object> params = new HashMap<>();
         String jsonData = new Gson().toJson(vo);
 
@@ -83,11 +77,9 @@ public class GuardianJoinActivity extends AppCompatActivity {
 
     /*아이디 길이 확인*/
     public void IdCheck(){
-        int idLength = binding.edtUserId.getText().length();
-        if(idLength <7 || idLength>16){
             binding.tvWarningId.setText("아이디를 7~20자로 입력해주세요");
             binding.tvWarningId.setVisibility(View.VISIBLE);
-            binding.btnIdCheck.setVisibility(View.GONE);}
+            binding.btnIdCheck.setVisibility(View.GONE);
         binding.edtUserId.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -96,6 +88,7 @@ public class GuardianJoinActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int idLength = binding.edtUserId.getText().length();
                 if(idLength <7 || idLength>16){
                     binding.tvWarningId.setText("아이디를 7~20자로 입력해주세요");
                     binding.tvWarningId.setVisibility(View.VISIBLE);
