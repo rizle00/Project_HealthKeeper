@@ -1,4 +1,4 @@
-package com.example.test;
+package com.example.testapplication2;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -9,19 +9,21 @@ import android.companion.AssociationInfo;
 import android.companion.AssociationRequest;
 import android.companion.BluetoothDeviceFilter;
 import android.companion.CompanionDeviceManager;
-import android.content.*;
-import android.content.pm.PackageManager;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentSender;
 import android.net.MacAddress;
-import android.os.*;
-import android.provider.Settings;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import android.os.Bundle;
 import androidx.core.os.HandlerCompat;
 import com.clj.fastble.BleManager;
 import com.clj.fastble.callback.BleGattCallback;
@@ -31,18 +33,17 @@ import com.clj.fastble.data.BleDevice;
 import com.clj.fastble.exception.BleException;
 import com.clj.fastble.scan.BleScanRuleConfig;
 import com.clj.fastble.utils.HexUtil;
-import com.example.test.databinding.ActivityMainBinding;
+import com.example.testapplication2.databinding.ActivityMainBinding;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.normal.TedPermission;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
+
 
     public static final int INTENT_REQUEST_BLUETOOTH_ENABLE = 0x0701;
     private static final int SELECT_DEVICE_REQUEST_CODE = 0x012;
@@ -52,12 +53,6 @@ public class MainActivity extends AppCompatActivity {
     private final Handler mainThreadHandler = HandlerCompat.createAsync(Looper.getMainLooper());
     private List<BleDevice> deviceList;
 
-    Executor executor = new Executor() {
-        @Override
-        public void execute(Runnable runnable) {
-            runnable.run();
-        }
-    };
     ActivityMainBinding binding;
 
 
@@ -73,8 +68,6 @@ public class MainActivity extends AppCompatActivity {
                 .setReConnectCount(1, 5 * 1000)
                 .setConnectOverTime(20 * 1000)
                 .setOperateTimeout(5 * 1000);
-
-
     }
 
     public void bluetooth(View view) {
@@ -92,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         TedPermission.create()
                 .setPermissionListener(permissionListener)
                 .setDeniedMessage("Denied Permission.")
-                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT)
+                .setPermissions(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT)
                 .check();
     }
 
@@ -177,12 +170,13 @@ public class MainActivity extends AppCompatActivity {
         BleManager.getInstance().scan(new BleScanCallback() {
             @Override
             public void onScanStarted(boolean success) {
+                Toast.makeText(MainActivity.this, "스캔을 시작합니다", Toast.LENGTH_LONG).show();
             }
 
-//            @Override
-//            public void onLeScan(BleDevice bleDevice) {
-//                super.onLeScan(bleDevice);
-//            }
+            @Override
+            public void onLeScan(BleDevice bleDevice) {
+                super.onLeScan(bleDevice);
+            }
 
             @Override
             public void onScanning(BleDevice bleDevice) {
@@ -227,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
             for (BleDevice device : scanResultList) {
                 // device.getName() : 단말기의 Bluetooth Adapter 이름을 반환.
                 listItems.add(device.getName());
+                deviceList.add(device);
             }
 
             listItems.add("취소");  // 취소 항목 추가.
@@ -239,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
 
             builder.setItems(items, new DialogInterface.OnClickListener() {
 
+                @SuppressLint("MissingPermission")
                 @Override
                 public void onClick(DialogInterface dialog, int item) {
                     if (item == scanResultList.size()) { // 연결할 장치를 선택하지 않고 '취소' 를 누른 경우.
@@ -253,7 +249,12 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                         if (selectedDevice != null) {
-                            connectgatt(selectedDevice);
+                           BluetoothDevice device = selectedDevice.getDevice();
+                            final Intent intent = new Intent(MainActivity.this, DeviceControlActivity.class);
+                            intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
+                            intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
+                            startActivity(intent);
+                            Log.d(TAG, "onClick: "+intent);
                         }
 
                     }
@@ -269,94 +270,105 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @SuppressLint("MissingPermission")
-    private void connectgatt(final BleDevice bleDevice) {
-        bleDevice.getDevice().connectGatt(MainActivity.this, true, gattCallback);
-    }
+//    @SuppressLint("MissingPermission")
+//    private void congatt(final BluetoothDevice device) {
+//        device.connectGatt(MainActivity.this, true, gattCallback);
+//    }
 
-    private final BluetoothGattCallback gattCallback = new BluetoothGattCallback() {
-        @SuppressLint("MissingPermission")      // 연결 상태 변경 처리
-        @Override
-        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-            super.onConnectionStateChange(gatt, status, newState);
-            if( status == BluetoothGatt.GATT_FAILURE ) {
-                gatt.disconnect();
-                gatt.close();
-                return;
-            }
-            if( status == 133 ) // Unknown Error
-            {
-                gatt.disconnect();
-                gatt.close();
-                return;
-            }
-            if( newState == BluetoothGatt.STATE_CONNECTED && status == BluetoothGatt.GATT_SUCCESS)
-            {
-                // "Connected to " + gatt.getDevice().getName()
-                gatt.discoverServices();
-            }
+//    private final BluetoothGattCallback gattCallback = new BluetoothGattCallback() {
+//        @SuppressLint("MissingPermission")      // 연결 상태 변경 처리
+//        @Override
+//        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
+//            super.onConnectionStateChange(gatt, status, newState);
+//            if (status == BluetoothGatt.GATT_FAILURE) {
+////                Toast.makeText(MainActivity.this, "장치 연결에 실패하였습니다", Toast.LENGTH_LONG).show();
+//                gatt.disconnect();
+//                gatt.close();
+//
+//                return;
+//            }
+//            if (status == 133) // Unknown Error
+//            {
+////                Toast.makeText(MainActivity.this, "장치 연결에 실패하였습니다", Toast.LENGTH_LONG).show();
+//                gatt.disconnect();
+//                gatt.close();
+//                return;
+//            }
+//            if (newState == BluetoothGatt.STATE_CONNECTED && status == BluetoothGatt.GATT_SUCCESS) {
+//                // "Connected to " + gatt.getDevice().getName()
+////                Toast.makeText(MainActivity.this, "기기가 연결 되었습니다", Toast.LENGTH_LONG).show();
+//                gatt.discoverServices();
+//                Log.d(TAG, "onConnectionStateChange: "+gatt.getServices());
+//            }
+//
+//        }
+//
+//        // 서비스 검색 완료 처리
+//        @SuppressLint("MissingPermission")
+//        @Override
+//        public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+//            super.onServicesDiscovered(gatt, status);
+//            if (status == BluetoothGatt.GATT_SUCCESS) {
+//                List<BluetoothGattService> services = gatt.getServices();
+//                Log.d(TAG, "onServicesDiscovered: "+services);
+//                for (BluetoothGattService service : services) {
+//                    // "Found service : " + service.getUuid()
+//                    for (BluetoothGattCharacteristic characteristic : service.getCharacteristics()) {
+//                        //"Found characteristic : " + characteristic.getUuid()
+//                        if (hasProperty(characteristic, BluetoothGattCharacteristic.PROPERTY_READ)) {
+//                            // "Read characteristic : " + characteristic.getUuid());
+//                            gatt.readCharacteristic(characteristic);
+//                            Log.d(TAG, "onServicesDiscovered: cccc"+characteristic);
+//                        }
+//
+//                        if (hasProperty(characteristic, BluetoothGattCharacteristic.PROPERTY_NOTIFY)) {
+//                            // "Register notification for characteristic : " + characteristic.getUuid());
+//                            gatt.setCharacteristicNotification(characteristic, true);
+//                            Log.d(TAG, "onServicesDiscovered:dddd "+characteristic);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        // 특성 값 읽기 처리
+//        @Override
+//        public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+//            super.onCharacteristicRead(gatt, characteristic, status);
+//            if (status == BluetoothGatt.GATT_SUCCESS) {
+////                if (onReadValueListener == null) return;
+//                // This is Background Thread
+//                System.out.println(characteristic.getValue().toString());
+//                mainThreadHandler.post(
+////                        () ->onReadValueListener.onValue(gatt.getDevice(), onReadValueListener.formatter(characteristic))
+//                        () -> {
+//
+//                        }
+//                );
+//            }
+//        }
+//
+//        // 알림 값 처리
+//        @Override
+//        public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+//            super.onCharacteristicChanged(gatt, characteristic);
+//            // This is Background Thread
+//            System.out.println(characteristic.getValue().toString());
+//            mainThreadHandler.post(
+////                    ()->onNotifyValueListener.onValue(gatt.getDevice(), onNotifyValueListener.formatter(characteristic))
+//                    () -> {
+//
+//                    }
+//            );
+//        }
+//
+//    };
 
-        }
-        // 서비스 검색 완료 처리
-        @SuppressLint("MissingPermission")
-        @Override
-        public void onServicesDiscovered(BluetoothGatt gatt, int status) {
-            super.onServicesDiscovered(gatt, status);
-            if( status == BluetoothGatt.GATT_SUCCESS)
-            {
-                List<BluetoothGattService> services = gatt.getServices();
-                for (BluetoothGattService service : services) {
-                    // "Found service : " + service.getUuid()
-                    for (BluetoothGattCharacteristic characteristic : service.getCharacteristics()) {
-                        //"Found characteristic : " + characteristic.getUuid()
-                        if( hasProperty(characteristic, BluetoothGattCharacteristic.PROPERTY_READ))
-                        {
-                            // "Read characteristic : " + characteristic.getUuid());
-                            gatt.readCharacteristic(characteristic);
-                        }
-
-                        if( hasProperty(characteristic, BluetoothGattCharacteristic.PROPERTY_NOTIFY))
-                        {
-                            // "Register notification for characteristic : " + characteristic.getUuid());
-                            gatt.setCharacteristicNotification(characteristic, true);
-                        }
-                    }
-                }
-            }
-        }
-        // 특성 값 읽기 처리
-        @Override
-        public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-            super.onCharacteristicRead(gatt, characteristic, status);
-            if( status == BluetoothGatt.GATT_SUCCESS) {
-                if( onReadValueListener == null ) return;
-                // This is Background Thread
-                mainThreadHandler.post(
-//                        () ->onReadValueListener.onValue(gatt.getDevice(), onReadValueListener.formatter(characteristic))
-                        () ->{System.out.println(characteristic.getValue().toString());}
-                );
-            }
-        }
-
-        // 알림 값 처리
-        @Override
-        public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-            super.onCharacteristicChanged(gatt, characteristic);
-            // This is Background Thread
-            mainThreadHandler.post(
-//                    ()->onNotifyValueListener.onValue(gatt.getDevice(), onNotifyValueListener.formatter(characteristic))
-                    ()-> {System.out.println(characteristic.getValue().toString());}
-            );
-        }
-
-    };
-
-    // Bluetooth GATT 특성 속성 확인
-    public boolean hasProperty(BluetoothGattCharacteristic characteristic, int property)
-    {
-        int prop = characteristic.getProperties() & property;
-        return prop == property;
-    }
+//    // Bluetooth GATT 특성 속성 확인
+//    public boolean hasProperty(BluetoothGattCharacteristic characteristic, int property) {
+//        int prop = characteristic.getProperties() & property;
+//        return prop == property;
+//    }
 
 //    @Override
 //    public void onValue(BluetoothDevice deivce, XiaomiSensor value) {
@@ -376,17 +388,21 @@ public class MainActivity extends AppCompatActivity {
 //        );
 //    }
 
-    public interface OnNotifyValueListener <T>{
+    public interface OnNotifyValueListener<T> {
         void onValue(BluetoothDevice deivce, T value);
+
         T formatter(BluetoothGattCharacteristic characteristic);
     }
 
-    public interface OnReadValueListener <T>{
+    public interface OnReadValueListener<T> {
         void onValue(BluetoothDevice deivce, T value);
+
         T formatter(BluetoothGattCharacteristic characteristic);
     }
+
     // Bluetooth 알림 값 콜백 설정
     private OnNotifyValueListener onNotifyValueListener = null;
+
     public MainActivity setOnNotifyValueListener(OnNotifyValueListener onNotifyValueListener) {
         this.onNotifyValueListener = onNotifyValueListener;
         return this;
@@ -394,6 +410,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Bluetooth 읽기 값 콜백 설정
     private OnReadValueListener onReadValueListener = null;
+
     public MainActivity setOnReadValueListener(OnReadValueListener onReadValueListener) {
         this.onReadValueListener = onReadValueListener;
         return this;
@@ -422,12 +439,12 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 Toast.makeText(MainActivity.this, "기기가 연결 되었습니다", Toast.LENGTH_LONG).show();
                 binding.toggleButton.setText("on");
-                Log.d(TAG, "onConnectSuccess: "+BleManager.getInstance().getAllConnectedDevice().toString());
+//                Log.d(TAG, "onConnectSuccess: " + BleManager.getInstance().getAllConnectedDevice().toString());
 //                BluetoothDevice device = bleDevice.getDevice();
 //                device.createBond();
 //                pairing();
-                gatt.discoverServices();
-                showData(bleDevice);
+//                gatt.discoverServices();
+//                showData(bleDevice);
             }
 
             @Override
@@ -446,74 +463,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-    private void pairing(){
-
-        // CompanionDeviceManager 객체 생성
-        CompanionDeviceManager deviceManager = null;
-        // BluetoothDeviceFilter를 사용하여 페어링할 장치 필터링
-        BluetoothDeviceFilter deviceFilter = null;
-        // AssociationRequest를 생성하여 페어링 옵션 설정
-        AssociationRequest pairingRequest = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            deviceManager = (CompanionDeviceManager) getSystemService(Context.COMPANION_DEVICE_SERVICE);
-            deviceFilter = new BluetoothDeviceFilter.Builder()
-                    .setNamePattern(Pattern.compile("HM10")) // 이름으로 필터링
-//                    .addServiceUuid(new ParcelUuid(new UUID(0x123abcL, -1L)), null) // 서비스 UUID로 필터링
-                    .build();
-            pairingRequest = new AssociationRequest.Builder()
-                    .addDeviceFilter(deviceFilter)
-                    .setSingleDevice(true) // 단일 장치 페어링 옵션 설정
-                    .build();
-            // CompanionDeviceManager를 사용하여 페어링 시도 및 콜백 처리
-            if (deviceManager != null) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    deviceManager.associate(pairingRequest, executor ,new CompanionDeviceManager.Callback() {
-                        @Override
-                        public void onDeviceFound(IntentSender chooserLauncher) {
-                            try {
-                                startIntentSenderForResult(
-                                        chooserLauncher, SELECT_DEVICE_REQUEST_CODE, null, 0, 0, 0
-                                );
-                            } catch (IntentSender.SendIntentException e) {
-                                Log.e("MainActivity", "Failed to send intent");
-                            }
-                        }
-
-                        @Override
-                        public void onAssociationCreated(AssociationInfo associationInfo) {
-                            // AssociationInfo object is created and get association id and the
-                            // macAddress.
-                            int associationId = associationInfo.getId();
-                            MacAddress macAddress = associationInfo.getDeviceMacAddress();
-                        }
-
-                        @Override
-                        public void onFailure(CharSequence errorMessage) {
-                            // Handle the failure. Add appropriate failure handling code here.
-                            Log.e("MainActivity", "Failed to associate: " + errorMessage);
-                        }});
-                }
-            }
-        }
-
-        }
-
-        @SuppressLint("MissingPermission")
-        private void showData(BleDevice bleDevice){
-            BluetoothGatt gatt = BleManager.getInstance().getBluetoothGatt(bleDevice);
+    @SuppressLint("MissingPermission")
+    private void showData(BleDevice bleDevice) {
+        BluetoothGatt gatt = BleManager.getInstance().getBluetoothGatt(bleDevice);
 //            BluetoothGattCharacteristic characteristic;
-            for (BluetoothGattService service : gatt.getServices()) {
-                Log.d(TAG, "showData: "+service);
-                for (BluetoothGattCharacteristic characteristic : service.getCharacteristics()) {
+        for (BluetoothGattService service : gatt.getServices()) {
+            Log.d(TAG, "showData: " + service);
+            for (BluetoothGattCharacteristic characteristic : service.getCharacteristics()) {
 //                String uuid = service.getUuid().toString();
 //                characteristic = service.getCharacteristic(service.getUuid());
 
 
 //                Log.d(TAG, "showData: "+uuid);
-                Log.d(TAG, "showData: "+characteristic);
-                    Log.d(TAG, "showData: "+characteristic.getUuid().toString());
+                Log.d(TAG, "showData: " + characteristic);
+                Log.d(TAG, "showData: " + characteristic.getUuid().toString());
 //                gatt.readCharacteristic(characteristic);
 
 //                Log.d(TAG, "showData: "+HexUtil.formatHexString(service.getCharacteristic(service.getUuid()).getValue(), true));
@@ -528,7 +491,7 @@ public class MainActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Log.d(TAG, "run: "+HexUtil.formatHexString(data, true));
+                                        Log.d(TAG, "run: " + HexUtil.formatHexString(data, true));
                                     }
                                 });
                             }
@@ -538,7 +501,7 @@ public class MainActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Log.d(TAG, "run: "+exception.toString());
+                                        Log.d(TAG, "run: " + exception.toString());
                                     }
                                 });
                             }
@@ -549,7 +512,5 @@ public class MainActivity extends AppCompatActivity {
 //            BleManager.getInstance().read(bleDevice, characteristic.getService().getUuid().toString(),
 //                    characteristic.getUuid().toString(), );
         }
-}
-
-
+    }
 }
