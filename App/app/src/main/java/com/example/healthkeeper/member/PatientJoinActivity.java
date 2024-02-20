@@ -21,7 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PatientJoinActivity extends AppCompatActivity {
-    MemberVO vo = new MemberVO();
+    GuardianMemberVO vo = new GuardianMemberVO();
     ActivityPatientJoinBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

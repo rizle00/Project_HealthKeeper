@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.healthkeeper.common.CommonConn;
@@ -35,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         binding.btnLogin.setOnClickListener(v -> {
-            login(binding.userId.toString(),binding.userPw.toString());
+            guardianlogin(binding.userId.getText().toString(),binding.userPw.getText().toString());
         });
 
         binding.tvFindId.setOnClickListener(v -> {
@@ -50,17 +51,22 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
     }
 
-    public void login(String user_id,String user_pw){
-        CommonConn conn = new CommonConn("http://192.168.0.49/web/and",this);
-        conn.addParamMap("user_id" , user_id);
-        conn.addParamMap("user_pw",user_pw);
+    public void guardianlogin(String guardian_id,String guardian_pw){
+        CommonConn conn = new CommonConn("andlogin",this);
+        conn.addParamMap("guardian_id" , guardian_id);
+        conn.addParamMap("guardian_pw",guardian_pw);
 
         conn.onExcute((isResult, data) -> {
-            MemberVO vo = new Gson().fromJson(data,MemberVO.class);
+            Log.d("로그인", "guardianlogin: "+data);
+            GuardianMemberVO vo = new Gson().fromJson(data, GuardianMemberVO.class);
+
             if(vo ==null){
                 Toast.makeText(this,"아이디 또는 패스워드 틀림",Toast.LENGTH_SHORT).show();
+                return;
+            }else{
                 MainActivity ma = (MainActivity)MainActivity._mainActivity;
                 ma.finish();
+                Log.d("로그인", "");
                 Intent intent = new Intent(this,MainActivity.class);
                 startActivity(intent);
                 finish();
