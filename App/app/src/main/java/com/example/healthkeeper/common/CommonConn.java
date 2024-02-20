@@ -2,6 +2,7 @@ package com.example.healthkeeper.common;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 
 import com.example.healthkeeper.R;
 
@@ -10,8 +11,10 @@ import java.util.HashMap;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class CommonConn {
+    private final String TAG = "CommonConn";
     private String url;
     private HashMap<String, Object> paramMap;
     private ProgressDialog dialog;
@@ -42,18 +45,24 @@ public class CommonConn {
 
     public void onExcute(appCallBack callBack){
         onPreExcute();
-
         CommonService service = CommonClient.getRetrofit().create(CommonService.class);
 
         service.clientPostMethod(url,paramMap).enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-
+            public void onResponse(retrofit2.Call<String> call, Response<String> response) {
+                Log.i(TAG, "onResponse: " + response.body());
+                Log.i(TAG, "onResponse: " + response.errorBody());
+                if(response.errorBody() ==null){
+                    callBack.onResult(true, response.body());
+                }else{
+                    callBack.onResult(false, response.body());
+                }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
+            public void onFailure(retrofit2.Call<String> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t.getMessage());
+                callBack.onResult(false,t.getMessage());
             }
         });
         onPostExcute();

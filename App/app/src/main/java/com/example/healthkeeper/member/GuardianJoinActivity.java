@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.common.CommonClient;
+import com.example.healthkeeper.common.CommonConn;
 import com.example.healthkeeper.common.CommonService;
 import com.example.healthkeeper.databinding.ActivityGuardianJoinBinding;
 import com.google.gson.Gson;
@@ -22,7 +23,7 @@ import java.util.regex.Pattern;
 public class GuardianJoinActivity extends AppCompatActivity {
 
     ActivityGuardianJoinBinding binding;
-    MemberVO vo;
+    GuardianMemberVO vo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +52,7 @@ public class GuardianJoinActivity extends AppCompatActivity {
 
     public void idCheck(){
         binding.btnIdCheck.setOnClickListener(v -> {
-
+            idDupCheck(binding.edtUserId.getText().toString());
         });
         /* 아이디 중복체크 완료되면 체크표시 */
         binding.edtUserId.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.img_check,0);
@@ -189,8 +190,23 @@ public class GuardianJoinActivity extends AppCompatActivity {
         }
     }
 
-    public MemberVO Join(String user_id, String user_pw ){
+    public GuardianMemberVO Join(String user_id, String user_pw ){
 
         return null;
+    }
+
+    public void idDupCheck(String user_id){
+        CommonConn conn = new CommonConn("andidcheck",this);
+        conn.addParamMap("user_id",user_id);
+
+        conn.onExcute((isResult, data) -> {
+            if(Integer.parseInt(data) == 1){
+               binding.btnIdCheck.setVisibility(View.GONE);
+
+            }else{
+                binding.tvWarningId.setText("아이디 중복입니다");
+                binding.tvWarningId.setVisibility(View.VISIBLE);
+            }
+        });
     }
 }
