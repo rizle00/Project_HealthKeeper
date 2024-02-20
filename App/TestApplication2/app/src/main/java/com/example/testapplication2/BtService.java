@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+import com.clj.fastble.BleManager;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -71,11 +73,8 @@ public class BtService extends Service {
                 broadcastUpdate(ACTION_GATT_SERVICES_DISCOVERED);
 
                 BluetoothGattCharacteristic ch = gatt.getService(UUID.fromString("0000ffe0-0000-1000-8000-00805f9b34fb")).getCharacteristic(UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb"));
-//               boolean a = gatt.setCharacteristicNotification(ch, true);
                setCharacteristicNotification(ch, true);
-//                gatt.setCharacteristicNotification(ch, true);
                 Log.d(TAG, "onServicesDiscovered: ");
-
             } else {
                 Log.w(TAG, "onServicesDiscovered received: " + status);
             }
@@ -87,7 +86,6 @@ public class BtService extends Service {
                                          int status) {
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
-                Log.d(TAG, "read: "+characteristic.getService());
             }
         }
 
@@ -96,19 +94,41 @@ public class BtService extends Service {
                                             BluetoothGattCharacteristic characteristic) {
             broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
             BluetoothGattCharacteristic ch = gatt.getService(UUID.fromString("0000ffe0-0000-1000-8000-00805f9b34fb")).getCharacteristic(UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb"));
-            Log.d(TAG, "change: "+ch.getUuid());
+            HashMap<String, String> extractedData = extractData(formatter(ch)) ;
         }
 
 
     };
 
+    private String formatter(BluetoothGattCharacteristic characteristic) {
+        final byte[] data = characteristic.getValue();
+        if (data != null && data.length > 0) {
+            final StringBuilder stringBuilder = new StringBuilder(data.length);
+            for (byte byteChar : data)
+                stringBuilder.append(String.format("%02X ", byteChar));
+            Log.d(TAG, "formatter: " + new String(data) + "\n" + stringBuilder.toString());
+
+        }
+        return new String(data);
+    }
+
+    public static HashMap<String, String> extractData(String data) {
+        HashMap<String, String> extractedData = new HashMap<>();
+        String[] items = data.split(",");
+
+        for (int i = 0; i < items.length; i += 2) {
+            extractedData.put(items[i], items[i + 1]);
+        }
+
+        return extractedData;
+    }
     private void broadcastUpdate(final String action) {
         final Intent intent = new Intent(action);
         Log.d(TAG, "broadcastUpdate: "+ action);
         sendBroadcast(intent);
     }
 
-    private void broadcastUpdate(final String action,
+    private void                                                                                                                                                  broadcastUpdate(final String action,
                                  final BluetoothGattCharacteristic characteristic) {
         final Intent intent = new Intent(action);
 
