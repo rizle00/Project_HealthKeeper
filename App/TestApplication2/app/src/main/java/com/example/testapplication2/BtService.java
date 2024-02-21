@@ -15,6 +15,11 @@ import java.util.List;
 import java.util.UUID;
 
 public class BtService extends Service {
+
+    public static String SERVICE_UUID = "0000ffe0-0000-1000-8000-00805f9b34fb";
+    public static String CHARACTERISTIC_UUID = "0000ffe1-0000-1000-8000-00805f9b34fb";
+    public static String CONFIG_UUID = "00002902-0000-1000-8000-00805f9b34fb";
+    public static String DEVICE_UUID = "0000180A-0000-1000-8000-00805f9b34fb";
     private final static String TAG = BtService.class.getSimpleName();
 
     private BluetoothManager mBluetoothManager;
@@ -58,6 +63,9 @@ public class BtService extends Service {
                         mBluetoothGatt.discoverServices());
 
                 mBluetoothGatt.discoverServices();
+                Log.d(TAG, "onConnectionStateChange: "+gatt.getDevice().getName());
+//                gatt.getDevice().createBond();
+
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 intentAction = ACTION_GATT_DISCONNECTED;
                 mConnectionState = STATE_DISCONNECTED;
@@ -73,7 +81,7 @@ public class BtService extends Service {
                 broadcastUpdate(ACTION_GATT_SERVICES_DISCOVERED);
 
                 BluetoothGattCharacteristic ch = gatt.getService(UUID.fromString("0000ffe0-0000-1000-8000-00805f9b34fb")).getCharacteristic(UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb"));
-               setCharacteristicNotification(ch, true);
+                setCharacteristicNotification(ch, true);
                 Log.d(TAG, "onServicesDiscovered: ");
             } else {
                 Log.w(TAG, "onServicesDiscovered received: " + status);
@@ -93,8 +101,9 @@ public class BtService extends Service {
         public void onCharacteristicChanged(BluetoothGatt gatt,
                                             BluetoothGattCharacteristic characteristic) {
             broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
+            //service uuid, char uuid
             BluetoothGattCharacteristic ch = gatt.getService(UUID.fromString("0000ffe0-0000-1000-8000-00805f9b34fb")).getCharacteristic(UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb"));
-            HashMap<String, String> extractedData = extractData(formatter(ch)) ;
+            HashMap<String, String> extractedData = extractData(formatter(ch));
         }
 
 
@@ -122,13 +131,14 @@ public class BtService extends Service {
 
         return extractedData;
     }
+
     private void broadcastUpdate(final String action) {
         final Intent intent = new Intent(action);
-        Log.d(TAG, "broadcastUpdate: "+ action);
+        Log.d(TAG, "broadcastUpdate: " + action);
         sendBroadcast(intent);
     }
 
-    private void                                                                                                                                                  broadcastUpdate(final String action,
+    private void broadcastUpdate(final String action,
                                  final BluetoothGattCharacteristic characteristic) {
         final Intent intent = new Intent(action);
 
@@ -153,7 +163,7 @@ public class BtService extends Service {
             final byte[] data = characteristic.getValue();
             if (data != null && data.length > 0) {
                 final StringBuilder stringBuilder = new StringBuilder(data.length);
-                for(byte byteChar : data)
+                for (byte byteChar : data)
                     stringBuilder.append(String.format("%02X ", byteChar));
                 intent.putExtra(EXTRA_DATA, new String(data) + "\n" + stringBuilder.toString());
             }
@@ -212,11 +222,10 @@ public class BtService extends Service {
      * Connects to the GATT server hosted on the Bluetooth LE device.
      *
      * @param address The device address of the destination device.
-     *
      * @return Return true if the connection is initiated successfully. The connection result
-     *         is reported asynchronously through the
-     *         {@code BluetoothGattCallback#onConnectionStateChange(android.bluetooth.BluetoothGatt, int, int)}
-     *         callback.
+     * is reported asynchronously through the
+     * {@code BluetoothGattCallback#onConnectionStateChange(android.bluetooth.BluetoothGatt, int, int)}
+     * callback.
      */
     @SuppressLint("MissingPermission")
     public boolean connect(final String address) {
@@ -299,7 +308,7 @@ public class BtService extends Service {
      * Enables or disables notification on a give characteristic.
      *
      * @param characteristic Characteristic to act on.
-     * @param enabled If true, enable notification.  False otherwise.
+     * @param enabled        If true, enable notification.  False otherwise.
      */
     @SuppressLint("MissingPermission")
     public void setCharacteristicNotification(BluetoothGattCharacteristic characteristic,
@@ -309,7 +318,7 @@ public class BtService extends Service {
             return;
         }
         mBluetoothGatt.setCharacteristicNotification(characteristic, enabled);
-        Log.d(TAG, "setCharacteristicNotification: "+characteristic);
+        Log.d(TAG, "setCharacteristicNotification: " + characteristic);
 
         // This is specific to Heart Rate Measurement.
         if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
@@ -331,4 +340,4 @@ public class BtService extends Service {
 
         return mBluetoothGatt.getServices();
     }
-    }
+}

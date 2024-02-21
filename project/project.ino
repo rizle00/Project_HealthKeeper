@@ -15,13 +15,13 @@ Adafruit_ADXL345_Unified accel = Adafruit_ADXL345_Unified(12345);
 
 
 PulseSensorPlayground pulseSensor;  // Creates an instance of the PulseSensorPlayground object called "pulseSensor"
+#define BT_RXD 12
+#define BT_TXD 11
 
-SoftwareSerial BTSerial(12,13);
+SoftwareSerial BTSerial(BT_TXD,BT_RXD); // 블루투스 연결
 const int PulseWire = A0;       // PulseSensor PURPLE WIRE connected to ANALOG PIN A2
-const int btn = 10;
-
+// const int btn = 10;
 float temp;
-int index = 0;
 int x, y, z;
 void setup() {
  Serial.begin(9600);        
@@ -31,11 +31,7 @@ BTSerial.begin(9600);     //블루투스
     while (1);
   }
   accel.setRange(ADXL345_RANGE_2_G);
-
-
-
-
-pinMode(btn, INPUT); // 버튼
+// pinMode(btn, INPUT); // 버튼
 mlx.begin();  //온도센서
 pulseSensor.analogInput(PulseWire);   
 pulseSensor.setThreshold(550);//심박 딜레이 기본 값
@@ -46,8 +42,7 @@ pulseSensor.setThreshold(550);//심박 딜레이 기본 값
 }
 
 void loop() {
-//온도
-  
+// 온도
   temp =0;
   for (int i = 0; i < 5; i++) {
     temp += mlx.readObjectTempC(); // 체온 c
@@ -57,15 +52,10 @@ void loop() {
   Serial.print("Average Temperature: ");
   Serial.print(temp,1);
   Serial.println("°C");
-  // Serial.print("Ambient = "); Serial.print(mlx.readAmbientTempC()); 
-  // Serial.print("*C\tObject = "); Serial.print(mlx.readObjectTempC()); Serial.println("*C");
 //심박
 int myBPM = pulseSensor.getBeatsPerMinute(); // 심박
 Serial.print("Heart Rate: ");
   Serial.println(myBPM);
-
-
-
 //가속도
    sensors_event_t event;
   accel.getEvent(&event);
@@ -83,7 +73,7 @@ Serial.print("Heart Rate: ");
    }
   Serial.println();
 
-  delay(500);
+  delay(500); // 딜레이
 
   String dataString = "hr," + String(myBPM) + ",tp," + String(temp, 1) + ",ac," + String(svm);
   BTSerial.println(dataString);
@@ -92,7 +82,7 @@ if(BTSerial.available())//  블루투스에서 데이터 보냄
 
 if(Serial.available())
         BTSerial.write(Serial.read());   
-delay(500);
+
 }
 
 float calculateSVM(float x, float y, float z) {
