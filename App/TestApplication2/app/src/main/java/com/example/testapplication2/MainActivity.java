@@ -270,151 +270,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    @SuppressLint("MissingPermission")
-//    private void congatt(final BluetoothDevice device) {
-//        device.connectGatt(MainActivity.this, true, gattCallback);
-//    }
 
-//    private final BluetoothGattCallback gattCallback = new BluetoothGattCallback() {
-//        @SuppressLint("MissingPermission")      // 연결 상태 변경 처리
-//        @Override
-//        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-//            super.onConnectionStateChange(gatt, status, newState);
-//            if (status == BluetoothGatt.GATT_FAILURE) {
-////                Toast.makeText(MainActivity.this, "장치 연결에 실패하였습니다", Toast.LENGTH_LONG).show();
-//                gatt.disconnect();
-//                gatt.close();
-//
-//                return;
-//            }
-//            if (status == 133) // Unknown Error
-//            {
-////                Toast.makeText(MainActivity.this, "장치 연결에 실패하였습니다", Toast.LENGTH_LONG).show();
-//                gatt.disconnect();
-//                gatt.close();
-//                return;
-//            }
-//            if (newState == BluetoothGatt.STATE_CONNECTED && status == BluetoothGatt.GATT_SUCCESS) {
-//                // "Connected to " + gatt.getDevice().getName()
-////                Toast.makeText(MainActivity.this, "기기가 연결 되었습니다", Toast.LENGTH_LONG).show();
-//                gatt.discoverServices();
-//                Log.d(TAG, "onConnectionStateChange: "+gatt.getServices());
-//            }
-//
-//        }
-//
-//        // 서비스 검색 완료 처리
-//        @SuppressLint("MissingPermission")
-//        @Override
-//        public void onServicesDiscovered(BluetoothGatt gatt, int status) {
-//            super.onServicesDiscovered(gatt, status);
-//            if (status == BluetoothGatt.GATT_SUCCESS) {
-//                List<BluetoothGattService> services = gatt.getServices();
-//                Log.d(TAG, "onServicesDiscovered: "+services);
-//                for (BluetoothGattService service : services) {
-//                    // "Found service : " + service.getUuid()
-//                    for (BluetoothGattCharacteristic characteristic : service.getCharacteristics()) {
-//                        //"Found characteristic : " + characteristic.getUuid()
-//                        if (hasProperty(characteristic, BluetoothGattCharacteristic.PROPERTY_READ)) {
-//                            // "Read characteristic : " + characteristic.getUuid());
-//                            gatt.readCharacteristic(characteristic);
-//                            Log.d(TAG, "onServicesDiscovered: cccc"+characteristic);
-//                        }
-//
-//                        if (hasProperty(characteristic, BluetoothGattCharacteristic.PROPERTY_NOTIFY)) {
-//                            // "Register notification for characteristic : " + characteristic.getUuid());
-//                            gatt.setCharacteristicNotification(characteristic, true);
-//                            Log.d(TAG, "onServicesDiscovered:dddd "+characteristic);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//
-//        // 특성 값 읽기 처리
-//        @Override
-//        public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-//            super.onCharacteristicRead(gatt, characteristic, status);
-//            if (status == BluetoothGatt.GATT_SUCCESS) {
-////                if (onReadValueListener == null) return;
-//                // This is Background Thread
-//                System.out.println(characteristic.getValue().toString());
-//                mainThreadHandler.post(
-////                        () ->onReadValueListener.onValue(gatt.getDevice(), onReadValueListener.formatter(characteristic))
-//                        () -> {
-//
-//                        }
-//                );
-//            }
-//        }
-//
-//        // 알림 값 처리
-//        @Override
-//        public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-//            super.onCharacteristicChanged(gatt, characteristic);
-//            // This is Background Thread
-//            System.out.println(characteristic.getValue().toString());
-//            mainThreadHandler.post(
-////                    ()->onNotifyValueListener.onValue(gatt.getDevice(), onNotifyValueListener.formatter(characteristic))
-//                    () -> {
-//
-//                    }
-//            );
-//        }
-//
-//    };
-
-//    // Bluetooth GATT 특성 속성 확인
-//    public boolean hasProperty(BluetoothGattCharacteristic characteristic, int property) {
-//        int prop = characteristic.getProperties() & property;
-//        return prop == property;
-//    }
-
-//    @Override
-//    public void onValue(BluetoothDevice deivce, XiaomiSensor value) {
-//        Log.d(TAG, "onValue: "+String.valueOf(value.temperature));
-//    }
-//
-//    @Override
-//    public XiaomiSensor formatter(BluetoothGattCharacteristic characteristic) {
-//        Integer value = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 0);
-//        Integer value2 = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 1);
-//        float temperature = value * 0.01f;
-//        int humidity = (value2 & 0xFF00) >> 8;
-//        return new XiaomiSensor(
-//                System.currentTimeMillis(),
-//                temperature,
-//                humidity
-//        );
-//    }
-
-    public interface OnNotifyValueListener<T> {
-        void onValue(BluetoothDevice deivce, T value);
-
-        T formatter(BluetoothGattCharacteristic characteristic);
-    }
-
-    public interface OnReadValueListener<T> {
-        void onValue(BluetoothDevice deivce, T value);
-
-        T formatter(BluetoothGattCharacteristic characteristic);
-    }
-
-    // Bluetooth 알림 값 콜백 설정
-    private OnNotifyValueListener onNotifyValueListener = null;
-
-    public MainActivity setOnNotifyValueListener(OnNotifyValueListener onNotifyValueListener) {
-        this.onNotifyValueListener = onNotifyValueListener;
-        return this;
-    }
-
-    // Bluetooth 읽기 값 콜백 설정
-    private OnReadValueListener onReadValueListener = null;
-
-    public MainActivity setOnReadValueListener(OnReadValueListener onReadValueListener) {
-        this.onReadValueListener = onReadValueListener;
-        return this;
-    }
 
     private void connect(final BleDevice bleDevice) {
         BleManager.getInstance().connect(bleDevice, new BleGattCallback() {
@@ -440,11 +296,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "기기가 연결 되었습니다", Toast.LENGTH_LONG).show();
                 binding.toggleButton.setText("on");
 //                Log.d(TAG, "onConnectSuccess: " + BleManager.getInstance().getAllConnectedDevice().toString());
-//                BluetoothDevice device = bleDevice.getDevice();
-//                device.createBond();
-//                pairing();
-//                gatt.discoverServices();
-//                showData(bleDevice);
+                BluetoothDevice device = bleDevice.getDevice();
+                device.createBond();
             }
 
             @Override
