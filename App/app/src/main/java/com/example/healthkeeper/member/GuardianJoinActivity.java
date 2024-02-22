@@ -3,6 +3,7 @@ package com.example.healthkeeper.member;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 
@@ -21,9 +22,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GuardianJoinActivity extends AppCompatActivity {
-
+    final String TAG = "guardian join";
     ActivityGuardianJoinBinding binding;
-    GuardianMemberVO vo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,11 +32,16 @@ public class GuardianJoinActivity extends AppCompatActivity {
 
         CommonService apiInterface = CommonClient.getRetrofit().create(CommonService.class);
         HashMap<String,Object> params = new HashMap<>();
-        String jsonData = new Gson().toJson(vo);
 
+        binding.btnIdCheck.setOnClickListener(v -> {
 
-        /* 아이디 글자수 메소드 */
-       IdCheck();
+        });
+
+        /* 아이디 유효성 메소드 */
+        usableIdCheck();
+
+        /*아이디중복확인*/
+        idDupCheck();
 
        /* 비밀번호 특문 메소드*/
        pwPattern();
@@ -50,22 +56,44 @@ public class GuardianJoinActivity extends AppCompatActivity {
 
 
 
-    public void idCheck(){
+    public void idDupCheck(){
         binding.btnIdCheck.setOnClickListener(v -> {
             idDupCheck(binding.edtUserId.getText().toString());
         });
         /* 아이디 중복체크 완료되면 체크표시 */
-        binding.edtUserId.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.img_check,0);
+
     }
 
     public void joinClick(){
-        idCheck();
+        usableIdCheck();
         mailPatterns();
         phonePattern();
+
+
+
+
         int num = binding.tvWarningId.getVisibility()+binding.tvWarningPw.getVisibility()
                 + binding.tvWarningEmail.getVisibility()+binding.tvWarningPhone.getVisibility();
         if(num ==32){
             JoinTypeActivity jta = (JoinTypeActivity)JoinTypeActivity.joinTypeActivity;
+            CommonConn conn = new CommonConn("andjoin",this);
+            GuardianMemberVO vo = new GuardianMemberVO();
+            vo.setGuardian_id(binding.edtUserId.getText().toString());
+            vo.setGuardian_pw(binding.edtUserPw.getText().toString());
+            vo.setGuardian_email(binding.edtAddress.getText().toString());
+            vo.setSocial("n");
+            vo.setGuardian_phone(binding.edtUserPhone.getText().toString());
+            vo.setPatient_id(binding.edtPatientId.getText().toString());
+            vo.setGuardian_name(binding.edtUserName.getText().toString());
+            String voJson = new Gson().toJson(vo);
+            conn.addParamMap("vo",voJson);
+
+
+            conn.onExcute((isResult, data) -> {
+                Log.i(TAG, "joinClick: "+isResult);
+            });
+
+
             jta.finish();
             finish();
         }else{
@@ -73,14 +101,11 @@ public class GuardianJoinActivity extends AppCompatActivity {
             builder.setMessage("정보가 올바르지 않습니다");
             builder.show();
         }
-
     }
 
     /*아이디 길이 확인*/
-    public void IdCheck(){
+    public void usableIdCheck(){
             binding.tvWarningId.setText("아이디를 7~20자로 입력해주세요");
-            binding.tvWarningId.setVisibility(View.VISIBLE);
-            binding.btnIdCheck.setVisibility(View.GONE);
         binding.edtUserId.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -98,7 +123,13 @@ public class GuardianJoinActivity extends AppCompatActivity {
                     binding.tvWarningId.setText("영어 소문자와 숫자만 가능합니다");
                     binding.tvWarningId.setVisibility(View.VISIBLE);
                     binding.btnIdCheck.setVisibility(View.GONE);
-                }else{
+                }else if (binding.edtUserId.getText().toString()==""){
+                    binding.tvWarningId.setText("아이디를 입력해주세요");
+                    binding.tvWarningId.setVisibility(View.VISIBLE);
+                    binding.btnIdCheck.setVisibility(View.GONE);
+                }
+                else
+                {
                     binding.tvWarningId.setVisibility(View.GONE);
                     binding.btnIdCheck.setVisibility(View.VISIBLE);
                 }
@@ -181,8 +212,8 @@ public class GuardianJoinActivity extends AppCompatActivity {
 
     public boolean isIdPattern(){
         Pattern id_pattern = Pattern.compile("^[a-z0-9]+$");
-        String id = binding.edtUserId.getText().toString();
-        Matcher matcher = id_pattern.matcher(id);
+
+        Matcher matcher = id_pattern.matcher(binding.edtUserId.getText().toString());
         if(matcher.matches()){
             return true;
         }else{
@@ -190,23 +221,24 @@ public class GuardianJoinActivity extends AppCompatActivity {
         }
     }
 
-    public GuardianMemberVO Join(String user_id, String user_pw ){
 
-        return null;
-    }
-
-    public void idDupCheck(String user_id){
+    public void idDupCheck(String guardian_id){
         CommonConn conn = new CommonConn("andidcheck",this);
-        conn.addParamMap("user_id",user_id);
+        conn.addParamMap("guardian_id",guardian_id);
 
         conn.onExcute((isResult, data) -> {
-            if(Integer.parseInt(data) == 1){
-               binding.btnIdCheck.setVisibility(View.GONE);
+            Log.i(TAG, "idDupCheck: "+data);
 
+            if(data.equals("0")){
+               binding.btnIdCheck.setVisibility(View.GONE);
+                binding.tvWarningId.setVisibility(View.GONE);
+                binding.edtUserId.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.img_check,0);
             }else{
                 binding.tvWarningId.setText("아이디 중복입니다");
                 binding.tvWarningId.setVisibility(View.VISIBLE);
+                binding.edtUserId.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
             }
+            Log.i(TAG, "idDupCheck: "+data);
         });
     }
 }

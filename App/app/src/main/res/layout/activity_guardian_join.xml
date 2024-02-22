@@ -42,7 +42,6 @@
                 />
             <Button
                 android:layout_marginTop="10dp"
-                android:visibility="gone"
                 android:background="@drawable/button_customize"
                 android:id="@+id/btn_id_check"
                 android:layout_width="0dp"
@@ -156,12 +155,12 @@
             android:orientation="horizontal">
             <EditText
                 android:layout_marginTop="10dp"
-                android:id="@+id/edt_guardian_id"
+                android:id="@+id/edt_patient_id"
                 android:layout_marginHorizontal="20dp"
                 android:layout_width="0dp"
                 android:layout_weight="7"
                 android:layout_height="40dp"
-                android:hint=" 보호자 아이디"
+                android:hint=" 환자 아이디"
                 android:background="@drawable/edittext_rounded"
                 />
             <Button
