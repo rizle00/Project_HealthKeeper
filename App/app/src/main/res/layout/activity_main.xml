@@ -9,7 +9,14 @@
     android:orientation="vertical"
     >
 
-
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_color"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:menu="@menu/toolbar_home"
+        />
 
     <!-- menu 리소스 , drawble : 선택 색상 -->
     <FrameLayout
@@ -24,8 +31,10 @@
         android:layout_height="wrap_content"
         app:itemIconTint="@drawable/btm_menu_selector"
         app:itemTextColor="@drawable/btm_menu_selector"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/menu_nav_btm" />
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/menu_nav_btm"
+
+        />
     <!--app:itemBackground:#FFFFFF-->
 
 

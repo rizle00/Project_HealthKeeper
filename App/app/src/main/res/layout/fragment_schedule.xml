@@ -27,7 +27,7 @@
     android:textStyle="bold"
     android:text="&lt;&lt;"/>
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/user_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
@@ -64,7 +64,6 @@
         android:dateTextAppearance="@style/CustomWeekDayTextAppearance"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:elevation="8dp"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
