@@ -17,30 +17,14 @@ public class BTManger {
     private static final String TAG = BluetoothManager.class.getSimpleName();
 
     private BluetoothManager mBluetoothManager;
+
     private BluetoothAdapter mBluetoothAdapter;
-    private BluetoothScanner mBluetoothScanner;
-    private Context context;
 
     private Set<BluetoothDevice> deviceList;
     private final static String deviceName = "HM10";
 
-    public BTManger(Context context) {
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        this.context = context;
-    }
-
-
-
-    public boolean isEnabled() {
-        return mBluetoothAdapter.isEnabled();
-    }
-
-    @SuppressLint("MissingPermission")
-    public void requestActivation(Activity activity, int requestCode) {
-        if (!isEnabled()) {
-            Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            activity.startActivityForResult(intent, requestCode);
-        }
+    public BluetoothAdapter getmBluetoothAdapter() {
+        return mBluetoothAdapter;
     }
 
     @SuppressLint("MissingPermission")
@@ -63,13 +47,23 @@ public class BTManger {
 
         mBluetoothAdapter = mBluetoothManager.getAdapter();
         deviceList = mBluetoothAdapter.getBondedDevices();
-        mBluetoothScanner = new BluetoothScanner(deviceList, deviceName);
         if (mBluetoothAdapter == null) {
             Log.e(TAG, "Unable to obtain a BluetoothAdapter.");
             return false;
-        } else if(!mBluetoothScanner.checkPairing()) mBluetoothScanner.startScan(context);
+        }
 
         return true;
+    }
+
+    @SuppressLint("MissingPermission")
+    public boolean checkPairing() {
+
+        for (BluetoothDevice device : deviceList) {
+            if (device.getName() != null && device.getName().equals(deviceName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

@@ -4,8 +4,8 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.bluetooth.BluetoothManager;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
@@ -60,6 +60,10 @@ public class ForegroundService extends Service {
 
         // START_STICKY를 반환하여 시스템이 서비스를 종료시킨 후에도 자동으로 재시작합니다.
         return START_STICKY;
+    }
+
+    private final ServiceConnection mServiceConnection() = new ServiceConnection(){
+
     }
     @Nullable
     @Override
