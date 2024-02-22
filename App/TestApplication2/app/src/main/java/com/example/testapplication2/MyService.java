@@ -14,24 +14,40 @@ import com.clj.fastble.callback.BleScanCallback;
 import com.clj.fastble.data.BleDevice;
 import com.clj.fastble.scan.BleScanRuleConfig;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 public class MyService extends Service {
     private final static String TAG = MyService.class.getSimpleName();
-    //블루투스 UUID들
+
+    private Thread mThread;
+
+    // Bluetooth UUID 상수
     public final static String SERVICE_UUID = "0000ffe0-0000-1000-8000-00805f9b34fb";
     public final static String CHARACTERISTIC_UUID = "0000ffe1-0000-1000-8000-00805f9b34fb";
     public final static String CONFIG_UUID = "00002902-0000-1000-8000-00805f9b34fb";
     public final static String DEVICE_UUID = "0000180A-0000-1000-8000-00805f9b34fb";
 
-    private int mConnectionState = STATE_DISCONNECTED;
-
+    // Bluetooth 연결 상태 상수
     private static final int STATE_DISCONNECTED = 0;
     private static final int STATE_CONNECTING = 1;
     private static final int STATE_CONNECTED = 2;
+    private int mConnectionState = STATE_DISCONNECTED;
+
+    // Bluetooth 관련 멤버 변수
+    private final static String deviceName = "HM10";
+    private BluetoothManager mBluetoothManager;
+    private BluetoothAdapter mBluetoothAdapter;
+    private String mBluetoothDeviceAddress;
+    private BluetoothGatt mBluetoothGatt;
+    private BluetoothGattCharacteristic characteristic;
+
+    // 블루투스 디바이스 리스트
+    private Set<BluetoothDevice> deviceList;
+//    private List<BleDevice> scanedList;
+
+
+
 
     public final static String ACTION_GATT_CONNECTED =
             "com.example.bluetooth.le.ACTION_GATT_CONNECTED";
@@ -44,20 +60,7 @@ public class MyService extends Service {
     public final static String EXTRA_DATA =
             "com.example.bluetooth.le.EXTRA_DATA";
 
-    private BluetoothManager mBluetoothManager;
-    private List<BleDevice> deviceList;
-
-
-    private BluetoothAdapter mBluetoothAdapter;
-    private String mBluetoothDeviceAddress;
-    private BluetoothGatt mBluetoothGatt;
-    private boolean mConnected = false;
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return mBinder;
-    }
-
+    // Service 바인더 ============================
     public class LocalBinder extends Binder {
         MyService getService() {
             return MyService.this;
@@ -67,11 +70,16 @@ public class MyService extends Service {
     private final IBinder mBinder = new LocalBinder();
 
     @Override
+    public IBinder onBind(Intent intent) {
+        return mBinder;
+    }
+//  서비스 연결 해제 시
+    @Override
     public boolean onUnbind(Intent intent) {
         close();
         return super.onUnbind(intent);
     }
-
+//    ble 연결 해제
     @SuppressLint("MissingPermission")
     public void close() {
         if (mBluetoothGatt == null) {
@@ -80,8 +88,9 @@ public class MyService extends Service {
         mBluetoothGatt.close();
         mBluetoothGatt = null;
     }
-
+    //===========================
     // ble 초기화
+    @SuppressLint("MissingPermission")
     public boolean initialize(Context context) {
         BleManager.getInstance().init(getApplication());
         mBluetoothManager = BleManager.getInstance().getBluetoothManager();
@@ -100,21 +109,33 @@ public class MyService extends Service {
                 .setOperateTimeout(5 * 1000);
 
         mBluetoothAdapter = mBluetoothManager.getAdapter();
+        deviceList = mBluetoothAdapter.getBondedDevices();
         if (mBluetoothAdapter == null) {
             Log.e(TAG, "Unable to obtain a BluetoothAdapter.");
             return false;
-        } else startScan(context);
+        } else if(!checkPairing()) startScan(context);
 
         return true;
     }
+    // 디바이스 있는지 확인
+    @SuppressLint("MissingPermission")
+    private boolean checkPairing() {
 
-    // 스캔 룰 지정
-    private void setScanRule(String name) {
+        for (BluetoothDevice device : deviceList) {
+            if (device.getName() != null && device.getName().equals(deviceName)) {
+                connect(device.getAddress());
+               return true;
+            }
+        }
+        return false;
+    }
+
+    // 스캔 룰 지정, 기기이름(배열가능), 맥주소, 등..
+    private void setScanRule() {
         BleScanRuleConfig scanRuleConfig = new BleScanRuleConfig.Builder()
-                .setDeviceName(true, name)   // 지정된 브로드캐스트 이름의 장치만 스캔합니다. 선택 사항입니다. 배열가능
-//                .setDeviceMac(mac)                  // 지정된 MAC 주소의 장치만 스캔합니다. 선택 사항입니다.50:65:83:09:4D:66
-                .setAutoConnect(true)      // 연결 시 autoConnect 매개변수입니다. 선택 사항입니다. 기본값은 false입니다.
-                .setScanTimeOut(10 * 1000)              // 스캔 타임아웃 시간입니다. 선택 사항입니다. 기본값은 10초입니다.
+                .setDeviceName(true, deviceName)
+                .setAutoConnect(true)
+                .setScanTimeOut(10 * 1000)
                 .build();
         BleManager.getInstance().initScanRule(scanRuleConfig);
     }
@@ -122,34 +143,34 @@ public class MyService extends Service {
     // 스캔 시작
     private void startScan(Context context) {
         // 기기이름 배열로 추가 가능, 맥주소 등  세팅가능
-        setScanRule("HM10");
+        setScanRule();
         BleManager.getInstance().scan(new BleScanCallback() {
             @Override
             public void onScanStarted(boolean success) {
                 Toast.makeText(getApplicationContext(), "스캔을 시작합니다", Toast.LENGTH_SHORT).show();
             }
 
-            @Override
-            public void onLeScan(BleDevice bleDevice) {
-                super.onLeScan(bleDevice);
-            }
+//            @Override
+//            public void onLeScan(BleDevice bleDevice) {
+//                super.onLeScan(bleDevice);
+//            }
 
             @Override
             public void onScanning(BleDevice bleDevice) {
 
-                if (bleDevice.getName().equals("HM10")) {
+                if (bleDevice.getName().equals(deviceName)) {
                     BleManager.getInstance().cancelScan();
                 }
             }
 
             @Override
             public void onScanFinished(List<BleDevice> scanResultList) {
-                deviceList = scanResultList;
+//                scanedList = scanResultList;
                 showDeviceList(scanResultList, context);
             }
         });
     }
-
+// 스캔 결과 보여주기
     private void showDeviceList(List<BleDevice> scanResultList, Context context) {
         if (scanResultList.size() == 0) { // 스캔된 장치가 없는 경우.
             Toast.makeText(getApplicationContext(), "근처에 연결 가능한 장치가 없습니다. 재검색을 시도합니다.", Toast.LENGTH_LONG).show();
@@ -167,7 +188,7 @@ public class MyService extends Service {
             for (BleDevice device : scanResultList) {
                 // device.getName() : 단말기의 Bluetooth Adapter 이름을 반환.
                 listItems.add(device.getName());
-                deviceList.add(device);
+//                scanedList.add(device);
             }
 
             listItems.add("취소");  // 취소 항목 추가.
@@ -188,6 +209,7 @@ public class MyService extends Service {
                         //                    finish();
                     } else { // 연결할 장치를 선택한 경우, 선택한 장치와 연결을 시도함.
                         BleDevice selectedDevice = null;
+                        //  선택한 기기를 가져옴
                         for (BleDevice device : scanResultList) {
                             if (device.getName().equals(items[item])) {
                                 selectedDevice = device;
@@ -196,11 +218,8 @@ public class MyService extends Service {
                         }
                         if (selectedDevice != null) {
                             BluetoothDevice device = selectedDevice.getDevice();
-//                            final Intent intent = new Intent(context, TestActivity.class);
-//                            intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
-//                            intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
-//                            startActivity(intent);
-//                            Log.d(TAG, "onClick: "+intent);
+                            Log.d(TAG, "onClick: "+device.getName());
+                           if(device.createBond())
                             connect(device.getAddress());
                         }
 
@@ -216,7 +235,7 @@ public class MyService extends Service {
         }
 
     }
-
+// 블루투스 연결 시도
     @SuppressLint("MissingPermission")
     public boolean connect(final String address) {
         if (mBluetoothAdapter == null || address == null) {
@@ -249,7 +268,7 @@ public class MyService extends Service {
         mConnectionState = STATE_CONNECTING;
         return true;
     }
-
+// 블루투스 연결 해제
     @SuppressLint("MissingPermission")
     public void disconnect() {
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
@@ -258,10 +277,10 @@ public class MyService extends Service {
         }
         mBluetoothGatt.disconnect();
     }
-
+// 블루투스 연결 콜백
     private final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
         @SuppressLint("MissingPermission")
-        @Override
+        @Override // 커넥트 상태 업데이트
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             String intentAction;
             if (newState == BluetoothProfile.STATE_CONNECTED) {
@@ -273,9 +292,8 @@ public class MyService extends Service {
                 Log.i(TAG, "Attempting to start service discovery:" +
                         mBluetoothGatt.discoverServices());
 
-                mBluetoothGatt.discoverServices();
                 Log.d(TAG, "onConnectionStateChange: " + gatt.getDevice().getName());
-//                gatt.getDevice().createBond();
+
 
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 intentAction = ACTION_GATT_DISCONNECTED;
@@ -286,20 +304,20 @@ public class MyService extends Service {
         }
 
         @SuppressLint("MissingPermission")
-        @Override
+        @Override // 블루투스 기기에서 넘어오는 서비스 확인
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 broadcastUpdate(ACTION_GATT_SERVICES_DISCOVERED);
-
-                BluetoothGattCharacteristic ch = gatt.getService(UUID.fromString("0000ffe0-0000-1000-8000-00805f9b34fb")).getCharacteristic(UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb"));
-                setCharacteristicNotification(ch, true);
+                // 캐릭터 노티파이 설정
+                characteristic = gatt.getService(UUID.fromString(SERVICE_UUID)).getCharacteristic(UUID.fromString(CHARACTERISTIC_UUID));
+                setCharacteristicNotification(characteristic, true);
                 Log.d(TAG, "onServicesDiscovered: ");
             } else {
                 Log.w(TAG, "onServicesDiscovered received: " + status);
             }
         }
 
-        @Override
+        @Override // 데이터 읽을 시
         public void onCharacteristicRead(BluetoothGatt gatt,
                                          BluetoothGattCharacteristic characteristic,
                                          int status) {
@@ -308,105 +326,36 @@ public class MyService extends Service {
             }
         }
 
-        @Override
+        @Override// 노티파이 데이터 읽을시
         public void onCharacteristicChanged(BluetoothGatt gatt,
                                             BluetoothGattCharacteristic characteristic) {
             broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
-            //service uuid, char uuid
-            BluetoothGattCharacteristic ch = gatt.getService(UUID.fromString("0000ffe0-0000-1000-8000-00805f9b34fb")).getCharacteristic(UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb"));
-            HashMap<String, String> extractedData = extractData(ch);
         }
     };
-
+// 액션에 대한 브로드캐스트 업데이트
     private void broadcastUpdate(final String action) {
         final Intent intent = new Intent(action);
         Log.d(TAG, "broadcastUpdate: " + action);
         sendBroadcast(intent);
     }
-
+// 데이터에 대한 브로드캐스트 업데이트
     private void broadcastUpdate(final String action,
                                  final BluetoothGattCharacteristic characteristic) {
         final Intent intent = new Intent(action);
-
-        // This is special handling for the Heart Rate Measurement profile.  Data parsing is
-        // carried out as per profile specifications:
-        // http://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml
-        if (CHARACTERISTIC_UUID.equals(characteristic.getUuid())) {
-            int flag = characteristic.getProperties();
-            int format = -1;
-            if ((flag & 0x01) != 0) {
-                format = BluetoothGattCharacteristic.FORMAT_UINT16;
-                Log.d(TAG, "Heart rate format UINT16.");
-            } else {
-                format = BluetoothGattCharacteristic.FORMAT_UINT8;
-                Log.d(TAG, "Heart rate format UINT8.");
-            }
-            final int heartRate = characteristic.getIntValue(format, 1);
-            Log.d(TAG, String.format("Received heart rate: %d", heartRate));
-            intent.putExtra(EXTRA_DATA, String.valueOf(heartRate));
-        } else {
-            // For all other profiles, writes the data formatted in HEX.
+// 데이터 처리 및 업데이트
             final byte[] data = characteristic.getValue();
             if (data != null && data.length > 0) {
-                final StringBuilder stringBuilder = new StringBuilder(data.length);
-                for (byte byteChar : data)
-                    stringBuilder.append(String.format("%02X ", byteChar));
-                intent.putExtra(EXTRA_DATA, new String(data) + "\n" + stringBuilder.toString());
+               HashMap<String,String> extractedData = extractData(new String(data, StandardCharsets.UTF_8));
+                intent.putExtra("heart",extractedData.get("hr") );
+                intent.putExtra("temp",extractedData.get("tp") );
+                intent.putExtra("accident",extractedData.get("ac") );
             }
-        }
+
         sendBroadcast(intent);
     }
 
-    private static IntentFilter makeGattUpdateIntentFilter() {
-        final IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BtService.ACTION_GATT_CONNECTED);
-        intentFilter.addAction(BtService.ACTION_GATT_DISCONNECTED);
-        intentFilter.addAction(BtService.ACTION_GATT_SERVICES_DISCOVERED);
-        intentFilter.addAction(BtService.ACTION_DATA_AVAILABLE);
-        return intentFilter;
-    }
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter(), RECEIVER_EXPORTED);
-//// 리시버 제대로 등록 ... 필수 암시적은 잘 등록 안되기도
-//        if (mBluetoothLeService != null) {
-//            final boolean result = mBluetoothLeService.connect(mDeviceAddress);
-//            Log.d(TAG, "Connect request result=" + result);
-//        }
-//    }
-//
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        unregisterReceiver(mGattUpdateReceiver);
-//    }
-//
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        unbindService(mServiceConnection);
-//        mBluetoothLeService = null;
-//    }
-//    private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            final String action = intent.getAction();
-//            Log.d(TAG, "onReceive: "+action);
-//            if (BtService.ACTION_GATT_CONNECTED.equals(action)) {
-//                mConnected = true;
-//                Log.d(TAG, "onReceive: "+action);
-//            } else if (BtService.ACTION_GATT_DISCONNECTED.equals(action)) {
-//                mConnected = false;
-//            } else if (BtService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
-//                // Show all the supported services and characteristics on the user interface.
-//                Log.d(TAG, "onReceive: "+action);
-//            } else if (BtService.ACTION_DATA_AVAILABLE.equals(action)) {
-//                Log.d(TAG, "onReceive: "+action);
-//                sendData(intent.getStringExtra(BtService.EXTRA_DATA));
-//            }
-//        }
-//    };
+
+
 
     @SuppressLint("MissingPermission")
     public void readCharacteristic(BluetoothGattCharacteristic characteristic) {
@@ -426,18 +375,16 @@ public class MyService extends Service {
         mBluetoothGatt.setCharacteristicNotification(characteristic, enabled);
         Log.d(TAG, "setCharacteristicNotification: " + characteristic);
 
-        // This is specific to Heart Rate Measurement.
         if (CHARACTERISTIC_UUID.equals(characteristic.getUuid())) {
             BluetoothGattDescriptor descriptor = characteristic.getDescriptor(
-                    UUID.fromString(SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG));
+                    UUID.fromString(CONFIG_UUID));
             descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
             mBluetoothGatt.writeDescriptor(descriptor);
         }
     }
 
-    public static HashMap<String, String> extractData(BluetoothGattCharacteristic characteristic) {
+    public static HashMap<String, String> extractData(String data) {
 
-        String data = new String(characteristic.getValue());
 
         HashMap<String, String> extractedData = new HashMap<>();
 
@@ -448,10 +395,6 @@ public class MyService extends Service {
         }
 
         return extractedData;
-    }
-    private void sendData(String data) {
-        if (data != null) {
-        }
     }
 
 

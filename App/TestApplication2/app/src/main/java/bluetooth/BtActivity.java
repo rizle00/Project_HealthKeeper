@@ -1,4 +1,4 @@
-package com.example.testapplication2;
+package bluetooth;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -14,18 +14,22 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import bluetooth.BTManger;
+import com.example.testapplication2.BtService;
+import com.example.testapplication2.MyService;
+import com.example.testapplication2.R;
+import com.example.testapplication2.TestActivity;
 import com.example.testapplication2.databinding.ActivityTestBinding;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.normal.TedPermission;
 
 import java.util.List;
 
-public class TestActivity extends AppCompatActivity {
+public class BtActivity extends AppCompatActivity {
+
     private final static String TAG = TestActivity.class.getSimpleName();
     public static final int INTENT_REQUEST_BLUETOOTH_ENABLE = 0x0701;
     ActivityTestBinding binding;// 바인딩  처리
-    private MyService mBluetoothLeService;
+    private BluetoothService bluetoothService;
     private boolean mBound;
     private final BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
     private int heart, accident;
@@ -62,14 +66,14 @@ public class TestActivity extends AppCompatActivity {
                         checkPermission();
 
                     } else {//블루투스 기능 활성 요청
-                        mbtManger.requestActivation(TestActivity.this, INTENT_REQUEST_BLUETOOTH_ENABLE);
+                        mbtManger.requestActivation(BtActivity.this, INTENT_REQUEST_BLUETOOTH_ENABLE);
 
                     }
                 } else {
                     if (mBound) {
-                        mBluetoothLeService.disconnect();
+                        bluetoothService.disconnect();
                         unbindService(mServiceConnection);
-                        mBluetoothLeService = null;
+                        bluetoothService = null;
                         unregisterReceiver(mGattUpdateReceiver);
                         mBound = false;
                     }
@@ -99,7 +103,7 @@ public class TestActivity extends AppCompatActivity {
         if (requestCode == INTENT_REQUEST_BLUETOOTH_ENABLE && resultCode == RESULT_OK) {
             checkPermission();
         } else if (requestCode == INTENT_REQUEST_BLUETOOTH_ENABLE && resultCode == RESULT_CANCELED) {
-            Toast.makeText(TestActivity.this, "블루투스 활성화가 필요합니다", Toast.LENGTH_SHORT).show();
+            Toast.makeText(BtActivity.this, "블루투스 활성화가 필요합니다", Toast.LENGTH_SHORT).show();
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -120,7 +124,7 @@ public class TestActivity extends AppCompatActivity {
         @Override
         public void onPermissionGranted() {
             // 권한 설정됨, 블루투스 초기화 시행
-            Intent intent = new Intent(TestActivity.this, MyService.class);
+            Intent intent = new Intent(BtActivity.this, MyService.class);
             bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
         }
 
@@ -140,7 +144,7 @@ public class TestActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(TestActivity.this, "권한 허용이 필요합니다", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(BtActivity.this, "권한 허용이 필요합니다", Toast.LENGTH_SHORT).show();
                             }
                         })
                 .setPositiveButton("확인",
@@ -159,14 +163,14 @@ public class TestActivity extends AppCompatActivity {
 
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
-            mBluetoothLeService = ((MyService.LocalBinder) service).getService();
+            bluetoothService = ((BluetoothService.LocalBinder) service).getService();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter(), RECEIVER_EXPORTED);
             }
 // 리시버 제대로 등록 ... 필수 암시적은 잘 등록 안되기도
-            if (!mBluetoothLeService.initialize(TestActivity.this)) {
+            if (!bluetoothService.initialize(BtActivity.this)) {
                 Log.e(TAG, "Unable to initialize Bluetooth");
-                Toast.makeText(TestActivity.this, "블루투스가 작동하지 않습니다", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BtActivity.this, "블루투스가 작동하지 않습니다", Toast.LENGTH_SHORT).show();
             }
             // Automatically connects to the device upon successful start-up initialization.
             Log.d(TAG, "onServiceConnected: " + 12345);
@@ -175,7 +179,7 @@ public class TestActivity extends AppCompatActivity {
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-            mBluetoothLeService = null;
+            bluetoothService = null;
         }
     };
 
