@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- chip선택되지 않은 상태일 때의 스타일 -->
+    <item android:state_checked="false">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/unselectedChipColor" />
+        </shape>
+    </item>
+    <!-- 선택된 상태의 칩 -->
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/selectedChipColor" />
+        </shape>
+    </item>
+</selector>

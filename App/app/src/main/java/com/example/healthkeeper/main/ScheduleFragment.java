@@ -49,7 +49,7 @@ public class ScheduleFragment extends Fragment {
         if (intent != null) {
             String name = intent.getStringExtra("edt_user_name");
             final String userID = intent.getStringExtra("edt_user_id");
-            binding.textView3.setText (name + "님의 일정관리" );
+            binding.userName.setText (name + "님의 일정관리" );
 
 
             binding.calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
