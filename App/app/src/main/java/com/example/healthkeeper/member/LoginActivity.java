@@ -62,8 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if(vo ==null){
                 Toast.makeText(this,"아이디 또는 패스워드 틀림",Toast.LENGTH_SHORT).show();
-                return;
-            }else{
+                return;            }else{
                 MainActivity ma = (MainActivity)MainActivity._mainActivity;
                 ma.finish();
                 Log.d("로그인", "");
@@ -71,8 +70,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-
         });
     }
-
 }
