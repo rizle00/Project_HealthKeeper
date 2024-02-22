@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.example.healthkeeper.common.CommonConn;
 import com.example.healthkeeper.databinding.ActivityLoginBinding;
 import com.example.healthkeeper.main.MainActivity;
+import com.google.gson.Gson;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -33,16 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         binding.btnLogin.setOnClickListener(v -> {
-            if(1==1){
-                /*로그인 성공 */
-                MainActivity ma = (MainActivity)MainActivity._mainActivity;
-                ma.finish();
-                Intent intent = new Intent(this,MainActivity.class);
-                startActivity(intent);
-                finish();
-            }else{
-                Toast.makeText(this, "아이디 혹은 비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
-            }
+            guardianlogin(binding.userId.getText().toString(),binding.userPw.getText().toString());
         });
 
         binding.tvFindId.setOnClickListener(v -> {
@@ -55,5 +49,27 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
         setContentView(binding.getRoot());
+    }
+
+    public void guardianlogin(String guardian_id,String guardian_pw){
+        CommonConn conn = new CommonConn("andlogin",this);
+        conn.addParamMap("guardian_id" , guardian_id);
+        conn.addParamMap("guardian_pw",guardian_pw);
+
+        conn.onExcute((isResult, data) -> {
+            Log.d("로그인", "guardianlogin: "+data);
+            GuardianMemberVO vo = new Gson().fromJson(data, GuardianMemberVO.class);
+
+            if(vo ==null){
+                Toast.makeText(this,"아이디 또는 패스워드 틀림",Toast.LENGTH_SHORT).show();
+                return;            }else{
+                MainActivity ma = (MainActivity)MainActivity._mainActivity;
+                ma.finish();
+                Log.d("로그인", "");
+                Intent intent = new Intent(this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }
