@@ -26,11 +26,7 @@ int x, y, z;
 void setup() {
  Serial.begin(9600);        
 BTSerial.begin(9600);     //블루투스 
- if (!accel.begin()) {
-    Serial.println("Could not find a valid ADXL345 sensor, check wiring!");
-    while (1);
-  }
-  accel.setRange(ADXL345_RANGE_2_G);
+ 
 // pinMode(btn, INPUT); // 버튼
 mlx.begin();  //온도센서
 pulseSensor.analogInput(PulseWire);   
@@ -38,7 +34,12 @@ pulseSensor.setThreshold(550);//심박 딜레이 기본 값
  if (pulseSensor.begin()) {
      Serial.println("We created a pulseSensor Object !");  //This prints one time at Arduino power-up,  or on Arduino reset.  
    }
-
+   //가속도 시작
+if (!accel.begin()) {
+    Serial.println("Could not find a valid ADXL345 sensor, check wiring!");
+    while (1);
+  }
+  accel.setRange(ADXL345_RANGE_2_G);
 }
 
 void loop() {
