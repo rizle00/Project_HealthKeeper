@@ -1,7 +1,10 @@
 package com.example.healthkeeper.member;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -12,17 +15,14 @@ import com.google.gson.Gson;
 
 public class FindIdActivity extends AppCompatActivity {
     ActivityFindIdBinding binding;
-    EditText mail = binding.edtUserEmail;
-    EditText phone = binding.edtUserPhone;
-    EditText name = binding.edtUserName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityFindIdBinding.inflate(getLayoutInflater());
 
         binding.btnFindId.setOnClickListener(v -> {
-
-            findId();
+            usableInfo();
         });
 
 
@@ -34,25 +34,28 @@ public class FindIdActivity extends AppCompatActivity {
         CommonConn conn = new CommonConn("andfindid",this);
 
         GuardianMemberVO vo = new GuardianMemberVO();
-        vo.setGuardian_name(name.getText().toString());
-        vo.setGuardian_email(mail.getText().toString());
-        vo.setGuardian_phone(phone.getText().toString());
-
+        vo.setGuardian_name(binding.edtUserName.getText().toString());
+        vo.setGuardian_email(binding.edtUserEmail.getText().toString());
+        vo.setGuardian_phone(binding.edtUserPhone.getText().toString());
         String voJson = new Gson().toJson(vo);
+        Log.d("TAG", "findId: ");
         conn.addParamMap("vo",voJson);
         conn.onExcute((isResult, data) -> {
-            if(data!=null){
-
+            if(!data.equals("")){
+                Intent intent = new Intent(this,FindResultActivity.class);
+                intent.putExtra("id_result",data);
+                startActivity(intent);
+                finish();
             }else{
-
+                Toast.makeText(this, "해당 정보의 아이디는 없습니다",Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void usableInfo(){
-        if(mail.getText().toString().length() == 0 ||
-        phone.getText().toString().length() == 0 ||
-        name.getText().toString().length()==0){
+        if(binding.edtUserName.getText().toString().length() == 0 ||
+                binding.edtUserEmail.getText().toString().length() == 0 ||
+                binding.edtUserPhone.getText().toString().length()==0){
             Toast.makeText(this, "정보를 모두 입력해주세요",Toast.LENGTH_SHORT).show();
         }else{
             findId();
