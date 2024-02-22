@@ -20,25 +20,16 @@ import java.util.Set;
 
 public class BluetoothScanner {
     private final static String TAG = BluetoothScanner.class.getSimpleName();
-    private Set<BluetoothDevice> deviceList;
-    private String deviceName;
+    private final static String deviceName = "HM10";
 
-    public BluetoothScanner(Set<BluetoothDevice> deviceList, String deviceName) {
-        this.deviceList = deviceList;
-        this.deviceName = deviceName;
+
+
+    private String deviceAddress;
+
+    public String getDeviceAddress() {
+        return deviceAddress;
     }
 
-    @SuppressLint("MissingPermission")
-    public boolean checkPairing() {
-
-        for (BluetoothDevice device : deviceList) {
-            if (device.getName() != null && device.getName().equals(deviceName)) {
-                connect(device.getAddress());
-                return true;
-            }
-        }
-        return false;
-    }
 
     // 스캔 룰 지정, 기기이름(배열가능), 맥주소, 등..
     private void setScanRule() {
@@ -59,12 +50,6 @@ public class BluetoothScanner {
             public void onScanStarted(boolean success) {
                 Toast.makeText(context, "스캔을 시작합니다", Toast.LENGTH_SHORT).show();
             }
-
-//            @Override
-//            public void onLeScan(BleDevice bleDevice) {
-//                super.onLeScan(bleDevice);
-//            }
-
             @Override
             public void onScanning(BleDevice bleDevice) {
 
@@ -75,7 +60,6 @@ public class BluetoothScanner {
 
             @Override
             public void onScanFinished(List<BleDevice> scanResultList) {
-//                scanedList = scanResultList;
                 showDeviceList(scanResultList, context);
             }
         });
@@ -130,7 +114,7 @@ public class BluetoothScanner {
                             BluetoothDevice device = selectedDevice.getDevice();
                             Log.d(TAG, "onClick: "+device.getName());
                             if(device.createBond())
-                                connect(device.getAddress());
+                                deviceAddress = device.getAddress();
                         }
 
                     }

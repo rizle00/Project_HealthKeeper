@@ -42,8 +42,7 @@ public class BtActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityTestBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        mbtManger = new BTManger();
-
+        mBound = bluetoothService.getBound();
         btSwitch();
     }
 
@@ -62,12 +61,11 @@ public class BtActivity extends AppCompatActivity {
                     // 스위치가 켜진 경우
                     // 권한 체크
 
-                    if (mbtManger.isEnabled()) {
+                    if (isOn()) {
                         checkPermission();
 
                     } else {//블루투스 기능 활성 요청
-                        mbtManger.requestActivation(BtActivity.this, INTENT_REQUEST_BLUETOOTH_ENABLE);
-
+                        requestBluetoothActivation(BtActivity.this);
                     }
                 } else {
                     if (mBound) {
