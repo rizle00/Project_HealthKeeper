@@ -8,4 +8,7 @@
         tools:context=".setting.HelpActivity">
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:text="설정 도움말 게시판 웹뷰 예정 "/>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

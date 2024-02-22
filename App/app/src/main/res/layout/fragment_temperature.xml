@@ -1,21 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="350dp"
+    android:layout_height="match_parent"
     tools:context=".main.TemperatureFragment"
+    android:background="#2E343B"
     android:orientation="vertical">
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="15dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        >
+        <FrameLayout
+            android:layout_width="350dp"
+            android:layout_height="260dp"
+            android:background="#717878"
+            android:layout_gravity="center">
+           <androidx.cardview.widget.CardView
+               android:alpha="0.8"
+                android:layout_width="340dp"
+                android:layout_height="250dp"
+                app:cardCornerRadius="15dp"
+                android:layout_gravity="center">
+
+
+
+
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#D9FDF9"
+        android:layout_width="380dp"
+        android:layout_height="250dp"
+        android:background="#DFF4F7"
         android:orientation="horizontal"
         >
+
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+
             android:src="@drawable/tem"
             />
         <LinearLayout
@@ -30,11 +59,13 @@
                 android:text="현재 체온"
                 android:textStyle="bold"
                 android:layout_weight="1"
-                android:textAlignment="center"
-                android:layout_marginTop="100dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="70dp"
                 android:layout_marginBottom="20dp"
-                android:layout_marginRight="30dp"
-                android:textSize="25dp"   />
+                android:layout_marginRight="50dp"
+                android:textSize="25dp"
+
+                />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -51,7 +82,7 @@
                     android:textColor="@color/main_color"
                     android:textStyle="bold"
                     android:textSize="40dp"
-                    android:layout_marginLeft="30dp"/>
+                    android:layout_marginLeft="10dp"/>
 
                 <ImageView
                     android:layout_width="70dp"
@@ -66,23 +97,32 @@
 
 
 
-    </LinearLayout>
+
+            </LinearLayout>
+          </androidx.cardview.widget.CardView>
+      </FrameLayout>
+
+    </androidx.cardview.widget.CardView>
+
     <View
         style="@style/gray_view_line1dp"
         android:layout_height="5dp"
+
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+
 
         />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="양 호"
+        android:text="양      호"
         android:textStyle="bold"
         android:textSize="40dp"
         android:textAlignment="center"
-        android:textColor="@color/main_color"
+        android:textColor="@color/white"
         />
 
 
-</LinearLayout>
+
+</LinearLayout >
