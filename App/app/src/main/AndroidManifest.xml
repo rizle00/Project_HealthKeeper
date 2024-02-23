@@ -31,7 +31,7 @@
             android:name=".member.JoinTypeActivity"
             android:exported="false" />
         <activity
-            android:name=".main.ConditionActivity"
+            android:name=".main.LoginBeforeActivity"
             android:exported="false" />
         <activity
             android:name=".main.ChatActivity"
@@ -48,9 +48,7 @@
         <activity
             android:name=".main.MonitoringActivity"
             android:exported="false" />
-        <activity
-            android:name=".member.ScheduleActivity"
-            android:exported="false" />
+
         <activity
             android:name=".member.FindIdActivity"
             android:exported="false" />
