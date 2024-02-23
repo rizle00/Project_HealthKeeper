@@ -30,12 +30,11 @@ public class BtActivity extends AppCompatActivity {
     public static final int INTENT_REQUEST_BLUETOOTH_ENABLE = 0x0701;
     ActivityTestBinding binding;// 바인딩  처리
     private BluetoothService bluetoothService;
-    private boolean mBound;
+    private boolean mBound, sBound;// gatt 서비스 연결 체크
     private final BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
     private int heart, accident;
     private double temp;
 
-    private BTManger mbtManger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,22 +57,15 @@ public class BtActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // 스위치 상태 변경 시 호출되는 메서드
                 if (isChecked) {
-                    // 스위치가 켜진 경우
-                    // 권한 체크
 
-                    if (isOn()) {
+                    if (isOn()) {// 블루투스 사용 가능 체크 후 권한체크, 권한 허용시 서비스 연결 시도
                         checkPermission();
 
                     } else {//블루투스 기능 활성 요청
                         requestBluetoothActivation(BtActivity.this);
                     }
-                } else {
-                    if (mBound) {
-                        bluetoothService.disconnect();
-                        unbindService(mServiceConnection);
-                        bluetoothService = null;
-                        mBound = false;
-                    }
+                } else {// 블루투스 해제, 서비스
+                    unbindService(mServiceConnection);
                 }
             }
         });
@@ -121,7 +113,7 @@ public class BtActivity extends AppCompatActivity {
         @Override
         public void onPermissionGranted() {
             // 권한 설정됨, 블루투스 초기화 시행
-            Intent intent = new Intent(BtActivity.this, MyService.class);
+            Intent intent = new Intent(BtActivity.this, BluetoothService.class);
             bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
         }
 
@@ -161,18 +153,14 @@ public class BtActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             bluetoothService = ((BluetoothService.LocalBinder) service).getService();
-            if (!bluetoothService.initialize()) {
-                Log.e(TAG, "Unable to initialize Bluetooth");
-                Toast.makeText(BtActivity.this, "블루투스가 작동하지 않습니다", Toast.LENGTH_SHORT).show();
-            }
-            // Automatically connects to the device upon successful start-up initialization.
-            Log.d(TAG, "onServiceConnected: " + 12345);
-//            mBluetoothLeService.connect(mDeviceAddress);
+            sBound = true;
+            bluetoothService.getContext(BtActivity.this);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
             bluetoothService = null;
+            sBound = false;
         }
     };
 

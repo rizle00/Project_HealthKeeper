@@ -18,15 +18,18 @@ public class NumberRepository {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                int num = 0;
+                try {
+                    int num = 0;
                 for(int i = 0; i<100; i++){
                     num++;
                     Result<Integer> result = new Result.Success<>(num);
                     notifyResult(result, callback);
-
-                }
-                try {
                     Thread.sleep(100);
+                }
+                    Result.Success<Integer> result = new Result.Success<>(num);
+                    result.isFinished = true;
+                    notifyResult(result, callback);
+
                 } catch (Exception e) {
                     Result<Integer> result = new Result.Error<>(e);
                     notifyResult(result, callback);

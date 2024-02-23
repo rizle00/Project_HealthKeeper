@@ -31,8 +31,14 @@
             android:theme="@style/Theme.TestApplication2"
             android:usesCleartextTraffic="true"
             tools:targetApi="31">
+        <service
+                android:name="bluetooth.MyService"
+                android:enabled="true"
+                android:exported="false">
+        </service>
+
         <activity
-                android:name="bluetooth.Newctivity"
+                android:name=".CameraActivity"
                 android:exported="false"/>
 
         <service
@@ -61,7 +67,7 @@
                 android:name=".DeviceControlActivity"
                 android:exported="false"/>
         <activity
-                android:name=".CameraActivity"
+                android:name="bluetooth.Newactivity"
                 android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

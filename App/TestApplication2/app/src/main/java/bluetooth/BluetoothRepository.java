@@ -2,8 +2,9 @@ package bluetooth;
 
 import java.util.HashMap;
 
-public class BluetoothDataHandler {
+public class BluetoothRepository {
     public static HashMap<String, String> extractData(String data) {
+        return null;
         // 데이터 추출 코드 작성
     }
 

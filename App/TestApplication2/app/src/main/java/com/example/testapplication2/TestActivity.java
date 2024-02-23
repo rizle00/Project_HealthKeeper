@@ -58,11 +58,11 @@ public class TestActivity extends AppCompatActivity {
                     // 스위치가 켜진 경우
                     // 권한 체크
 
-                    if (mbtManger.isEnabled()) {
+                    if (isOn()) {
                         checkPermission();
 
                     } else {//블루투스 기능 활성 요청
-                        mbtManger.requestActivation(TestActivity.this, INTENT_REQUEST_BLUETOOTH_ENABLE);
+                        requestBluetoothActivation(TestActivity.this);
 
                     }
                 } else {
