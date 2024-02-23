@@ -27,7 +27,7 @@ public class BluetoothConnector {
     }
     // 블루투스 연결 시도
     @SuppressLint("MissingPermission")
-    public boolean connect(final String address, Context context) {
+    public boolean connect(final String address) {
         if (mBluetoothAdapter == null || address == null) {
             Log.w(TAG, "BluetoothAdapter not initialized or unspecified address.");
             return false;
@@ -50,14 +50,14 @@ public class BluetoothConnector {
             Log.w(TAG, "Device not found.  Unable to connect.");
             return false;
         }
-        mBluetoothGatt = device.connectGatt(context, true, mGattCallback);
+        mBluetoothGatt = device.connectGatt(mContext, true, mGattCallback);
         Log.d(TAG, "Trying to create a new connection.");
         mBluetoothDeviceAddress = address;
         mConnectionState = BluetoothAttributes.STATE_CONNECTING;
         return true;
     }
 
-    // 블루투스 연결 해제
+    // 블루투스 연결, 자원 해제
     @SuppressLint("MissingPermission")
     public void disconnect() {
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
@@ -65,16 +65,10 @@ public class BluetoothConnector {
             return;
         }
         mBluetoothGatt.disconnect();
-    }
-    // 블루투스 자원 해제
-    @SuppressLint("MissingPermission")
-    public void close() {
-        if (mBluetoothGatt == null) {
-            return;
-        }
         mBluetoothGatt.close();
         mBluetoothGatt = null;
     }
+
 
     // 블루투스 연결 콜백
     private final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
