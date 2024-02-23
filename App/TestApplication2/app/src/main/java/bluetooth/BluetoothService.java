@@ -13,10 +13,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
-import com.example.testapplication2.BtService;
-import com.example.testapplication2.MainActivity;
-import com.example.testapplication2.MyService;
-import com.example.testapplication2.TestActivity;
+import com.example.testapplication2.*;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -77,7 +74,7 @@ public class BluetoothService extends Service {
         builder.setContentTitle("포그라운드 서비스");
         builder.setContentText("포그라운드 서비스 실행 중");
         Intent notificationIntent = new Intent(this, BtActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
         builder.setContentIntent(pendingIntent);
 
         // 오레오에서는 알림 채널을 매니저에 생성해야 한다
@@ -134,7 +131,7 @@ public class BluetoothService extends Service {
     }
     //===========================
     // ble 초기화
-    public boolean initialize(Context context) {
+    public boolean initialize() {
         // 여기에 블루투스 초기화 코드 작성
        mBtManger = new BTManger();
 
@@ -149,13 +146,14 @@ public class BluetoothService extends Service {
         deviceAddress = mBtScanner.getDeviceAddress();
     }
     // 블루투스 연결 시도
-    public boolean connect(final String address) {
-        // 여기에 블루투스 연결 시도 코드 작성
-        return true;
+    public boolean connect(Context context) {
+        mBtConnector = new BluetoothConnector(context);
+
+        return mBtConnector.connect(deviceAddress);
     }
     // 블루투스 연결 해제
     public void disconnect() {
-        // 여기에 블루투스 연결 해제 코드 작성
+        mBtConnector.disconnect();
     }
 
     private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {

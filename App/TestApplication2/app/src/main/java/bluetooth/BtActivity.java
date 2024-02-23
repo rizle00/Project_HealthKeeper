@@ -72,7 +72,6 @@ public class BtActivity extends AppCompatActivity {
                         bluetoothService.disconnect();
                         unbindService(mServiceConnection);
                         bluetoothService = null;
-                        unregisterReceiver(mGattUpdateReceiver);
                         mBound = false;
                     }
                 }
@@ -162,11 +161,7 @@ public class BtActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             bluetoothService = ((BluetoothService.LocalBinder) service).getService();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter(), RECEIVER_EXPORTED);
-            }
-// 리시버 제대로 등록 ... 필수 암시적은 잘 등록 안되기도
-            if (!bluetoothService.initialize(BtActivity.this)) {
+            if (!bluetoothService.initialize()) {
                 Log.e(TAG, "Unable to initialize Bluetooth");
                 Toast.makeText(BtActivity.this, "블루투스가 작동하지 않습니다", Toast.LENGTH_SHORT).show();
             }
@@ -199,34 +194,5 @@ public class BtActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            final String action = intent.getAction();
-            Log.d(TAG, "onReceive: " + action);
-            if (MyService.ACTION_GATT_CONNECTED.equals(action)) {
-                mBound = true;
-                Log.d(TAG, "onReceive: " + action);
-            } else if (MyService.ACTION_GATT_DISCONNECTED.equals(action)) {
-                mBound = false;
-            } else if (MyService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
-                // Show all the supported services and characteristics on the user interface.
-                Log.d(TAG, "onReceive: " + action);
-            } else if (MyService.ACTION_DATA_AVAILABLE.equals(action)) {
-                Log.d(TAG, "onReceive: " + action);
-                heart = Integer.parseInt(intent.getStringExtra("heart"));
-                temp = Double.parseDouble(intent.getStringExtra("temp"));
-                accident = Integer.parseInt(intent.getStringExtra("accident"));
-            }
-        }
-    };
 
-    private static IntentFilter makeGattUpdateIntentFilter() {
-        final IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BtService.ACTION_GATT_CONNECTED);
-        intentFilter.addAction(BtService.ACTION_GATT_DISCONNECTED);
-        intentFilter.addAction(BtService.ACTION_GATT_SERVICES_DISCOVERED);
-        intentFilter.addAction(BtService.ACTION_DATA_AVAILABLE);
-        return intentFilter;
-    }
 }
