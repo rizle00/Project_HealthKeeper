@@ -125,7 +125,7 @@
                        >
 
                        <androidx.cardview.widget.CardView
-                           android:alpha="0.5"
+                           android:alpha="0.7"
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
                            app:cardCornerRadius="20dp">
@@ -137,7 +137,7 @@
                                <ImageView
                                    android:layout_width="120dp"
                                    android:layout_height="150dp"
-                                   android:src="@drawable/watch_img7"
+                                   android:src="@drawable/img_cctv"
                                    android:scaleType="fitXY"
                                    android:background="@android:color/transparent"
                                    android:layout_marginBottom="5dp"
@@ -145,19 +145,7 @@
 
 
                                    />
-                               <TextView
-                                   android:layout_width="wrap_content"
-                                   android:layout_height="wrap_content"
-                                   android:text="낙상감지시스템!!"
-                                   android:textSize="12dp"
-                                   android:textStyle="bold"
-                                   android:textAlignment="center"
-                                   android:textColor="#1010F8"
-                                   android:layout_marginTop="115dp"
-                                   android:layout_marginLeft="5dp"
 
-
-                                   />
 
                            </RelativeLayout>
 
