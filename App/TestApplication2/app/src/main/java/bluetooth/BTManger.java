@@ -46,7 +46,7 @@ public class BTManger {
                 .setOperateTimeout(5 * 1000);
 
         mBluetoothAdapter = mBluetoothManager.getAdapter();
-        deviceList = mBluetoothAdapter.getBondedDevices();
+
         if (mBluetoothAdapter == null) {
             Log.e(TAG, "Unable to obtain a BluetoothAdapter.");
             return false;
@@ -56,14 +56,15 @@ public class BTManger {
     }
 
     @SuppressLint("MissingPermission")
-    public boolean checkPairing() {
-
+    public String checkPairing() {
+        deviceList = mBluetoothAdapter.getBondedDevices();
         for (BluetoothDevice device : deviceList) {
             if (device.getName() != null && device.getName().equals(deviceName)) {
-                return true;
+
+                return device.getAddress();
             }
         }
-        return false;
+        return null;
     }
 
 }

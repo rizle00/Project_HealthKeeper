@@ -25,4 +25,8 @@
                 android:id="@+id/action_SecondFragment_to_FirstFragment"
                 app:destination="@id/FirstFragment"/>
     </fragment>
+    <fragment android:id="@+id/excutorFragment" android:name="bluetooth.ExcutorFragment"
+              android:label="fragment_foregroun_service" tools:layout="@layout/fragment_foregroun_service"/>
+    <fragment android:id="@+id/foregrounServiceFragment" android:name="bluetooth.ForegrounServiceFragment"
+              android:label="ForegrounServiceFragment"/>
 </navigation>
