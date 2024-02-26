@@ -24,7 +24,6 @@ import com.example.healthkeeper.databinding.ActivityMainBinding;
 import com.example.healthkeeper.setting.MyMenuFragment;
 
 public class MainActivity extends AppCompatActivity {
-    public static MainActivity _mainActivity;
     private AlertDialog alertDialog;
     ActivityMainBinding binding;
 

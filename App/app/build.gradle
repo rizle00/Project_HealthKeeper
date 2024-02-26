@@ -32,6 +32,11 @@ android {
 }
 
 dependencies {
+    //네아로 
+    implementation 'com.navercorp.nid:oauth:5.9.0'
+
+    //카카오 로그인 모듈
+    implementation "com.kakao.sdk:v2-user:2.19.0"
     /*롬복 */
     compileOnly 'org.projectlombok:lombok:1.18.22'
     //implementation "androidx.webkit:webkit:1.8.0"//webView API

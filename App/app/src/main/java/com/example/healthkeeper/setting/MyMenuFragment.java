@@ -18,7 +18,7 @@ public class MyMenuFragment extends Fragment {
         binding = FragmentMyMenuBinding.inflate(getLayoutInflater());
 
         binding.llMemberModify.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), ModifyPatientActivity.class);
+            Intent intent = new Intent(getActivity(), ModifyGuardianActivity.class);
             startActivity(intent);
         });
 

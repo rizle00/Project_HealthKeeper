@@ -16,6 +16,8 @@ import com.example.healthkeeper.databinding.ActivityMainBinding;
 import com.example.healthkeeper.member.LoginActivity;
 
 public class LoginBeforeActivity extends AppCompatActivity {
+    /* 로그인 되면 종료하게 하기위함*/
+    public static LoginBeforeActivity _loginBeforeActivity;
     private SharedPreferences sharedPreferences;
     private static final String PREFS_NAME = "MyPrefs";
     private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
@@ -25,6 +27,7 @@ public class LoginBeforeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBeforeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        _loginBeforeActivity = this;
 
         sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
