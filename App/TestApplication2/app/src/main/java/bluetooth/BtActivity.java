@@ -41,7 +41,7 @@ public class BtActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityTestBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        mBound = bluetoothService.getBound();
+
         btSwitch();
     }
 
@@ -155,6 +155,7 @@ public class BtActivity extends AppCompatActivity {
             bluetoothService = ((BluetoothService.LocalBinder) service).getService();
             sBound = true;
             bluetoothService.getContext(BtActivity.this);
+            mBound = bluetoothService.getBound();
         }
 
         @Override

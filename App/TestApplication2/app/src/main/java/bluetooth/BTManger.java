@@ -57,11 +57,13 @@ public class BTManger {
 
     @SuppressLint("MissingPermission")
     public String checkPairing() {
-        deviceList = mBluetoothAdapter.getBondedDevices();
-        for (BluetoothDevice device : deviceList) {
-            if (device.getName() != null && device.getName().equals(deviceName)) {
+        if(mBluetoothAdapter.getBondedDevices()!=null){
+            deviceList = mBluetoothAdapter.getBondedDevices();
+            for (BluetoothDevice device : deviceList) {
+                if (device.getName() != null && device.getName().equals(deviceName)) {
 
-                return device.getAddress();
+                    return device.getAddress();
+                }
             }
         }
         return null;
