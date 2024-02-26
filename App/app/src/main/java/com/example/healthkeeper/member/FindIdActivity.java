@@ -38,7 +38,6 @@ public class FindIdActivity extends AppCompatActivity {
         vo.setGuardian_email(binding.edtUserEmail.getText().toString());
         vo.setGuardian_phone(binding.edtUserPhone.getText().toString());
         String voJson = new Gson().toJson(vo);
-        Log.d("TAG", "findId: ");
         conn.addParamMap("vo",voJson);
         conn.onExcute((isResult, data) -> {
             if(!data.equals("")){

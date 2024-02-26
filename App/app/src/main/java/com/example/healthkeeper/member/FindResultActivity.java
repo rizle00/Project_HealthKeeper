@@ -13,10 +13,10 @@ public class FindResultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityFindResultBinding.inflate(getLayoutInflater());
 
-
-//        Intent intent = getIntent();
-//        binding.tvResultId.setText(intent.getStringExtra("id_result"));
+        Intent intent = getIntent();
+        binding.tvResultId.setText(intent.getStringExtra("id_result"));
         setContentView(binding.getRoot());
 
     }
