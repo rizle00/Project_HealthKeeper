@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.ActivityMainBinding;
@@ -27,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     public static MainActivity _mainActivity;
     private AlertDialog alertDialog;
     ActivityMainBinding binding;
+
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//뒤로가기 버튼만들기
 
         changeFragment(new HomeFragment());
 
@@ -76,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
+
     }
 
 
@@ -85,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {//툴바선택시....
         int id = item.getItemId();
@@ -93,12 +100,15 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         } else if (id == R.id.menu_logout) {
-            Intent intent=new Intent(this,LoginBeforeActivity.class);
+            Intent intent = new Intent(this, LoginBeforeActivity.class);
             startActivity(intent);
             finish();
             return true;
         } else if (id == R.id.menu_setting) {
 
+            return true;
+        }else if (id == android.R.id.home) { //toolbar의 back키 눌렀을 때 동작
+            finish();
             return true;
         }
         // 다른 메뉴 아이템에 대한 처리 추가 가능
@@ -113,7 +123,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void changeFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void showEmergencyDialog() {//긴급전화 다이얼로그
@@ -154,10 +166,11 @@ public class MainActivity extends AppCompatActivity {
     public void changeScheduleFragment(ScheduleFragment fragment) {//일정관리메뉴 화면
         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();//
     }
-    private  void setToolbarMenu(int menuResId){//툴바메뉴 생성
-        Toolbar toolbar=findViewById(R.id.toolbar);
+
+    private void setToolbarMenu(int menuResId) {//툴바메뉴 생성
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.getMenu().clear();
-        getMenuInflater().inflate(menuResId,toolbar.getMenu());
+        getMenuInflater().inflate(menuResId, toolbar.getMenu());
     }
 
     private void updateNotificationCount(int count) {//새로운 알림이 뜨면 업데이트된 알림갯수가 표시됨
@@ -169,4 +182,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();// Fragment를 뒤로가기
+
+        } else {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "한번 더 뒤로가기를 누르면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000); // 2초 동안 한번 더 눌러야 종료
+        }
+
+
+    }
 }

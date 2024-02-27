@@ -41,12 +41,12 @@ public class HomeFragment extends Fragment {
                 binding.edtUserName.setText(name + "님");
             }
 
-            binding.btnLogout.setOnClickListener(new View.OnClickListener() {
+          /*  binding.btnLogout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(getActivity(), LoginBeforeActivity.class));
                 }
-            });
+            });*/
 
             binding.case1.setOnClickListener(new View.OnClickListener() {//심박, 체온 현재상태보여줄 엑티비티
                 @Override
@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
             binding.case4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(getActivity(), CommunityActivity.class));
+                    startActivity(new Intent(getActivity(), CummunityActivity.class));
                 }
             });
         }

@@ -28,6 +28,7 @@ public class FindIdActivity extends AppCompatActivity {
 
 
         setContentView(binding.getRoot());
+
     }
 
     public void findId(){

@@ -73,6 +73,7 @@ public class LoginBeforeActivity extends AppCompatActivity {
         });
 
 
+
     }
 
     private void showLoginDialogAndNavigate() {

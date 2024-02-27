@@ -29,6 +29,7 @@ public class ModifyPatientActivity extends AppCompatActivity {
             joinClick();
             pwCheck();
         });
+
     }
     public void joinClick(){
         mailPatterns();

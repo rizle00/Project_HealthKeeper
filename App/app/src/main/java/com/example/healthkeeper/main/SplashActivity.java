@@ -30,6 +30,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
             startActivity(intent);
             finish(); // 선택 사항: 새로 시작한 활동 이후 현재 활동을 종료합니다.
         }, 2000);
+
     }
 
 

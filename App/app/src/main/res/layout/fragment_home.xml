@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
+   <!-- <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -20,7 +20,7 @@
 
             />
 
-    </RelativeLayout>
+    </RelativeLayout>-->
 
    <!-- <View
         style="@style/gray_view_line1dp"
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:text="오늘도 건강한 하루 되세요!!"
                 android:textColor="#243070"
-                android:textSize="17dp"
+                android:textSize="15dp"
                 android:elevation="10dp"
                 android:shadowColor="#3B4A49"
                 android:shadowDx="0"
@@ -151,8 +151,8 @@
                 app:cardCornerRadius="20dp">
 
                 <ImageView
-                    android:layout_width="90dp"
-                    android:layout_height="110dp"
+                    android:layout_width="100dp"
+                    android:layout_height="140dp"
                     android:src="@drawable/watch_img1"
                     android:scaleType="fitXY"
                     />
@@ -169,8 +169,8 @@
                 app:cardCornerRadius="20dp">
 
                 <ImageView
-                    android:layout_width="90dp"
-                    android:layout_height="110dp"
+                    android:layout_width="100dp"
+                    android:layout_height="140dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/watch_img2"/>
 
@@ -193,16 +193,16 @@
                 app:cardCornerRadius="20dp">
 
                 <ImageView
-                    android:layout_width="90dp"
-                    android:layout_height="110dp"
+                    android:layout_width="100dp"
+                    android:layout_height="140dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/watch_img6"
 
                     />
 
                 <ImageView
-                    android:layout_width="90dp"
-                    android:layout_height="110dp"
+                    android:layout_width="100dp"
+                    android:layout_height="140dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/watch_img5" />
 
@@ -222,7 +222,8 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
-                android:layout_height="110dp"
+                android:layout_height="wrap_content"
+
                 android:layout_marginTop="5dp"
 
 
@@ -232,21 +233,21 @@
                 <FrameLayout
 
                     android:layout_width="wrap_content"
-                    android:layout_height="115dp"
+                    android:layout_height="wrap_content"
                     android:background="#0E0F0F"
                     >
 
                     <androidx.cardview.widget.CardView
                         android:alpha="0.8"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="120dp"
                         app:cardCornerRadius="20dp">
 
 
                             <ImageView
-                                android:layout_width="90dp"
+                                android:layout_width="100dp"
+                                android:layout_height="110dp"
                                 android:src="@drawable/img_cctv"
-                                android:layout_height="115dp"
                                 android:scaleType="fitXY"
                                 android:background="@android:color/transparent"
                                 android:layout_marginBottom="27dp"
@@ -273,8 +274,8 @@
                 app:cardCornerRadius="20dp">
 
                 <ImageView
-                    android:layout_width="90dp"
-                    android:layout_height="110dp"
+                    android:layout_width="100dp"
+                    android:layout_height="140dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/watch_img1"
                     />
@@ -296,6 +297,7 @@
         android:layout_height="1.5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
         android:elevation="10dp"
 
         />
@@ -305,7 +307,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -313,48 +315,55 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="1"
+            android:layout_weight="0.65"
             android:orientation="horizontal">
+
+
+
+
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:background="#123"
                 android:orientation="vertical">
 
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:alpha="0.7"
-                    app:cardCornerRadius="2dp">
+                    android:layout_height="wrap_content"
+                    android:alpha="0.8"
+                    app:cardCornerRadius="20dp">
 
                     <RelativeLayout
                         android:id="@+id/case1"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="140dp"
                         android:clickable="true"
+                        android:background="#8A90AE"
                         tools:ignore="DuplicateIds">
 
 
                         <ImageView
                             android:id="@+id/img1"
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
-                            android:layout_above="@id/tv1"
-                            android:src="@drawable/baseline_favorite_border_24" />
+                            android:layout_height="90dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="40dp"
+                            android:src="@drawable/state" />
 
                         <TextView
                             android:id="@+id/tv1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:text="Condition"
-                            android:textAlignment="center"
-                            android:textSize="20dp" />
+                            android:layout_alignParentStart="true"
+                            android:text="나의상태"
+                            android:textColor="@color/white"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:textStyle="bold"
+                            android:textSize="18dp" />
                     </RelativeLayout>
 
 
@@ -363,44 +372,56 @@
 
             </LinearLayout>
 
+
+
+
+
+
+
+
+
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:background="#123"
+
                 android:orientation="vertical">
 
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:alpha="0.7"
-                    app:cardCornerRadius="2dp">
+                    android:layout_height="wrap_content"
+                    android:alpha="0.8"
+                    app:cardCornerRadius="20dp">
 
                     <RelativeLayout
                         android:id="@+id/case2"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="140dp"
                         android:clickable="true"
+                        android:background="#89ABA8"
                         tools:ignore="DuplicateIds">
 
 
                         <ImageView
                             android:id="@+id/img2"
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
-                            android:layout_above="@id/tv2"
-                            android:layout_marginBottom="0dp"
-                            android:src="@drawable/baseline_favorite_border_24" />
+                            android:layout_height="100dp"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/cctvimg" />
 
                         <TextView
                             android:id="@+id/tv2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentStart="true"
                             android:text="CCTV"
-                            android:textAlignment="center"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="20dp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
                             android:textSize="20dp" />
                     </RelativeLayout>
 
@@ -415,51 +436,52 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-
-
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:background="#DBE6F1"
+            android:layout_weight="0.8"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:background="#123"
                 android:orientation="vertical">
 
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:alpha="0.7"
-                    app:cardCornerRadius="2dp">
+                    android:layout_height="wrap_content"
+                    android:alpha="0.8"
+                    android:layout_marginRight="5dp"
+                    app:cardCornerRadius="20dp">
 
                     <RelativeLayout
                         android:id="@+id/case3"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="140dp"
                         android:clickable="true"
+                        android:background="#ECD2AC"
                         tools:ignore="DuplicateIds">
 
 
                         <ImageView
                             android:id="@+id/img3"
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
-                            android:layout_above="@id/tv3"
-                            android:src="@drawable/baseline_favorite_border_24" />
+                            android:layout_height="80dp"
+                            android:layout_marginTop="40dp"
+                            android:src="@drawable/baseline_settings_phone_24" />
 
                         <TextView
                             android:id="@+id/tv3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:text="Emergency"
-                            android:textAlignment="center"
-                            android:textSize="20dp" />
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="10dp"
+                            android:text="긴급전화"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            android:layout_marginLeft="10dp"
+
+                            android:textStyle="bold" />
                     </RelativeLayout>
 
 
@@ -471,41 +493,45 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:background="#123"
+
                 android:orientation="vertical">
 
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:alpha="0.7"
-                    app:cardCornerRadius="2dp">
+                    app:cardCornerRadius="20dp">
 
                     <RelativeLayout
                         android:id="@+id/case4"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="140dp"
                         android:clickable="true"
+                        android:background="#D4BED8"
                         tools:ignore="DuplicateIds">
 
 
                         <ImageView
                             android:id="@+id/img4"
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
-                            android:layout_above="@id/tv4"
-                            android:src="@drawable/baseline_favorite_border_24" />
+                            android:layout_height="100dp"
+                            android:layout_marginTop="35dp"
+                            android:src="@drawable/cummunityimg" />
 
                         <TextView
                             android:id="@+id/tv4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
+                            android:textStyle="bold"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
                             android:text="CUMMUNITY"
-                            android:textAlignment="center"
+                            android:textColor="@color/white"
                             android:textSize="20dp" />
                     </RelativeLayout>
 

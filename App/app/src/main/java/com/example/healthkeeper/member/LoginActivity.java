@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
         setContentView(binding.getRoot());
+
     }
 
     public void guardianlogin(String guardian_id,String guardian_pw){

@@ -52,6 +52,7 @@ public class GuardianJoinActivity extends AppCompatActivity {
 
 
         setContentView(binding.getRoot());
+
     }
 
 
