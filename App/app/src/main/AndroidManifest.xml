@@ -16,6 +16,17 @@
         android:theme="@style/Theme.HealthKeeper"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+                   <!--android:screenOrientation="portrait:cctvfullActivity에서 가로방향으로 화면 설정-->
+        <activity
+            android:name=".main.CCTVFullmainActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+        <activity
+            android:name=".main.CCTVActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+
         <activity
             android:name=".main.LoginBeforeActivity"
             android:exported="false" />
@@ -38,14 +49,12 @@
             android:name=".main.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".main.CommunityActivity"
+            android:name=".main.CummunityActivity"
             android:exported="false" />
         <activity
             android:name=".main.QAActivity"
             android:exported="false" />
-        <activity
-            android:name=".main.CCTVActivity"
-            android:exported="false" />
+
         <activity
             android:name=".main.MonitoringActivity"
             android:exported="false" />

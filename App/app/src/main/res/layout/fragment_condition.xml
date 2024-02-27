@@ -14,9 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
+
         app:selectionRequired="true"
         app:singleSelection="true"
-        android:background="#2E343B"
+
         app:chipGroupStyle="@drawable/chip_background_selector">
 
         <!-- 체온 Chip -->

@@ -50,6 +50,7 @@ public class PatientJoinActivity extends AppCompatActivity {
 
 
         setContentView(binding.getRoot());
+
     }
 
 

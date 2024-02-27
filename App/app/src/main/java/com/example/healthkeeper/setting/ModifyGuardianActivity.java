@@ -22,5 +22,7 @@ public class ModifyGuardianActivity extends AppCompatActivity {
     /*로그인 정보 가져오기*/
     public void getPreference(){
        getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE).getString("user_id","");
+        setContentView(R.layout.activity_modify_guardian);
+
     }
 }

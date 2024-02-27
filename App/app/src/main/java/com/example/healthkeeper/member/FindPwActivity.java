@@ -24,6 +24,7 @@ public class FindPwActivity extends AppCompatActivity {
         });
 
         setContentView(binding.getRoot());
+
     }
 
     public void infoPw(){
