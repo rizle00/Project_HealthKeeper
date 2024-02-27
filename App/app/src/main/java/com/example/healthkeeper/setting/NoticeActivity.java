@@ -26,6 +26,7 @@ public class NoticeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notice);
 
         binding = ActivityNoticeBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         NoticeAdapter nAdapter = new NoticeAdapter(getLayoutInflater(),getNotice());
         binding.recvNotice.setAdapter(nAdapter);
