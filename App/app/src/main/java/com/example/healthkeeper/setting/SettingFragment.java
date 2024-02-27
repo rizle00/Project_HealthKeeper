@@ -7,15 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.healthkeeper.databinding.FragmentMyMenuBinding;
+import com.example.healthkeeper.databinding.FragmentSettingBinding;
 
 
-public class MyMenuFragment extends Fragment {
-    FragmentMyMenuBinding binding;
+public class SettingFragment extends Fragment {
+    FragmentSettingBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentMyMenuBinding.inflate(getLayoutInflater());
+        binding = FragmentSettingBinding.inflate(getLayoutInflater());
 
         binding.llMemberModify.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), ModifyGuardianActivity.class);
