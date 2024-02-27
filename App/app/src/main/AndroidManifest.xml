@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" 카카오 로그인-->
 
     <application
         android:allowBackup="true"
@@ -27,6 +26,9 @@
             android:screenOrientation="portrait"
             android:exported="false" />
 
+        <activity
+            android:name=".setting.NoticeActivity"
+            android:exported="false" />
         <activity
             android:name=".main.LoginBeforeActivity"
             android:exported="false" />
@@ -60,9 +62,6 @@
             android:exported="false" />
         <activity
             android:name=".member.FindIdActivity"
-            android:exported="false" />
-        <activity
-            android:name=".setting.NoticeActivity"
             android:exported="false" />
         <activity
             android:name=".setting.HelpActivity"

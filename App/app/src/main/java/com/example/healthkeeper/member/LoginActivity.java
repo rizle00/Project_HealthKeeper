@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if(vo ==null){
                 Toast.makeText(this,"아이디 또는 패스워드 틀림",Toast.LENGTH_SHORT).show();
-                return;
+
             }else{
                 /*로그인 유지를 위한 정보 setting*/
                 SharedPreferences.Editor editor = preference.edit();
