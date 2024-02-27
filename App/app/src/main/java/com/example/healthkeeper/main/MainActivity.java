@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.ActivityMainBinding;
-import com.example.healthkeeper.setting.MyMenuFragment;
+import com.example.healthkeeper.setting.SettingFragment;
 
 public class MainActivity extends AppCompatActivity {
     private AlertDialog alertDialog;
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 setToolbarMenu(R.menu.toolbar_schedule);
                 return true;
             } else if (itemId == R.id.nav_setting) {
-                changeFragment(new MyMenuFragment());
+                changeFragment(new SettingFragment());
                 getSupportActionBar().setTitle(getColoredSpanned("나의 메뉴", customTextColor));
                 setToolbarMenu(R.menu.toolbar_setting);
                 return true;
