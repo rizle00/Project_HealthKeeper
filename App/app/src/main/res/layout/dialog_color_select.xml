@@ -1,0 +1,73 @@
+<RadioGroup
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/colorChangeGroup"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="20dp"
+
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="원하시는 색상을 선택해주세요"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold|italic"/>
+
+
+        <RadioButton
+            android:id="@+id/radioColor1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:textStyle="bold"
+
+            android:text="화이트" />
+
+
+
+
+        <RadioButton
+            android:id="@+id/radioColor2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:textStyle="bold"
+            android:text="민   트" />
+
+
+
+        <RadioButton
+            android:id="@+id/radioColor3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:textStyle="bold"
+            android:text="블   랙" />
+
+
+        <RadioButton
+            android:id="@+id/radioColor4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:textStyle="bold"
+            android:text="레   드" />
+
+        <RadioButton
+            android:id="@+id/radioColor5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:textStyle="bold"
+            android:text="엘로우" />
+
+
+
+
+</RadioGroup>

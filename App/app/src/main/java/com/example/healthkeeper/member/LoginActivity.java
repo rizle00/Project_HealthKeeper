@@ -77,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         naverLogin();
+        setContentView(binding.getRoot());
 
     }
 
