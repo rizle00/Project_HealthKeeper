@@ -29,5 +29,6 @@ public class JoinTypeActivity extends AppCompatActivity {
         });
 
         setContentView(binding.getRoot());
+
     }
 }

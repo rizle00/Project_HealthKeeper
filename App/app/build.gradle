@@ -35,6 +35,7 @@ dependencies {
     /*롬복 */
     compileOnly 'org.projectlombok:lombok:1.18.22'
     implementation "androidx.webkit:webkit:1.8.0"//webView API
+    implementation 'com.ms-square:expandableTextView:0.1.4'//
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
