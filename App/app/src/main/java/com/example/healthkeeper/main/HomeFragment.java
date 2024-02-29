@@ -22,6 +22,12 @@ public class HomeFragment extends Fragment {
     public String str=null;
     private AlertDialog alertDialog;
     FragmentHomeBinding binding;
+
+    public void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,8 +57,7 @@ public class HomeFragment extends Fragment {
             binding.case1.setOnClickListener(new View.OnClickListener() {//심박, 체온 현재상태보여줄 엑티비티
                 @Override
                 public void onClick(View v) {
-                    changeFragment(new ConditionFragment());
-
+                    startActivity(new Intent(getActivity(), ConditionActivity.class));
                 }
             });
 
@@ -73,7 +78,7 @@ public class HomeFragment extends Fragment {
             binding.case4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(getActivity(), CummunityActivity.class));
+                    startActivity(new Intent(getActivity(), CommunityActivity.class));
                 }
             });
         }
@@ -120,6 +125,7 @@ public class HomeFragment extends Fragment {
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     alertDialog.dismiss();
                 }
             });

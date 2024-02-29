@@ -37,36 +37,43 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
         // 툴바 추가
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        int customTextColor = getResources().getColor(R.color.white);//툴바의 타이틀 생상변경시 사용
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//뒤로가기 버튼만들기
-
+        getSupportActionBar().setTitle(getColoredSpanned("홈",customTextColor));
         changeFragment(new HomeFragment());
 
 
         binding.bottomNav.setOnNavigationItemSelectedListener(item -> {
+                              // btm_nav에 메뉴를 눌렀을때 툴바에 표시될 타이틀,메뉴와 색상지정!
             int itemId = item.getItemId();
-            int customTextColor = getResources().getColor(R.color.white);
 
             if (itemId == R.id.nav_home) {
                 changeFragment(new HomeFragment());
-                getSupportActionBar().setTitle(getColoredSpanned("홈", customTextColor));//툴바에 표시될 타이틀과 색상지정!
+
+                getSupportActionBar().setTitle(getColoredSpanned("홈", customTextColor));
                 setToolbarMenu(R.menu.toolbar_home);
 
                 return true;
             } else if (itemId == R.id.nav_119) {
-                getSupportActionBar().setTitle(getColoredSpanned("긴급연락", customTextColor));
                 showEmergencyDialog();
+
+                getSupportActionBar().setTitle(getColoredSpanned("긴급연락", customTextColor));
                 return true;
             } else if (itemId == R.id.nav_commu) {
-                //changeScheduleFragment(new ());
-                getSupportActionBar().setTitle(getColoredSpanned("CUMUNITY", customTextColor));
-                setToolbarMenu(R.menu.toolbar_cummunity);
+                Intent intent=new Intent(this,CommunityActivity.class);
+                startActivity(intent);
+                finish();
+
+
                 return true;
             } else if (itemId == R.id.nav_schedule) {
-                changeScheduleFragment(new ScheduleFragment());
+                changeFragment(new ScheduleFragment());
+
                 getSupportActionBar().setTitle(getColoredSpanned("일정관리", customTextColor));
                 setToolbarMenu(R.menu.toolbar_schedule);
                 return true;
@@ -83,10 +90,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+ @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+                         //아무것도 선택하지 않았을 경우 홈을 누른것처럼 툴바의 메뉴가 보이게 설정!
+        int selectedItem = binding.bottomNav.getSelectedItemId();
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {//툴바의 메뉴생성
-        getMenuInflater().inflate(R.menu.toolbar_home, menu);
+        if (selectedItem == R.id.nav_home) {
+            getMenuInflater().inflate(R.menu.toolbar_home, menu);
+
+        } else {
+           // getMenuInflater().inflate(R.menu.toolbar_home, menu);
+        }
+
         return true;
     }
 
@@ -95,16 +110,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {//툴바선택시....
         int id = item.getItemId();
 
-        if (id == R.id.menu_menu) {
-
-            return true;
-        } else if (id == R.id.menu_logout) {
+      if (id == R.id.menu_logout) {
             Intent intent = new Intent(this, LoginBeforeActivity.class);
             startActivity(intent);
             finish();
-            return true;
-        } else if (id == R.id.menu_setting) {
-
             return true;
         }else if (id == android.R.id.home) { //toolbar의 back키 눌렀을 때 동작
             finish();
@@ -186,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStack();// Fragment를 뒤로가기
 
         } else {

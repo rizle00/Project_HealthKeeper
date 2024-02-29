@@ -21,7 +21,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.Viewholder
 
     public NoticeAdapter(LayoutInflater inflater, List<GuardianMemberVO> list) {
         this.inflater = inflater;
-        this.list = list;
+        //this.list = list;   !!!!!!!!!!!!!
     }
 
     @NonNull

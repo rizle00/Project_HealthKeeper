@@ -28,8 +28,8 @@ public class NoticeActivity extends AppCompatActivity {
         binding = ActivityNoticeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        NoticeAdapter nAdapter = new NoticeAdapter(getLayoutInflater(),getNotice());
-        binding.recvNotice.setAdapter(nAdapter);
+        //NoticeAdapter nAdapter = new NoticeAdapter(getLayoutInflater(),getNotice()); !!!
+       // binding.recvNotice.setAdapter(nAdapter);          !!!!!!
         binding.recvNotice.setLayoutManager(new LinearLayoutManager(this));
     }
 
