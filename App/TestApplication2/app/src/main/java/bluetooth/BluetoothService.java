@@ -106,7 +106,7 @@ public class BluetoothService extends Service {
         this.resultHandler = ((App) getApplication()).mainThreadHandler;
         this.executor = ((App) getApplication()).executorService;
 
-        ContextCompat.registerReceiver(BluetoothService.this,mGattUpdateReceiver, makeGattUpdateIntentFilter(), RECEIVER_EXPORTED);
+        ContextCompat.registerReceiver(BluetoothService.this,mGattUpdateReceiver, makeGattUpdateIntentFilter(), ContextCompat.RECEIVER_EXPORTED);
         return mBinder;
     }
     //  서비스 연결 해제 시
