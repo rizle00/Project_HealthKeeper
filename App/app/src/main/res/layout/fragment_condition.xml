@@ -1,0 +1,105 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".main.ConditionFragment">
+
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+
+        app:selectionRequired="true"
+        app:singleSelection="true"
+
+        app:chipGroupStyle="@drawable/chip_background_selector">
+
+        <!-- 체온 Chip -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipTemperature"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="95dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:checked="true"
+            android:text="체온"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            app:chipIconEnabled="true"
+            app:chipMinHeight="40dp"
+            app:iconEndPadding="10dp"
+            app:iconStartPadding="10dp"
+            app:textEndPadding="5dp"
+            android:background="@drawable/chip_background_selector"
+            app:textStartPadding="5dp" />
+
+
+
+
+        <!-- 심박 Chip -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipHeartRate"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="95dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="10dp"
+            android:checked="false"
+            android:text="심박"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+
+            app:chipIconEnabled="true"
+            app:chipMinHeight="40dp"
+            app:iconEndPadding="10dp"
+            app:iconStartPadding="10dp"
+            app:textEndPadding="5dp"
+            app:textStartPadding="5dp" />
+
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/data"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="130dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="10dp"
+            android:checked="false"
+            android:text="주간통계"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            app:chipIconEnabled="true"
+            app:chipMinHeight="40dp"
+            app:iconEndPadding="10dp"
+            app:iconStartPadding="10dp"
+            app:textEndPadding="5dp"
+            app:textStartPadding="5dp" />
+
+
+    </com.google.android.material.chip.ChipGroup>
+
+
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+
+
+
+</LinearLayout>

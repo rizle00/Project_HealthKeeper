@@ -9,8 +9,15 @@
     android:orientation="vertical"
     >
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_color"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:menu="@menu/toolbar_home"
+        />
 
-<!--프레그 먼트로? 액티비티로?-->
     <!-- menu 리소스 , drawble : 선택 색상 -->
     <FrameLayout
         android:id="@+id/container"
@@ -22,10 +29,11 @@
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/menu_nav_btm"
         app:itemIconTint="@drawable/btm_menu_selector"
         app:itemTextColor="@drawable/btm_menu_selector"
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/menu_nav_btm"
+
         />
     <!--app:itemBackground:#FFFFFF-->
 

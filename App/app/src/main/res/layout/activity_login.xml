@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.LoginActivity"
+    tools:context=".member.LoginActivity"
     android:orientation="vertical"
     >
     <TextView
@@ -58,6 +58,15 @@
         android:src="@drawable/kakao_login_btn"
         android:background="#FEE500" />
     </androidx.cardview.widget.CardView>
+
+    <com.navercorp.nid.oauth.view.NidOAuthLoginButton
+        android:id="@+id/btn_naver_login"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="10dp"
+        android:background="#03C75A"
+        android:src="@drawable/img_naver_login" />
 
     <LinearLayout
         android:layout_marginTop="10dp"
