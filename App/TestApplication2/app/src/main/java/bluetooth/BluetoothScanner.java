@@ -21,10 +21,15 @@ import java.util.Set;
 public class BluetoothScanner {
     private final static String TAG = BluetoothScanner.class.getSimpleName();
     private final static String deviceName = "HM10";
+    private final Context mContext;
 
 
 
     private String deviceAddress;
+
+    public BluetoothScanner(Context mContext) {
+        this.mContext = mContext.getApplicationContext();
+    }
 
     public String getDeviceAddress() {
         return deviceAddress;
@@ -42,13 +47,14 @@ public class BluetoothScanner {
     }
 
     // 스캔 시작
-    public void startScan(Context context) {
+    public void startScan() {
         // 기기이름 배열로 추가 가능, 맥주소 등  세팅가능
         setScanRule();
+
         BleManager.getInstance().scan(new BleScanCallback() {
             @Override
             public void onScanStarted(boolean success) {
-                Toast.makeText(context, "스캔을 시작합니다", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "스캔을 시작합니다", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onScanning(BleDevice bleDevice) {
@@ -60,19 +66,19 @@ public class BluetoothScanner {
 
             @Override
             public void onScanFinished(List<BleDevice> scanResultList) {
-                showDeviceList(scanResultList, context);
+                showDeviceList(scanResultList);
             }
         });
     }
     // 스캔 결과 보여주기
-    private void showDeviceList(List<BleDevice> scanResultList, Context context) {
+    private void showDeviceList(List<BleDevice> scanResultList) {
         if (scanResultList.size() == 0) { // 스캔된 장치가 없는 경우.
-            Toast.makeText(context, "근처에 연결 가능한 장치가 없습니다. 재검색을 시도합니다.", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext.getApplicationContext(), "근처에 연결 가능한 장치가 없습니다. 재검색을 시도합니다.", Toast.LENGTH_LONG).show();
 
-            startScan(context);
+            startScan();
         } else {// 스캔된 장치가 있는 경우.
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
             builder.setTitle("블루투스 장치 선택");
 
             // 각 디바이스는 이름과(서로 다른) 주소를 가진다. 페어링 된 디바이스들을 표시한다.
@@ -99,7 +105,7 @@ public class BluetoothScanner {
                 @Override
                 public void onClick(DialogInterface dialog, int item) {
                     if (item == scanResultList.size()) { // 연결할 장치를 선택하지 않고 '취소' 를 누른 경우.
-                        Toast.makeText(context, "연결할 장치를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(mContext, "연결할 장치를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
                         //                    finish();
                     } else { // 연결할 장치를 선택한 경우, 선택한 장치와 연결을 시도함.
                         BleDevice selectedDevice = null;

@@ -48,7 +48,7 @@
         </service>
 
         <activity
-                android:name="bluetooth.BtActivity"
+                android:name="bluetooth.Newactivity"
                 android:exported="false"/>
 
         <service
@@ -67,7 +67,7 @@
                 android:name=".DeviceControlActivity"
                 android:exported="false"/>
         <activity
-                android:name="bluetooth.Newactivity"
+                android:name="bluetooth.BtActivity"
                 android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

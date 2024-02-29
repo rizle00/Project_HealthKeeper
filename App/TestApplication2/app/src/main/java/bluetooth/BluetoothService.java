@@ -34,13 +34,12 @@ public class BluetoothService extends Service {
     private BluetoothReceiver mBtReceiver;
     private BluetoothRepository mBtData;
 
-    private BluetoothAdapter mBluetoothAdapter;
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        bluetoothTask();
+//        bluetoothTask();
 //        if ("startForeground".equals(intent.getAction())) {
 //            // 포그라운드 서비스 시작
 //            startForegroundService();
@@ -107,6 +106,7 @@ public class BluetoothService extends Service {
         this.executor = ((App) getApplication()).executorService;
 
         ContextCompat.registerReceiver(BluetoothService.this,mGattUpdateReceiver, makeGattUpdateIntentFilter(), ContextCompat.RECEIVER_EXPORTED);
+        bluetoothTask();
         return mBinder;
     }
     //  서비스 연결 해제 시
@@ -149,9 +149,10 @@ public class BluetoothService extends Service {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                while(!mBound){// 블루투스 연결 끊겻을때만 시행
+                if(!mBound){// 블루투스 연결 끊겻을때만 시행
 
                     mBound = initialize();// 블루투스 초기화
+                    deviceAddress = mBtManger.checkPairing();// 페어링 된 디바이스가 있으면 주소 반환
                     if(deviceAddress == null) {// 페어링 되어있는지 체크
                         scan(mContext);// 되어있지 않을시 스캔
                         connect(mContext);
@@ -166,14 +167,12 @@ public class BluetoothService extends Service {
         // 여기에 블루투스 초기화 코드 작성
        mBtManger = new BTManger();
 
-        mBluetoothAdapter = mBtManger.getmBluetoothAdapter();
-       deviceAddress = mBtManger.checkPairing();// 페어링 된 디바이스가 있으면 주소 반환
         return mBtManger.initialize(getApplication());
     }
 
     public void scan(Context context){
-        mBtScanner = new BluetoothScanner();
-        mBtScanner.startScan(context);
+        mBtScanner = new BluetoothScanner(context);
+        mBtScanner.startScan();
         deviceAddress = mBtScanner.getDeviceAddress();
     }
     // 블루투스 연결 시도
