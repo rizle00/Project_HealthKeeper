@@ -148,10 +148,17 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("kakao login", "accesstoken: "+ oAuthToken.getAccessToken());
                     Log.d("kakao login", "refreshtoken: "+ oAuthToken.getRefreshToken());
 
+
                     Log.d("kakao login", "token id: "+ oAuthToken.getIdToken());
                     UserApiClient.getInstance().me((user, throwable) -> {
                         if(throwable ==null){
                             Log.d("kakao login", "invoke: "+user.getKakaoAccount().getProfile().getNickname());
+                            Log.d("kakao login", "invoke: "+user.getId());//숫자로 넘어옴 +  String  으로 저장
+                            CommonConn conn =new CommonConn("kakaologin",context);
+                            conn.addParamMap("kakaoid",user.getId());
+                            conn.onExcute((isResult, data) -> {
+
+                            });
 
 
                         }else{
@@ -170,7 +177,7 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("kakao Login", "loginWithKakaoAccount: 카카오톡이 설치되어있음");
             UserApiClient.getInstance().loginWithKakaoTalk(context,callback);
         }else{
-//            Log.d("kakao login", "loginWithKakaoAccount: 설치안되어있음");
+            Log.d("kakao login", "loginWithKakaoAccount: 설치안되어있음");
             UserApiClient.getInstance().loginWithKakaoAccount(context,callback);
         }
     }
@@ -190,7 +197,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("네이버", "onSuccess: " + nidProfileResponse.getProfile().getName());
                         Log.d("네이버", "onSuccess: " + nidProfileResponse.getProfile().getNickname());
                         Log.d("네이버", "onSuccess: " + nidProfileResponse.getProfile().getProfileImage());
-
+                        Log.d("네이버", "onSuccess: 아이디 "+nidProfileResponse.getProfile().getId());
                     }
 
                     @Override
