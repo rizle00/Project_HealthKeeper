@@ -43,6 +43,12 @@ public class BtActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         btSwitch();
+        Log.d(TAG, "onCreate: "+sBound);
+//        if(sBound){
+//            Intent intent = new Intent(this, BluetoothService.class);
+//            startService(intent);
+//        }
+
     }
 
 
@@ -154,8 +160,9 @@ public class BtActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             bluetoothService = ((BluetoothService.LocalBinder) service).getService();
             sBound = true;
-            bluetoothService.getContext(BtActivity.this);
+            bluetoothService.setContext(BtActivity.this);
             mBound = bluetoothService.getBound();
+
         }
 
         @Override

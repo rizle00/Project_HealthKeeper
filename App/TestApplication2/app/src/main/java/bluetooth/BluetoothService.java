@@ -14,30 +14,47 @@ import android.os.IBinder;
 import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.MutableLiveData;
 import com.example.testapplication2.*;
+import com.google.gson.Gson;
 
+import java.util.HashMap;
 import java.util.concurrent.Executor;
 
-public class BluetoothService extends Service {
-    private final static String TAG = MyService.class.getSimpleName();
+public class BluetoothService extends Service implements GattUpdateListener {
+    private final static String TAG = BluetoothService.class.getSimpleName();
 
     private Handler resultHandler;
     private  Executor executor;
     private boolean mBound, sBound; // mBound = bluegatt연결상태, sBound = 서비스 연결상태
     private String deviceAddress;
+
     private int heart, accident;
     private double temp;
+
+    public MutableLiveData<Integer> heartLiveData = new MutableLiveData<>(0);
+    public MutableLiveData<Integer> accidentLiveData = new MutableLiveData<>(0);
+    public MutableLiveData<Double> tempLiveData = new MutableLiveData<>((double) 0);
+
     private Context mContext;
     private BTManger mBtManger;
+    private BluetoothAdapter adapter;
     private BluetoothScanner mBtScanner;
     private BluetoothConnector mBtConnector;
     private BluetoothReceiver mBtReceiver;
-    private BluetoothRepository mBtData;
+    private BluetoothRepository repository;
+
 
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        repository = new BluetoothRepository(
+                ((App) getApplication()).mainThreadHandler,
+                ((App) getApplication()).executorService,
+                this
+        );
 
 //        bluetoothTask();
 //        if ("startForeground".equals(intent.getAction())) {
@@ -90,6 +107,31 @@ public class BluetoothService extends Service {
         startForeground(1, builder.build());
     }
 
+    @Override
+    public void onGattConnected() {
+        // 블루투스 연결 상태에 따른 처리
+        mBound = true;
+        Log.d(TAG, "Bluetooth connected");
+    }
+
+    @Override
+    public void onGattDisconnected() {
+// 블루투스 연결 해제 상태에 따른 처리
+        mBound = false;
+        Log.d(TAG, "Bluetooth disconnected");
+    }
+
+    @Override
+    public void onGattServicesDiscovered() {
+        // GATT 서비스 발견 상태에 따른 처리
+        Log.d(TAG, "Gatt services discovered");
+    }
+
+    @Override
+    public void onDataAvailable(Intent intent) {
+        handleData(intent);
+    }
+
     // Service 바인더 ============================
     public class LocalBinder extends Binder {
         BluetoothService getService() {
@@ -101,34 +143,44 @@ public class BluetoothService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
+        Log.d(TAG, "onBind: 바인드됨");
         sBound =true;
         this.resultHandler = ((App) getApplication()).mainThreadHandler;
         this.executor = ((App) getApplication()).executorService;
 
-        ContextCompat.registerReceiver(BluetoothService.this,mGattUpdateReceiver, makeGattUpdateIntentFilter(), ContextCompat.RECEIVER_EXPORTED);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter(), RECEIVER_EXPORTED);
+            }
         bluetoothTask();
         return mBinder;
     }
     //  서비스 연결 해제 시
     @Override
     public boolean onUnbind(Intent intent) {
-        stopForeground(true);//포그라운드 종료
-        stopSelf();// 서비스종료
-        disconnectGatt();
-        sBound =false;
+        unregisterReceiver(mGattUpdateReceiver);
+//        stopForeground(true);//포그라운드 종료
+//        stopSelf();// 서비스종료
+//        disconnectGatt();
+//        sBound =false;
         return super.onUnbind(intent);
     }
 
     public boolean getBound() {
         return mBound;
     }
-    public void getContext(Context context){
+    public void setContext(Context context){
         this.mContext = context;
     }
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.d(TAG, "onCreate: 서비스 생성됨");
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter(), RECEIVER_EXPORTED);
+//
+//        }
         Log.d(TAG, "onCreate: ");
+
     }
 
     @Override
@@ -151,34 +203,38 @@ public class BluetoothService extends Service {
             public void run() {
                 if(!mBound){// 블루투스 연결 끊겻을때만 시행
 
-                    mBound = initialize();// 블루투스 초기화
+                    initialize();// 블루투스 초기화
                     deviceAddress = mBtManger.checkPairing();// 페어링 된 디바이스가 있으면 주소 반환
+                    Log.d(TAG, "run: "+deviceAddress);
                     if(deviceAddress == null) {// 페어링 되어있는지 체크
-                        scan(mContext);// 되어있지 않을시 스캔
-                        connect(mContext);
-                    } else connect(mContext);
+                        scan();// 되어있지 않을시 스캔
+                        connect();
+                    } else connect();
                 }
 
             }
         });
     }
     // ble 초기화
-    public boolean initialize() {
+    public void initialize() {
         // 여기에 블루투스 초기화 코드 작성
        mBtManger = new BTManger();
-
-        return mBtManger.initialize(getApplication());
+        mBtManger.initialize(getApplication());
+       adapter = mBtManger.getmBluetoothAdapter();
+        Log.d(TAG, "initialize: "+adapter);
     }
 
-    public void scan(Context context){
-        mBtScanner = new BluetoothScanner(context);
+    public void scan(){
+        mBtScanner = new BluetoothScanner(mContext);
         mBtScanner.startScan();
         deviceAddress = mBtScanner.getDeviceAddress();
     }
     // 블루투스 연결 시도
-    public void connect(Context context) {
-        mBtConnector = new BluetoothConnector(context);
+    public void connect() {
+        mBtConnector = new BluetoothConnector(mContext, adapter);
         mBound = mBtConnector.connect(deviceAddress);
+        Log.d(TAG, "connect: "+mBound);
+        Log.d(TAG, "connect: "+deviceAddress);
     }
     // 블루투스 연결 해제
     public void disconnectGatt() {
@@ -200,12 +256,34 @@ public class BluetoothService extends Service {
                 Log.d(TAG, "onReceive: " + action);
             } else if (BluetoothAttributes.ACTION_DATA_AVAILABLE.equals(action)) {
                 Log.d(TAG, "onReceive: " + action);
-                heart = Integer.parseInt(intent.getStringExtra("heart"));
-                temp = Double.parseDouble(intent.getStringExtra("temp"));
-                accident = Integer.parseInt(intent.getStringExtra("accident"));
+               handleData(intent);
             }
         }
     };
+
+    private void handleData(Intent intent){
+
+        heart = Integer.parseInt(intent.getStringExtra("heart"));
+        temp = Double.parseDouble(intent.getStringExtra("temp"));
+        accident = Integer.parseInt(intent.getStringExtra("accident"));
+        heartLiveData.setValue(heart);
+        tempLiveData.setValue(temp);
+        accidentLiveData.setValue(accident);
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("heart", heart);
+        map.put("temp", temp);
+        map.put("accident", accident);// 0 -> 문제없음 , 1 -> 문제발생
+        repository.insertData(map, result -> {
+            if(result instanceof Result.Success){
+                Log.d(TAG, "handleData: "+((Result.Success<String>) result).data);
+            } else if(result instanceof Result.Error){
+                // 에러
+            }
+        });
+//        String json = new Gson().toJson(map);
+
+    }
 
     private static IntentFilter makeGattUpdateIntentFilter() {
         final IntentFilter intentFilter = new IntentFilter();

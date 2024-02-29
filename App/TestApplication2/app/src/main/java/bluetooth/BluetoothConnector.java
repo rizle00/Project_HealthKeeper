@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class BluetoothConnector {
+public class BluetoothConnector  {
     private final static String TAG = BluetoothConnector.class.getSimpleName();
     private BluetoothAdapter mBluetoothAdapter;
     private BluetoothGatt mBluetoothGatt;
@@ -20,14 +20,47 @@ public class BluetoothConnector {
     private Context mContext;
     private LocalBroadcastManager mLocalBroadcastManager;
 
+    private GattUpdateListener mGattUpdateListener;
+    public void setGattUpdateListener(GattUpdateListener listener) {
+        mGattUpdateListener = listener;
+    }
+
+    // GATT 연결 상태 변화를 감지하고 리스너에 알림
+    private void notifyGattConnectionState(boolean connected) {
+        if (mListener != null) {
+            if (connected) {
+                mListener.onGattConnected();
+            } else {
+                mListener.onGattDisconnected();
+            }
+        }
+    }
+
+    // 데이터 수신 이벤트를 감지하고 리스너에 알림
+    private void notifyDataReceived(int heartRate, double temperature, int accidentStatus) {
+        if (mListener != null) {
+            mListener.onDataReceived(heartRate, temperature, accidentStatus);
+        }
+    }
+
+    // GATT 서비스 디스커버리 이벤트를 감지하고 리스너에 알림
+    private void notifyGattServicesDiscovered() {
+        if (mListener != null) {
+            mListener.onGattServicesDiscovered();
+        }
+    }
     // 생성자에서 컨텍스트 초기화
-    public BluetoothConnector(Context context) {
-        mContext = context;
-        mLocalBroadcastManager = LocalBroadcastManager.getInstance(mContext);
+    public BluetoothConnector(Context context, BluetoothAdapter adapter) {
+        this.mContext = context;
+        Log.d(TAG, "BluetoothConnector: "+adapter);
+        this.mBluetoothAdapter = adapter;
+        this.mLocalBroadcastManager = LocalBroadcastManager.getInstance(context);
+        Log.d(TAG, "BluetoothConnector: "+mLocalBroadcastManager);
     }
     // 블루투스 연결 시도
     @SuppressLint("MissingPermission")
     public boolean connect(final String address) {
+        Log.d(TAG, "connect: "+mBluetoothAdapter);
         if (mBluetoothAdapter == null || address == null) {
             Log.w(TAG, "BluetoothAdapter not initialized or unspecified address.");
             return false;
@@ -87,12 +120,22 @@ public class BluetoothConnector {
 
                 Log.d(TAG, "onConnectionStateChange: " + gatt.getDevice().getName());
 
+                // 연결됨 상태 변화를 리스너에 알림
+                if (mGattUpdateListener != null) {
+                    mGattUpdateListener.onGattConnected();
+                }
+
 
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 intentAction = BluetoothAttributes.ACTION_GATT_DISCONNECTED;
                 mConnectionState = BluetoothAttributes.STATE_DISCONNECTED;
                 Log.i(TAG, "Disconnected from GATT server.");
                 broadcastUpdate(intentAction);
+
+                // 연결 해제 상태 변화를 리스너에 알림
+                if (mGattUpdateListener != null) {
+                    mGattUpdateListener.onGattDisconnected();
+                }
             }
         }
 
@@ -101,6 +144,9 @@ public class BluetoothConnector {
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 broadcastUpdate(BluetoothAttributes.ACTION_GATT_SERVICES_DISCOVERED);
+                if (mGattUpdateListener != null) {
+                    mGattUpdateListener.onGattServicesDiscovered();
+                }
                 // 캐릭터 노티파이 설정
                 BluetoothGattCharacteristic characteristic =
                         gatt.getService(UUID.fromString(BluetoothAttributes.SERVICE_UUID))
@@ -125,6 +171,9 @@ public class BluetoothConnector {
         public void onCharacteristicChanged(BluetoothGatt gatt,
                                             BluetoothGattCharacteristic characteristic) {
             broadcastUpdate(BluetoothAttributes.ACTION_DATA_AVAILABLE, characteristic);
+            if (mGattUpdateListener != null) {
+                mGattUpdateListener.onDataAvailable();
+            }
         }
     };
 
@@ -166,8 +215,12 @@ public class BluetoothConnector {
                                  final BluetoothGattCharacteristic characteristic) {
         final Intent intent = new Intent(action);
 // 데이터 처리 및 업데이트
+        Log.d(TAG, "broadcastUpdate: "+mLocalBroadcastManager);
         final byte[] data = characteristic.getValue();
-        if (data != null && data.length > 0) {
+        if (data != null && data.length > 1) {
+            Log.d(TAG, "broadcastUpdate: "+action);
+            Log.d(TAG, "broadcastUpdate: "+new String(data));
+            Log.d(TAG, "broadcastUpdate: "+data.length);
             HashMap<String,String> extractedData = extractData(new String(data, StandardCharsets.UTF_8));
             intent.putExtra("heart",extractedData.get("hr") );
             intent.putExtra("temp",extractedData.get("tp") );
@@ -176,12 +229,13 @@ public class BluetoothConnector {
 
         mLocalBroadcastManager.sendBroadcast(intent);
     }
-    public static HashMap<String, String> extractData(String data) {
+    public HashMap<String, String> extractData(String data) {
 
 
         HashMap<String, String> extractedData = new HashMap<>();
 
         String[] items = data.split(",");
+        Log.d(TAG, "extractData: "+items.length);
 
         for (int i = 0; i < items.length; i += 2) {
             extractedData.put(items[i], items[i + 1]);
@@ -189,4 +243,6 @@ public class BluetoothConnector {
 
         return extractedData;
     }
+
+
 }
