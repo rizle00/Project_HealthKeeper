@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".main.ConditionFragment">
+    tools:context=".main.ConditionActivity">
 
 
     <com.google.android.material.chip.ChipGroup
@@ -14,10 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
-
         app:selectionRequired="true"
         app:singleSelection="true"
-
         app:chipGroupStyle="@drawable/chip_background_selector">
 
         <!-- 체온 Chip -->
@@ -30,7 +28,7 @@
             android:layout_marginRight="10dp"
             android:checked="true"
             android:text="체온"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:textStyle="bold"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
@@ -39,7 +37,7 @@
             app:iconEndPadding="10dp"
             app:iconStartPadding="10dp"
             app:textEndPadding="5dp"
-            android:background="@drawable/chip_background_selector"
+            android:background="@color/white"
             app:textStartPadding="5dp" />
 
 
@@ -55,7 +53,7 @@
             android:layout_marginRight="10dp"
             android:checked="false"
             android:text="심박"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:textStyle="bold"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
@@ -77,7 +75,7 @@
             android:layout_marginRight="10dp"
             android:checked="false"
             android:text="주간통계"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:textStyle="bold"
             android:textAlignment="center"
             android:textColor="#FFFFFF"

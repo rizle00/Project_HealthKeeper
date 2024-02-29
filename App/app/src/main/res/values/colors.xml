@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="main_color">#2A877E</color>
+    <color name="led">#F73729</color>
 
 
 
@@ -12,9 +13,9 @@
     <color name="unselectedChipColor">#FAFAFA</color>
 
 
-    <color name="radioColor1">#FFFFFF</color>
+    <color name="radioColor1">#EDEAEA</color>
     <color name="radioColor2">#4ED1C5</color>
     <color name="radioColor3">#0F0707</color>
-    <color name="radioColor4">#F73729</color>
+    <color name="radioColor4">#F48981</color>
     <color name="radioColor5">#FAE525</color>
 </resources>

@@ -26,6 +26,7 @@ public class HeartRateFragment extends Fragment {
     private String PREFS_NAME="MyHeartPrefs";
     private String  KEY_SELECTED_COLOR="selectedColor";
     private String KEY_SELECTED_TEXT_COLOR="selectedTextColor";
+    private String KEY_SELECTED_TEXT_COLOR2="selectedTextColor2";
 
 
     @Override
@@ -74,6 +75,7 @@ public class HeartRateFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 int selectedColor = 0;
                 int selectedTextColor = Color.WHITE; // 기본적으로 텍스트 색상을 화이트로 설정
+                int selectedTextColor2 = Color.BLACK; // 기본적으로 텍스트 색상을 블랙으로 설정
 
                 int checkedRadioButtonId = colorChangeGroup.getCheckedRadioButtonId();
 
@@ -82,11 +84,12 @@ public class HeartRateFragment extends Fragment {
 
                     if (checkedRadioButton.getId() == R.id.radioColor1) {
                         selectedColor = ContextCompat.getColor(requireContext(), R.color.radioColor1);
-                        selectedTextColor = Color.BLACK;
+                       selectedTextColor = Color.BLACK;
                     } else if (checkedRadioButton.getId() == R.id.radioColor2) {
                         selectedColor = ContextCompat.getColor(requireContext(), R.color.radioColor2);
                     } else if (checkedRadioButton.getId() == R.id.radioColor3) {
                         selectedColor = ContextCompat.getColor(requireContext(), R.color.radioColor3);
+                        selectedTextColor2=Color.WHITE;
                     } else if (checkedRadioButton.getId() == R.id.radioColor4) {
                         selectedColor = ContextCompat.getColor(requireContext(), R.color.radioColor4);
                     } else if (checkedRadioButton.getId() == R.id.radioColor5) {
@@ -94,10 +97,14 @@ public class HeartRateFragment extends Fragment {
                     }
                 }
 
-                saveColorSettings(selectedColor,selectedTextColor);
+                saveColorSettings(selectedColor,selectedTextColor,selectedTextColor2);
+
+                setChipGroupBackgroundColor(selectedColor);
+
 
                 binding.HeartlateLinearlayout.setBackgroundColor(selectedColor);
                 binding.tvSate.setTextColor(selectedTextColor);
+                binding.tvTitle.setTextColor(selectedTextColor2);
             }
         });
 
@@ -105,11 +112,12 @@ public class HeartRateFragment extends Fragment {
         builder.show();
     }
 
-    private void saveColorSettings(int selectedColor, int selectedTextColor) {//바꾼배경 설정저장
+    private void saveColorSettings(int selectedColor, int selectedTextColor,int selectedTextColor2) {//바꾼배경 설정저장
         SharedPreferences preferences=requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=preferences.edit();
         editor.putInt(KEY_SELECTED_COLOR,selectedColor);
         editor.putInt(KEY_SELECTED_TEXT_COLOR,selectedTextColor);
+        editor.putInt(KEY_SELECTED_TEXT_COLOR2,selectedTextColor2);
         editor.apply();
 
     }
@@ -117,8 +125,20 @@ public class HeartRateFragment extends Fragment {
         SharedPreferences preferences=requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         int selectedColor= preferences.getInt(KEY_SELECTED_COLOR,0);
         int selectedTextColor= preferences.getInt(KEY_SELECTED_TEXT_COLOR,Color.WHITE);
+        int selectedTextColor2= preferences.getInt(KEY_SELECTED_TEXT_COLOR2,Color.BLACK);
 
         binding.HeartlateLinearlayout.setBackgroundColor(selectedColor);
         binding.tvSate.setTextColor(selectedTextColor);
+        binding.tvTitle.setTextColor(selectedTextColor2);
+        setChipGroupBackgroundColor(selectedColor);
+    }
+
+    private void setChipGroupBackgroundColor(int selectedColor) {
+        if(getActivity() instanceof  ConditionActivity){
+            ConditionActivity conditionActivity=(ConditionActivity) getActivity();
+            if(conditionActivity.binding != null && conditionActivity.binding.chipGroup !=null){
+                conditionActivity.binding.chipGroup.setBackgroundColor(selectedColor);
+            }
+        }
     }
 }
