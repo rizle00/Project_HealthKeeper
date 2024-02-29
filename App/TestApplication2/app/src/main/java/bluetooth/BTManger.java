@@ -46,7 +46,6 @@ public class BTManger {
                 .setOperateTimeout(5 * 1000);
 
         mBluetoothAdapter = mBluetoothManager.getAdapter();
-
         if (mBluetoothAdapter == null) {
             Log.e(TAG, "Unable to obtain a BluetoothAdapter.");
             return false;
@@ -61,7 +60,8 @@ public class BTManger {
             deviceList = mBluetoothAdapter.getBondedDevices();
             for (BluetoothDevice device : deviceList) {
                 if (device.getName() != null && device.getName().equals(deviceName)) {
-
+                    Log.d(TAG, "checkPairing: "+device.getName());
+                    Log.d(TAG, "checkPairing: "+device.getAddress());
                     return device.getAddress();
                 }
             }

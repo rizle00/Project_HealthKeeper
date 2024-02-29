@@ -44,7 +44,9 @@ public class MyService extends Service {
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .build();
 
-        startForeground(2000, notification);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
+            startForeground(2000, notification);
+        }
 
         repository.longTask(result -> {
             if(result instanceof Result.Success){
