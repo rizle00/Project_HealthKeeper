@@ -27,7 +27,7 @@ public class MemberController {
 	}
 
 	
-	@GetMapping("/andlogin")
+	@PostMapping("/andlogin")
 	public ResponseEntity<String> login(String guardian_id, String guardian_pw) {
 		System.out.println("요청");
 		MemberVO vo = service.login(guardian_id);
