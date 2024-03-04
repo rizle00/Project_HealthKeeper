@@ -32,4 +32,12 @@ public class MemberService {
 	public int resetpw(MemberVO vo) {
 		return sql.update("me.resetPassword",vo);
 	}
+	
+	public String socialIdCheck(String social) {
+		return sql.selectOne("me.socialCheck",social);
+	}
+	
+	public MemberVO socialLogin(String social) {
+		return sql.selectOne("me.socialLogin",social);
+	}
 }

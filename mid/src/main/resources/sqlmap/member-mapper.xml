@@ -19,4 +19,10 @@
 <update id="resetpw">
 	UPDATE GUARDIAN_ID	SET GUARDIAN_PW = #{GUARDIAN_PW} WHERE GUARDIAN_ID = #{GUARDIAN_ID}
 </update>
+<select id= "socialCheck" resultType="String">
+	SELECT COUNT(*) FROM PROJECT_MEMBER WHERE SOCIAL = #{social}
+</select>
+<select id="socialLogin" resultType="member">
+	SELECT * FROM PROJECT_MEMBER WHERE SOCIAL = #{social}
+</select>
 </mapper>

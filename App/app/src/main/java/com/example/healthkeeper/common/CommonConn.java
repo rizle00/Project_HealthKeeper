@@ -77,4 +77,5 @@ public class CommonConn {
         public void onResult(boolean isResult, String data);
     }
 
+
 }
