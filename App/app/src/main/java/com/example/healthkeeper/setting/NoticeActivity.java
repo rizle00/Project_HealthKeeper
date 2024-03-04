@@ -31,6 +31,7 @@ public class NoticeActivity extends AppCompatActivity {
         NoticeAdapter nAdapter = new NoticeAdapter(getLayoutInflater(),getNotice());
         binding.recvNotice.setAdapter(nAdapter);
         binding.recvNotice.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     public List<NoticeVO> getNotice(){
