@@ -1,6 +1,8 @@
 package com.example.healthkeeper.main;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -15,6 +17,8 @@ import android.widget.TextView;
 
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.FragmentHomeBinding;
+
+import java.util.Map;
 
 
 public class HomeFragment extends Fragment {
@@ -36,9 +40,12 @@ public class HomeFragment extends Fragment {
 
             Intent intent = getActivity().getIntent();
             if (intent != null) {
-                String name = intent.getStringExtra("edt_user_name");//Intent에서 "edt_user_name" 키로 전달된 값을 가져옴
-                final String userID = intent.getStringExtra("edt_user_id");
-                binding.edtUserName.setText(name + "님");
+
+
+                /*하단 setUserName(); 로 대체*/
+//                String name = intent.getStringExtra("edt_user_name");//Intent에서 "edt_user_name" 키로 전달된 값을 가져옴
+//                final String userID = intent.getStringExtra("edt_user_id");
+//                binding.edtUserName.setText(name + "님");
             }
 
           /*  binding.btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +54,10 @@ public class HomeFragment extends Fragment {
                     startActivity(new Intent(getActivity(), LoginBeforeActivity.class));
                 }
             });*/
+
+            //메인화면 이름 호출
+            setUserName();
+
 
             binding.case1.setOnClickListener(new View.OnClickListener() {//심박, 체온 현재상태보여줄 엑티비티
                 @Override
@@ -127,6 +138,12 @@ public class HomeFragment extends Fragment {
             alertDialog = builder.create();
             alertDialog.show();
         }
+
+        public void setUserName(){
+            SharedPreferences pref = this.getActivity().getSharedPreferences("PROJECT_MEMBER",Context.MODE_PRIVATE);
+            binding.edtUserName.setText(pref.getString("user_name","익명")+ "님");
+        }
+
     }
 
 

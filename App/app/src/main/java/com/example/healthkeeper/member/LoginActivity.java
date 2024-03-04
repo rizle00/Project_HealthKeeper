@@ -101,7 +101,9 @@ public class LoginActivity extends AppCompatActivity {
                 /*로그인 유지를 위한 정보 setting*/
                 SharedPreferences.Editor editor = preference.edit();
                 editor.putString("user_id",vo.getGuardian_id());
-                editor.commit();
+                editor.putString("user_name",vo.getGuardian_name());
+                editor.apply();
+                Log.d("login info", "guardianlogin: "+vo.getGuardian_name());
 
                 /*기존에 켜져있는 액티비티 종료*/
                 LoginBeforeActivity lba = (LoginBeforeActivity)LoginBeforeActivity._loginBeforeActivity;
