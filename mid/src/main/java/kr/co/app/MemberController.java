@@ -57,6 +57,21 @@ public class MemberController {
 		return ResponseEntity.ok(service.findid(find_info));
 	}
 	
+	@PostMapping("/kakaologin")
+	public ResponseEntity<String> kakaologin(String social) {
+//		MemberVO kakaoVo = new Gson().fromJson(vo, MemberVO.class);
+		
+		if(service.socialIdCheck(social).equals("0")) {
+			return ResponseEntity.ok("join");
+		}else {
+			String returnVO = new Gson().toJson(service.socialLogin(social));
+			System.out.println(returnVO);
+			return ResponseEntity.ok(returnVO);
+		}
+	}
+	
+	
+	
 	@RequestMapping("/andfindpw")
 	public void resetpw(String vo) {
 		MemberVO find_info = new Gson().fromJson(vo,MemberVO.class);
@@ -68,4 +83,8 @@ public class MemberController {
 		}
 		
 	}
+	
+	
+	
+	
 }

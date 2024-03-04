@@ -101,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         } else if (id == R.id.menu_logout) {
+            SharedPreferences pref = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.clear();
             Intent intent = new Intent(this, LoginBeforeActivity.class);
             startActivity(intent);
             finish();

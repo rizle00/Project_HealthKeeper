@@ -3,7 +3,23 @@ package kr.co.app.member;
 
 
 public class MemberVO {
-    private String guardian_id, guardian_pw, guardian_email, guardian_phone, social, alram, patient_id, guardian_name;
+    private String guardian_id,gender, bloodtype, guardian_pw, guardian_email, guardian_phone, social, alram, patient_id, guardian_name;
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getBloodtype() {
+		return bloodtype;
+	}
+
+	public void setBloodtype(String bloodtype) {
+		this.bloodtype = bloodtype;
+	}
 
 	public String getGuardian_id() {
 		return guardian_id;

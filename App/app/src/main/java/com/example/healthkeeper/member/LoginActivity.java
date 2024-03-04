@@ -1,10 +1,12 @@
 package com.example.healthkeeper.member;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -105,14 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                 editor.apply();
                 Log.d("login info", "guardianlogin: "+vo.getGuardian_name());
 
-                /*기존에 켜져있는 액티비티 종료*/
-                LoginBeforeActivity lba = (LoginBeforeActivity)LoginBeforeActivity._loginBeforeActivity;
-                lba.finish();
-
-                /*화면 전환*/
-                Intent intent = new Intent(this,MainActivity.class);
-                startActivity(intent);
-                finish();
+               loginSuccess();
             }
         });
     }
@@ -142,24 +137,50 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginWithKakaoAccount(Context context){
         KakaoSdk.init(this,"1cf34851d43903b60a3c465f4245ef4f");//{NATIVE_APP_KEY}
+        Intent intent = new Intent(this, SimpleJoinActivity.class);
+
 
         Function2<OAuthToken, Throwable, Unit> callback = new Function2<OAuthToken, Throwable, Unit>() {
             @Override
             public Unit invoke(OAuthToken oAuthToken, Throwable error) {
                 if(error == null){
-                    Log.d("kakao login", "accesstoken: "+ oAuthToken.getAccessToken());
-                    Log.d("kakao login", "refreshtoken: "+ oAuthToken.getRefreshToken());
-
-
-                    Log.d("kakao login", "token id: "+ oAuthToken.getIdToken());
                     UserApiClient.getInstance().me((user, throwable) -> {
                         if(throwable ==null){
-                            Log.d("kakao login", "invoke: "+user.getKakaoAccount().getProfile().getNickname());
-                            Log.d("kakao login", "invoke: "+user.getId());//숫자로 넘어옴 +  String  으로 저장
                             CommonConn conn =new CommonConn("kakaologin",context);
-                            conn.addParamMap("kakaoid",user.getId());
-                            conn.onExcute((isResult, data) -> {
+                            GuardianMemberVO vo = new GuardianMemberVO();
 
+                            conn.addParamMap("social",String.valueOf(user.getId()));
+
+                            conn.onExcute((isResult, data) -> {
+                                //가입 정보가 없을때 , 간편 회원가입으로 이동
+                                if(data.equals("join")){
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this)
+                                            .setMessage("가입되어있지 않은 회원입니다. 가입하시겠습니까?").setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            intent.putExtra("social", String.valueOf(user.getId()));
+                                                            startActivity(intent);
+                                                        }
+                                                    }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.cancel();
+                                                }
+                                            });
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
+
+
+                                }else { //로그인 성공
+                                    SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
+                                    GuardianMemberVO kakaoVo = new Gson().fromJson(data, GuardianMemberVO.class);
+                                    SharedPreferences.Editor editor = preference.edit();
+                                    editor.putString("user_id", kakaoVo.getGuardian_id());
+                                    editor.putString("user_name", kakaoVo.getGuardian_name());
+                                    editor.apply();
+
+                                    loginSuccess();
+                                }
                             });
 
 
@@ -185,6 +206,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void naverLogin(){
+        CommonConn conn = new CommonConn("naverlogin",this);
         final String TAG= "naevr Login";
         binding.btnNaverLogin.setOAuthLogin(new OAuthLoginCallback() {
             @Override
@@ -200,7 +222,14 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("네이버", "onSuccess: " + nidProfileResponse.getProfile().getNickname());
                         Log.d("네이버", "onSuccess: " + nidProfileResponse.getProfile().getProfileImage());
                         Log.d("네이버", "onSuccess: 아이디 "+nidProfileResponse.getProfile().getId());
+
+                        GuardianMemberVO vo = new GuardianMemberVO();
+
+
+
                     }
+
+
 
                     @Override
                     public void onFailure(int i, @NonNull String s) {
@@ -225,4 +254,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    public void loginSuccess() {
+
+        /*기존에 켜져있는 액티비티 종료*/
+        LoginBeforeActivity lba = (LoginBeforeActivity)LoginBeforeActivity._loginBeforeActivity;
+        lba.finish();
+
+        /*화면 전환*/
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }
