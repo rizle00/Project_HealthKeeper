@@ -51,12 +51,14 @@ public class CommonConn {
     }
 
     public void onExcute(appCallBack callBack){
-        onPreExcute();
+//        onPreExcute();
         CommonService service = CommonClient.getRetrofit().create(CommonService.class);
-
+        Log.d(TAG, "map: "+paramMap);
         service.clientPostMethod(url,paramMap).enqueue(new Callback<String>() {
+
             @Override
             public void onResponse(retrofit2.Call<String> call, Response<String> response) {
+
                 Log.i(TAG, "onResponse: " + response.body());
                 Log.i(TAG, "onResponse: " + response.errorBody());
                 //옵저버 패턴 3번 호출 -> MainActivity
@@ -73,7 +75,7 @@ public class CommonConn {
                 callBack.onResult(false,t.getMessage());
             }
         });
-        onPostExcute();
+//        onPostExcute();
     }
 
     private void onPostExcute() {

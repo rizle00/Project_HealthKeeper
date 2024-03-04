@@ -5,62 +5,43 @@ import android.bluetooth.*;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import androidx.lifecycle.MutableLiveData;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import org.jetbrains.annotations.NotNull;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class BluetoothConnector  {
+public class BluetoothConnector {
     private final static String TAG = BluetoothConnector.class.getSimpleName();
     private BluetoothAdapter mBluetoothAdapter;
     private BluetoothGatt mBluetoothGatt;
     private String mBluetoothDeviceAddress;
     private int mConnectionState;
     private Context mContext;
-    private LocalBroadcastManager mLocalBroadcastManager;
+    private BluetoothRepository repository;
 
-    private GattUpdateListener mGattUpdateListener;
-    public void setGattUpdateListener(GattUpdateListener listener) {
-        mGattUpdateListener = listener;
-    }
+    public MutableLiveData<String> heartLiveData = new MutableLiveData<>("0");
+    public MutableLiveData<String> accidentLiveData = new MutableLiveData<>("0");
+    public MutableLiveData<String > tempLiveData = new MutableLiveData<>("0");
+//    private LocalBroadcastManager mLocalBroadcastManager;
 
-    // GATT 연결 상태 변화를 감지하고 리스너에 알림
-    private void notifyGattConnectionState(boolean connected) {
-        if (mListener != null) {
-            if (connected) {
-                mListener.onGattConnected();
-            } else {
-                mListener.onGattDisconnected();
-            }
-        }
-    }
 
-    // 데이터 수신 이벤트를 감지하고 리스너에 알림
-    private void notifyDataReceived(int heartRate, double temperature, int accidentStatus) {
-        if (mListener != null) {
-            mListener.onDataReceived(heartRate, temperature, accidentStatus);
-        }
-    }
-
-    // GATT 서비스 디스커버리 이벤트를 감지하고 리스너에 알림
-    private void notifyGattServicesDiscovered() {
-        if (mListener != null) {
-            mListener.onGattServicesDiscovered();
-        }
-    }
     // 생성자에서 컨텍스트 초기화
-    public BluetoothConnector(Context context, BluetoothAdapter adapter) {
+    public BluetoothConnector(Context context, BluetoothAdapter adapter, BluetoothRepository repository) {
         this.mContext = context;
-        Log.d(TAG, "BluetoothConnector: "+adapter);
+        Log.d(TAG, "BluetoothConnector: " + adapter);
         this.mBluetoothAdapter = adapter;
-        this.mLocalBroadcastManager = LocalBroadcastManager.getInstance(context);
-        Log.d(TAG, "BluetoothConnector: "+mLocalBroadcastManager);
+        this.repository = repository;
+//        this.mLocalBroadcastManager = LocalBroadcastManager.getInstance(context);
+//        Log.d(TAG, "BluetoothConnector: "+mLocalBroadcastManager);
     }
+
     // 블루투스 연결 시도
     @SuppressLint("MissingPermission")
     public boolean connect(final String address) {
-        Log.d(TAG, "connect: "+mBluetoothAdapter);
+        Log.d(TAG, "connect: " + mBluetoothAdapter);
         if (mBluetoothAdapter == null || address == null) {
             Log.w(TAG, "BluetoothAdapter not initialized or unspecified address.");
             return false;
@@ -120,11 +101,6 @@ public class BluetoothConnector  {
 
                 Log.d(TAG, "onConnectionStateChange: " + gatt.getDevice().getName());
 
-                // 연결됨 상태 변화를 리스너에 알림
-                if (mGattUpdateListener != null) {
-                    mGattUpdateListener.onGattConnected();
-                }
-
 
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 intentAction = BluetoothAttributes.ACTION_GATT_DISCONNECTED;
@@ -132,10 +108,6 @@ public class BluetoothConnector  {
                 Log.i(TAG, "Disconnected from GATT server.");
                 broadcastUpdate(intentAction);
 
-                // 연결 해제 상태 변화를 리스너에 알림
-                if (mGattUpdateListener != null) {
-                    mGattUpdateListener.onGattDisconnected();
-                }
             }
         }
 
@@ -144,9 +116,7 @@ public class BluetoothConnector  {
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 broadcastUpdate(BluetoothAttributes.ACTION_GATT_SERVICES_DISCOVERED);
-                if (mGattUpdateListener != null) {
-                    mGattUpdateListener.onGattServicesDiscovered();
-                }
+
                 // 캐릭터 노티파이 설정
                 BluetoothGattCharacteristic characteristic =
                         gatt.getService(UUID.fromString(BluetoothAttributes.SERVICE_UUID))
@@ -170,13 +140,44 @@ public class BluetoothConnector  {
         @Override// 노티파이 데이터 읽을시
         public void onCharacteristicChanged(BluetoothGatt gatt,
                                             BluetoothGattCharacteristic characteristic) {
-            broadcastUpdate(BluetoothAttributes.ACTION_DATA_AVAILABLE, characteristic);
-            if (mGattUpdateListener != null) {
-                mGattUpdateListener.onDataAvailable();
+//            broadcastUpdate(BluetoothAttributes.ACTION_DATA_AVAILABLE, characteristic);
+            if(characteristic.getValue().length>1){
+            repository.insertData(handleData(characteristic));
             }
+
         }
     };
 
+    public HashMap<String, Object> handleData(BluetoothGattCharacteristic characteristic) {
+        final byte[] data = characteristic.getValue();
+        HashMap<String, String> extractedData = new HashMap<>();
+        HashMap<String, Object> dataMap = new HashMap<>();
+        if (data != null && data.length > 1) {
+            Log.d(TAG, "broadcastUpdate: " + data.length);
+            String strData = new String(data, StandardCharsets.UTF_8);
+            String[] items = strData.split(",");
+            Log.d(TAG, "extractData: " + items.length);
+
+            for (int i = 0; i < items.length; i += 2) {
+                extractedData.put(items[i], items[i + 1]);
+            }
+            dataMap.put("heart", extractedData.get("hr"));
+            dataMap.put("temp", extractedData.get("tp"));
+            dataMap.put("accident", extractedData.get("ac"));
+            Log.d(TAG, "handleData: "+dataMap.toString());
+            setLiveData(dataMap);
+        }
+        return dataMap;
+    }
+
+    private void setLiveData(HashMap<String, Object> dataMap){
+        String heart = dataMap.get("heart").toString();
+        String  temp = dataMap.get("temp").toString();
+        String  accident = dataMap.get("accident").toString();
+        heartLiveData.postValue(heart);
+        tempLiveData.postValue(temp);
+        accidentLiveData.postValue(accident);
+    }
     @SuppressLint("MissingPermission")
     public void readCharacteristic(BluetoothGattCharacteristic characteristic) {
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
@@ -208,34 +209,36 @@ public class BluetoothConnector  {
     private void broadcastUpdate(final String action) {
         final Intent intent = new Intent(action);
         Log.d(TAG, "broadcastUpdate: " + action);
-        mLocalBroadcastManager.sendBroadcast(intent);
+//        mLocalBroadcastManager.sendBroadcast(intent);
     }
+
     // 데이터에 대한 브로드캐스트 업데이트
     private void broadcastUpdate(final String action,
                                  final BluetoothGattCharacteristic characteristic) {
         final Intent intent = new Intent(action);
 // 데이터 처리 및 업데이트
-        Log.d(TAG, "broadcastUpdate: "+mLocalBroadcastManager);
+//        Log.d(TAG, "broadcastUpdate: "+mLocalBroadcastManager);
         final byte[] data = characteristic.getValue();
         if (data != null && data.length > 1) {
-            Log.d(TAG, "broadcastUpdate: "+action);
-            Log.d(TAG, "broadcastUpdate: "+new String(data));
-            Log.d(TAG, "broadcastUpdate: "+data.length);
-            HashMap<String,String> extractedData = extractData(new String(data, StandardCharsets.UTF_8));
-            intent.putExtra("heart",extractedData.get("hr") );
-            intent.putExtra("temp",extractedData.get("tp") );
-            intent.putExtra("accident",extractedData.get("ac") );
+            Log.d(TAG, "broadcastUpdate: " + action);
+            Log.d(TAG, "broadcastUpdate: " + new String(data));
+            Log.d(TAG, "broadcastUpdate: " + data.length);
+            HashMap<String, String> extractedData = extractData(new String(data, StandardCharsets.UTF_8));
+            intent.putExtra("heart", extractedData.get("hr"));
+            intent.putExtra("temp", extractedData.get("tp"));
+            intent.putExtra("accident", extractedData.get("ac"));
         }
 
-        mLocalBroadcastManager.sendBroadcast(intent);
+//        mLocalBroadcastManager.sendBroadcast(intent);
     }
-    public HashMap<String, String> extractData(String data) {
+
+    public HashMap<String, String> extractData(@NotNull String data) {
 
 
         HashMap<String, String> extractedData = new HashMap<>();
 
         String[] items = data.split(",");
-        Log.d(TAG, "extractData: "+items.length);
+        Log.d(TAG, "extractData: " + items.length);
 
         for (int i = 0; i < items.length; i += 2) {
             extractedData.put(items[i], items[i + 1]);

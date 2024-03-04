@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.lifecycle.Observer;
 import com.example.testapplication2.BtService;
 import com.example.testapplication2.MyService;
 import com.example.testapplication2.R;
@@ -32,9 +33,9 @@ public class BtActivity extends AppCompatActivity {
     private BluetoothService bluetoothService;
     private boolean mBound, sBound;// gatt 서비스 연결 체크
     private final BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-    private int heart, accident;
+    private String heart, accident;
     private double temp;
-
+    private BluetoothConnector btConnector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,8 @@ public class BtActivity extends AppCompatActivity {
 
         btSwitch();
         Log.d(TAG, "onCreate: "+sBound);
+
+
 //        if(sBound){
 //            Intent intent = new Intent(this, BluetoothService.class);
 //            startService(intent);
@@ -162,6 +165,14 @@ public class BtActivity extends AppCompatActivity {
             sBound = true;
             bluetoothService.setContext(BtActivity.this);
             mBound = bluetoothService.getBound();
+            btConnector = bluetoothService.getmBtConnector();
+            btConnector.heartLiveData.observe(BtActivity.this, new Observer<String>() {
+                @Override
+                public void onChanged(String  integer) {
+                    heart = integer;
+                    Log.d(TAG, "live"+heart);
+                }
+            });
 
         }
 
