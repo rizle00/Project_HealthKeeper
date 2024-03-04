@@ -32,14 +32,19 @@ public class BluetoothService extends Service implements GattUpdateListener {
     private int heart, accident;
     private double temp;
 
-    public MutableLiveData<Integer> heartLiveData = new MutableLiveData<>(0);
-    public MutableLiveData<Integer> accidentLiveData = new MutableLiveData<>(0);
-    public MutableLiveData<Double> tempLiveData = new MutableLiveData<>((double) 0);
+
+
+
 
     private Context mContext;
     private BTManger mBtManger;
     private BluetoothAdapter adapter;
     private BluetoothScanner mBtScanner;
+
+    public BluetoothConnector getmBtConnector() {
+        return mBtConnector;
+    }
+
     private BluetoothConnector mBtConnector;
     private BluetoothReceiver mBtReceiver;
     private BluetoothRepository repository;
@@ -50,11 +55,7 @@ public class BluetoothService extends Service implements GattUpdateListener {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        repository = new BluetoothRepository(
-                ((App) getApplication()).mainThreadHandler,
-                ((App) getApplication()).executorService,
-                this
-        );
+//        initRepository();
 
 //        bluetoothTask();
 //        if ("startForeground".equals(intent.getAction())) {
@@ -83,6 +84,14 @@ public class BluetoothService extends Service implements GattUpdateListener {
 //            mThread.start();
 //        }
         return START_NOT_STICKY;
+    }
+
+    private void initRepository() {
+        repository = new BluetoothRepository(
+//                ((App) getApplication()).mainThreadHandler,
+                executor,
+                this
+        );
     }
 
     @SuppressLint("ForegroundServiceType")
@@ -129,7 +138,7 @@ public class BluetoothService extends Service implements GattUpdateListener {
 
     @Override
     public void onDataAvailable(Intent intent) {
-        handleData(intent);
+//        handleData(intent);
     }
 
     // Service 바인더 ============================
@@ -147,20 +156,24 @@ public class BluetoothService extends Service implements GattUpdateListener {
         sBound =true;
         this.resultHandler = ((App) getApplication()).mainThreadHandler;
         this.executor = ((App) getApplication()).executorService;
+        initRepository();
+        initialize();
+        this.mBtConnector = new BluetoothConnector(mContext, adapter, repository);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter(), RECEIVER_EXPORTED);
-            }
+
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//                registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter(), RECEIVER_EXPORTED);
+//            }
         bluetoothTask();
         return mBinder;
     }
     //  서비스 연결 해제 시
     @Override
     public boolean onUnbind(Intent intent) {
-        unregisterReceiver(mGattUpdateReceiver);
+//        unregisterReceiver(mGattUpdateReceiver);
 //        stopForeground(true);//포그라운드 종료
 //        stopSelf();// 서비스종료
-//        disconnectGatt();
+        disconnectGatt();
 //        sBound =false;
         return super.onUnbind(intent);
     }
@@ -231,7 +244,7 @@ public class BluetoothService extends Service implements GattUpdateListener {
     }
     // 블루투스 연결 시도
     public void connect() {
-        mBtConnector = new BluetoothConnector(mContext, adapter);
+//        mBtConnector = new BluetoothConnector(mContext, adapter, repository);
         mBound = mBtConnector.connect(deviceAddress);
         Log.d(TAG, "connect: "+mBound);
         Log.d(TAG, "connect: "+deviceAddress);
@@ -256,34 +269,34 @@ public class BluetoothService extends Service implements GattUpdateListener {
                 Log.d(TAG, "onReceive: " + action);
             } else if (BluetoothAttributes.ACTION_DATA_AVAILABLE.equals(action)) {
                 Log.d(TAG, "onReceive: " + action);
-               handleData(intent);
+//               handleData(intent);
             }
         }
     };
 
-    private void handleData(Intent intent){
-
-        heart = Integer.parseInt(intent.getStringExtra("heart"));
-        temp = Double.parseDouble(intent.getStringExtra("temp"));
-        accident = Integer.parseInt(intent.getStringExtra("accident"));
-        heartLiveData.setValue(heart);
-        tempLiveData.setValue(temp);
-        accidentLiveData.setValue(accident);
-
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("heart", heart);
-        map.put("temp", temp);
-        map.put("accident", accident);// 0 -> 문제없음 , 1 -> 문제발생
-        repository.insertData(map, result -> {
-            if(result instanceof Result.Success){
-                Log.d(TAG, "handleData: "+((Result.Success<String>) result).data);
-            } else if(result instanceof Result.Error){
-                // 에러
-            }
-        });
-//        String json = new Gson().toJson(map);
-
-    }
+//    private void handleData(Intent intent){
+//
+//        heart = Integer.parseInt(intent.getStringExtra("heart"));
+//        temp = Double.parseDouble(intent.getStringExtra("temp"));
+//        accident = Integer.parseInt(intent.getStringExtra("accident"));
+//        heartLiveData.setValue(heart);
+//        tempLiveData.setValue(temp);
+//        accidentLiveData.setValue(accident);
+//
+//        HashMap<String, Object> map = new HashMap<>();
+//        map.put("heart", heart);
+//        map.put("temp", temp);
+//        map.put("accident", accident);// 0 -> 문제없음 , 1 -> 문제발생
+//        repository.insertData(map, result -> {
+//            if(result instanceof Result.Success){
+//                Log.d(TAG, "handleData: "+((Result.Success<String>) result).data);
+//            } else if(result instanceof Result.Error){
+//                // 에러
+//            }
+//        });
+////        String json = new Gson().toJson(map);
+//
+//    }
 
     private static IntentFilter makeGattUpdateIntentFilter() {
         final IntentFilter intentFilter = new IntentFilter();
