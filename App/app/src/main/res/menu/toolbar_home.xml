@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-        <item
-            android:id="@+id/menu_menu"
-            android:title="menu"
-            android:icon="@drawable/baseline_phone"
-            app:showAsAction="always"
-            />
+
         <item
             android:id="@+id/menu_alam"
             android:title="alam"
@@ -30,12 +25,7 @@
         </item>
 
 
-        <item
-            android:id="@+id/menu_setting"
-            android:title="setting"
-            android:icon="@drawable/baseline_settings_suggest_24"
-            app:showAsAction="always"
-            />
+
         <item
             android:id="@+id/menu_logout"
             android:title="logout"

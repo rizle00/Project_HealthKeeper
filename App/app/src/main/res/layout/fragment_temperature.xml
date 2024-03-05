@@ -9,24 +9,73 @@
     android:background="@color/main_color"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Smart HealthKeeper"
+        android:gravity="right"
+        android:textSize="20dp"
+        android:layout_marginRight="20dp"
+        />
+    <View
+        android:layout_width="180dp"
+        android:layout_height="3dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="20dp"
+        android:background="#FFFFFF"/>
+    <View
+        android:layout_width="180dp"
+        android:layout_marginRight="20dp"
+        android:layout_height="3dp"
+        android:layout_gravity="right"
+        android:background="#123"/>
+    <Button
+        android:id="@+id/colorChangeButton"
+        android:layout_width="110dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:text="배경색변경"
+        />
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginTop="10dp"
+        app:lottie_fileName="temperature.json"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_speed="@integer/dial_img_speed"
+        android:layout_gravity="center"
+
+
+        />
+
+
+
+
 
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="15dp"
+        android:layout_marginTop="50dp"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+
         >
         <FrameLayout
             android:layout_width="350dp"
-            android:layout_height="260dp"
+            android:layout_height="200dp"
             android:background="#024C4C"
             android:layout_gravity="center">
            <androidx.cardview.widget.CardView
-               android:alpha="0.8"
+               android:alpha="1.0"
                 android:layout_width="340dp"
-                android:layout_height="250dp"
+                android:layout_height="190dp"
                 app:cardCornerRadius="15dp"
                 android:layout_gravity="center">
 
@@ -35,42 +84,28 @@
 
 
     <LinearLayout
-        android:layout_width="380dp"
-        android:layout_height="250dp"
-        android:background="#F9FCFD"
-        android:orientation="horizontal"
+        android:layout_width="350dp"
+        android:layout_height="190dp"
+        android:orientation="vertical"
         >
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
 
-            android:src="@drawable/tem"
-            />
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            >
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="현재 체온"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_weight="1"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="70dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginRight="50dp"
-                android:textSize="20dp"
+            android:layout_marginTop="20dp"
+            android:text="현재    체온"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25dp"
+            android:textStyle="bold"
 
-                />
 
-            <LinearLayout
+            />
+
+        <LinearLayout
                 android:layout_width="wrap_content"
+                android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 >
@@ -81,6 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:text="36"
                     android:textColor="@color/main_color"
@@ -88,15 +124,15 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="80dp"
+                    android:layout_width="80dp"
+                    android:layout_height="90dp"
                     android:layout_weight="1"
                     android:src="@drawable/tem_c"
                     android:paddingBottom="20dp"
 
                     />
             </LinearLayout>
-        </LinearLayout>
+
 
 
 
@@ -127,15 +163,7 @@
         android:textSize="40dp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/colorChangeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="30dp"
-        android:text="배경색상변경"
-        />
+
 
 
 
