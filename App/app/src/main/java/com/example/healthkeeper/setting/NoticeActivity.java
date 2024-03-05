@@ -18,7 +18,7 @@ import java.util.List;
 
 public class NoticeActivity extends AppCompatActivity {
     ActivityNoticeBinding binding;
-
+    List<NoticeVO> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +33,15 @@ public class NoticeActivity extends AppCompatActivity {
         binding.recvNotice.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public ArrayList<String> getNotice(){
+    public List<NoticeVO> getNotice(){
+
         CommonConn conn =  new CommonConn("andnotice",this);
+
         conn.onExcute((isResult, data) -> {
-            List<NoticeVO> noticeList = new Gson().fromJson(data, new TypeToken<List<NoticeVO>>(){}.getType());
+            list = new Gson().fromJson(data, new TypeToken<List<NoticeVO>>(){}.getType());
+
+
         });
-        return null;
+        return list;
     }
 }
