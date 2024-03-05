@@ -6,7 +6,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="360dp"
-        android:layout_height="250dp"
+        android:layout_height="300dp"
         app:cardCornerRadius="20px"
         android:backgroundTint="#F1EDED"
         android:layout_gravity="center"
@@ -27,17 +27,27 @@
          android:layout_gravity="center"
           android:orientation="horizontal"
           >
-        <ImageView
+          <com.airbnb.lottie.LottieAnimationView
+              android:layout_width="90dp"
+              android:layout_height="110dp"
+              app:lottie_fileName="emergency.json"
+              app:lottie_autoPlay="true"
+              app:lottie_loop="true"
+              app:lottie_colorFilter="@color/led"
+
+              />
+
+       <!-- <ImageView
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:src="@drawable/baseline_phone"
-            />
+            />-->
         <TextView
             android:id="@+id/dialogTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20px"
-            android:text="긴급 전화"
+            android:layout_marginTop="45px"
+            android:text="119"
             android:textColor="#360B3D"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -50,7 +60,7 @@
             android:textSize="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="긴급 전화 연결됩니다.\r\n 연결하시겠습니까?"
+            android:text="긴급 전화 연결됩니다.\n 연결하시겠습니까?"
             android:gravity="center"
             android:padding="16dp"/>
         <LinearLayout

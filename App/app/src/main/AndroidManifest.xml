@@ -27,6 +27,10 @@
             android:name=".main.CCTVActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+            android:exported="false" />
+        <activity
+            android:exported="false" />
+
         <activity
             android:name=".setting.NoticeActivity"
             android:exported="false" />
