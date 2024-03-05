@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             if (itemId == R.id.nav_home) {
                 changeFragment(new HomeFragment());
                 getSupportActionBar().setTitle(getColoredSpanned("홈", customTextColor));//툴바에 표시될 타이틀과 색상지정!
+                getSupportActionBar().setTitle(getColoredSpanned("홈", customTextColor));
                 setToolbarMenu(R.menu.toolbar_home);
 
                 return true;
@@ -73,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(getColoredSpanned("CUMUNITY", customTextColor));
                 setToolbarMenu(R.menu.toolbar_cummunity);
                 Intent intent=new Intent(this,CommunityActivity.class);
+                startActivity(intent);
+                finish();
+
+
                 return true;
             } else if (itemId == R.id.nav_schedule) {
                 changeScheduleFragment(new ScheduleFragment());
