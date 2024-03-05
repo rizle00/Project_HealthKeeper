@@ -20,11 +20,7 @@ import java.util.Set;
 
 public class BluetoothScanner {
     private final static String TAG = BluetoothScanner.class.getSimpleName();
-    private final static String deviceName = "HM10";
     private final Context mContext;
-
-
-
     private String deviceAddress;
 
     public BluetoothScanner(Context mContext) {
@@ -39,7 +35,7 @@ public class BluetoothScanner {
     // 스캔 룰 지정, 기기이름(배열가능), 맥주소, 등..
     private void setScanRule() {
         BleScanRuleConfig scanRuleConfig = new BleScanRuleConfig.Builder()
-                .setDeviceName(true, deviceName)
+                .setDeviceName(true, BluetoothAttributes.deviceName)
                 .setAutoConnect(true)
                 .setScanTimeOut(10 * 1000)
                 .build();
@@ -59,7 +55,7 @@ public class BluetoothScanner {
             @Override
             public void onScanning(BleDevice bleDevice) {
 
-                if (bleDevice.getName().equals(deviceName)) {
+                if (bleDevice.getName().equals(BluetoothAttributes.deviceName)) {
                     BleManager.getInstance().cancelScan();
                 }
             }

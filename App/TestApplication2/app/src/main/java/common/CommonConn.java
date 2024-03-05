@@ -35,23 +35,9 @@ public class CommonConn {
         return this;//addParamMap(key,value).addParamMap..... 계속 연결됨.
     }
 
-    public void pushParamMap(HashMap<String,Object> map){
-        paramMap = map;
-    }
-    //    전송 실행 전 해야할 코드를 넣어줄 메소드 (onPre)
-    private void onPreExcute() {
-        if (context != null && dialog == null) {
-            dialog = new ProgressDialog(context);
-            dialog.setProgress(ProgressDialog.STYLE_SPINNER);
-            dialog.setTitle(context.getString(R.string.app_name));
-            dialog.setMessage("현재 데이터 로딩중");
-            dialog.setCancelable(false);
-            dialog.show();
-        }
-    }
+
 
     public void onExcute(appCallBack callBack){
-//        onPreExcute();
         CommonService service = CommonClient.getRetrofit().create(CommonService.class);
         Log.d(TAG, "map: "+paramMap);
         service.clientPostMethod(url,paramMap).enqueue(new Callback<String>() {
@@ -75,14 +61,9 @@ public class CommonConn {
                 callBack.onResult(false,t.getMessage());
             }
         });
-//        onPostExcute();
     }
 
-    private void onPostExcute() {
-        if (dialog != null && dialog.isShowing()) {
-            dialog.dismiss();//다이얼로그 안보이게 처리
-        }
-    }
+
 
     //    옵저버 패턴의 순서 1. 응답을 위한 메소드를 가진 인터페이스를 하나 만든다
     public interface appCallBack{

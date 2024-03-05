@@ -14,9 +14,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import com.example.testapplication2.BtService;
-import com.example.testapplication2.MyService;
 import com.example.testapplication2.R;
 import com.example.testapplication2.TestActivity;
 import com.example.testapplication2.databinding.ActivityTestBinding;
@@ -27,22 +27,23 @@ import java.util.List;
 
 public class BtActivity extends AppCompatActivity {
 
-    private final static String TAG = TestActivity.class.getSimpleName();
+    private final static String TAG = BtActivity.class.getSimpleName();
     public static final int INTENT_REQUEST_BLUETOOTH_ENABLE = 0x0701;
     ActivityTestBinding binding;// 바인딩  처리
     private BluetoothService bluetoothService;
-    private boolean mBound, sBound;// gatt 서비스 연결 체크
+    private boolean sBound;// gatt 서비스, bluetooth 서비스 연결 체크
     private final BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-    private String heart, accident;
-    private double temp;
+    private String heart, accident, temp;
     private BluetoothConnector btConnector;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    private Switch toggleSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityTestBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        toggleSwitch = binding.toggleSwitch;
         btSwitch();
         Log.d(TAG, "onCreate: "+sBound);
 
@@ -56,25 +57,29 @@ public class BtActivity extends AppCompatActivity {
 
 
     //  블루투스 커넥트 요청시 , 서비스의 온오프
-    @SuppressLint("UseSwitchCompatOrMaterialCode")
     public void btSwitch() {
-        Switch toggleSwitch = binding.toggleSwitch;
 
         // 스위치 상태 변경 이벤트 리스너 설정
         toggleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // 스위치 상태 변경 시 호출되는 메서드
-                if (isChecked) {
-
-                    if (isOn()) {// 블루투스 사용 가능 체크 후 권한체크, 권한 허용시 서비스 연결 시도
-                        checkPermission();
-
-                    } else {//블루투스 기능 활성 요청
-                        requestBluetoothActivation(BtActivity.this);
+                if (!isChecked) { // 스위치가 꺼진 경우
+                    if (sBound) { // 서비스에 바인드된 경우
+                        // 서비스 종료 및 언바인드
+                        unbindService(mServiceConnection);
+                        stopService(new Intent(BtActivity.this, BluetoothService.class));
+                        sBound = false; // 바인드 상태 갱신
                     }
-                } else {// 블루투스 해제, 서비스
-                    unbindService(mServiceConnection);
+                } else { // 스위치가 켜진 경우
+                    if(!sBound){
+                        if (isOn()) { // 블루투스 사용 가능한 경우
+                            checkPermission();
+                        } else { // 블루투스 활성화가 필요한 경우
+                            requestBluetoothActivation(BtActivity.this);
+                        }
+                    }
+
                 }
             }
         });
@@ -157,29 +162,56 @@ public class BtActivity extends AppCompatActivity {
                 .show();
     }
 
+    private void observeData() {
+        if (bluetoothService != null) {
+            btConnector = bluetoothService.getmBtConnector();
+            if (btConnector != null) {
+                btConnector.heartLiveData.observe(BtActivity.this, new Observer<String>() {
+                    @Override
+                    public void onChanged(String  data) {
+                        heart = data;
+                        Log.d(TAG, "live"+heart);
+                    }
+                });
+                btConnector.tempLiveData.observe(BtActivity.this, new Observer<String>() {
+                    @Override
+                    public void onChanged(String  data) {
+                        temp = data;
+                    }
+                });
+                btConnector.accidentLiveData.observe(BtActivity.this, new Observer<String>() {
+                    @Override
+                    public void onChanged(String  data) {
+                        accident = data;
+                    }
+                });
+            }
+        }
+    }
+
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             bluetoothService = ((BluetoothService.LocalBinder) service).getService();
+//            sBound = bluetoothService.getBound();
             sBound = true;
             bluetoothService.setContext(BtActivity.this);
-            mBound = bluetoothService.getBound();
-            btConnector = bluetoothService.getmBtConnector();
-            btConnector.heartLiveData.observe(BtActivity.this, new Observer<String>() {
-                @Override
-                public void onChanged(String  integer) {
-                    heart = integer;
-                    Log.d(TAG, "live"+heart);
-                }
-            });
-
+//            bluetoothService.startForegroundService();
+//            Intent foregroundServiceIntent = new Intent(BtActivity.this, BluetoothService.class);
+//            ContextCompat.startForegroundService(BtActivity.this, foregroundServiceIntent);
+            ContextCompat.startForegroundService(BtActivity.this,
+                    new Intent(BtActivity.this, BluetoothService.class));
+            // 서비스가 연결되어 있는 경우 스위치를 켜기
+            toggleSwitch.setChecked(true);
+            Log.d(TAG, "onServiceConnected: "+sBound);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
             bluetoothService = null;
             sBound = false;
+
         }
     };
 

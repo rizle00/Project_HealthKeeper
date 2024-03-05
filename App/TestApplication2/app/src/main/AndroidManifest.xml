@@ -16,6 +16,7 @@
     <uses-permission
             android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/> <!-- 포그라운드 서비스 허용, 배터리 최적화를 위한 종료 방지 -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/> <!-- 서비스 시행시 꺼지지 않게 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE"/> <!-- 서비스 시행시 꺼지지 않게 -->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/> <!-- 페어링 설정 -->
     <uses-feature android:name="android.software.companion_device_setup"/>
 
@@ -53,6 +54,7 @@
 
         <service
                 android:name="bluetooth.BluetoothService"
+                android:foregroundServiceType="connectedDevice"
                 android:enabled="true"
                 android:exported="true">
         </service>
