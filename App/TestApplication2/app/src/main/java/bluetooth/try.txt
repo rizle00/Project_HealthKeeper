@@ -1,0 +1,143 @@
+브로드캐스트리스너 대체 시도
+
+package bluetooth;
+
+import android.content.Intent;
+
+public interface GattUpdateListener {
+    void onGattConnected();
+    void onGattDisconnected();
+    void onGattServicesDiscovered();
+    void onDataAvailable(Intent intent);
+}
+
+package bluetooth;
+
+import android.content.Intent;
+
+public class BluetoothHandler {
+    private GattUpdateListener mListener;
+      public void setGattUpdateListener(GattUpdateListener listener) {
+        mListener = listener;
+    }
+
+    // 리스너 호출 메소드들
+    private void notifyGattConnected() {
+        if (mListener != null) {
+            mListener.onGattConnected();
+        }
+    }
+
+    private void notifyGattDisconnected() {
+        if (mListener != null) {
+            mListener.onGattDisconnected();
+        }
+    }
+
+    private void notifyGattServicesDiscovered() {
+        if (mListener != null) {
+            mListener.onGattServicesDiscovered();
+        }
+    }
+
+    private void notifyDataAvailable(Intent intent) {
+        if (mListener != null) {
+            mListener.onDataAvailable(intent);
+        }
+    }
+}
+
+---------------------------------------------------------------
+ConmmonConn
+
+public void pushParamMap(HashMap<String,Object> map){
+        paramMap = map;
+    } map의 주소값만 들어가는듯..
+
+     //    전송 실행 전 해야할 코드를 넣어줄 메소드 (onPre)
+        private void onPreExcute() { ui 메인스레드와 서비스에서의 스레드 다름..
+            if (context != null && dialog == null) {
+                dialog = new ProgressDialog(context);
+                dialog.setProgress(ProgressDialog.STYLE_SPINNER);
+                dialog.setTitle(context.getString(R.string.app_name));
+                dialog.setMessage("현재 데이터 로딩중");
+                dialog.setCancelable(false);
+                dialog.show();
+            }
+        }
+
+         private void onPostExcute() {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();//다이얼로그 안보이게 처리
+                }
+            }
+
+             public void onExcute(appCallBack callBack){
+            //        onPreExcute();
+                    CommonService service = CommonClient.getRetrofit().create(CommonService.class);
+                    Log.d(TAG, "map: "+paramMap);
+                    service.clientPostMethod(url,paramMap).enqueue(new Callback<String>() {
+
+                        @Override
+                        public void onResponse(retrofit2.Call<String> call, Response<String> response) {
+
+                            Log.i(TAG, "onResponse: " + response.body());
+                            Log.i(TAG, "onResponse: " + response.errorBody());
+                            //옵저버 패턴 3번 호출 -> MainActivity
+                            if(response.errorBody() ==null){
+                                callBack.onResult(true, response.body());
+                            }else{
+                                callBack.onResult(false, response.body());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(retrofit2.Call<String> call, Throwable t) {
+                            Log.d(TAG, "onFailure: " + t.getMessage());
+                            callBack.onResult(false,t.getMessage());
+                        }
+                    });
+            //        onPostExcute();
+                }
+
+-----------------------------------------------------------------------------------------
+
+receiver
+
+package bluetooth;
+
+import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattCallback;
+import android.bluetooth.BluetoothGattCharacteristic;
+
+public class BluetoothReceiver extends BluetoothGattCallback {
+
+    private static final String TAG = BluetoothReceiver.class.getSimpleName();
+
+    private BluetoothReceiverCallback mCallback;
+
+    public interface BluetoothReceiverCallback {
+        void onConnectionStateChanged(int newState);
+        void onDataReceived(String data);
+    }
+
+    public void setBluetoothReceiverCallback(BluetoothReceiverCallback callback) {
+        mCallback = callback;
+    }
+
+    @Override
+    public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
+        super.onConnectionStateChange(gatt, status, newState);
+        mCallback.onConnectionStateChanged(newState);
+    }
+
+    @Override
+    public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+        super.onCharacteristicChanged(gatt, characteristic);
+        byte[] data = characteristic.getValue();
+        if (data != null && data.length > 0) {
+            String receivedData = new String(data);
+            mCallback.onDataReceived(receivedData);
+        }
+    }
+}

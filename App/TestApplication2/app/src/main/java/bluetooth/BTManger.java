@@ -10,27 +10,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import com.clj.fastble.BleManager;
+import lombok.Getter;
 
 import java.util.Set;
 
+
 public class BTManger {
     private static final String TAG = BluetoothManager.class.getSimpleName();
-
-    private BluetoothManager mBluetoothManager;
-
-    private BluetoothAdapter mBluetoothAdapter;
-
-    private Set<BluetoothDevice> deviceList;
-    private final static String deviceName = "HM10";
 
     public BluetoothAdapter getmBluetoothAdapter() {
         return mBluetoothAdapter;
     }
 
+    private BluetoothAdapter mBluetoothAdapter;
+
     @SuppressLint("MissingPermission")
     public boolean initialize(Application application) {
         BleManager.getInstance().init(application);
-        mBluetoothManager = BleManager.getInstance().getBluetoothManager();
+        BluetoothManager mBluetoothManager = BleManager.getInstance().getBluetoothManager();
         // 매니저 체크
         if (mBluetoothManager == null) {
             mBluetoothManager = (BluetoothManager) application.getSystemService(Context.BLUETOOTH_SERVICE);
@@ -56,12 +53,12 @@ public class BTManger {
 
     @SuppressLint("MissingPermission")
     public String checkPairing() {
-        if(mBluetoothAdapter.getBondedDevices()!=null){
-            deviceList = mBluetoothAdapter.getBondedDevices();
+        if (mBluetoothAdapter.getBondedDevices() != null) {
+            Set<BluetoothDevice> deviceList = mBluetoothAdapter.getBondedDevices();
             for (BluetoothDevice device : deviceList) {
-                if (device.getName() != null && device.getName().equals(deviceName)) {
-                    Log.d(TAG, "checkPairing: "+device.getName());
-                    Log.d(TAG, "checkPairing: "+device.getAddress());
+                if (device.getName() != null && device.getName().equals(BluetoothAttributes.deviceName)) {
+                    Log.d(TAG, "checkPairing: " + device.getName());
+                    Log.d(TAG, "checkPairing: " + device.getAddress());
                     return device.getAddress();
                 }
             }
