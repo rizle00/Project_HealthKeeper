@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.*;
 import android.bluetooth.*;
 import android.content.*;
+import android.content.pm.PackageManager;
 import android.content.pm.ServiceInfo;
 import android.os.Binder;
 import android.os.Build;
@@ -12,6 +13,7 @@ import android.os.IBinder;
 import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.ServiceCompat;
+import androidx.core.content.ContextCompat;
 import com.example.testapplication2.*;
 
 import java.util.concurrent.Executor;
@@ -19,9 +21,8 @@ import java.util.concurrent.Executor;
 public class BluetoothService extends Service {
     private final static String TAG = BluetoothService.class.getSimpleName();
 
-    private Handler resultHandler;
     private  Executor executor;
-    private boolean mBound, sBound; // mBound = bluegatt연결상태, sBound = 서비스 연결상태
+    private boolean mBound, sBound, active; // mBound = bluegatt연결상태, sBound = 서비스 연결상태
     private String deviceAddress;
     private Context mContext;
     private NotificationManager notificationManager;
@@ -30,62 +31,46 @@ public class BluetoothService extends Service {
     private BluetoothAdapter adapter;
     private BluetoothScanner mBtScanner;
 
-    public BluetoothConnector getmBtConnector() {
-        return mBtConnector;
-    }
+   
 
     private BluetoothConnector mBtConnector;
     private BluetoothRepository repository;
 
 
-
+    public BluetoothConnector getmBtConnector() {
+        return mBtConnector;
+    }// 초기화 위해서 필요
 
     @SuppressLint("ForegroundServiceType")
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-//        this.resultHandler = ((App) getApplication()).mainThreadHandler;
-        this.executor = ((App) getApplication()).executorService;
-        initRepository();
-        initialize();
-        this.mBtConnector = new BluetoothConnector(mContext, adapter, repository);
-        mBound = mBtConnector.isConnected();
-
+        Log.d(TAG, "onStartCommand: 서비스 들어옴");
         bluetoothTask();
+        startForeground();
+        return START_STICKY;
+    }
 
-//        if(mBound) {
-
-
-
+    private void startForeground() {
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         createNotificationChannel();
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("fore service")
                 .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setOngoing(true)
                 .build();
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-//            startForeground(2000, notification, Service.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
-//
-//        }
-
-//        }
-//        Context context = getApplicationContext();
-//         intent = new Intent(context,BluetoothService.class); // Build the intent for the service
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            context.startForegroundService(intent);
-//        }
         int type = 0;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             type = ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE;
         }
         ServiceCompat.startForeground(this,2000,notification,type);
-
-        return super.onStartCommand(intent, flags, startId);
+        active = true;
+        Log.d(TAG, "onStartCommand: 포그라운드 서비스 시작?"+type+notification.priority);
     }
 
     private void createNotificationChannel(){
+        Log.d(TAG, "createNotificationChannel: noti");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "fore channel";
             String description = "ground channel";
@@ -95,43 +80,23 @@ public class BluetoothService extends Service {
 
             channel = new NotificationChannel(CHANNEL_ID, name, importance);
 
-
             channel.setDescription(description);
             notificationManager.createNotificationChannel(channel);
         }
     }
+    
+    public void stopService(){
+        stopForeground(true);
+        stopSelf();
+        Log.d(TAG, "stopService: 종료됨");
+    }
 
     private void initRepository() {
         repository = new BluetoothRepository(
-//               resultHandler,
                 executor,
                 this
         );
     }
-
-    @SuppressLint("ForegroundServiceType")
-    public void startForegroundService() {
-        // default 채널 ID로 알림 생성
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setContentTitle("포그라운드 서비스");
-        builder.setContentText("포그라운드 서비스 실행 중");
-        // 클릭시 실행할 액티비티 설정
-        Intent notificationIntent = new Intent(this, BtActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
-        builder.setContentIntent(pendingIntent);
-
-        // 오레오에서는 알림 채널을 매니저에 생성해야 한다
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            manager.createNotificationChannel(new NotificationChannel("default", "기본 채널", NotificationManager.IMPORTANCE_DEFAULT));
-        }
-
-        // 포그라운드로 시작
-        startForeground(1, builder.build());
-        Log.d(TAG, "startForegroundService: 포그라운드 시작됨");
-    }
-
 
 
     // Service 바인더 ============================
@@ -148,38 +113,44 @@ public class BluetoothService extends Service {
         sBound =true;
         Log.d(TAG, "onBind: "+sBound);
 
+
         return mBinder;
     }
     //  서비스 연결 해제 시
     @Override
     public boolean onUnbind(Intent intent) {
-//        unregisterReceiver(mGattUpdateReceiver);
-//        stopForeground(true);//포그라운드 종료
-//        stopSelf();// 서비스종료
-        disconnectGatt();
-//        sBound =false;
+//       앱 종료시 호출되어버림
+        sBound = false;
+
+        Log.d(TAG, "onUnbind: 어플종료됨 ");
         return super.onUnbind(intent);
     }
 
-    public boolean getBound() {
-        return sBound;
+    public boolean getActive() {
+        return active;
     }
     public void setContext(Context context){
         this.mContext = context;
     }
     @Override
     public void onCreate() {
+        // 포그라운드 서비스 생성시 작동
         super.onCreate();
         Log.d(TAG, "onCreate: 서비스 생성됨");
-        Log.d(TAG, "onCreate: ");
+        this.executor = ((App) getApplication()).executorService;
+        initRepository();
+        initialize();
+        this.mBtConnector = new BluetoothConnector(mContext, adapter, repository);
+        mBound = mBtConnector.isConnected();
 
     }
 
     @Override
     public void onDestroy() {
+        //서비스 사망시
         Log.d(TAG, "onDestroy: ");
-
-
+        disconnectGatt();
+        active = false;
         super.onDestroy();
     }
     //===========================
@@ -216,7 +187,6 @@ public class BluetoothService extends Service {
     }
     // 블루투스 연결 시도
     public void connect() {
-//        mBtConnector = new BluetoothConnector(mContext, adapter, repository);
         mBound = mBtConnector.connect(deviceAddress);
         Log.d(TAG, "connect: "+mBound);
         Log.d(TAG, "connect: "+deviceAddress);

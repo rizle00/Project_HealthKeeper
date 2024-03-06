@@ -2,13 +2,16 @@ package bluetooth;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.*;
 import android.os.Build;
 import android.os.IBinder;
+import android.service.notification.StatusBarNotification;
 import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -31,27 +34,41 @@ public class BtActivity extends AppCompatActivity {
     public static final int INTENT_REQUEST_BLUETOOTH_ENABLE = 0x0701;
     ActivityTestBinding binding;// 바인딩  처리
     private BluetoothService bluetoothService;
-    private boolean sBound;// gatt 서비스, bluetooth 서비스 연결 체크
+    private boolean sBound, active;// gatt 서비스, bluetooth 서비스 연결 체크
     private final BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
     private String heart, accident, temp;
     private BluetoothConnector btConnector;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch toggleSwitch;
+    private TextView tv, tv2;
 
+    public boolean isForegroundServiceRunning(Context context, int notificationId) {
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        StatusBarNotification[] notifications = manager.getActiveNotifications();
+        for (StatusBarNotification notification : notifications) {
+            if (notification.getId() == notificationId) {
+                return true;
+            }
+        }
+        return false;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityTestBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         toggleSwitch = binding.toggleSwitch;
-        btSwitch();
+        tv = binding.tv;
+        tv2 = binding.tv2;
+        active = isForegroundServiceRunning(this, 2000);
+        toggleSwitch.setChecked(active);
+        if(active && !sBound){
+        tv.setText("on");
+            Intent intent = new Intent(BtActivity.this, BluetoothService.class);
+            bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
+        }
+        Log.d(TAG, "onCreate: "+active);
         Log.d(TAG, "onCreate: "+sBound);
-
-
-//        if(sBound){
-//            Intent intent = new Intent(this, BluetoothService.class);
-//            startService(intent);
-//        }
 
     }
 
@@ -65,13 +82,17 @@ public class BtActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // 스위치 상태 변경 시 호출되는 메서드
                 if (!isChecked) { // 스위치가 꺼진 경우
+                    tv.setText("off");
+
                     if (sBound) { // 서비스에 바인드된 경우
                         // 서비스 종료 및 언바인드
+                        bluetoothService.stopService();
                         unbindService(mServiceConnection);
-                        stopService(new Intent(BtActivity.this, BluetoothService.class));
                         sBound = false; // 바인드 상태 갱신
+                        active = false;
                     }
                 } else { // 스위치가 켜진 경우
+                        Log.d(TAG, "check "+sBound);
                     if(!sBound){
                         if (isOn()) { // 블루투스 사용 가능한 경우
                             checkPermission();
@@ -118,7 +139,11 @@ public class BtActivity extends AppCompatActivity {
         TedPermission.create()
                 .setPermissionListener(permissionListener)
                 .setDeniedMessage("Denied Permission.")
-                .setPermissions(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT)
+                .setPermissions(android.Manifest.permission.ACCESS_FINE_LOCATION,
+                        android.Manifest.permission.BLUETOOTH_SCAN,
+                        Manifest.permission.BLUETOOTH_CONNECT,
+                        Manifest.permission.POST_NOTIFICATIONS,
+                        Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
                 .check();
     }
 
@@ -165,6 +190,7 @@ public class BtActivity extends AppCompatActivity {
     private void observeData() {
         if (bluetoothService != null) {
             btConnector = bluetoothService.getmBtConnector();
+            Log.d(TAG, "observeData: "+btConnector);
             if (btConnector != null) {
                 btConnector.heartLiveData.observe(BtActivity.this, new Observer<String>() {
                     @Override
@@ -185,6 +211,14 @@ public class BtActivity extends AppCompatActivity {
                         accident = data;
                     }
                 });
+
+                btConnector.btLiveData.observe(BtActivity.this, new Observer<String>() {
+                    @Override
+                    public void onChanged(String  data) {
+                        Log.d(TAG, "onChanged: "+data);
+                        tv2.setText(data);
+                    }
+                });
             }
         }
     }
@@ -194,22 +228,25 @@ public class BtActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             bluetoothService = ((BluetoothService.LocalBinder) service).getService();
-//            sBound = bluetoothService.getBound();
             sBound = true;
             bluetoothService.setContext(BtActivity.this);
-//            bluetoothService.startForegroundService();
-//            Intent foregroundServiceIntent = new Intent(BtActivity.this, BluetoothService.class);
-//            ContextCompat.startForegroundService(BtActivity.this, foregroundServiceIntent);
-            ContextCompat.startForegroundService(BtActivity.this,
-                    new Intent(BtActivity.this, BluetoothService.class));
+            Log.d(TAG, "onServiceConnected: "+active);
+            if(!active){// 앱 처음 시작시 포그라운드 서비스를 실행하지 않았을때 포그라운드가 시행중이면 다시 시작x
+                ContextCompat.startForegroundService(BtActivity.this,
+                        new Intent(BtActivity.this, BluetoothService.class));
+            }
+
             // 서비스가 연결되어 있는 경우 스위치를 켜기
             toggleSwitch.setChecked(true);
+            tv.setText("on");
             Log.d(TAG, "onServiceConnected: "+sBound);
+            observeData();
         }
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-            bluetoothService = null;
+//            bluetoothService = null;
+            Log.d(TAG, "onServiceDisconnected: "+bluetoothService.getActive());
             sBound = false;
 
         }
@@ -218,7 +255,7 @@ public class BtActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        btSwitch();
 
     }
 

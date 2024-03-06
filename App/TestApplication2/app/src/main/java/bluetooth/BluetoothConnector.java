@@ -30,6 +30,7 @@ public class BluetoothConnector {
     public MutableLiveData<String> heartLiveData = new MutableLiveData<>("0");
     public MutableLiveData<String> accidentLiveData = new MutableLiveData<>("0");
     public MutableLiveData<String> tempLiveData = new MutableLiveData<>("0");
+    public MutableLiveData<String> btLiveData = new MutableLiveData<>("on");
 
 
 
@@ -46,6 +47,7 @@ public class BluetoothConnector {
         Log.d(TAG, "connect: " + mBluetoothAdapter);
         if (mBluetoothAdapter == null || address == null) {
             Log.w(TAG, "BluetoothAdapter not initialized or unspecified address.");
+            btLiveData.postValue("off");
             return false;
         }
 
@@ -55,8 +57,10 @@ public class BluetoothConnector {
             Log.d(TAG, "Trying to use an existing mBluetoothGatt for connection.");
             if (mBluetoothGatt.connect()) {
                 mConnectionState = true;
+                btLiveData.postValue("on");
                 return true;
             } else {
+                btLiveData.postValue("off");
                 return false;
             }
         }
@@ -64,12 +68,14 @@ public class BluetoothConnector {
         final BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
         if (device == null) {
             Log.w(TAG, "Device not found.  Unable to connect.");
+            btLiveData.postValue("off");
             return false;
         }
         mBluetoothGatt = device.connectGatt(mContext, true, mGattCallback);
         Log.d(TAG, "Trying to create a new connection.");
         mBluetoothDeviceAddress = address;
         mConnectionState = true;
+        btLiveData.postValue("on");
         return true;
     }
 
@@ -82,6 +88,7 @@ public class BluetoothConnector {
         }
         mBluetoothGatt.disconnect();
         mBluetoothGatt.close();
+        btLiveData.postValue("off");
         mBluetoothGatt = null;
     }
 
@@ -93,12 +100,14 @@ public class BluetoothConnector {
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             if (newState == BluetoothProfile.STATE_CONNECTED) {
                 mConnectionState = true;
+                btLiveData.postValue("on");
                 Log.d(TAG, "onConnectionStateChange: 커넥트 성공");
                 mBluetoothGatt.discoverServices();// 서비스 찾기
 
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
 
                 mConnectionState = false;
+                btLiveData.postValue("off");
             }
         }
 

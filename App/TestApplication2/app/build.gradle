@@ -38,7 +38,7 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.20" //코틀린 중복 오류 해결
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation "androidx.core:core:1.12.0"
+    implementation "androidx.core:core:1.12.0"// 안드로이드 코어 버전 , 포그라운드 서비스 이용시 필요
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment:2.6.0'

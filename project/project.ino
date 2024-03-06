@@ -2,7 +2,7 @@
 
 #include <SoftwareSerial.h>
 #include <Wire.h>
-// #include <Adafruit_MLX90614.h>
+#include <Adafruit_MLX90614.h>
 #include <Adafruit_Sensor.h>
 #include <SparkFun_ADXL345.h>
 #include <Adafruit_ADXL345_U.h>
@@ -10,14 +10,14 @@
 #include <PulseSensorPlayground.h> // Includes the PulseSensorPlayground Library.   
 #define USE_ARDUINO_INTERRUPTS true    // Set-up low-level interrupts for most acurate BPM math.
 
-// Adafruit_MLX90614 mlx = Adafruit_MLX90614();
+Adafruit_MLX90614 mlx = Adafruit_MLX90614();
 Adafruit_ADXL345_Unified accel = Adafruit_ADXL345_Unified(12345);
 
 
 PulseSensorPlayground pulseSensor;  // Creates an instance of the PulseSensorPlayground object called "pulseSensor"
 #define BT_RXD 12
 #define BT_TXD 11
-const int lm35Pin = A1; // LM35 센서의 아날로그 핀
+// const int lm35Pin = A1; // LM35 센서의 아날로그 핀
 SoftwareSerial BTSerial(BT_TXD,BT_RXD); // 블루투스 연결
 const int PulseWire = A0;       // PulseSensor PURPLE WIRE connected to ANALOG PIN A2
 // const int btn = 10;
@@ -26,9 +26,9 @@ int x, y, z;
 void setup() {
  Serial.begin(9600);        
 BTSerial.begin(9600);     //블루투스 
-  pinMode(lm35Pin, INPUT);
+  // pinMode(lm35Pin, INPUT);
 // pinMode(btn, INPUT); // 버튼
-// mlx.begin();  //온도센서
+mlx.begin();  //온도센서
 pulseSensor.analogInput(PulseWire);   
 pulseSensor.setThreshold(550);//심박 딜레이 기본 값
  if (pulseSensor.begin()) {
@@ -43,12 +43,13 @@ if (!accel.begin()) {
 }
 
 void loop() {
-  int sensorValue = analogRead(lm35Pin); // LM35 센서에서 아날로그 값을 읽음
-  float voltage = (sensorValue / 1023.0) * 5.0; // 아날로그 값을 전압 값으로 변환
-  float temperature = voltage * 100.0; // LM35의 출력 전압을 온도로 변환
+  // int sensorValue = analogRead(lm35Pin); // LM35 센서에서 아날로그 값을 읽음
+  // float voltage = (sensorValue / 1023.0) * 5.0; // 아날로그 값을 전압 값으로 변환
+  // float temperature = voltage * 100.0; // LM35의 출력 전압을 온도로 변환
  
 // 온도
   temp =0;
+  float temperature = mlx.readObjectTempC();
   for (int i = 0; i < 5; i++) {
     temp += temperature; // 체온 c
     delay(100); // 임시 딜레이

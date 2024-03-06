@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.concurrent.Executor;
 
 public class BluetoothRepository {
-
+// 추후 조회하기 등 백그라운드 작업 추가
     private static final String TAG = BluetoothRepository.class.getSimpleName();
     private final Executor executor;
     private final CommonConn commonConn;
