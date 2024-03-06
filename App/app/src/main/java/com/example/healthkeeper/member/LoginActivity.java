@@ -78,6 +78,10 @@ public class LoginActivity extends AppCompatActivity {
             loginWithKakaoAccount(this);
         });
 
+        binding.fake.setOnClickListener(v -> {
+            binding.btnNaverLogin.performClick();
+        });
+
         naverLogin();
         setContentView(binding.getRoot());
 
@@ -146,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(error == null){
                     UserApiClient.getInstance().me((user, throwable) -> {
                         if(throwable ==null){
-                            CommonConn conn =new CommonConn("kakaologin",context);
+                            CommonConn conn =new CommonConn("sociallogin",context);
                             GuardianMemberVO vo = new GuardianMemberVO();
 
                             conn.addParamMap("social",String.valueOf(user.getId()));
@@ -206,43 +210,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void naverLogin(){
-        CommonConn conn = new CommonConn("naverlogin",this);
-        final String TAG= "naevr Login";
+        Intent intent = new Intent(this, SimpleJoinActivity.class);
+        final String TAG= "naver Login";
         binding.btnNaverLogin.setOAuthLogin(new OAuthLoginCallback() {
-            @Override
-            public void onSuccess() {
-                Log.d(TAG, "onSuccess: " + NaverIdLoginSDK.INSTANCE.getAccessToken());
-                new NidOAuthLogin().callProfileApi(new NidProfileCallback<NidProfileResponse>() {
-                    @Override
-                    public void onSuccess(NidProfileResponse nidProfileResponse) {
-                        guardianlogin(nidProfileResponse.getProfile().getEmail(),null);
-                        Log.d("네이버", "onSuccess: " + nidProfileResponse.getProfile().getEmail());
-                        Log.d("네이버", "onSuccess: " + nidProfileResponse.getProfile().getMobile());
-                        Log.d("네이버", "onSuccess: " + nidProfileResponse.getProfile().getName());
-                        Log.d("네이버", "onSuccess: " + nidProfileResponse.getProfile().getNickname());
-                        Log.d("네이버", "onSuccess: " + nidProfileResponse.getProfile().getProfileImage());
-                        Log.d("네이버", "onSuccess: 아이디 "+nidProfileResponse.getProfile().getId());
-
-                        GuardianMemberVO vo = new GuardianMemberVO();
-
-
-
-                    }
-
-
-
-                    @Override
-                    public void onFailure(int i, @NonNull String s) {
-
-                    }
-
-                    @Override
-                    public void onError(int i, @NonNull String s) {
-
-                    }
-                });
-            }
-
             @Override
             public void onFailure(int i, @NonNull String s) {
 
@@ -252,12 +222,64 @@ public class LoginActivity extends AppCompatActivity {
             public void onError(int i, @NonNull String s) {
 
             }
+
+            @Override
+            public void onSuccess() {
+                Log.d(TAG, "onSuccess: " + NaverIdLoginSDK.INSTANCE.getAccessToken());
+                new NidOAuthLogin().callProfileApi(new NidProfileCallback<NidProfileResponse>() {
+                    @Override
+                    public void onFailure(int i, @NonNull String s) {
+
+                    }
+
+                    @Override
+                    public void onError(int i, @NonNull String s) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(NidProfileResponse nidProfileResponse) {
+
+
+                        CommonConn conn = new CommonConn("sociallogin",LoginActivity.this);
+                        conn.addParamMap("social",nidProfileResponse.getProfile().getId());
+                        conn.onExcute((isResult, data) -> {
+                            if (data.equals("join")) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this)
+                                        .setMessage("가입되어있지 않은 회원입니다. 가입하시겠습니까?").setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                intent.putExtra("social", String.valueOf(nidProfileResponse.getProfile().getId()));
+                                                startActivity(intent);
+                                            }
+                                        }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            } else { //로그인 성공
+                                SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
+                                GuardianMemberVO kakaoVo = new Gson().fromJson(data, GuardianMemberVO.class);
+                                SharedPreferences.Editor editor = preference.edit();
+                                editor.putString("user_id", kakaoVo.getGuardian_id());
+                                editor.putString("user_name", kakaoVo.getGuardian_name());
+                                editor.apply();
+                                loginSuccess();
+                            }
+                        });
+                    }
+                });
+            }
         });
     }
-    public void loginSuccess() {
 
+    public void loginSuccess() {
         /*기존에 켜져있는 액티비티 종료*/
         LoginBeforeActivity lba = (LoginBeforeActivity)LoginBeforeActivity._loginBeforeActivity;
+        lba.getLifecycle();
         lba.finish();
 
         /*화면 전환*/
@@ -265,5 +287,4 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
 }

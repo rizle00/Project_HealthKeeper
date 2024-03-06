@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
 }
 
+
 android {
     namespace 'com.example.healthkeeper'
     compileSdk 34
@@ -32,6 +33,7 @@ android {
 }
 
 dependencies {
+
     //네아로 
     implementation 'com.navercorp.nid:oauth:5.9.0'
 

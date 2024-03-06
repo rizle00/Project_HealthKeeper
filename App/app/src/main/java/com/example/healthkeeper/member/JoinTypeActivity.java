@@ -20,11 +20,13 @@ public class JoinTypeActivity extends AppCompatActivity {
 
         binding.llPatient.setOnClickListener(v -> {
             Intent intent = new Intent(this,PatientJoinActivity.class);
+            intent.putExtra("type","patient");
             startActivity(intent);
         });
 
         binding.llGuardian.setOnClickListener(v -> {
             Intent intent = new Intent(this, GuardianJoinActivity.class);
+            intent.putExtra("type","guardian");
             startActivity(intent);
         });
 

@@ -79,9 +79,9 @@ public class SimpleJoinActivity extends AppCompatActivity {
 
 
 
-        int num = binding.tvWarningId.getVisibility()
+        int num = binding.tvWarningId.getVisibility()+binding.tvWarningBlood.getVisibility()
                 + binding.tvWarningEmail.getVisibility()+binding.tvWarningPhone.getVisibility()+binding.tvWarningGender.getVisibility();
-        if(num ==32){
+        if(num ==40){
 
             Intent intent = getIntent();
             JoinTypeActivity jta = (JoinTypeActivity)JoinTypeActivity.joinTypeActivity;

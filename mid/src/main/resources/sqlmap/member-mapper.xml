@@ -25,4 +25,7 @@
 <select id="socialLogin" resultType="member">
 	SELECT * FROM PROJECT_MEMBER WHERE SOCIAL = #{social}
 </select>
+<select id="partnerCheck" resultType="member">
+	SELECT * FROM PROJECT_MEMBER WHERE GUARDIAN_ID = #{partner_id}
+</select>
 </mapper>

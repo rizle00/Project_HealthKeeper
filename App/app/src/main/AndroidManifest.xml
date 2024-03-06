@@ -15,10 +15,14 @@
         android:theme="@style/Theme.HealthKeeper"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <activity
+            android:name=".member.PopupSearchAddressActivity"
+            android:theme="@style/Theme.MaterialComponents.Dialog"
+            android:exported="false" />
         <activity
             android:name=".member.SimpleJoinActivity"
-            android:exported="false" />
-        <!-- android:screenOrientation="portrait:cctvfullActivity에서 가로방향으로 화면 설정 -->
+            android:exported="false" /> <!-- android:screenOrientation="portrait:cctvfullActivity에서 가로방향으로 화면 설정 -->
         <activity
             android:name=".main.CCTVFullmainActivity"
             android:exported="false"
