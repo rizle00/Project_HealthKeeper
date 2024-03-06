@@ -40,4 +40,8 @@ public class MemberService {
 	public MemberVO socialLogin(String social) {
 		return sql.selectOne("me.socialLogin",social);
 	}
+	
+	public MemberVO partnerCheck(String partner_id) {
+		return sql.selectOne("me.partnerCheck",partner_id);
+	}
 }

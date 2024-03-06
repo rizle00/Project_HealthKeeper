@@ -132,6 +132,7 @@
 
 
         <EditText
+            android:focusable="false"
             android:layout_marginTop="10dp"
             android:id="@+id/edt_address"
             android:layout_marginHorizontal="20dp"
@@ -149,6 +150,15 @@
             android:hint=" 상세주소"
             android:background="@drawable/edittext_rounded"
             />
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:id="@+id/tv_warning_addr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="주소를 모두 입력해주세요"
+            android:textColor="#FF5B5B"
+            android:visibility="gone"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -160,7 +170,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="7"
                 android:layout_height="40dp"
-                android:hint=" 환자 아이디"
+                android:hint=" 환자 / 보호자 아이디"
                 android:background="@drawable/edittext_rounded"
                 />
             <Button
@@ -171,15 +181,18 @@
                 android:layout_width="0dp"
                 android:layout_weight="4"
                 android:layout_height="40dp"
-                android:text="보호자 확인"
+                android:text="아이디 확인"
                 android:layout_marginRight="20dp"/>
         </LinearLayout>
         <Button
+            android:backgroundTint="@drawable/button_customize"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="30dp"
             android:id="@+id/btn_join"
             android:layout_gravity="bottom"
             android:text="회원가입"
             android:background="@drawable/button_customize"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 </ScrollView>

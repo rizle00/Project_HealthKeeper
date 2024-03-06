@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +14,7 @@ import com.google.gson.Gson;
 import kr.co.app.member.MemberService;
 import kr.co.app.member.MemberVO;
 
-@RestController
+@Controller
 public class MemberController {
 	
 	@Autowired
@@ -55,9 +56,11 @@ public class MemberController {
 	public ResponseEntity<String> findid(String vo){
 		MemberVO find_info = new Gson().fromJson(vo, MemberVO.class);
 		return ResponseEntity.ok(service.findid(find_info));
+		
+		
 	}
 	
-	@PostMapping("/kakaologin")
+	@PostMapping("/sociallogin")
 	public ResponseEntity<String> kakaologin(String social) {
 //		MemberVO kakaoVo = new Gson().fromJson(vo, MemberVO.class);
 		
@@ -84,6 +87,17 @@ public class MemberController {
 		
 	}
 	
+	@RequestMapping("partnercheck")
+	public ResponseEntity<String> partnerCheck(String partner_id) {
+		
+		String voJson = new Gson().toJson(service.partnerCheck(partner_id));
+		return ResponseEntity.ok(voJson);
+	}
+	
+	@RequestMapping("/address")
+	public String address() {
+		return "daum";
+	}
 	
 	
 	
