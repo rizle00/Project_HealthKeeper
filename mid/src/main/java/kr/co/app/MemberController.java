@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +14,7 @@ import com.google.gson.Gson;
 import kr.co.app.member.MemberService;
 import kr.co.app.member.MemberVO;
 
-@RestController
+@Controller
 public class MemberController {
 	
 	@Autowired
@@ -27,11 +28,11 @@ public class MemberController {
 
 	
 	@PostMapping("/andlogin")
-	public ResponseEntity<String> login(String guardian_id, String guardian_pw) {
+	public ResponseEntity<String> login(String member_id, String pw) {
 		System.out.println("요청");
-		MemberVO vo = service.login(guardian_id);
-		System.out.println(guardian_id.toString() + guardian_pw.toString());
-		if(vo.getGuardian_pw().equals(guardian_pw)){//나중에 encoding해야함
+		MemberVO vo = service.login(member_id);
+		System.out.println(member_id.toString() + pw.toString());
+		if(vo.getPw().equals(pw)){//나중에 encoding해야함
 			return ResponseEntity.ok(new Gson().toJson(vo));}
 		else {
 			return null;
@@ -39,9 +40,9 @@ public class MemberController {
 	} 
 	
 	@PostMapping(value="/andidcheck" )
-	public ResponseEntity<String> idcheck(String guardian_id) {
-		System.out.println("서비스"+service.idcheck(guardian_id));
-		String result = service.idcheck(guardian_id);
+	public ResponseEntity<String> idcheck(String member_id) {
+		System.out.println("서비스"+service.idcheck(member_id));
+		String result = service.idcheck(member_id);
 		return ResponseEntity.ok(result);
 	}
 	
@@ -55,9 +56,11 @@ public class MemberController {
 	public ResponseEntity<String> findid(String vo){
 		MemberVO find_info = new Gson().fromJson(vo, MemberVO.class);
 		return ResponseEntity.ok(service.findid(find_info));
+		
+		
 	}
 	
-	@PostMapping("/kakaologin")
+	@PostMapping("/sociallogin")
 	public ResponseEntity<String> kakaologin(String social) {
 //		MemberVO kakaoVo = new Gson().fromJson(vo, MemberVO.class);
 		
@@ -76,14 +79,22 @@ public class MemberController {
 	public void resetpw(String vo) {
 		MemberVO find_info = new Gson().fromJson(vo,MemberVO.class);
 		String pw = UUID.randomUUID().toString();
-		find_info.setGuardian_pw(pw);
+		find_info.setPw(pw);
 		
 		if(service.resetpw(find_info)==1) {
 			
 		}
-		
 	}
 	
+	@RequestMapping("partnercheck")
+	public ResponseEntity<String> partnerCheck(String partner_id) {
+		return ResponseEntity.ok(service.partnerCheck(partner_id));
+	}
+	
+	@RequestMapping("/address")
+	public String address() {
+		return "daum";
+	}
 	
 	
 	
