@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
             binding.btnNaverLogin.performClick();
         });
 
+
         naverLogin();
         setContentView(binding.getRoot());
 
@@ -97,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
 
         conn.onExcute((isResult, data) -> {
             Log.d("로그인", "guardianlogin: "+data);
-            GuardianMemberVO vo = new Gson().fromJson(data, GuardianMemberVO.class);
+            MemberVO vo = new Gson().fromJson(data, MemberVO.class);
 
 
             if(vo ==null){
@@ -107,9 +108,8 @@ public class LoginActivity extends AppCompatActivity {
                 /*로그인 유지를 위한 정보 setting*/
                 SharedPreferences.Editor editor = preference.edit();
                 editor.putString("user_id",vo.getGuardian_id());
-                editor.putString("user_name",vo.getGuardian_name());
+                editor.putString("user_name",vo.getName());
                 editor.apply();
-                Log.d("login info", "guardianlogin: "+vo.getGuardian_name());
 
                loginSuccess();
             }
@@ -151,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
                     UserApiClient.getInstance().me((user, throwable) -> {
                         if(throwable ==null){
                             CommonConn conn =new CommonConn("sociallogin",context);
-                            GuardianMemberVO vo = new GuardianMemberVO();
+                            MemberVO vo = new MemberVO();
 
                             conn.addParamMap("social",String.valueOf(user.getId()));
 
@@ -177,10 +177,10 @@ public class LoginActivity extends AppCompatActivity {
 
                                 }else { //로그인 성공
                                     SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
-                                    GuardianMemberVO kakaoVo = new Gson().fromJson(data, GuardianMemberVO.class);
+                                    MemberVO kakaoVo = new Gson().fromJson(data, MemberVO.class);
                                     SharedPreferences.Editor editor = preference.edit();
-                                    editor.putString("user_id", kakaoVo.getGuardian_id());
-                                    editor.putString("user_name", kakaoVo.getGuardian_name());
+                                    editor.putString("user_id", kakaoVo.getMember_id());
+                                    editor.putString("user_name", kakaoVo.getName());
                                     editor.apply();
 
                                     loginSuccess();
@@ -262,10 +262,10 @@ public class LoginActivity extends AppCompatActivity {
                                 dialog.show();
                             } else { //로그인 성공
                                 SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
-                                GuardianMemberVO kakaoVo = new Gson().fromJson(data, GuardianMemberVO.class);
+                                MemberVO kakaoVo = new Gson().fromJson(data, MemberVO.class);
                                 SharedPreferences.Editor editor = preference.edit();
-                                editor.putString("user_id", kakaoVo.getGuardian_id());
-                                editor.putString("user_name", kakaoVo.getGuardian_name());
+                                editor.putString("user_id", kakaoVo.getMember_id());
+                                editor.putString("user_name", kakaoVo.getName());
                                 editor.apply();
                                 loginSuccess();
                             }

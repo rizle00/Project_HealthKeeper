@@ -80,7 +80,7 @@
             android:name=".member.PatientJoinActivity"
             android:exported="false" />
         <activity
-            android:name=".member.GuardianJoinActivity"
+            android:name=".member.JoinActivity"
             android:exported="false" />
         <activity
             android:name=".member.LoginActivity"
