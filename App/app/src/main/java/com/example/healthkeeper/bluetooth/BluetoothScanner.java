@@ -1,7 +1,6 @@
 package com.example.healthkeeper.bluetooth;
 
 import android.annotation.SuppressLint;
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,11 +11,9 @@ import com.clj.fastble.BleManager;
 import com.clj.fastble.callback.BleScanCallback;
 import com.clj.fastble.data.BleDevice;
 import com.clj.fastble.scan.BleScanRuleConfig;
-import com.example.testapplication2.MyService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class BluetoothScanner {
     private final static String TAG = BluetoothScanner.class.getSimpleName();

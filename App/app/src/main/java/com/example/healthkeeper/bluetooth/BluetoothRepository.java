@@ -3,9 +3,7 @@ package com.example.healthkeeper.bluetooth;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
-import common.CommonClient;
-import common.CommonConn;
-import common.CommonService;
+import com.example.healthkeeper.common.CommonConn;
 
 import java.util.HashMap;
 import java.util.concurrent.Executor;
