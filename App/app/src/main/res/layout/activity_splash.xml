@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main.SplashActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:textSize="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Smart HomeKeeper!!"
+        android:textColor="#2A877E"
+        android:layout_marginTop="130dp"
+        android:fontFamily="@font/fontmain"
+        android:textAlignment="center"
+        />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+        app:lottie_fileName="loading.json"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_speed="@integer/splish_img_speed"
+        android:layout_gravity="center"
+        />
+    <!--app:lottie_fileName="loading.json" : assets에 json형태로 담아둠-->
+    <!--app:lottie_speed="@integer/splish_img_speed" : values에 integers.xml에 정의-->
+
+
+    <!--기존이미지
+    <FrameLayout
+        android:background="#123"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        >
+
+        &lt;!&ndash;CardView의 투명도를 나타내며, 값이 1.0이면 완전 불투명, 0.0이면 완전 투명&ndash;&gt;
+        <androidx.cardview.widget.CardView
+            android:alpha="0.5"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+
+
+            >
+
+            <ImageView
+
+                android:id="@+id/imgv_profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/watch_img4" />
+        </androidx.cardview.widget.CardView>
+
+
+    </FrameLayout>
+-->
+
+</LinearLayout>

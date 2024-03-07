@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="gray_view_line1dp">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+       <!-- <item name="android:background">#EEEEEE</item>-->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+    </style>
+
+
+    <style name="AppTheme.PopupOverlay" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- 툴바! -->
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+    </style>
+
+        <!--일정관리에서 쓰이느 스타일정의!-->
+
+
+    <!--연월-->
+    <style name="CustomWeekDayTextAppearance" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">#090201</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15dp</item>
+
+    </style>
+
+
+
+
+</resources>
