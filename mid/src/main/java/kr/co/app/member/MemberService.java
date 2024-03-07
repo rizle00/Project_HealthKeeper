@@ -13,12 +13,12 @@ public class MemberService {
 	@Qualifier("hanul")
 	SqlSession sql;
 	
-	public MemberVO login(String user_id) {
-		return sql.selectOne("me.login", user_id);
+	public MemberVO login(String member_id) {
+		return sql.selectOne("me.login", member_id);
 	}
 	
-	public String idcheck(String guardian_id) {
-		return sql.selectOne("me.idcheck",guardian_id);
+	public String idcheck(String member_id) {
+		return sql.selectOne("me.idcheck",member_id);
 	}
 	
 	public void join(MemberVO vo) {
@@ -39,5 +39,9 @@ public class MemberService {
 	
 	public MemberVO socialLogin(String social) {
 		return sql.selectOne("me.socialLogin",social);
+	}
+	
+	public String partnerCheck(String partner_id) {
+		return sql.selectOne("me.partnerCheck",partner_id);
 	}
 }

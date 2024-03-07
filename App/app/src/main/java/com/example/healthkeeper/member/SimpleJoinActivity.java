@@ -3,7 +3,6 @@ package com.example.healthkeeper.member;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,7 +21,6 @@ import com.example.healthkeeper.common.CommonService;
 import com.example.healthkeeper.databinding.ActivitySimpleJoinBinding;
 import com.google.gson.Gson;
 
-import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -79,20 +77,20 @@ public class SimpleJoinActivity extends AppCompatActivity {
 
 
 
-        int num = binding.tvWarningId.getVisibility()
+        int num = binding.tvWarningId.getVisibility()+binding.tvWarningBlood.getVisibility()
                 + binding.tvWarningEmail.getVisibility()+binding.tvWarningPhone.getVisibility()+binding.tvWarningGender.getVisibility();
-        if(num ==32){
+        if(num ==40){
 
             Intent intent = getIntent();
             JoinTypeActivity jta = (JoinTypeActivity)JoinTypeActivity.joinTypeActivity;
             CommonConn conn = new CommonConn("andjoin",this);
-            GuardianMemberVO vo = new GuardianMemberVO();
-            vo.setGuardian_id(binding.edtUserId.getText().toString());
-            vo.setGuardian_email(binding.edtAddress.getText().toString());
+            MemberVO vo = new MemberVO();
+            vo.setMember_id(binding.edtUserId.getText().toString());
+            vo.setEmail(binding.edtAddress.getText().toString());
             vo.setSocial(intent.getStringExtra("social"));
-            vo.setGuardian_phone(binding.edtUserPhone.getText().toString());
-            vo.setPatient_id(binding.edtGuardianId.getText().toString());
-            vo.setGuardian_name(binding.edtUserName.getText().toString());
+            vo.setPhone(binding.edtUserPhone.getText().toString());
+            vo.setGuardian_id(binding.edtGuardianId.getText().toString());
+            vo.setName(binding.edtUserName.getText().toString());
             String voJson = new Gson().toJson(vo);
             conn.addParamMap("vo",voJson);
 

@@ -13,7 +13,7 @@ import android.view.View;
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.common.CommonConn;
 import com.example.healthkeeper.databinding.ActivityModifyGuardianBinding;
-import com.example.healthkeeper.member.GuardianMemberVO;
+import com.example.healthkeeper.member.MemberVO;
 import com.example.healthkeeper.member.JoinTypeActivity;
 import com.google.gson.Gson;
 
@@ -44,11 +44,11 @@ public class ModifyGuardianActivity extends AppCompatActivity {
 
     public void modify(){
         CommonConn conn = new CommonConn("/andmodify",this);
-        GuardianMemberVO vo = new GuardianMemberVO();
+        MemberVO vo = new MemberVO();
 
-        vo.setGuardian_pw(binding.edtUserPw.getText().toString());
-        vo.setGuardian_email(binding.edtUserEmail.getText().toString());
-        vo.setGuardian_phone(binding.edtUserPhone.getText().toString());
+        vo.setPw(binding.edtUserPw.getText().toString());
+        vo.setEmail(binding.edtUserEmail.getText().toString());
+        vo.setPhone(binding.edtUserPhone.getText().toString());
         String voJson = new Gson().toJson(vo);
         conn.addParamMap("vo",voJson);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
