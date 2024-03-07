@@ -1,0 +1,85 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev20c class="oracle.dbtools.crest.model.design.storage.oracle.v20c.TableProxyOraclev20c" name="QUESTION" directorySegmentName="seg_0" id="ED1D2132-BF83-8F35-780E-0BFA3569880D">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>EC29E7B1-260E-82F6-B69B-C690B656C283</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>699DB0E8-CF9B-0FF8-12B7-A43B538FEC82</segment>
+<tableSpace>87CCF3AA-6EDF-B9B9-D530-F12D63892AD4</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="SECRET" id="1BE62D3D-7315-CAEE-AE51-9964D12B37C1">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<defaultValue>&apos;n&apos;</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="CATEGORY_ID" id="1EE12DCB-197E-DA85-CD5A-F6F745544A45">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="TIME" id="29AD0DF9-2272-F070-0C35-312F0EADD88F">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<defaultValue>SYSDATE</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="QUE_ID" id="494F36D3-2F5F-0118-4AA0-A818D97B571A">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CONTENT" id="54A07C3B-5623-BAEF-EE15-69B3793A27A8">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="TITLE" id="AE2EBE41-9154-664B-E6A8-1A2777CE237F">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="READ_CNT" id="C42EA6CC-48BE-DBC9-D434-4932F3B092B9">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<defaultValue>0</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="MEMBER_ID" id="CFCEF205-075F-BA31-9366-20F697F782FB">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_QUESTION_MEMBER_ID" id="9F152A38-85C6-05A1-B366-353C08C7875B">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:19 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_QUESTION_CATEGORY_ID" id="EBD291E9-A318-7D9B-2711-EFD62FE8A312">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:19 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="QUESTION_PK" id="2BA347B6-6BBC-984A-6E63-122C36137E08">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:18 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>EC29E7B1-260E-82F6-B69B-C690B656C283</schemaObject>
+<segment>E46EA7CD-0F71-1E8E-B244-3FA87B032F23</segment>
+<tableSpace>87CCF3AA-6EDF-B9B9-D530-F12D63892AD4</tableSpace>
+<indexSegment>E46EA7CD-0F71-1E8E-B244-3FA87B032F23</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev20c>

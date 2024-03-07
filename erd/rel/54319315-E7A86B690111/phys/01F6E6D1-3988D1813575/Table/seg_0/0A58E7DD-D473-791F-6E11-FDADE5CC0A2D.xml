@@ -1,0 +1,50 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev20c class="oracle.dbtools.crest.model.design.storage.oracle.v20c.TableProxyOraclev20c" name="HOSPITALS" directorySegmentName="seg_0" id="0A58E7DD-D473-791F-6E11-FDADE5CC0A2D">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>EC29E7B1-260E-82F6-B69B-C690B656C283</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>F60C1EAA-C86B-0B17-C707-A6B10101E0F3</segment>
+<tableSpace>87CCF3AA-6EDF-B9B9-D530-F12D63892AD4</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="CONTACT" id="0E8A5BFE-15ED-0233-99A9-CCF0A0C5EDC9">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="HOSPITAL_ID" id="4F845ED2-97F9-61E8-F8DF-9EF9D1010CD1">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="NAME" id="9AAA13FD-0923-2717-9C82-692DA8D81A48">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="LOCATION" id="A6947018-A907-DEB8-C04B-933483157BF6">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="HOSPITALS_PK" id="6A40D3F6-FAAB-B59C-47B1-DE8239D46D33">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:18 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>EC29E7B1-260E-82F6-B69B-C690B656C283</schemaObject>
+<segment>A0646F54-9678-8D0C-F920-842A42002899</segment>
+<tableSpace>87CCF3AA-6EDF-B9B9-D530-F12D63892AD4</tableSpace>
+<indexSegment>A0646F54-9678-8D0C-F920-842A42002899</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev20c>

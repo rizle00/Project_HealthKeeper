@@ -1,0 +1,127 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="3851AAE9-6FF0-39C9-14DE-F108BC00635C" schemaObject="EC29E7B1-260E-82F6-B69B-C690B656C283" name="ALARMLOG">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ATEAM</sourceObjSchema>
+<sourceObjName>ALARMLOG</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ALARM_ID" id="8C70C693-D6FF-0C48-BD82-12114E048D3E">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ALARMLOG</sourceObjSchema>
+<sourceObjName>ALARM_ID</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TITLE" id="DA603886-97A7-5FDF-90E2-5D951050B0A0">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ALARMLOG</sourceObjSchema>
+<sourceObjName>TITLE</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CONTENT" id="EA6A6B92-4685-0B04-9BB0-6EEE26CBA08E">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ALARMLOG</sourceObjSchema>
+<sourceObjName>CONTENT</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1000 BYTE</dataTypeSize>
+<ownDataTypeParameters>1000 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TIME" id="7B684ADF-C5F4-551E-8852-ADE14BC3AFB7">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ALARMLOG</sourceObjSchema>
+<sourceObjName>TIME</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<defaultValue>SYSDATE</defaultValue>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="STATE" id="7E1F7DFC-A8A9-75A6-66BC-602ED35CF605">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ALARMLOG</sourceObjSchema>
+<sourceObjName>STATE</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>4 BYTE</dataTypeSize>
+<defaultValue>&apos;n&apos;</defaultValue>
+<ownDataTypeParameters>4 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MEMBER_ID" id="48F7C125-38CA-36CD-6776-951A6397ABEE">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ALARMLOG</sourceObjSchema>
+<sourceObjName>MEMBER_ID</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="B91C33D7-FE4D-DD49-784B-4556CBB3814A" referredColumn="4310E022-8B93-D76F-A327-96C57579AE1E"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="D19DD794-85D7-A32E-1BC9-E9EA33FA79C9" schemaObject="EC29E7B1-260E-82F6-B69B-C690B656C283" name="ALARMLOG_PK">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ATEAM</sourceObjSchema>
+<sourceObjName>SYS_C008715</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8C70C693-D6FF-0C48-BD82-12114E048D3E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9D84D154-EE53-37D6-0A22-2E4FBBC61B7D" name="FK_ALARMLOG_MEMBER_ID">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:18 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="48F7C125-38CA-36CD-6776-951A6397ABEE"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
