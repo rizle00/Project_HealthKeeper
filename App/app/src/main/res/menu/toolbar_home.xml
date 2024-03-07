@@ -24,6 +24,14 @@
 
         </item>
 
+        <item
+            android:id="@+id/bluetooth"
+            android:title="alam"
+            android:icon="@drawable/baseline_bluetooth_no_conn"
+            app:showAsAction="always"
+
+            ></item>
+
 
 
         <item
