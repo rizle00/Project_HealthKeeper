@@ -17,7 +17,7 @@
             <!-- 게시판  -->
             <Button
                 android:id="@+id/button1"
-                android:state_selected="true"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="게시판"
@@ -29,7 +29,7 @@
             <!-- 자주묻는 질문 -->
             <Button
                 android:id="@+id/button2"
-                android:state_selected="true"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="자주묻는 질문"
@@ -41,7 +41,6 @@
             <!-- 공지사항  -->
             <Button
                 android:id="@+id/button3"
-                android:state_selected="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="공지사항"
