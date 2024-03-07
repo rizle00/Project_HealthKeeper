@@ -19,15 +19,15 @@
         android:layout_height="wrap_content">
 
 
-    <TextView
-        android:textStyle="bold"
-        android:textSize="15dp"
-        android:text="공지사항 제목으로 들어갈 내용"
-        android:id="@+id/tv_title"
-        android:layout_width="0dp"
-        android:maxLines="1"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"/>
+        <TextView
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:text="공지사항 제목으로 들어갈 내용"
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:maxLines="1"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
         
         <TextView
             android:id="@+id/tv_write_time"

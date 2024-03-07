@@ -21,6 +21,7 @@
             android:theme="@style/Theme.MaterialComponents.Dialog"
             android:exported="false" />
         <activity
+
             android:name=".member.SimpleJoinActivity"
             android:exported="false" /> <!-- android:screenOrientation="portrait:cctvfullActivity에서 가로방향으로 화면 설정 -->
         <activity
@@ -31,8 +32,7 @@
             android:name=".main.CCTVActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-            android:screenOrientation="portrait"
-            android:exported="false" />
+
         <activity
             android:name=".main.ConditionActivity"
             android:exported="false" />
@@ -46,7 +46,9 @@
         <activity
             android:name=".member.FindResultActivity"
             android:exported="false" />
+
         <activity
+
             android:name=".setting.ModifyPatientActivity"
             android:exported="false" />
         <activity
@@ -58,11 +60,12 @@
         <activity
             android:name=".member.JoinTypeActivity"
             android:exported="false" />
+
         <activity
             android:name=".main.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".main.CummunityActivity"
+
             android:name=".main.CommunityActivity"
             android:exported="false" />
         <activity
@@ -71,6 +74,8 @@
         <activity
             android:name=".main.MonitoringActivity"
             android:exported="false" />
+
+
         <activity
             android:name=".member.FindIdActivity"
             android:exported="false" />
