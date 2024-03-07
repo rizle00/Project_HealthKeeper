@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="360dp"
+        android:layout_height="300dp"
+        app:cardCornerRadius="20px"
+        android:backgroundTint="#F1EDED"
+        android:layout_gravity="center"
+        app:cardUseCompatPadding="true"
+
+
+        >
+
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+         android:layout_gravity="center"
+          android:orientation="horizontal"
+          >
+          <com.airbnb.lottie.LottieAnimationView
+              android:layout_width="90dp"
+              android:layout_height="110dp"
+              app:lottie_fileName="emergency.json"
+              app:lottie_autoPlay="true"
+              app:lottie_loop="true"
+              app:lottie_colorFilter="@color/led"
+
+              />
+
+       <!-- <ImageView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/baseline_phone"
+            />-->
+        <TextView
+            android:id="@+id/dialogTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45px"
+            android:text="119"
+            android:textColor="#360B3D"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:padding="16dp"/>
+      </LinearLayout>
+
+        <TextView
+            android:id="@+id/dialogMessage"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="긴급 전화 연결됩니다.\n 연결하시겠습니까?"
+            android:gravity="center"
+            android:padding="16dp"/>
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/confirmButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="확인"
+            android:backgroundTint="#F84884"
+            android:textStyle="bold"
+            android:onClick="onConfirmButtonClicked"
+            android:layout_marginRight="30dp"
+            android:padding="16dp"/>
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="취소"
+            android:backgroundTint="#2C95E7"
+            android:textStyle="bold"
+            android:onClick="onCancelButtonClicked"
+            android:padding="16dp"
+            />
+
+        </LinearLayout>
+
+</LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
