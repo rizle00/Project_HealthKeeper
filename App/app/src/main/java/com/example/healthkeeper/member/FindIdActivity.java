@@ -4,11 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.healthkeeper.R;
 import com.example.healthkeeper.common.CommonConn;
 import com.example.healthkeeper.databinding.ActivityFindIdBinding;
 import com.google.gson.Gson;
@@ -34,10 +31,10 @@ public class FindIdActivity extends AppCompatActivity {
     public void findId(){
         CommonConn conn = new CommonConn("andfindid",this);
 
-        GuardianMemberVO vo = new GuardianMemberVO();
-        vo.setGuardian_name(binding.edtUserName.getText().toString());
-        vo.setGuardian_email(binding.edtUserEmail.getText().toString());
-        vo.setGuardian_phone(binding.edtUserPhone.getText().toString());
+        MemberVO vo = new MemberVO();
+        vo.setName(binding.edtUserName.getText().toString());
+        vo.setEmail(binding.edtUserEmail.getText().toString());
+        vo.setPhone(binding.edtUserPhone.getText().toString());
         String voJson = new Gson().toJson(vo);
         conn.addParamMap("vo",voJson);
         conn.onExcute((isResult, data) -> {

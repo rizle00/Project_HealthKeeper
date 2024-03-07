@@ -9,9 +9,7 @@ import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
 
-import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.ActivityModifyPatientBinding;
-import com.example.healthkeeper.member.GuardianJoinActivity;
 import com.example.healthkeeper.member.JoinTypeActivity;
 
 import java.util.regex.Matcher;
