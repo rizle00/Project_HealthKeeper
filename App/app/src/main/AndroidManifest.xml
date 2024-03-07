@@ -39,10 +39,14 @@
                 android:enabled="true"
                 android:exported="true">
         </service>
+
         <activity
-                android:name=".member.SimpleJoinActivity"
-                android:exported="false"/>
-        <!-- android:screenOrientation="portrait:cctvfullActivity에서 가로방향으로 화면 설정 -->
+            android:name=".member.PopupSearchAddressActivity"
+            android:theme="@style/Theme.MaterialComponents.Dialog"
+            android:exported="false" />
+        <activity
+            android:name=".member.SimpleJoinActivity"
+            android:exported="false" /> <!-- android:screenOrientation="portrait:cctvfullActivity에서 가로방향으로 화면 설정 -->
         <activity
                 android:name=".main.CCTVFullmainActivity"
                 android:exported="false"
@@ -104,8 +108,8 @@
                 android:name=".member.PatientJoinActivity"
                 android:exported="false"/>
         <activity
-                android:name=".member.GuardianJoinActivity"
-                android:exported="false"/>
+            android:name=".member.JoinActivity"
+            android:exported="false" />
         <activity
                 android:name=".member.LoginActivity"
                 android:exported="false"/>

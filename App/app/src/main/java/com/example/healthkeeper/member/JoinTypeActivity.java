@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.ActivityJoinTypeBinding;
 
 public class JoinTypeActivity extends AppCompatActivity {
@@ -17,14 +16,14 @@ public class JoinTypeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         joinTypeActivity = JoinTypeActivity.this;
         binding = ActivityJoinTypeBinding.inflate(getLayoutInflater());
-
+        Intent intent = new Intent(this,JoinActivity.class);
         binding.llPatient.setOnClickListener(v -> {
-            Intent intent = new Intent(this,PatientJoinActivity.class);
+            intent.putExtra("type","patient");
             startActivity(intent);
         });
 
         binding.llGuardian.setOnClickListener(v -> {
-            Intent intent = new Intent(this, GuardianJoinActivity.class);
+            intent.putExtra("type","guardian");
             startActivity(intent);
         });
 

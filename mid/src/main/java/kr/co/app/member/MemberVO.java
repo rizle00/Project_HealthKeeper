@@ -3,22 +3,14 @@ package kr.co.app.member;
 
 
 public class MemberVO {
-    private String guardian_id,gender, bloodtype, guardian_pw, guardian_email, guardian_phone, social, alram, patient_id, guardian_name;
+    private String member_id, guardian_id, pw, name, phone, birth, gender, blood, social, email, address, address_detail, alarm, role;
 
-	public String getGender() {
-		return gender;
+	public String getMember_id() {
+		return member_id;
 	}
 
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public String getBloodtype() {
-		return bloodtype;
-	}
-
-	public void setBloodtype(String bloodtype) {
-		this.bloodtype = bloodtype;
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
 	}
 
 	public String getGuardian_id() {
@@ -29,28 +21,52 @@ public class MemberVO {
 		this.guardian_id = guardian_id;
 	}
 
-	public String getGuardian_pw() {
-		return guardian_pw;
+	public String getPw() {
+		return pw;
 	}
 
-	public void setGuardian_pw(String guardian_pw) {
-		this.guardian_pw = guardian_pw;
+	public void setPw(String pw) {
+		this.pw = pw;
 	}
 
-	public String getGuardian_email() {
-		return guardian_email;
+	public String getName() {
+		return name;
 	}
 
-	public void setGuardian_email(String guardian_email) {
-		this.guardian_email = guardian_email;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getGuardian_phone() {
-		return guardian_phone;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setGuardian_phone(String guardian_phone) {
-		this.guardian_phone = guardian_phone;
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getBlood() {
+		return blood;
+	}
+
+	public void setBlood(String blood) {
+		this.blood = blood;
 	}
 
 	public String getSocial() {
@@ -61,28 +77,45 @@ public class MemberVO {
 		this.social = social;
 	}
 
-	public String getAlram() {
-		return alram;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setAlram(String alram) {
-		this.alram = alram;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getPatient_id() {
-		return patient_id;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setPatient_id(String patient_id) {
-		this.patient_id = patient_id;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	public String getGuardian_name() {
-		return guardian_name;
+	public String getAddress_detail() {
+		return address_detail;
 	}
 
-	public void setGuardian_name(String guardian_name) {
-		this.guardian_name = guardian_name;
+	public void setAddress_detail(String address_detail) {
+		this.address_detail = address_detail;
 	}
+
+	public String getalarm() {
+		return alarm;
+	}
+
+	public void setalarm(String alarm) {
+		this.alarm = alarm;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
     
 }
