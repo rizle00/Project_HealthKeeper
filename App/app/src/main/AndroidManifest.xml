@@ -27,8 +27,7 @@
             android:name=".main.CCTVActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-            android:screenOrientation="portrait"
-            android:exported="false" />
+
         <activity
             android:name=".main.ConditionActivity"
             android:exported="false" />
@@ -58,7 +57,7 @@
             android:name=".main.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".main.CummunityActivity"
+
             android:name=".main.CommunityActivity"
             android:exported="false" />
         <activity
