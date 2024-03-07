@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.healthkeeper.databinding.ItemRecvNoticeBinding;
-import com.example.healthkeeper.member.GuardianMemberVO;
 
 import java.util.List;
 

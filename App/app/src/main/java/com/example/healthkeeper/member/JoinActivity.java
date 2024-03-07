@@ -1,45 +1,40 @@
 package com.example.healthkeeper.member;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.webkit.WebView;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.healthkeeper.R;
-import com.example.healthkeeper.common.CommonClient;
 import com.example.healthkeeper.common.CommonConn;
-import com.example.healthkeeper.common.CommonService;
-import com.example.healthkeeper.databinding.ActivityGuardianJoinBinding;
+import com.example.healthkeeper.databinding.ActivityJoinBinding;
 import com.google.gson.Gson;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class GuardianJoinActivity extends AppCompatActivity {
+public class JoinActivity extends AppCompatActivity {
     final String TAG = "guardian join";
-    ActivityGuardianJoinBinding binding;
+    ActivityJoinBinding binding;
+
+
 
     private final int SEARCH_ADDRESS_ACTIVITY = 10000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityGuardianJoinBinding.inflate(getLayoutInflater());
+        binding = ActivityJoinBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.edtAddress.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), PopupSearchAddressActivity.class);
@@ -55,18 +50,36 @@ public class GuardianJoinActivity extends AppCompatActivity {
             pwCheck();
             joinClick();
         });
-
-        binding.btnGuardianFind.setOnClickListener(v -> {
-
+        binding.llPartner.setOnClickListener(v -> {
+            partnerCheck();
         });
+        if (!isPatient(getIntent().getStringExtra("type"))) {
+            binding.llBloodtype.setVisibility(View.GONE);
+        }
 
+        /* 혈액형 */
+        Spinner bloodTypeSpn = (Spinner) binding.spnBloodType;
+        ArrayAdapter bloodAdapter = ArrayAdapter.createFromResource(this, R.array.bloodType, android.R.layout.simple_spinner_item);
+        bloodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        bloodTypeSpn.setAdapter(bloodAdapter);
 
+        binding.edtPatientId.setOnClickListener(v -> {
+            binding.llPartner.performClick();
+        });
+        binding.btnGuardianFind.setOnClickListener(v -> {
+            if(binding.btnGuardianFind.getText().toString().equals("취소")){
+                binding.edtPatientId.setText("");
+                binding.btnGuardianFind.setText("아이디 확인");
+            }else {
+                binding.llPartner.performClick();
+            }
+        });
     }
 
 
-    public void addressCheck(){
-        if(binding.edtAddress.getText().length() == 0 ||
-                binding.edtAddressDetail.getText().length() ==0){
+    public void addressCheck() {
+        if (binding.edtAddress.getText().length() == 0 ||
+                binding.edtAddressDetail.getText().length() == 0) {
             binding.tvWarningAddr.setVisibility(View.VISIBLE);
         }
 
@@ -96,6 +109,25 @@ public class GuardianJoinActivity extends AppCompatActivity {
 
     }
 
+    public void bloodCheck() {
+        binding.spnBloodType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String blood = binding.spnBloodType.getSelectedItem().toString();
+                if (isPatient(getIntent().getStringExtra("type")) && blood.equals("혈액형")) {
+                    binding.tvWarningBlood.setVisibility(View.VISIBLE);
+                } else {
+                    binding.tvWarningBlood.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+    }
+
     public void joinClick() {
         usableIdCheck();
         mailPatterns();
@@ -103,20 +135,21 @@ public class GuardianJoinActivity extends AppCompatActivity {
         addressCheck();
 
         int num = binding.tvWarningId.getVisibility() + binding.tvWarningPw.getVisibility()
-                + binding.tvWarningEmail.getVisibility() + binding.tvWarningPhone.getVisibility()+binding.tvWarningAddr.getVisibility();
+                + binding.tvWarningEmail.getVisibility() + binding.tvWarningPhone.getVisibility() + binding.tvWarningAddr.getVisibility();
         if (num == 40) {
             JoinTypeActivity jta = (JoinTypeActivity) JoinTypeActivity.joinTypeActivity;
             CommonConn conn = new CommonConn("andjoin", this);
-            GuardianMemberVO vo = new GuardianMemberVO();
-            vo.setGuardian_id(binding.edtUserId.getText().toString());
-            vo.setGuardian_pw(binding.edtUserPw.getText().toString());
-            vo.setGuardian_email(binding.edtAddress.getText().toString());
-            vo.setSocial("n");
-            vo.setGuardian_phone(binding.edtUserPhone.getText().toString());
-            vo.setPatient_id(binding.edtPatientId.getText().toString());
-            vo.setGuardian_name(binding.edtUserName.getText().toString());
+            MemberVO vo = new MemberVO();
+            vo.setMember_id(binding.edtUserId.getText().toString());
+            vo.setPw(binding.edtUserPw.getText().toString());
+            vo.setEmail(binding.edtAddress.getText().toString());
+            vo.setPhone(binding.edtUserPhone.getText().toString());
+            vo.setGuardian_id(binding.edtPatientId.getText().toString());
+            vo.setName(binding.edtUserName.getText().toString());
+            vo.setRole(getIntent().getStringExtra("type"));
             String voJson = new Gson().toJson(vo);
             conn.addParamMap("vo", voJson);
+
 
 
             conn.onExcute((isResult, data) -> {
@@ -248,13 +281,32 @@ public class GuardianJoinActivity extends AppCompatActivity {
         }
     }
 
-    public void partnerCheck(String partner_id){
-        CommonConn conn = new CommonConn("partnercheck",this);
-        conn.addParamMap("partner_id",partner_id);
-        conn.onExcute((isResult, data) -> {
-            GuardianMemberVO vo = new Gson().fromJson(data,GuardianMemberVO.class);
-            AlertDialog.Builder builder = new AlertDialog.Builder()
-        });
+    public void partnerCheck() {
+        CommonConn conn = new CommonConn("partnercheck", this);
+        String partner;
+        EditText edt = new EditText(this);
+        if (isPatient(getIntent().getStringExtra("type"))) {
+            partner = "보호자";
+        } else {
+            partner = "환자";
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(partner + " 등록")
+                .setMessage(partner+" 아이디를 입력해주세요")
+                .setView(edt).setPositiveButton("등록하기", (dialog, which) -> {
+
+                    conn.addParamMap("partner_id", edt.getText().toString());
+                    conn.onExcute((isResult, data) -> {
+                        if(data.equals("1")){
+                            binding.edtPatientId.setText(edt.getText().toString());
+                            binding.btnGuardianFind.setText("취소");
+                        }else{
+                            AlertDialog builder1 = new AlertDialog.Builder(this).setMessage("존재하지 않는 회원입니다").show();
+                        }
+                    });
+                }).setNegativeButton("취소", (dialog, which) -> {
+                    dialog.dismiss();
+                });
+        builder.show();
 
     }
 
@@ -277,5 +329,13 @@ public class GuardianJoinActivity extends AppCompatActivity {
             }
             Log.i(TAG, "idDupCheck: " + data);
         });
+    }
+
+    public boolean isPatient(String type) {
+        if (type.equals("patient")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

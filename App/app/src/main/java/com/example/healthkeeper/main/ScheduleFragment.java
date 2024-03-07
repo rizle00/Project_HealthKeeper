@@ -1,17 +1,8 @@
 package com.example.healthkeeper.main;
 
-import static android.content.Intent.getIntent;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.os.Bundle;
 
-
-import com.example.healthkeeper.databinding.FragmentHomeBinding;
-import com.example.healthkeeper.databinding.FragmentScheduleBinding;
-import com.example.healthkeeper.member.GuardianJoinActivity;
-import com.example.healthkeeper.member.LoginActivity;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.Toast;
+
+import com.example.healthkeeper.databinding.FragmentScheduleBinding;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
