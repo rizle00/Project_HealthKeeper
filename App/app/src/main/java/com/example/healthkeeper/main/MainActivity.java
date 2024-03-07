@@ -1,11 +1,5 @@
 package com.example.healthkeeper.main;
 
-import static android.app.PendingIntent.getActivity;
-
-import android.app.NotificationManager;
-import android.bluetooth.BluetoothAdapter;
-import android.content.Context;
-import android.service.notification.StatusBarNotification;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;

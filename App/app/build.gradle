@@ -24,12 +24,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     viewBinding{
         enabled=true
     }
+
+
 }
 
 dependencies {
@@ -53,6 +55,8 @@ dependencies {
 
     implementation 'com.ms-square:expandableTextView:0.1.4'//
 
+    implementation 'com.github.lakue119:LakuePagingButton:1.0.0'//Paging라이브러리
+   
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'

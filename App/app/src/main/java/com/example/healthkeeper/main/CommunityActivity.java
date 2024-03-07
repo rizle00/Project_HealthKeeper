@@ -1,26 +1,29 @@
 package com.example.healthkeeper.main;
 
-import static android.app.PendingIntent.getActivity;
+        import static android.app.PendingIntent.getActivity;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+        import androidx.appcompat.app.AlertDialog;
+        import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+        import android.app.Activity;
+        import android.content.Intent;
+        import android.net.Uri;
+        import android.os.Bundle;
+        import android.text.Spannable;
+        import android.text.SpannableString;
+        import android.text.style.ForegroundColorSpan;
+        import android.view.Menu;
+        import android.view.MenuItem;
+        import android.view.View;
+        import android.widget.Button;
+        import android.widget.TextView;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
+        import androidx.appcompat.widget.Toolbar;
+        import androidx.fragment.app.Fragment;
 
-import com.example.healthkeeper.R;
-import com.example.healthkeeper.databinding.ActivityCommunityBinding;
-import com.example.healthkeeper.setting.SettingFragment;
+        import com.example.healthkeeper.R;
+        import com.example.healthkeeper.databinding.ActivityCommunityBinding;
+        import com.example.healthkeeper.setting.SettingFragment;
 
 public class CommunityActivity extends AppCompatActivity {
     ActivityCommunityBinding binding;
@@ -32,15 +35,20 @@ public class CommunityActivity extends AppCompatActivity {
         binding = ActivityCommunityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
+        changeFragment(new CommunityFragment());
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //getSupportActionBar().hide();
-        getSupportActionBar().setTitle("커뮤니티");
+        int customTextColor = getResources().getColor(R.color.white);
+        getSupportActionBar().setTitle(getColoredSpanned("COMMUNITY", customTextColor));
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//부모 액티비티로의 이동이나 앱의 계층 구조 내에서 위로 이동하는 데 사용
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                                  //부모 액티비티로의 이동이나 앱의 계층 구조 내에서 위로 이동하는 데 사용
 
         binding.bottomNav.setOnItemSelectedListener(item -> {//btm_menu 클릭시 설정
             int itemId = item.getItemId();
+
 
             if (itemId == R.id.btm_home) {
                 Intent intent=new Intent(this, MainActivity.class);
@@ -58,6 +66,12 @@ public class CommunityActivity extends AppCompatActivity {
         });
 
     }
+
+    private SpannableString getColoredSpanned(String text, int color) {
+        SpannableString spannableString = new SpannableString(text);
+        spannableString.setSpan(new ForegroundColorSpan(color), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannableString;
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {//툴바의 메뉴생성
         getMenuInflater().inflate(R.menu.toolbar_community, menu);
@@ -72,16 +86,14 @@ public class CommunityActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
             return true;
-        }else
-        if(id==R.id.menu_condition){
+        }else if(id==R.id.menu_condition){
             Intent intent= new Intent(this,ConditionActivity.class);
             startActivity(intent);
             finish();
 
 
             return true;
-        }
-        if(id==R.id.menu_logout){
+        }else if(id==R.id.menu_logout){
             Intent intent=new Intent(this, LoginBeforeActivity.class);
             startActivity(intent);
             finish();
@@ -121,7 +133,7 @@ public class CommunityActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:긴급전화번호"));
+                callIntent.setData(Uri.parse("tel:119"));
                 startActivity(callIntent);
 
                 alertDialog.dismiss();
@@ -137,6 +149,14 @@ public class CommunityActivity extends AppCompatActivity {
         alertDialog = builder.create();
 
         alertDialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // 뒤로가기 버튼 눌렀을 때의 동작 구현
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 
