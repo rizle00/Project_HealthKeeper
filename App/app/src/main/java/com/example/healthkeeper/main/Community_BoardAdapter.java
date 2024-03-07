@@ -1,13 +1,16 @@
 package com.example.healthkeeper.main;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
+
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.healthkeeper.databinding.RecvCommunityBoardBinding;import com.example.healthkeeper.databinding.RecvCommunityBoardBinding;
+import com.example.healthkeeper.databinding.RecvCommunityBoardBinding;
+import com.example.healthkeeper.main.CommunityDTOS.Community_BoardDTO;
 
 import java.util.ArrayList;
 

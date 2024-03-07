@@ -3,20 +3,25 @@ package com.example.healthkeeper.main;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.healthkeeper.databinding.FragmentCommunityBinding;
+import com.lakue.pagingbutton.OnPageSelectListener;
 
 import java.util.ArrayList;
 
 
 public class CommunityFragment extends Fragment {
     FragmentCommunityBinding binding;
+    int page = 1;
+    int max_page = 30;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         binding = FragmentCommunityBinding.inflate(inflater, container, false);
@@ -32,8 +37,27 @@ public class CommunityFragment extends Fragment {
         binding.notice.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
+        binding.pagingList.setPageItemCount(7); //한 번에 표시되는 버튼 수
+        binding.pagingList.addBottomPageButton(max_page,1);//총 페이지 버튼 수와 현재 페이지 설정
+        binding.pagingList.setOnPageSelectListener(new OnPageSelectListener() {
+            @Override
+            public void onPageBefore(int now_page) {
+                binding.pagingList.addBottomPageButton(max_page,now_page);
+                Toast.makeText(getActivity(), ""+now_page, Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onPageCenter(int now_page) {
+                Toast.makeText(getActivity(), ""+now_page, Toast.LENGTH_SHORT).show();
+                binding.pagingList.addBottomPageButton(max_page,page);
+            }
 
+            @Override
+            public void onPageNext(int now_page) {
+                Toast.makeText(getActivity(), ""+now_page, Toast.LENGTH_SHORT).show();
+                binding.pagingList.addBottomPageButton(max_page,now_page);
+            }
+        });
 
 
 
@@ -78,7 +102,7 @@ public class CommunityFragment extends Fragment {
 
 
 
-    private ArrayList<CommunityDTOS.Community_BoardDTO> getArrayBoardList() {
+    ArrayList<CommunityDTOS.Community_BoardDTO> getArrayBoardList() {
         ArrayList<CommunityDTOS.Community_BoardDTO> list=new ArrayList<>();
         list.add(new CommunityDTOS().new Community_BoardDTO("오늘은 웨어러블 산날! 기분좋아","황승은","18:20"));
         list.add(new CommunityDTOS().new Community_BoardDTO("ㅋㅋ! 기분좋아","이정은","16:30"));
@@ -89,6 +113,79 @@ public class CommunityFragment extends Fragment {
         list.add(new CommunityDTOS().new Community_BoardDTO("금요일","와따시와","어제"));
         list.add(new CommunityDTOS().new Community_BoardDTO("토요일","하지원","어제"));
         list.add(new CommunityDTOS().new Community_BoardDTO("일요일","데스네","2020.03.01"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("오늘은 웨어러블 산날! 기분좋아","황승은","18:20"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("ㅋㅋ! 기분좋아","이정은","16:30"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("월요일","송차은","15:30"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("화요일","황지정","13:29"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("수요일","하지매","12:03"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("목요일","마시뗴","09:20"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("금요일","와따시와","어제"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("토요일","하지원","어제"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("일요일","데스네","2020.03.01"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("오늘은 웨어러블 산날! 기분좋아","황승은","18:20"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("ㅋㅋ! 기분좋아","이정은","16:30"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("월요일","송차은","15:30"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("화요일","황지정","13:29"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("수요일","하지매","12:03"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("목요일","마시뗴","09:20"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("금요일","와따시와","어제"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("토요일","하지원","어제"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("일요일","데스네","2020.03.01"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("오늘은 웨어러블 산날! 기분좋아","황승은","18:20"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("ㅋㅋ! 기분좋아","이정은","16:30"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("월요일","송차은","15:30"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("화요일","황지정","13:29"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("수요일","하지매","12:03"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("목요일","마시뗴","09:20"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("금요일","와따시와","어제"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("토요일","하지원","어제"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("일요일","데스네","2020.03.01"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("오늘은 웨어러블 산날! 기분좋아","황승은","18:20"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("ㅋㅋ! 기분좋아","이정은","16:30"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("월요일","송차은","15:30"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("화요일","황지정","13:29"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("수요일","하지매","12:03"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("목요일","마시뗴","09:20"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("금요일","와따시와","어제"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("토요일","하지원","어제"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("일요일","데스네","2020.03.01"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("오늘은 웨어러블 산날! 기분좋아","황승은","18:20"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("ㅋㅋ! 기분좋아","이정은","16:30"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("월요일","송차은","15:30"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("화요일","황지정","13:29"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("수요일","하지매","12:03"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("목요일","마시뗴","09:20"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("금요일","와따시와","어제"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("토요일","하지원","어제"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("일요일","데스네","2020.03.01"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("오늘은 웨어러블 산날! 기분좋아","황승은","18:20"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("ㅋㅋ! 기분좋아","이정은","16:30"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("월요일","송차은","15:30"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("화요일","황지정","13:29"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("수요일","하지매","12:03"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("목요일","마시뗴","09:20"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("금요일","와따시와","어제"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("토요일","하지원","어제"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("일요일","데스네","2020.03.01"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("오늘은 웨어러블 산날! 기분좋아","황승은","18:20"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("ㅋㅋ! 기분좋아","이정은","16:30"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("월요일","송차은","15:30"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("화요일","황지정","13:29"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("수요일","하지매","12:03"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("목요일","마시뗴","09:20"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("금요일","와따시와","어제"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("토요일","하지원","어제"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("일요일","데스네","2020.03.01"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("오늘은 웨어러블 산날! 기분좋아","황승은","18:20"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("ㅋㅋ! 기분좋아","이정은","16:30"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("월요일","송차은","15:30"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("화요일","황지정","13:29"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("수요일","하지매","12:03"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("목요일","마시뗴","09:20"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("금요일","와따시와","어제"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("토요일","하지원","어제"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("일요일","데스네","2020.03.01"));
+
 
         return list;
     }
