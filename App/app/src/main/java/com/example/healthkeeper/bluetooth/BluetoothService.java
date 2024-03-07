@@ -4,17 +4,15 @@ import android.annotation.SuppressLint;
 import android.app.*;
 import android.bluetooth.*;
 import android.content.*;
-import android.content.pm.PackageManager;
 import android.content.pm.ServiceInfo;
 import android.os.Binder;
 import android.os.Build;
-import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.ServiceCompat;
-import androidx.core.content.ContextCompat;
-import com.example.testapplication2.*;
+import com.example.healthkeeper.App;
+import com.example.healthkeeper.R;
 
 import java.util.concurrent.Executor;
 
@@ -101,7 +99,7 @@ public class BluetoothService extends Service {
 
     // Service 바인더 ============================
     public class LocalBinder extends Binder {
-        BluetoothService getService() {
+        public BluetoothService getService() {
             return BluetoothService.this;
         }
     }
