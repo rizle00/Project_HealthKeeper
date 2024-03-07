@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
 }
 
+
+
 android {
     namespace 'com.example.healthkeeper'
     compileSdk 34
@@ -23,12 +25,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     viewBinding{
         enabled=true
     }
+
+
 }
 
 dependencies {
@@ -41,11 +45,8 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.22'
     implementation "androidx.webkit:webkit:1.8.0"//webView API
     implementation 'com.airbnb.android:lottie:5.0.2'//동적이미지 추가 라이브러리
-
-
-    implementation "androidx.paging:paging-runtime:3.2.1"//Paging라이브러리
-
-    implementation 'com.ms-square:expandableTextView:0.1.4'//
+    implementation 'com.github.lakue119:LakuePagingButton:1.0.0'//Paging라이브러리
+    implementation 'com.ms-square:expandableTextView:0.1.4'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
