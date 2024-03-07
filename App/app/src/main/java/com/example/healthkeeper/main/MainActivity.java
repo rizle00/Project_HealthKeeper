@@ -47,12 +47,12 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//뒤로가기 버튼만들기
 
-        getSupportActionBar().setTitle(getColoredSpanned("홈",customTextColor));
+        getSupportActionBar().setTitle(getColoredSpanned("홈", customTextColor));
         changeFragment(new HomeFragment());
 
 
         binding.bottomNav.setOnNavigationItemSelectedListener(item -> {
-                              // btm_nav에 메뉴를 눌렀을때 툴바에 표시될 타이틀,메뉴와 색상지정!
+            // btm_nav에 메뉴를 눌렀을때 툴바에 표시될 타이틀,메뉴와 색상지정!
             int itemId = item.getItemId();
             int customTextColor = getResources().getColor(R.color.white);
 
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 //changeScheduleFragment(new ());
                 getSupportActionBar().setTitle(getColoredSpanned("CUMUNITY", customTextColor));
                 setToolbarMenu(R.menu.toolbar_cummunity);
-                Intent intent=new Intent(this,CommunityActivity.class);
+                Intent intent = new Intent(this, CommunityActivity.class);
                 startActivity(intent);
                 finish();
 
@@ -99,141 +99,141 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
- @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-                         //아무것도 선택하지 않았을 경우 홈을 누른것처럼 툴바의 메뉴가 보이게 설정!
+        //아무것도 선택하지 않았을 경우 홈을 누른것처럼 툴바의 메뉴가 보이게 설정!
         int selectedItem = binding.bottomNav.getSelectedItemId();
 
         if (selectedItem == R.id.nav_home) {
             getMenuInflater().inflate(R.menu.toolbar_home, menu);
 
         } else {
-           // getMenuInflater().inflate(R.menu.toolbar_home, menu);
+            // getMenuInflater().inflate(R.menu.toolbar_home, menu);
         }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {//툴바의 메뉴생성
-        getMenuInflater().inflate(R.menu.toolbar_home, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {//툴바선택시....
-        int id = item.getItemId();
-
-        if (id == R.id.menu_menu) {
-
-            return true;
-        } else if (id == R.id.menu_logout) {
-            SharedPreferences pref = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.clear();
-      if (id == R.id.menu_logout) {
-            Intent intent = new Intent(this, LoginBeforeActivity.class);
-            startActivity(intent);
-            finish();
-            return true;
-        } else if (id == R.id.menu_setting) {
-
-            return true;
-        }else if (id == android.R.id.home) { //toolbar의 back키 눌렀을 때 동작
-            finish();
+        @Override
+        public boolean onCreateOptionsMenu (Menu menu){//툴바의 메뉴생성
+            getMenuInflater().inflate(R.menu.toolbar_home, menu);
             return true;
         }
-        // 다른 메뉴 아이템에 대한 처리 추가 가능
 
-        return super.onOptionsItemSelected(item);
-    }
 
-    private SpannableString getColoredSpanned(String text, int color) {//툴바의 텍스트색상설정
-        SpannableString spannableString = new SpannableString(text);
-        spannableString.setSpan(new ForegroundColorSpan(color), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return spannableString;
-    }
+        @Override
+        public boolean onOptionsItemSelected (MenuItem item){//툴바선택시....
+            int id = item.getItemId();
 
-    public void changeFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment)
-                .addToBackStack(null)
-                .commit();
-    }
+            if (id == R.id.menu_menu) {
 
-    private void showEmergencyDialog() {//긴급전화 다이얼로그
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_emergency, null);
-        builder.setView(dialogView);
+                return true;
+            } else if (id == R.id.menu_logout) {
+                SharedPreferences pref = getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.clear();
+                if (id == R.id.menu_logout) {
+                    Intent intent = new Intent(this, LoginBeforeActivity.class);
+                    startActivity(intent);
+                    finish();
+                    return true;
+                } else if (id == R.id.menu_setting) {
 
-        TextView dialogTitle = dialogView.findViewById(R.id.dialogTitle);
-        TextView dialogMessage = dialogView.findViewById(R.id.dialogMessage);
-        Button confirmButton = dialogView.findViewById(R.id.confirmButton);
-        Button cancelButton = dialogView.findViewById(R.id.cancelButton);
+                    return true;
+                } else if (id == android.R.id.home) { //toolbar의 back키 눌렀을 때 동작
+                    finish();
+                    return true;
+                }
+                // 다른 메뉴 아이템에 대한 처리 추가 가능
 
-        dialogTitle.setText("긴급 전화");
-        dialogMessage.setText("긴급 전화 연결됩니다.\n 연결하시겠습니까?");
+                return super.onOptionsItemSelected(item);
+            }
 
-        confirmButton.setOnClickListener((new View.OnClickListener() {//긴급전화 확인버튼
+            private SpannableString getColoredSpanned (String text,int color){//툴바의 텍스트색상설정
+                SpannableString spannableString = new SpannableString(text);
+                spannableString.setSpan(new ForegroundColorSpan(color), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                return spannableString;
+            }
+
+            public void changeFragment (Fragment fragment){
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+
+            private void showEmergencyDialog () {//긴급전화 다이얼로그
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                View dialogView = getLayoutInflater().inflate(R.layout.dialog_emergency, null);
+                builder.setView(dialogView);
+
+                TextView dialogTitle = dialogView.findViewById(R.id.dialogTitle);
+                TextView dialogMessage = dialogView.findViewById(R.id.dialogMessage);
+                Button confirmButton = dialogView.findViewById(R.id.confirmButton);
+                Button cancelButton = dialogView.findViewById(R.id.cancelButton);
+
+                dialogTitle.setText("긴급 전화");
+                dialogMessage.setText("긴급 전화 연결됩니다.\n 연결하시겠습니까?");
+
+                confirmButton.setOnClickListener((new View.OnClickListener() {//긴급전화 확인버튼
+                    @Override
+                    public void onClick(View v) {
+                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                        callIntent.setData(Uri.parse("tel:긴급전화번호"));
+                        startActivity(callIntent);
+
+                        alertDialog.dismiss();
+                    }
+                }));
+
+                cancelButton.setOnClickListener(new View.OnClickListener() {//긴급전화 취소버튼
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+                alertDialog = builder.create();
+
+                alertDialog.show();
+            }
+
+            public void changeScheduleFragment (ScheduleFragment fragment){//일정관리메뉴 화면
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();//
+            }
+
+            private void setToolbarMenu ( int menuResId){//툴바메뉴 생성
+                Toolbar toolbar = findViewById(R.id.toolbar);
+                toolbar.getMenu().clear();
+                getMenuInflater().inflate(menuResId, toolbar.getMenu());
+            }
+
+            private void updateNotificationCount ( int count){//새로운 알림이 뜨면 업데이트된 알림갯수가 표시됨
+                MenuItem menuItem = binding.toolbar.getMenu().findItem(R.id.menu_alam_notification_count);
+
+                if (menuItem != null) {
+                    menuItem.setTitle(String.valueOf(count));
+                    menuItem.setVisible(count > 0);
+                }
+            }
+
+
             @Override
-            public void onClick(View v) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:긴급전화번호"));
-                startActivity(callIntent);
+            public void onBackPressed () {
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+                        getSupportFragmentManager().popBackStack();// Fragment를 뒤로가기
 
-                alertDialog.dismiss();
-            }
-        }));
+                    } else {
+                        if (doubleBackToExitPressedOnce) {
+                            super.onBackPressed();
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {//긴급전화 취소버튼
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
-        alertDialog = builder.create();
+                        }
 
-        alertDialog.show();
-    }
+                        this.doubleBackToExitPressedOnce = true;
+                        Toast.makeText(this, "한번 더 뒤로가기를 누르면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
 
-    public void changeScheduleFragment(ScheduleFragment fragment) {//일정관리메뉴 화면
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();//
-    }
-
-    private void setToolbarMenu(int menuResId) {//툴바메뉴 생성
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.getMenu().clear();
-        getMenuInflater().inflate(menuResId, toolbar.getMenu());
-    }
-
-    private void updateNotificationCount(int count) {//새로운 알림이 뜨면 업데이트된 알림갯수가 표시됨
-        MenuItem menuItem = binding.toolbar.getMenu().findItem(R.id.menu_alam_notification_count);
-
-        if (menuItem != null) {
-            menuItem.setTitle(String.valueOf(count));
-            menuItem.setVisible(count > 0);
-        }
-    }
+                        new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000); // 2초 동안 한번 더 눌러야 종료
+                    }
 
 
-
-
-    @Override
-    public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-            getSupportFragmentManager().popBackStack();// Fragment를 뒤로가기
-
-        } else {
-            if (doubleBackToExitPressedOnce) {
-                super.onBackPressed();
+                }
 
             }
-
-            this.doubleBackToExitPressedOnce = true;
-            Toast.makeText(this, "한번 더 뒤로가기를 누르면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
-
-            new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000); // 2초 동안 한번 더 눌러야 종료
         }
 
-
-    }
-
-}
