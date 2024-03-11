@@ -11,7 +11,7 @@ import com.example.healthkeeper.databinding.ActivityFindPwBinding;
 import com.google.gson.Gson;
 
 public class FindPwActivity extends AppCompatActivity {
-    ActivityFindPwBinding binding;
+   /* ActivityFindPwBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,5 +58,5 @@ public class FindPwActivity extends AppCompatActivity {
             }
         });
 
-    }
+    }*/
 }

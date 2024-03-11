@@ -14,7 +14,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class CommonConn {
-    private final String TAG = "CommonConn";
+   /* private final String TAG = "CommonConn";
     private String url;
     private HashMap<String, Object> paramMap;
     private ProgressDialog dialog;
@@ -75,7 +75,7 @@ public class CommonConn {
     }
     public interface appCallBack{
         public void onResult(boolean isResult, String data);
-    }
+    }*/
 
 
 }
