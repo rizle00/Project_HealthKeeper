@@ -20,7 +20,7 @@ import kr.co.app.member.MemberVO;
 import oracle.sql.CharacterBuffer;
 
 @RequestMapping("and")
-@Controller
+@RestController
 public class MemberController {
 	
 	@Autowired
@@ -58,7 +58,7 @@ public class MemberController {
 		return ResponseEntity.ok(service.findid(find_info));
 	}
 	
-	@PostMapping(value="/sociallogin",produces = "application/json; charset=utf8")
+	@PostMapping(value="/sociallogin")
 	public ResponseEntity<String> kakaologin(String social) {
 		if(service.socialIdCheck(social).equals("0")) {
 			return ResponseEntity.ok("join");
