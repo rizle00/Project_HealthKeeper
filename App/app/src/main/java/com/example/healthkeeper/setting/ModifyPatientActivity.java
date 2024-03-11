@@ -3,6 +3,8 @@ package com.example.healthkeeper.setting;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -113,7 +115,9 @@ public class ModifyPatientActivity extends AppCompatActivity {
 
 
     public boolean socialCheck(String member_id){
-
+        SharedPreferences pref = this.getActivity().getSharedPreferences("PROJECT_MEMBER", Context.MODE_PRIVATE);
+        binding.edtUserName.setText(pref.getString("user_name","익명")+ "님");
+        pref.getString("user_id","");
         return true;
     }
 
