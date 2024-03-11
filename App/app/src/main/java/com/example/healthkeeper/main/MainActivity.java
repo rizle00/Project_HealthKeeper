@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         changeFragment(new HomeFragment());//화면에 처음 보여질 fragment설정!!
 
-        binding.bottomNav.setOnNavigationItemSelectedListener(item -> {
+        binding.bottomNav.setOnNavigationItemSelectedListener(item -> {//nav 메뉴 선택시!!!
             int itemId = item.getItemId();
             int customTextColorNav = getResources().getColor(R.color.white);
 
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {//툴바메뉴 붙이기
         int selectedItem = binding.bottomNav.getSelectedItemId();
         if (selectedItem == R.id.nav_home) {
             getMenuInflater().inflate(R.menu.toolbar_home, menu);
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {//toolbar 메뉴 선택시 !!
         int id = item.getItemId();
 
         if  (id == R.id.menu_logout) {

@@ -54,13 +54,11 @@ public class SimpleJoinActivity extends AppCompatActivity {
             joinClick();
         });
 
-        /* 혈액형 */
         Spinner bloodTypeSpn = (Spinner)binding.spnBloodType;
         ArrayAdapter bloodAdapter = ArrayAdapter.createFromResource(this,R.array.bloodType, android.R.layout.simple_spinner_item);
         bloodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         bloodTypeSpn.setAdapter(bloodAdapter);
 
-        /*혈액형 선택되었는지 메소드*/
         bloodCheck();
 
         if (!isPatient(getIntent().getStringExtra("type"))) {
@@ -73,7 +71,6 @@ public class SimpleJoinActivity extends AppCompatActivity {
         binding.btnIdCheck.setOnClickListener(v -> {
             idDupCheck(binding.edtEmail.getText().toString());
         });
-        /* 아이디 중복체크 완료되면 체크표시 */
 
     }
 
@@ -128,7 +125,6 @@ public class SimpleJoinActivity extends AppCompatActivity {
         }
     }
 
-    /*아이디 길이 확인*/
     public void usableIdCheck(){
         binding.tvWarningId.setText("아이디를 7~20자로 입력해주세요");
         binding.edtEmail.addTextChangedListener(new TextWatcher() {
@@ -170,7 +166,6 @@ public class SimpleJoinActivity extends AppCompatActivity {
     }
 
 
-    /*비밀번호 영문, 숫자, 특문 정규식*/
 
     public void phonePattern(){
         Pattern phone_pattern = Pattern.compile("\\d{3}-\\d{3,4}-\\d{4}");
@@ -219,5 +214,4 @@ public class SimpleJoinActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-    }
 }

@@ -13,7 +13,6 @@ import retrofit2.http.Url;
 
 public interface CommonService {
 
-    @FormUrlEncoded
     @POST
     Call<String> clientPostMethod(@Url String url, @FieldMap HashMap<String, Object> params);
 
