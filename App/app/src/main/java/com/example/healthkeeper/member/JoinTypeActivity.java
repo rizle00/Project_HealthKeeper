@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.healthkeeper.databinding.ActivityJoinTypeBinding;
 
@@ -28,6 +29,7 @@ public class JoinTypeActivity extends AppCompatActivity {
                 Intent intent = new Intent(this,SimpleJoinActivity.class);
                 intent.putExtra("social",getIntent().getStringExtra("social"));
                 intent.putExtra("type", "patient");
+                Log.d("intent", "onCreate: "+getIntent().getStringExtra("social"));
                 startActivity(intent);
             }
         });
@@ -41,6 +43,7 @@ public class JoinTypeActivity extends AppCompatActivity {
                 Intent intent = new Intent(this,SimpleJoinActivity.class);
                 intent.putExtra("social",getIntent().getStringExtra("social"));
                 intent.putExtra("type", "patient");
+                Log.d("intent", "onCreate: "+getIntent().getStringExtra("social"));
                 startActivity(intent);
             }
         });
