@@ -14,7 +14,7 @@ import com.example.healthkeeper.databinding.ActivityFindIdBinding;
 import com.google.gson.Gson;
 
 public class FindIdActivity extends AppCompatActivity {
-    ActivityFindIdBinding binding;
+  /*  ActivityFindIdBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,5 +60,5 @@ public class FindIdActivity extends AppCompatActivity {
         }else{
             findId();
         }
-    }
+    }*/
 }

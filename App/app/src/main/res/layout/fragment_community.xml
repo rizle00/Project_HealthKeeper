@@ -106,7 +106,7 @@
                         />
 
 
-                    <LinearLayout
+                    <!--<LinearLayout
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:orientation="horizontal"
@@ -132,7 +132,7 @@
                             android:layout_width="25dp"
                             android:layout_height="25dp"/>
 
-                    </LinearLayout>
+                    </LinearLayout>-->
 
 
                     <View

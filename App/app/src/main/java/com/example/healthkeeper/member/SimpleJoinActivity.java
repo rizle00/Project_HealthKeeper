@@ -28,7 +28,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SimpleJoinActivity extends AppCompatActivity {
-    ActivitySimpleJoinBinding binding;
+ /*   ActivitySimpleJoinBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         binding = ActivitySimpleJoinBinding.inflate(getLayoutInflater());
@@ -42,10 +42,10 @@ public class SimpleJoinActivity extends AppCompatActivity {
 
         });
 
-        /* 아이디 유효성 메소드 */
+        *//* 아이디 유효성 메소드 *//*
         usableIdCheck();
 
-        /*아이디중복확인*/
+        *//*아이디중복확인*//*
         idDupCheck();
 
 
@@ -53,13 +53,13 @@ public class SimpleJoinActivity extends AppCompatActivity {
             joinClick();
         });
 
-        /* 혈액형 */
+        *//* 혈액형 *//*
         Spinner bloodTypeSpn = (Spinner)binding.spnBloodType;
         ArrayAdapter bloodAdapter = ArrayAdapter.createFromResource(this,R.array.bloodType, android.R.layout.simple_spinner_item);
         bloodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         bloodTypeSpn.setAdapter(bloodAdapter);
 
-        /*혈액형 선택되었는지 메소드*/
+        *//*혈액형 선택되었는지 메소드*//*
         bloodCheck();
 
     }
@@ -67,7 +67,7 @@ public class SimpleJoinActivity extends AppCompatActivity {
         binding.btnIdCheck.setOnClickListener(v -> {
             idDupCheck(binding.edtUserId.getText().toString());
         });
-        /* 아이디 중복체크 완료되면 체크표시 */
+        *//* 아이디 중복체크 완료되면 체크표시 *//*
 
     }
 
@@ -111,7 +111,7 @@ public class SimpleJoinActivity extends AppCompatActivity {
         }
     }
 
-    /*아이디 길이 확인*/
+    *//*아이디 길이 확인*//*
     public void usableIdCheck(){
         binding.tvWarningId.setText("아이디를 7~20자로 입력해주세요");
         binding.edtUserId.addTextChangedListener(new TextWatcher() {
@@ -152,7 +152,7 @@ public class SimpleJoinActivity extends AppCompatActivity {
 
 
 
-    /*비밀번호 영문, 숫자, 특문 정규식*/
+    *//*비밀번호 영문, 숫자, 특문 정규식*//*
 
 
     public void mailPatterns(){
@@ -222,5 +222,5 @@ public class SimpleJoinActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-    }
+    }*/
 }

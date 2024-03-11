@@ -1,63 +1,40 @@
 package com.example.healthkeeper.main;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.healthkeeper.databinding.FragmentCommunityBinding;
-import com.lakue.pagingbutton.OnPageSelectListener;
 
 import java.util.ArrayList;
 
 
 public class CommunityFragment extends Fragment {
     FragmentCommunityBinding binding;
-    int page = 1;
-    int max_page = 30;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         binding = FragmentCommunityBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        binding.board.setAdapter(new Community_BoardAdapter(inflater, getArrayBoardList(),getContext()));//게시판 어뎁터
+        // 게시판 어뎁터 초기화
+        Community_boardAdapter boardAdapter = new Community_boardAdapter(inflater,getBoardArrayList(), getContext());
+        binding.board.setAdapter(boardAdapter);
         binding.board.setLayoutManager(new LinearLayoutManager(getContext()));
+           /*(new Community_boardAdapter(inflater,getBoardArrayList(),getContext()))*/
 
-        binding.question.setAdapter(new Community_QuestionAdapter(inflater,getQuestionArrayList(),getContext()));//자주묻는 질문 어뎁터
+        //자주묻는 질문 어뎁터
+        binding.question.setAdapter(new Community_QuestionAdapter(inflater,getQuestionArrayList(),getContext()));
         binding.question.setLayoutManager((new LinearLayoutManager(getContext())));
 
-        binding.notice.setAdapter(new Community_NoticeAdapter(inflater,getNoticeArrayList(),getContext()));//공지사항 어뎁터
+        //공지사항 어뎁터
+        binding.notice.setAdapter(new Community_NoticeAdapter(inflater,getNoticeArrayList(),getContext()));
         binding.notice.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
-        binding.pagingList.setPageItemCount(7); //한 번에 표시되는 버튼 수
-        binding.pagingList.addBottomPageButton(max_page,1);//총 페이지 버튼 수와 현재 페이지 설정
-        binding.pagingList.setOnPageSelectListener(new OnPageSelectListener() {
-            @Override
-            public void onPageBefore(int now_page) {
-                binding.pagingList.addBottomPageButton(max_page,now_page);
-                Toast.makeText(getActivity(), ""+now_page, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onPageCenter(int now_page) {
-                Toast.makeText(getActivity(), ""+now_page, Toast.LENGTH_SHORT).show();
-                binding.pagingList.addBottomPageButton(max_page,page);
-            }
-
-            @Override
-            public void onPageNext(int now_page) {
-                Toast.makeText(getActivity(), ""+now_page, Toast.LENGTH_SHORT).show();
-                binding.pagingList.addBottomPageButton(max_page,now_page);
-            }
-        });
 
 
 
@@ -92,6 +69,7 @@ public class CommunityFragment extends Fragment {
                     binding.button2.setSelected(false);
                     binding.button3.setSelected(true);
                 }
+
             }
         });
 
@@ -102,8 +80,8 @@ public class CommunityFragment extends Fragment {
 
 
 
-    ArrayList<CommunityDTOS.Community_BoardDTO> getArrayBoardList() {
-        ArrayList<CommunityDTOS.Community_BoardDTO> list=new ArrayList<>();
+    private ArrayList<CommunityDTOS.Community_BoardDTO> getBoardArrayList() {
+        ArrayList<CommunityDTOS.Community_BoardDTO> list = new ArrayList<>();
         list.add(new CommunityDTOS().new Community_BoardDTO("오늘은 웨어러블 산날! 기분좋아","황승은","18:20"));
         list.add(new CommunityDTOS().new Community_BoardDTO("ㅋㅋ! 기분좋아","이정은","16:30"));
         list.add(new CommunityDTOS().new Community_BoardDTO("월요일","송차은","15:30"));
