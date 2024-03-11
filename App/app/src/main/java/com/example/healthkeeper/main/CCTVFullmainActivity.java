@@ -46,9 +46,9 @@ public class CCTVFullmainActivity extends AppCompatActivity {
         webPageWebView.loadUrl(CCTVActivity.CCTV_URL);
         originalOrientation = getRequestedOrientation();
 
-        restoreButton.setOnClickListener(new View.OnClickListener() {
+        restoreButton.setOnClickListener(new View.OnClickListener() {//이전화면 눌렀을때! CCTVActivity로 이동
             @Override
-            public void onClick(View view) {//아직 처리못함... 다시봐야함
+            public void onClick(View view) {
                 startActivity(new Intent(CCTVFullmainActivity.this, CCTVActivity.class));
             }
         });
