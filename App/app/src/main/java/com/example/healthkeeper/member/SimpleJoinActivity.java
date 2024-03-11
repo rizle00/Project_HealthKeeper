@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 public class SimpleJoinActivity extends AppCompatActivity {
     ActivitySimpleJoinBinding binding;
     private final int SEARCH_ADDRESS_ACTIVITY = 10000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         binding = ActivitySimpleJoinBinding.inflate(getLayoutInflater());
@@ -37,7 +38,7 @@ public class SimpleJoinActivity extends AppCompatActivity {
             startActivityForResult(intent, SEARCH_ADDRESS_ACTIVITY);
         });
         CommonService apiInterface = CommonClient.getRetrofit().create(CommonService.class);
-        HashMap<String,Object> params = new HashMap<>();
+        HashMap<String, Object> params = new HashMap<>();
 
         binding.btnIdCheck.setOnClickListener(v -> {
 
@@ -53,8 +54,8 @@ public class SimpleJoinActivity extends AppCompatActivity {
             joinClick();
         });
 
-        Spinner bloodTypeSpn = (Spinner)binding.spnBloodType;
-        ArrayAdapter bloodAdapter = ArrayAdapter.createFromResource(this,R.array.bloodType, android.R.layout.simple_spinner_item);
+        Spinner bloodTypeSpn = (Spinner) binding.spnBloodType;
+        ArrayAdapter bloodAdapter = ArrayAdapter.createFromResource(this, R.array.bloodType, android.R.layout.simple_spinner_item);
         bloodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         bloodTypeSpn.setAdapter(bloodAdapter);
 
@@ -66,7 +67,8 @@ public class SimpleJoinActivity extends AppCompatActivity {
 
 
     }
-    public void idDupCheck(){
+
+    public void idDupCheck() {
         binding.btnIdCheck.setOnClickListener(v -> {
             idDupCheck(binding.edtEmail.getText().toString());
         });
@@ -81,33 +83,31 @@ public class SimpleJoinActivity extends AppCompatActivity {
         }
     }
 
-    public void joinClick(){
+    public void joinClick() {
         usableIdCheck();
         phonePattern();
 
 
-
-
-        int num = binding.tvWarningId.getVisibility()+binding.tvWarningBlood.getVisibility()
-                + binding.tvWarningPhone.getVisibility()+binding.tvWarningGender.getVisibility();
-        if(num ==32){
+        int num = binding.tvWarningId.getVisibility() + binding.tvWarningBlood.getVisibility()
+                + binding.tvWarningPhone.getVisibility() + binding.tvWarningGender.getVisibility();
+        if (num == 32) {
 
             Intent intent = getIntent();
-            JoinTypeActivity jta = (JoinTypeActivity)JoinTypeActivity.joinTypeActivity;
-            CommonConn conn = new CommonConn("andjoin",this);
+            JoinTypeActivity jta = (JoinTypeActivity) JoinTypeActivity.joinTypeActivity;
+            CommonConn conn = new CommonConn("andjoin", this);
             MemberVO vo = new MemberVO();
             vo.setEmail(binding.edtEmail.getText().toString());
             vo.setSocial(intent.getStringExtra("social"));
             vo.setPhone(binding.edtUserPhone.getText().toString());
             vo.setGuardian_id(binding.edtGuardianId.getText().toString());
             vo.setName(binding.edtUserName.getText().toString());
-            if(binding.rgFemale.isChecked()){
+            if (binding.rgFemale.isChecked()) {
                 vo.setGender("Female");
-            }else{
+            } else {
                 vo.setGender("Male");
             }
             String voJson = new Gson().toJson(vo);
-            conn.addParamMap("vo",voJson);
+            conn.addParamMap("vo", voJson);
 
 
             conn.onExcute((isResult, data) -> {
@@ -117,14 +117,14 @@ public class SimpleJoinActivity extends AppCompatActivity {
 
             jta.finish();
             finish();
-        }else{
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("정보가 올바르지 않습니다");
             builder.show();
         }
     }
 
-    public void usableIdCheck(){
+    public void usableIdCheck() {
         binding.tvWarningId.setText("아이디를 7~20자로 입력해주세요");
         binding.edtEmail.addTextChangedListener(new TextWatcher() {
             @Override
@@ -155,6 +155,7 @@ public class SimpleJoinActivity extends AppCompatActivity {
             }
         });
     }
+
     public boolean isIdPatterns() {
         Pattern mail_pattern = Patterns.EMAIL_ADDRESS;
         if (mail_pattern.matcher(binding.edtEmail.getText().toString()).matches()) {
@@ -165,33 +166,31 @@ public class SimpleJoinActivity extends AppCompatActivity {
     }
 
 
-
-    public void phonePattern(){
+    public void phonePattern() {
         Pattern phone_pattern = Pattern.compile("\\d{3}-\\d{3,4}-\\d{4}");
-        if(phone_pattern.matcher(binding.edtUserPhone.getText().toString()).matches()){
+        if (phone_pattern.matcher(binding.edtUserPhone.getText().toString()).matches()) {
             binding.tvWarningPhone.setVisibility(View.GONE);
-        }else{
+        } else {
             binding.tvWarningPhone.setText("전화번호를 확인해주세요");
             binding.tvWarningPhone.setVisibility(View.VISIBLE);
         }
     }
 
 
-
-    public void idDupCheck(String guardian_id){
-        CommonConn conn = new CommonConn("andidcheck",this);
-        conn.addParamMap("guardian_id",guardian_id);
+    public void idDupCheck(String guardian_id) {
+        CommonConn conn = new CommonConn("andidcheck", this);
+        conn.addParamMap("guardian_id", guardian_id);
 
         conn.onExcute((isResult, data) -> {
 
-            if(data.equals("0")){
+            if (data.equals("0")) {
                 binding.btnIdCheck.setVisibility(View.GONE);
                 binding.tvWarningId.setVisibility(View.GONE);
-                binding.edtEmail.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.img_check,0);
-            }else{
+                binding.edtEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.img_check, 0);
+            } else {
                 binding.tvWarningId.setText("아이디 중복입니다");
                 binding.tvWarningId.setVisibility(View.VISIBLE);
-                binding.edtEmail.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                binding.edtEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
             }
         });
     }
@@ -213,4 +212,5 @@ public class SimpleJoinActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+    }
 }
