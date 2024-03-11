@@ -33,7 +33,6 @@ public class FindIdActivity extends AppCompatActivity {
 
         MemberVO vo = new MemberVO();
         vo.setName(binding.edtUserName.getText().toString());
-        vo.setEmail(binding.edtUserEmail.getText().toString());
         vo.setPhone(binding.edtUserPhone.getText().toString());
         String voJson = new Gson().toJson(vo);
         conn.addParamMap("vo",voJson);
@@ -51,7 +50,6 @@ public class FindIdActivity extends AppCompatActivity {
 
     public void usableInfo(){
         if(binding.edtUserName.getText().toString().length() == 0 ||
-                binding.edtUserEmail.getText().toString().length() == 0 ||
                 binding.edtUserPhone.getText().toString().length()==0){
             Toast.makeText(this, "정보를 모두 입력해주세요",Toast.LENGTH_SHORT).show();
         }else{

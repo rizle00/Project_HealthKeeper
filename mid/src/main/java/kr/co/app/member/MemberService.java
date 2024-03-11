@@ -13,8 +13,8 @@ public class MemberService {
 	@Qualifier("hanul")
 	SqlSession sql;
 	
-	public MemberVO login(String member_id) {
-		return sql.selectOne("me.login", member_id);
+	public MemberVO login(String email) {
+		return sql.selectOne("me.login", email);
 	}
 	
 	public String idcheck(String member_id) {

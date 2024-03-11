@@ -41,15 +41,6 @@
         android:hint=" 휴대전화"
         android:background="@drawable/edittext_rounded"
         />
-    <EditText
-        android:layout_marginTop="10dp"
-        android:id="@+id/edt_user_email"
-        android:layout_marginHorizontal="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:hint=" 이메일"
-        android:background="@drawable/edittext_rounded"
-        />
     <Button
         android:id="@+id/btn_find_id"
         android:layout_marginTop="10dp"

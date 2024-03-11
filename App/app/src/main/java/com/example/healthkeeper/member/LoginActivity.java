@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         binding.btnLogin.setOnClickListener(v -> {
-            guardianlogin(binding.userId.getText().toString(),binding.userPw.getText().toString());
+            login(binding.userId.getText().toString(),binding.userPw.getText().toString());
         });
 
         binding.tvFindId.setOnClickListener(v -> {
@@ -88,13 +88,13 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void guardianlogin(String guardian_id,String guardian_pw){
+    public void login(String email,String pw){
         /*로그인 유지*/
         SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
         CommonConn conn = new CommonConn("andlogin",this);
 
-        conn.addParamMap("guardian_id" , guardian_id);
-        conn.addParamMap("guardian_pw",guardian_pw);
+        conn.addParamMap("email" , email);
+        conn.addParamMap("pw",pw);
 
         conn.onExcute((isResult, data) -> {
             Log.d("로그인", "guardianlogin: "+data);
@@ -141,8 +141,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginWithKakaoAccount(Context context){
         KakaoSdk.init(this,"1cf34851d43903b60a3c465f4245ef4f");//{NATIVE_APP_KEY}
-        Intent intent = new Intent(this, SimpleJoinActivity.class);
-
+        Intent intent = new Intent(this, JoinTypeActivity.class);
+        intent.putExtra("logintype","social");
 
         Function2<OAuthToken, Throwable, Unit> callback = new Function2<OAuthToken, Throwable, Unit>() {
             @Override
@@ -182,7 +182,6 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString("user_id", kakaoVo.getMember_id());
                                     editor.putString("user_name", kakaoVo.getName());
                                     editor.apply();
-
                                     loginSuccess();
                                 }
                             });
