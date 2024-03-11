@@ -35,8 +35,6 @@ public class ModifyPatientActivity extends AppCompatActivity {
         int num = binding.tvWarningId.getVisibility()+binding.tvWarningPw.getVisibility()
                 + binding.tvWarningEmail.getVisibility()+binding.tvWarningPhone.getVisibility();
         if(num ==32){
-            JoinTypeActivity jta = (JoinTypeActivity)JoinTypeActivity.joinTypeActivity;
-            jta.finish();
             finish();
         }else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -114,6 +112,10 @@ public class ModifyPatientActivity extends AppCompatActivity {
     }
 
 
+    public boolean socialCheck(String member_id){
+
+        return true;
+    }
 
 
 }

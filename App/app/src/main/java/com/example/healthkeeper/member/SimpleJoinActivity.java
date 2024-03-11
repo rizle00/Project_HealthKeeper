@@ -30,6 +30,7 @@ public class SimpleJoinActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("joinintent", "onCreate: "+getIntent().getStringExtra("social"));
         binding = ActivitySimpleJoinBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
@@ -68,6 +69,20 @@ public class SimpleJoinActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        switch (requestCode) {
+            case SEARCH_ADDRESS_ACTIVITY:
+                if (resultCode == RESULT_OK) {
+                    String data = intent.getExtras().getString("data");
+                    if (data != null) {
+                        binding.edtAddress.setText(data);
+                    }
+                }
+        }
+    }
+
     public void idDupCheck() {
         binding.btnIdCheck.setOnClickListener(v -> {
             idDupCheck(binding.edtEmail.getText().toString());
@@ -92,15 +107,18 @@ public class SimpleJoinActivity extends AppCompatActivity {
                 + binding.tvWarningPhone.getVisibility() + binding.tvWarningGender.getVisibility();
         if (num == 32) {
 
-            Intent intent = getIntent();
+
             JoinTypeActivity jta = (JoinTypeActivity) JoinTypeActivity.joinTypeActivity;
             CommonConn conn = new CommonConn("andjoin", this);
             MemberVO vo = new MemberVO();
             vo.setEmail(binding.edtEmail.getText().toString());
-            vo.setSocial(intent.getStringExtra("social"));
             vo.setPhone(binding.edtUserPhone.getText().toString());
             vo.setGuardian_id(binding.edtGuardianId.getText().toString());
             vo.setName(binding.edtUserName.getText().toString());
+            vo.setSocial(getIntent().getStringExtra("social").toString());
+            vo.setAddress(binding.edtAddress.getText().toString());
+            vo.setAddress_detail(binding.edtAddressDetail.getText().toString());
+            vo.setBlood(binding.spnBloodType.getSelectedItem().toString());
             if (binding.rgFemale.isChecked()) {
                 vo.setGender("Female");
             } else {

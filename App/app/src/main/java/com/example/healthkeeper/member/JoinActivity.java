@@ -146,8 +146,15 @@ public class JoinActivity extends AppCompatActivity {
             vo.setPhone(binding.edtUserPhone.getText().toString());
             vo.setGuardian_id(binding.edtPatientId.getText().toString());
             vo.setName(binding.edtUserName.getText().toString());
-            vo.setRole(getIntent().getStringExtra("type"));
-            vo.setBlood(binding.spnBloodType.getSelectedItem().toString());
+            vo.setAddress(binding.edtAddress.getText().toString());
+            vo.setAddress_detail(binding.edtAddressDetail.getText().toString());
+
+            vo.setSocial(getIntent().getStringExtra("social"));
+            if(getIntent().getStringExtra("type").toString().equals("guardian")){
+                vo.setBlood(null);
+            }else{
+                vo.setBlood(binding.spnBloodType.getSelectedItem().toString());
+            }
             if(binding.rgFemale.isChecked()){
                 vo.setGender("Female");
             }else{
