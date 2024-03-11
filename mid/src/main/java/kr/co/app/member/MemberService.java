@@ -44,4 +44,8 @@ public class MemberService {
 	public String partnerCheck(String partner_id) {
 		return sql.selectOne("me.partnerCheck",partner_id);
 	}
+
+	public int modify(MemberVO vo){
+		return 0;
+	}
 }

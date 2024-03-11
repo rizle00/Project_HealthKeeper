@@ -11,8 +11,10 @@ import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
 
+import com.example.healthkeeper.common.CommonConn;
 import com.example.healthkeeper.databinding.ActivityModifyPatientBinding;
 import com.example.healthkeeper.member.JoinTypeActivity;
+import com.example.healthkeeper.member.MemberVO;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,8 +37,15 @@ public class ModifyPatientActivity extends AppCompatActivity {
         mailPatterns();
         phonePattern();
         int num = binding.tvWarningId.getVisibility()+binding.tvWarningPw.getVisibility()
-                + binding.tvWarningEmail.getVisibility()+binding.tvWarningPhone.getVisibility();
+                + binding.tvWarningPhone.getVisibility();
         if(num ==32){
+            CommonConn conn = new CommonConn("membermodify",this);
+            MemberVO vo = new MemberVO();
+            vo.setPw(binding.edtUserPw.getText().toString());
+            vo.setPhone(binding.edtUserPhone.getText().toString());
+            vo.setName(binding.edtUserName.getText().toString());
+            vo.setAddress(binding.edtAddress.getText().toString());
+            vo.setAddress_detail(binding.edtAddressDetail.getText().toString());
             finish();
         }else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -71,11 +80,12 @@ public class ModifyPatientActivity extends AppCompatActivity {
 
     /*비밀번호 일치, 글자수 확인*/
     public void pwCheck() {
+        SharedPreferences pref = getSharedPreferences("PROJECT_MEMBER", Context.MODE_PRIVATE);
         String user_pw = binding.edtUserPw.getText().toString();
         if(!user_pw.equals(binding.edtUserPwCheck.getText().toString())){
             binding.tvWarningPw.setText("비밀번호가 일치하지 않습니다.");
             binding.tvWarningPw.setVisibility(View.VISIBLE);
-        }else if(user_pw.length()<9){
+        }else if(user_pw.length()<9&&pref.getString("user_name",null)!=null ){
             binding.tvWarningPw.setText("비밀번호를 8자 이상 입력해주세요");
             binding.tvWarningPw.setVisibility(View.VISIBLE);
         }
@@ -114,11 +124,17 @@ public class ModifyPatientActivity extends AppCompatActivity {
     }
 
 
-    public boolean socialCheck(String member_id){
-        SharedPreferences pref = this.getActivity().getSharedPreferences("PROJECT_MEMBER", Context.MODE_PRIVATE);
-        binding.edtUserName.setText(pref.getString("user_name","익명")+ "님");
+    public void socialCheck(String member_id){
+        SharedPreferences pref = getSharedPreferences("PROJECT_MEMBER", Context.MODE_PRIVATE);
+        CommonConn conn = new CommonConn("social",this);
         pref.getString("user_id","");
-        return true;
+        if(pref.getString("user_name",null)==null){
+            binding.edtUserPw.setVisibility(View.GONE);
+            binding.edtUserPwCheck.setVisibility(View.GONE);
+        }else{
+            binding.edtUserPw.setVisibility(View.VISIBLE);
+            binding.edtUserPwCheck.setVisibility(View.VISIBLE);
+        }
     }
 
 
