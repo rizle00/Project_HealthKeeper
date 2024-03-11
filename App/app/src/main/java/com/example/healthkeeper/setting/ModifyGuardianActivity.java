@@ -21,7 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ModifyGuardianActivity extends AppCompatActivity {
-    ActivityModifyGuardianBinding binding;
+/*    ActivityModifyGuardianBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +35,7 @@ public class ModifyGuardianActivity extends AppCompatActivity {
         });
     }
 
-    /*로그인 정보 가져오기*/
+    *//*로그인 정보 가져오기*//*
     public void getPreference(){
        getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE).getString("user_id","회원");
         setContentView(R.layout.activity_modify_guardian);
@@ -108,7 +108,7 @@ public class ModifyGuardianActivity extends AppCompatActivity {
         });
     }
 
-    /*비밀번호 일치, 글자수 확인*/
+    *//*비밀번호 일치, 글자수 확인*//*
     public void pwCheck() {
         String user_pw = binding.edtUserPw.getText().toString();
         if(!user_pw.equals(binding.edtUserPwCheck.getText().toString())){
@@ -123,7 +123,7 @@ public class ModifyGuardianActivity extends AppCompatActivity {
         }
     }
 
-    /*비밀번호 영문, 숫자, 특문 정규식*/
+    *//*비밀번호 영문, 숫자, 특문 정규식*//*
     public boolean isPwPattern(){
         Pattern pw_pattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$");
         String pw = binding.edtUserPw.getText().toString();
@@ -150,5 +150,5 @@ public class ModifyGuardianActivity extends AppCompatActivity {
         }else{
             binding.tvWarningPhone.setVisibility(View.VISIBLE);
         }
-    }
+    }*/
 }

@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class NoticeActivity extends AppCompatActivity {
-    ActivityNoticeBinding binding;
+/*    ActivityNoticeBinding binding;
     List<NoticeVO> list;
 
     @Override
@@ -44,5 +44,5 @@ public class NoticeActivity extends AppCompatActivity {
 
         });
         return list;
-    }
+    }*/
 }

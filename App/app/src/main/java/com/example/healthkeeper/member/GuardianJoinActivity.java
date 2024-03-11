@@ -22,7 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GuardianJoinActivity extends AppCompatActivity {
-    final String TAG = "guardian join";
+/*    final String TAG = "guardian join";
     ActivityGuardianJoinBinding binding;
 
     @Override
@@ -37,13 +37,13 @@ public class GuardianJoinActivity extends AppCompatActivity {
 
         });
 
-        /* 아이디 유효성 메소드 */
+        *//* 아이디 유효성 메소드 *//*
         usableIdCheck();
 
-        /*아이디중복확인*/
+        *//*아이디중복확인*//*
         idDupCheck();
 
-       /* 비밀번호 특문 메소드*/
+       *//* 비밀번호 특문 메소드*//*
        pwPattern();
         binding.btnJoin.setOnClickListener(v -> {
             pwCheck();
@@ -61,7 +61,7 @@ public class GuardianJoinActivity extends AppCompatActivity {
         binding.btnIdCheck.setOnClickListener(v -> {
             idDupCheck(binding.edtUserId.getText().toString());
         });
-        /* 아이디 중복체크 완료되면 체크표시 */
+        *//* 아이디 중복체크 완료되면 체크표시 *//*
 
     }
 
@@ -104,7 +104,7 @@ public class GuardianJoinActivity extends AppCompatActivity {
         }
     }
 
-    /*아이디 길이 확인*/
+    *//*아이디 길이 확인*//*
     public void usableIdCheck(){
             binding.tvWarningId.setText("아이디를 7~20자로 입력해주세요");
         binding.edtUserId.addTextChangedListener(new TextWatcher() {
@@ -167,7 +167,7 @@ public class GuardianJoinActivity extends AppCompatActivity {
         });
     }
 
-    /*비밀번호 일치, 글자수 확인*/
+    *//*비밀번호 일치, 글자수 확인*//*
     public void pwCheck() {
         String user_pw = binding.edtUserPw.getText().toString();
         if(!user_pw.equals(binding.edtUserPwCheck.getText().toString())){
@@ -182,7 +182,7 @@ public class GuardianJoinActivity extends AppCompatActivity {
         }
     }
 
-    /*비밀번호 영문, 숫자, 특문 정규식*/
+    *//*비밀번호 영문, 숫자, 특문 정규식*//*
     public boolean isPwPattern(){
         Pattern pw_pattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$");
         String pw = binding.edtUserPw.getText().toString();
@@ -241,5 +241,5 @@ public class GuardianJoinActivity extends AppCompatActivity {
             }
             Log.i(TAG, "idDupCheck: "+data);
         });
-    }
+    }*/
 }

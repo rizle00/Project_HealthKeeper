@@ -9,6 +9,7 @@ android {
     compileSdk 34
 
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.example.healthkeeper"
         minSdk 24
         targetSdk 34
@@ -31,6 +32,9 @@ android {
     viewBinding{
         enabled=true
     }
+    buildFeatures {
+        dataBinding true
+    }
 
 
 }
@@ -45,7 +49,9 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.22'
     implementation "androidx.webkit:webkit:1.8.0"//webView API
     implementation 'com.airbnb.android:lottie:5.0.2'//동적이미지 추가 라이브러리
+
     implementation 'com.github.lakue119:LakuePagingButton:1.0.0'//Paging라이브러리
+//    implementation "androidx.paging:paging-runtime:3.0.1"
     implementation 'com.ms-square:expandableTextView:0.1.4'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'

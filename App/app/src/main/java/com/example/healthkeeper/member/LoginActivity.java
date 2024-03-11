@@ -39,14 +39,14 @@ import kotlin.jvm.functions.Function2;
 
 public class LoginActivity extends AppCompatActivity {
 
-    /* 화면 전환 -> intent
+/*    *//* 화면 전환 -> intent
     아이디 비밀번호 -> finish() xx
-    회원가입 -> finish()*/
+    회원가입 -> finish()*//*
 
-    /*
+    *//*
     https://developer.android.com/training/transitions/start-activity?hl=ko
     intent animation
-    */
+    *//*
     ActivityLoginBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void guardianlogin(String guardian_id,String guardian_pw){
-        /*로그인 유지*/
+        *//*로그인 유지*//*
         SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
         CommonConn conn = new CommonConn("andlogin",this);
 
@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this,"아이디 또는 패스워드 틀림",Toast.LENGTH_SHORT).show();
 
             }else{
-                /*로그인 유지를 위한 정보 setting*/
+                *//*로그인 유지를 위한 정보 setting*//*
                 SharedPreferences.Editor editor = preference.edit();
                 editor.putString("user_id",vo.getGuardian_id());
                 editor.putString("user_name",vo.getGuardian_name());
@@ -256,14 +256,14 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void loginSuccess() {
 
-        /*기존에 켜져있는 액티비티 종료*/
+        *//*기존에 켜져있는 액티비티 종료*//*
         LoginBeforeActivity lba = (LoginBeforeActivity)LoginBeforeActivity._loginBeforeActivity;
         lba.finish();
 
-        /*화면 전환*/
+        *//*화면 전환*//*
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
         finish();
-    }
+    }*/
 
 }

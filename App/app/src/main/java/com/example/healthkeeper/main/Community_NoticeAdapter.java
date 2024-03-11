@@ -2,13 +2,11 @@ package com.example.healthkeeper.main;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.airbnb.lottie.L;
 import com.example.healthkeeper.databinding.RecvCommunityNoticeBinding;
 
 import java.util.ArrayList;
