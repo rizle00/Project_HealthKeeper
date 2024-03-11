@@ -2,6 +2,8 @@ package kr.co.app;
 
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -9,11 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import com.google.gson.Gson;
 
 import kr.co.app.member.MemberService;
 import kr.co.app.member.MemberVO;
+import oracle.sql.CharacterBuffer;
 
 @RequestMapping("and")
 @Controller
@@ -21,12 +25,6 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService service;
-
-	
-	@RequestMapping("test")
-	public void con() {
-		System.out.println("요청");
-	}
 
 	
 	@PostMapping("/andlogin")
@@ -58,14 +56,10 @@ public class MemberController {
 	public ResponseEntity<String> findid(String vo){
 		MemberVO find_info = new Gson().fromJson(vo, MemberVO.class);
 		return ResponseEntity.ok(service.findid(find_info));
-		
-		
 	}
 	
-	@PostMapping("/sociallogin")
+	@PostMapping(value="/sociallogin",produces = "application/json; charset=utf8")
 	public ResponseEntity<String> kakaologin(String social) {
-//		MemberVO kakaoVo = new Gson().fromJson(vo, MemberVO.class);
-		
 		if(service.socialIdCheck(social).equals("0")) {
 			return ResponseEntity.ok("join");
 		}else {

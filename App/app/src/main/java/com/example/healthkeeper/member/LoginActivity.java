@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
 
             }else{
                 SharedPreferences.Editor editor = preference.edit();
-                editor.putString("user_id",vo.getGuardian_id());
+                editor.putString("user_id",vo.getMember_id());
                 editor.putString("user_name",vo.getName());
                 editor.apply();
 
@@ -201,7 +201,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void naverLogin(){
-        Intent intent = new Intent(this, SimpleJoinActivity.class);
+        Intent intent = new Intent(this, JoinTypeActivity.class);
         final String TAG= "naver Login";
         binding.btnNaverLogin.setOAuthLogin(new OAuthLoginCallback() {
             @Override
@@ -256,7 +256,8 @@ public class LoginActivity extends AppCompatActivity {
                                 MemberVO kakaoVo = new Gson().fromJson(data, MemberVO.class);
                                 SharedPreferences.Editor editor = preference.edit();
                                 editor.putString("user_id", kakaoVo.getMember_id());
-                                editor.putString("user_name", kakaoVo.getName());
+                                editor.putString("user_name", kakaoVo.getName().toString());
+                                Log.d("setName", "onSuccess: "+kakaoVo.getName().toString());
                                 editor.apply();
                                 loginSuccess();
                             }
