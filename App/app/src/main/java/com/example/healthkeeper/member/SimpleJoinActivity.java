@@ -43,7 +43,6 @@ public class SimpleJoinActivity extends AppCompatActivity {
 
         });
 
-        /* 아이디 유효성 메소드 */
         usableIdCheck();
 
         /*아이디중복확인*/
