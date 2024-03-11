@@ -79,6 +79,8 @@ public class HeartRateFragment extends Fragment {
 
                 int checkedRadioButtonId = colorChangeGroup.getCheckedRadioButtonId();
 
+
+
                 if (checkedRadioButtonId != -1) { // 어떤 라디오 버튼이 선택되었는지 확인
                     RadioButton checkedRadioButton = dialogView.findViewById(checkedRadioButtonId);
 

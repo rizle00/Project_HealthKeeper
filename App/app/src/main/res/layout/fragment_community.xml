@@ -99,16 +99,22 @@
                             android:layout_height="20dp"/>
 
                     </RelativeLayout>
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/board"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        />
+                        android:layout_height="wrap_content" />
 
-<Button
+                    <Button
+    android:id="@+id/clickButton"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text=""
+    android:text="Read more"
+    android:layout_gravity="right"
+    android:layout_marginRight="30dp"
+    android:textSize="14dp"
+    android:textColor="#3B7CBD"
+    android:backgroundTint="#FFFFFF"
     />
 
 

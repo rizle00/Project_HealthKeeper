@@ -13,12 +13,12 @@ import java.util.ArrayList;
 
 public class Community_boardAdapter extends RecyclerView.Adapter<Community_boardAdapter.ViewHolder> {
     LayoutInflater inflater;
-    ArrayList<CommunityDTOS.Community_BoardDTO> list;
+    ArrayList<CommunityDTOS.Community_BoardDTO> List;
     Context context;
 
-    public Community_boardAdapter (LayoutInflater inflater, ArrayList<CommunityDTOS.Community_BoardDTO> list, Context context){
+    public Community_boardAdapter (LayoutInflater inflater, ArrayList<CommunityDTOS.Community_BoardDTO>  boardList, Context context){
         this.context=context;
-        this.list=list;
+        this. List= boardList;
         this.inflater=inflater;
     }
     @NonNull
@@ -30,7 +30,7 @@ public class Community_boardAdapter extends RecyclerView.Adapter<Community_board
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
-        CommunityDTOS.Community_BoardDTO item=list.get(i);
+        CommunityDTOS.Community_BoardDTO item=List.get(i);
         holder.bind(item);
 
 
@@ -39,7 +39,7 @@ public class Community_boardAdapter extends RecyclerView.Adapter<Community_board
     @Override
     public int getItemCount() {
 
-        return list.size();
+        return List.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
