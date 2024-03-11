@@ -39,11 +39,7 @@ import kotlin.jvm.functions.Function2;
 
 public class LoginActivity extends AppCompatActivity {
 
-    아이디 비밀번호 -> finish() xx
 
-    https://developer.android.com/training/transitions/start-activity?hl=ko
-    intent animation
-    */
     ActivityLoginBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

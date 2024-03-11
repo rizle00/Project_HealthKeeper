@@ -38,7 +38,15 @@ android {
 }
 
 dependencies {
-
+    /*duplcate 에러 방지용 모듈*/
+    modules {
+        module("org.jetbrains.kotlin:kotlin-stdlib-jdk7") {
+            replacedBy("org.jetbrains.kotlin:kotlin-stdlib", "kotlin-stdlib-jdk7 is now part of kotlin-stdlib")
+        }
+        module("org.jetbrains.kotlin:kotlin-stdlib-jdk8") {
+            replacedBy("org.jetbrains.kotlin:kotlin-stdlib", "kotlin-stdlib-jdk8 is now part of kotlin-stdlib")
+        }
+    }
     //네아로 
     implementation 'com.navercorp.nid:oauth:5.9.0'
 

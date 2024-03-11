@@ -105,34 +105,11 @@
                         android:layout_height="wrap_content"
                         />
 
-
-                    <!--<LinearLayout
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:src="@drawable/before"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"/>
-
-                        <com.lakue.pagingbutton.LakuePagingButton
-                            android:id="@+id/paging_list"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:src="@drawable/after"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"/>
-
-                    </LinearLayout>-->
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text=""
+    />
 
 
                     <View
