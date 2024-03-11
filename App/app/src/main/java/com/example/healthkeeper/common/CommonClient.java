@@ -8,7 +8,6 @@ public class CommonClient {
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.49/middle/and/")
                 .addConverterFactory(ScalarsConverterFactory.create()).build();
-
         return retrofit;
     }
 }
