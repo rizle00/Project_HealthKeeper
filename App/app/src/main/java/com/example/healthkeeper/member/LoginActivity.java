@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
 
             }else{
                 SharedPreferences.Editor editor = preference.edit();
-                editor.putString("user_id",vo.getGuardian_id());
+                editor.putString("user_id",vo.getMember_id());
                 editor.putString("user_name",vo.getName());
                 editor.apply();
 
