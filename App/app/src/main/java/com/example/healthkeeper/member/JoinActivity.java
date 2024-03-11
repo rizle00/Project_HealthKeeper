@@ -24,9 +24,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class JoinActivity extends AppCompatActivity {
-    final String TAG = "guardian join";
+    final String TAG = "member join";
     ActivityJoinBinding binding;
-
 
 
     private final int SEARCH_ADDRESS_ACTIVITY = 10000;
@@ -67,14 +66,17 @@ public class JoinActivity extends AppCompatActivity {
             binding.llPartner.performClick();
         });
         binding.btnGuardianFind.setOnClickListener(v -> {
-            if(binding.btnGuardianFind.getText().toString().equals("취소")){
+            if (binding.btnGuardianFind.getText().toString().equals("취소")) {
                 binding.edtPatientId.setText("");
                 binding.btnGuardianFind.setText("아이디 확인");
-            }else {
+            } else {
                 binding.llPartner.performClick();
             }
         });
     }
+
+
+
 
 
     public void addressCheck() {
@@ -103,7 +105,7 @@ public class JoinActivity extends AppCompatActivity {
 
     public void idDupCheck() {
         binding.btnIdCheck.setOnClickListener(v -> {
-            idDupCheck(binding.edtUserId.getText().toString());
+            idDupCheck(binding.edtEmail.getText().toString());
         });
         /* 아이디 중복체크 완료되면 체크표시 */
 
@@ -130,7 +132,6 @@ public class JoinActivity extends AppCompatActivity {
 
     public void joinClick() {
         usableIdCheck();
-        mailPatterns();
         phonePattern();
         addressCheck();
 
@@ -140,17 +141,21 @@ public class JoinActivity extends AppCompatActivity {
             JoinTypeActivity jta = (JoinTypeActivity) JoinTypeActivity.joinTypeActivity;
             CommonConn conn = new CommonConn("andjoin", this);
             MemberVO vo = new MemberVO();
-            vo.setMember_id(binding.edtUserId.getText().toString());
             vo.setPw(binding.edtUserPw.getText().toString());
-            vo.setEmail(binding.edtAddress.getText().toString());
+            vo.setEmail(binding.edtEmail.getText().toString());
             vo.setPhone(binding.edtUserPhone.getText().toString());
             vo.setGuardian_id(binding.edtPatientId.getText().toString());
             vo.setName(binding.edtUserName.getText().toString());
             vo.setRole(getIntent().getStringExtra("type"));
+            vo.setBlood(binding.spnBloodType.getSelectedItem().toString());
+            if(binding.rgFemale.isChecked()){
+                vo.setGender("Female");
+            }else{
+                vo.setGender("Male");
+            }
+
             String voJson = new Gson().toJson(vo);
             conn.addParamMap("vo", voJson);
-
-
 
             conn.onExcute((isResult, data) -> {
 
@@ -168,7 +173,7 @@ public class JoinActivity extends AppCompatActivity {
     /*아이디 길이 확인*/
     public void usableIdCheck() {
         binding.tvWarningId.setText("아이디를 7~20자로 입력해주세요");
-        binding.edtUserId.addTextChangedListener(new TextWatcher() {
+        binding.edtEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -176,17 +181,14 @@ public class JoinActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int idLength = binding.edtUserId.getText().length();
-                if (idLength < 7 || idLength > 16) {
-                    binding.tvWarningId.setText("아이디를 7~20자로 입력해주세요");
+                binding.edtEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                int idLength = binding.edtEmail.getText().length();
+                if (!isIdPatterns()) {
+                    binding.tvWarningId.setText("이메일 형식으로 입력해주세요");
                     binding.tvWarningId.setVisibility(View.VISIBLE);
                     binding.btnIdCheck.setVisibility(View.GONE);
-                } else if (!isIdPattern()) {
-                    binding.tvWarningId.setText("영어 소문자와 숫자만 가능합니다");
-                    binding.tvWarningId.setVisibility(View.VISIBLE);
-                    binding.btnIdCheck.setVisibility(View.GONE);
-                } else if (binding.edtUserId.getText().toString() == "") {
-                    binding.tvWarningId.setText("아이디를 입력해주세요");
+                } else if (binding.edtEmail.getText().toString() == "") {
+                    binding.tvWarningId.setText("아이디(이메일)를 입력해주세요");
                     binding.tvWarningId.setVisibility(View.VISIBLE);
                     binding.btnIdCheck.setVisibility(View.GONE);
                 } else {
@@ -252,17 +254,17 @@ public class JoinActivity extends AppCompatActivity {
         }
     }
 
-    public void mailPatterns() {
+    public boolean isIdPatterns() {
         Pattern mail_pattern = Patterns.EMAIL_ADDRESS;
-        if (mail_pattern.matcher(binding.edtUserEmail.getText().toString()).matches()) {
-            binding.tvWarningEmail.setVisibility(View.GONE);
+        if (mail_pattern.matcher(binding.edtEmail.getText().toString()).matches()) {
+            return true;
         } else {
-            binding.tvWarningEmail.setVisibility(View.VISIBLE);
+            return false;
         }
     }
 
     public void phonePattern() {
-        Pattern phone_pattern = Patterns.PHONE;
+        Pattern phone_pattern = Pattern.compile("\\d{3}-\\d{3,4}-\\d{4}");
         if (phone_pattern.matcher(binding.edtUserPhone.getText().toString()).matches()) {
             binding.tvWarningPhone.setVisibility(View.GONE);
         } else {
@@ -270,16 +272,6 @@ public class JoinActivity extends AppCompatActivity {
         }
     }
 
-    public boolean isIdPattern() {
-        Pattern id_pattern = Pattern.compile("^[a-z0-9]+$");
-
-        Matcher matcher = id_pattern.matcher(binding.edtUserId.getText().toString());
-        if (matcher.matches()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     public void partnerCheck() {
         CommonConn conn = new CommonConn("partnercheck", this);
@@ -291,15 +283,15 @@ public class JoinActivity extends AppCompatActivity {
             partner = "환자";
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(partner + " 등록")
-                .setMessage(partner+" 아이디를 입력해주세요")
+                .setMessage(partner + " 아이디를 입력해주세요")
                 .setView(edt).setPositiveButton("등록하기", (dialog, which) -> {
 
                     conn.addParamMap("partner_id", edt.getText().toString());
                     conn.onExcute((isResult, data) -> {
-                        if(data.equals("1")){
+                        if (data.equals("1")) {
                             binding.edtPatientId.setText(edt.getText().toString());
                             binding.btnGuardianFind.setText("취소");
-                        }else{
+                        } else {
                             AlertDialog builder1 = new AlertDialog.Builder(this).setMessage("존재하지 않는 회원입니다").show();
                         }
                     });
@@ -311,9 +303,9 @@ public class JoinActivity extends AppCompatActivity {
     }
 
 
-    public void idDupCheck(String guardian_id) {
+    public void idDupCheck(String email) {
         CommonConn conn = new CommonConn("andidcheck", this);
-        conn.addParamMap("guardian_id", guardian_id);
+        conn.addParamMap("email", email);
 
         conn.onExcute((isResult, data) -> {
             Log.i(TAG, "idDupCheck: " + data);
@@ -321,11 +313,11 @@ public class JoinActivity extends AppCompatActivity {
             if (data.equals("0")) {
                 binding.btnIdCheck.setVisibility(View.GONE);
                 binding.tvWarningId.setVisibility(View.GONE);
-                binding.edtUserId.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.img_check, 0);
+                binding.edtEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.img_check, 0);
             } else {
-                binding.tvWarningId.setText("아이디 중복입니다");
+                binding.tvWarningId.setText("이미 가입된 메일입니다.");
                 binding.tvWarningId.setVisibility(View.VISIBLE);
-                binding.edtUserId.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                binding.edtEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
             }
             Log.i(TAG, "idDupCheck: " + data);
         });

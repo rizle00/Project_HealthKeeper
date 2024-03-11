@@ -22,17 +22,20 @@ import com.example.healthkeeper.databinding.ActivitySimpleJoinBinding;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SimpleJoinActivity extends AppCompatActivity {
     ActivitySimpleJoinBinding binding;
+    private final int SEARCH_ADDRESS_ACTIVITY = 10000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         binding = ActivitySimpleJoinBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
-
+        binding.edtAddress.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), PopupSearchAddressActivity.class);
+            startActivityForResult(intent, SEARCH_ADDRESS_ACTIVITY);
+        });
         CommonService apiInterface = CommonClient.getRetrofit().create(CommonService.class);
         HashMap<String,Object> params = new HashMap<>();
 
@@ -60,37 +63,53 @@ public class SimpleJoinActivity extends AppCompatActivity {
         /*혈액형 선택되었는지 메소드*/
         bloodCheck();
 
+        if (!isPatient(getIntent().getStringExtra("type"))) {
+            binding.llBloodtype.setVisibility(View.GONE);
+        }
+
+
     }
     public void idDupCheck(){
         binding.btnIdCheck.setOnClickListener(v -> {
-            idDupCheck(binding.edtUserId.getText().toString());
+            idDupCheck(binding.edtEmail.getText().toString());
         });
         /* 아이디 중복체크 완료되면 체크표시 */
 
     }
 
+    public boolean isPatient(String type) {
+        if (type.equals("patient")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void joinClick(){
         usableIdCheck();
-        mailPatterns();
         phonePattern();
 
 
 
 
         int num = binding.tvWarningId.getVisibility()+binding.tvWarningBlood.getVisibility()
-                + binding.tvWarningEmail.getVisibility()+binding.tvWarningPhone.getVisibility()+binding.tvWarningGender.getVisibility();
-        if(num ==40){
+                + binding.tvWarningPhone.getVisibility()+binding.tvWarningGender.getVisibility();
+        if(num ==32){
 
             Intent intent = getIntent();
             JoinTypeActivity jta = (JoinTypeActivity)JoinTypeActivity.joinTypeActivity;
             CommonConn conn = new CommonConn("andjoin",this);
             MemberVO vo = new MemberVO();
-            vo.setMember_id(binding.edtUserId.getText().toString());
-            vo.setEmail(binding.edtAddress.getText().toString());
+            vo.setEmail(binding.edtEmail.getText().toString());
             vo.setSocial(intent.getStringExtra("social"));
             vo.setPhone(binding.edtUserPhone.getText().toString());
             vo.setGuardian_id(binding.edtGuardianId.getText().toString());
             vo.setName(binding.edtUserName.getText().toString());
+            if(binding.rgFemale.isChecked()){
+                vo.setGender("Female");
+            }else{
+                vo.setGender("Male");
+            }
             String voJson = new Gson().toJson(vo);
             conn.addParamMap("vo",voJson);
 
@@ -112,7 +131,7 @@ public class SimpleJoinActivity extends AppCompatActivity {
     /*아이디 길이 확인*/
     public void usableIdCheck(){
         binding.tvWarningId.setText("아이디를 7~20자로 입력해주세요");
-        binding.edtUserId.addTextChangedListener(new TextWatcher() {
+        binding.edtEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -120,22 +139,16 @@ public class SimpleJoinActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int idLength = binding.edtUserId.getText().length();
-                if(idLength <7 || idLength>16){
-                    binding.tvWarningId.setText("아이디를 7~20자로 입력해주세요");
+                int idLength = binding.edtEmail.getText().length();
+                if (!isIdPatterns()) {
+                    binding.tvWarningId.setText("이메일 형식으로 입력해주세요");
                     binding.tvWarningId.setVisibility(View.VISIBLE);
                     binding.btnIdCheck.setVisibility(View.GONE);
-                }else if(!isIdPattern()){
-                    binding.tvWarningId.setText("영어 소문자와 숫자만 가능합니다");
+                } else if (binding.edtEmail.getText().toString() == "") {
+                    binding.tvWarningId.setText("아이디(이메일)를 입력해주세요");
                     binding.tvWarningId.setVisibility(View.VISIBLE);
                     binding.btnIdCheck.setVisibility(View.GONE);
-                }else if (binding.edtUserId.getText().toString()==""){
-                    binding.tvWarningId.setText("아이디를 입력해주세요");
-                    binding.tvWarningId.setVisibility(View.VISIBLE);
-                    binding.btnIdCheck.setVisibility(View.GONE);
-                }
-                else
-                {
+                } else {
                     binding.tvWarningId.setVisibility(View.GONE);
                     binding.btnIdCheck.setVisibility(View.VISIBLE);
                 }
@@ -147,23 +160,20 @@ public class SimpleJoinActivity extends AppCompatActivity {
             }
         });
     }
-
+    public boolean isIdPatterns() {
+        Pattern mail_pattern = Patterns.EMAIL_ADDRESS;
+        if (mail_pattern.matcher(binding.edtEmail.getText().toString()).matches()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
     /*비밀번호 영문, 숫자, 특문 정규식*/
 
-
-    public void mailPatterns(){
-        Pattern mail_pattern = Patterns.EMAIL_ADDRESS;
-        if(mail_pattern.matcher(binding.edtUserEmail.getText().toString()).matches()){
-            binding.tvWarningEmail.setVisibility(View.GONE);
-        }else {
-            binding.tvWarningEmail.setText("이메일을 확인해주세요");
-            binding.tvWarningEmail.setVisibility(View.VISIBLE);
-        }
-    }
     public void phonePattern(){
-        Pattern phone_pattern = Patterns.PHONE;
+        Pattern phone_pattern = Pattern.compile("\\d{3}-\\d{3,4}-\\d{4}");
         if(phone_pattern.matcher(binding.edtUserPhone.getText().toString()).matches()){
             binding.tvWarningPhone.setVisibility(View.GONE);
         }else{
@@ -172,16 +182,6 @@ public class SimpleJoinActivity extends AppCompatActivity {
         }
     }
 
-    public boolean isIdPattern(){
-        Pattern id_pattern = Pattern.compile("^[a-z0-9]+$");
-
-        Matcher matcher = id_pattern.matcher(binding.edtUserId.getText().toString());
-        if(matcher.matches()){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
 
     public void idDupCheck(String guardian_id){
@@ -193,11 +193,11 @@ public class SimpleJoinActivity extends AppCompatActivity {
             if(data.equals("0")){
                 binding.btnIdCheck.setVisibility(View.GONE);
                 binding.tvWarningId.setVisibility(View.GONE);
-                binding.edtUserId.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.img_check,0);
+                binding.edtEmail.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.img_check,0);
             }else{
                 binding.tvWarningId.setText("아이디 중복입니다");
                 binding.tvWarningId.setVisibility(View.VISIBLE);
-                binding.edtUserId.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                binding.edtEmail.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
             }
         });
     }
@@ -208,10 +208,9 @@ public class SimpleJoinActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String blood = binding.spnBloodType.getSelectedItem().toString();
-                Log.d("change", blood);
-                if (blood.equals("혈액형")) {
+                if (isPatient(getIntent().getStringExtra("type")) && blood.equals("혈액형")) {
                     binding.tvWarningBlood.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     binding.tvWarningBlood.setVisibility(View.GONE);
                 }
             }

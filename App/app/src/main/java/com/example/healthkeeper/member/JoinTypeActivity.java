@@ -16,15 +16,33 @@ public class JoinTypeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         joinTypeActivity = JoinTypeActivity.this;
         binding = ActivityJoinTypeBinding.inflate(getLayoutInflater());
-        Intent intent = new Intent(this,JoinActivity.class);
+
+
         binding.llPatient.setOnClickListener(v -> {
-            intent.putExtra("type","patient");
-            startActivity(intent);
+            if(getIntent().getStringExtra("social")==null) {
+                Intent intent = new Intent(this,JoinActivity.class);
+                intent.putExtra("type", "patient");
+                startActivity(intent);
+            }
+            else {
+                Intent intent = new Intent(this,SimpleJoinActivity.class);
+                intent.putExtra("social",getIntent().getStringExtra("social"));
+                intent.putExtra("type", "patient");
+                startActivity(intent);
+            }
         });
 
         binding.llGuardian.setOnClickListener(v -> {
-            intent.putExtra("type","guardian");
-            startActivity(intent);
+            if(getIntent().getStringExtra("social")==null) {
+                Intent intent = new Intent(this, JoinActivity.class);
+                intent.putExtra("type", "guardian");
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent(this,SimpleJoinActivity.class);
+                intent.putExtra("social",getIntent().getStringExtra("social"));
+                intent.putExtra("type", "patient");
+                startActivity(intent);
+            }
         });
 
         setContentView(binding.getRoot());
