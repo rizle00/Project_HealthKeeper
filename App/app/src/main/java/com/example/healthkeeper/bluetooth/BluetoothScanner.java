@@ -21,7 +21,7 @@ public class BluetoothScanner {
     private String deviceAddress;
 
     public BluetoothScanner(Context mContext) {
-        this.mContext = mContext.getApplicationContext();
+        this.mContext = mContext;
     }
 
     public String getDeviceAddress() {

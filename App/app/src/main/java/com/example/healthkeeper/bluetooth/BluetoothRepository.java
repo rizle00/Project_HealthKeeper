@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 import com.example.healthkeeper.common.CommonConn;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.concurrent.Executor;
@@ -18,11 +19,12 @@ public class BluetoothRepository {
         this.commonConn = new CommonConn("test/insert", context);
     }
 
-    public void insertData(HashMap<String, String > map) {
+    public void insertData(HashMap<String, Object> map) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                commonConn.addParamMap("params",map);
+                String json =  new Gson().toJson(map);
+                commonConn.addParamMap("params",json);
                 Log.d(TAG, "run: "+map);
                 commonConn.onExcute((isResult, data) -> {
 

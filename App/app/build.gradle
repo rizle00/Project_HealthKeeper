@@ -52,6 +52,7 @@ dependencies {
     implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'// 권한 허용 라이브러리
 
     implementation "androidx.lifecycle:lifecycle-livedata:2.7.0"// 라이브 데이터
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.7.0"// 뷰모델
 
     implementation 'com.ms-square:expandableTextView:0.1.4'//
 

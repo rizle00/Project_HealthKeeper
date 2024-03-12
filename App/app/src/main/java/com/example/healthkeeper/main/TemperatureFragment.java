@@ -12,11 +12,14 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.healthkeeper.App;
 import com.example.healthkeeper.R;
 
+import com.example.healthkeeper.bluetooth.BluetoothViewModel;
 import com.example.healthkeeper.databinding.FragmentTemperatureBinding;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -25,12 +28,14 @@ public class TemperatureFragment extends Fragment {
 
 
     FragmentTemperatureBinding binding;
-    double trueTemperature=0;
+    double trueTemperature = 0;
 
-    private String PREFS_NAME="MyTempPrefs";
-    private String  KEY_SELECTED_COLOR="selectedColor";
-    private String KEY_SELECTED_TEXT_COLOR="selectedTextColor";
-    private String KEY_SELECTED_TEXT_COLOR2="selectedTextColor";
+    private String PREFS_NAME = "MyTempPrefs";
+    private String KEY_SELECTED_COLOR = "selectedColor";
+    private String KEY_SELECTED_TEXT_COLOR = "selectedTextColor";
+    private String KEY_SELECTED_TEXT_COLOR2 = "selectedTextColor";
+
+    TextView textView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,7 +43,13 @@ public class TemperatureFragment extends Fragment {
 
         binding = FragmentTemperatureBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        textView = binding.trueTemperature;
+        BluetoothViewModel sharedViewModel = ((App) requireActivity().getApplicationContext()).getSharedViewModel();
+        sharedViewModel.getTempLiveData().observe(getViewLifecycleOwner(), data -> {
 
+                currentState(data);
+                textView.setText(String.valueOf(data));
+        });
         loadColorSettings();
 
         binding.colorChangeButton.setOnClickListener(new View.OnClickListener() {
@@ -47,14 +58,15 @@ public class TemperatureFragment extends Fragment {
                 showColorChangeDialog();
             }
         });
-
         return view;
     }
 
 
     private void currentState(double trueTemperature) {// 체온결과에 따라 tv_sate 텍스트 업데이트해주도록 설정
 
-        if (trueTemperature >= 35.9 && trueTemperature < 37.6) {
+        if (trueTemperature == 0) {
+            binding.tvSate.setText("온도 정보 없음");
+        } else if (trueTemperature >= 35.9 && trueTemperature < 37.6) {
             binding.tvSate.setText("양  호");
         } else if (trueTemperature <= 35.8) {
             binding.tvSate.setText("저체온");
@@ -62,8 +74,6 @@ public class TemperatureFragment extends Fragment {
             binding.tvSate.setText("고열");
         }
     }
-
-
 
 
     private void showColorChangeDialog() {//배경생상바꿀수있게!
@@ -93,7 +103,7 @@ public class TemperatureFragment extends Fragment {
                     } else if (checkedRadioButton.getId() == R.id.radioColor2) {
                         selectedColor = ContextCompat.getColor(requireContext(), R.color.radioColor2);
                     } else if (checkedRadioButton.getId() == R.id.radioColor3) {
-                        selectedTextColor2=Color.WHITE;
+                        selectedTextColor2 = Color.WHITE;
                         selectedColor = ContextCompat.getColor(requireContext(), R.color.radioColor3);
                     } else if (checkedRadioButton.getId() == R.id.radioColor4) {
                         selectedColor = ContextCompat.getColor(requireContext(), R.color.radioColor4);
@@ -103,13 +113,13 @@ public class TemperatureFragment extends Fragment {
                 }
 
 
-                saveColorSettings(selectedColor,selectedTextColor,selectedTextColor2);
+                saveColorSettings(selectedColor, selectedTextColor, selectedTextColor2);
                 setChipGroupBackgroundColor(selectedColor);
 
 
-                if(getActivity() instanceof ConditionActivity){
-                    ConditionActivity conditionActivity=(ConditionActivity) getActivity();
-                    if(conditionActivity.binding != null && conditionActivity.binding.chipGroup !=null){
+                if (getActivity() instanceof ConditionActivity) {
+                    ConditionActivity conditionActivity = (ConditionActivity) getActivity();
+                    if (conditionActivity.binding != null && conditionActivity.binding.chipGroup != null) {
                         conditionActivity.binding.chipGroup.setBackgroundColor(selectedColor);
                     }
                 }
@@ -125,31 +135,33 @@ public class TemperatureFragment extends Fragment {
         builder.setNegativeButton("취소", null);
         builder.show();
     }
-    private void setChipGroupBackgroundColor(int selectedColor){
-        if(getActivity() instanceof ConditionActivity){
-            ConditionActivity conditionActivity=(ConditionActivity) getActivity();
-            if(conditionActivity.binding != null && conditionActivity.binding.chipGroup !=null){
+
+    private void setChipGroupBackgroundColor(int selectedColor) {
+        if (getActivity() instanceof ConditionActivity) {
+            ConditionActivity conditionActivity = (ConditionActivity) getActivity();
+            if (conditionActivity.binding != null && conditionActivity.binding.chipGroup != null) {
                 conditionActivity.binding.chipGroup.setBackgroundColor(selectedColor);
             }
         }
     }
 
 
-    private void saveColorSettings(int selectedColor, int selectedTextColor,int selectedTextColor2) {
-                              //다른 화면을 갔다오면 처름설정으로 바뀌는걸 방지하기위해 사용자가 바꾼배경 설정저장
-        SharedPreferences preferences=requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferences.edit();
-        editor.putInt(KEY_SELECTED_COLOR,selectedColor);
-        editor.putInt(KEY_SELECTED_TEXT_COLOR,selectedTextColor);
-        editor.putInt(KEY_SELECTED_TEXT_COLOR2,selectedTextColor);
+    private void saveColorSettings(int selectedColor, int selectedTextColor, int selectedTextColor2) {
+        //다른 화면을 갔다오면 처름설정으로 바뀌는걸 방지하기위해 사용자가 바꾼배경 설정저장
+        SharedPreferences preferences = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(KEY_SELECTED_COLOR, selectedColor);
+        editor.putInt(KEY_SELECTED_TEXT_COLOR, selectedTextColor);
+        editor.putInt(KEY_SELECTED_TEXT_COLOR2, selectedTextColor);
         editor.apply();
 
     }
-    private void loadColorSettings(){
-        SharedPreferences preferences=requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        int selectedColor= preferences.getInt(KEY_SELECTED_COLOR,0);
-        int selectedTextColor= preferences.getInt(KEY_SELECTED_TEXT_COLOR,Color.WHITE);
-        int selectedTextColor2= preferences.getInt(KEY_SELECTED_TEXT_COLOR2,Color.BLACK);
+
+    private void loadColorSettings() {
+        SharedPreferences preferences = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        int selectedColor = preferences.getInt(KEY_SELECTED_COLOR, 0);
+        int selectedTextColor = preferences.getInt(KEY_SELECTED_TEXT_COLOR, Color.WHITE);
+        int selectedTextColor2 = preferences.getInt(KEY_SELECTED_TEXT_COLOR2, Color.BLACK);
 
         binding.temperatureLinearlayout.setBackgroundColor(selectedColor);
         binding.tvSate.setTextColor(selectedTextColor);
