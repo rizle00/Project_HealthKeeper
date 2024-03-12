@@ -42,7 +42,7 @@ public class JoinTypeActivity extends AppCompatActivity {
             }else{
                 Intent intent = new Intent(this,SimpleJoinActivity.class);
                 intent.putExtra("social",getIntent().getStringExtra("social"));
-                intent.putExtra("type", "patient");
+                intent.putExtra("type", "guardian");
                 Log.d("intent", "onCreate: "+getIntent().getStringExtra("social"));
                 startActivity(intent);
             }

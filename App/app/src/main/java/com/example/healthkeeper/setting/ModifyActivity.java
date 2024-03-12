@@ -12,19 +12,18 @@ import android.util.Patterns;
 import android.view.View;
 
 import com.example.healthkeeper.common.CommonConn;
-import com.example.healthkeeper.databinding.ActivityModifyPatientBinding;
-import com.example.healthkeeper.member.JoinTypeActivity;
+import com.example.healthkeeper.databinding.ActivityModifyBinding;
 import com.example.healthkeeper.member.MemberVO;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ModifyPatientActivity extends AppCompatActivity {
-    ActivityModifyPatientBinding binding;
+public class ModifyActivity extends AppCompatActivity {
+    ActivityModifyBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityModifyPatientBinding.inflate(getLayoutInflater());
+        binding = ActivityModifyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.btnModify.setOnClickListener(v -> {
@@ -34,7 +33,6 @@ public class ModifyPatientActivity extends AppCompatActivity {
 
     }
     public void joinClick(){
-        mailPatterns();
         phonePattern();
         int num = binding.tvWarningId.getVisibility()+binding.tvWarningPw.getVisibility()
                 + binding.tvWarningPhone.getVisibility();
@@ -103,15 +101,6 @@ public class ModifyPatientActivity extends AppCompatActivity {
             return false;
         }else {
             return true;
-        }
-    }
-
-    public void mailPatterns(){
-        Pattern mail_pattern = Patterns.EMAIL_ADDRESS;
-        if(mail_pattern.matcher(binding.edtUserEmail.getText().toString()).matches()){
-            binding.tvWarningEmail.setVisibility(View.GONE);
-        }else {
-            binding.tvWarningEmail.setVisibility(View.VISIBLE);
         }
     }
     public void phonePattern(){
