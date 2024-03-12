@@ -5,11 +5,13 @@ import java.util.List;
 
 public class CommunityDAO {
     List<CommunityDTOS.Community_BoardDTO> getRecentBoardList() {
-        List<CommunityDTOS.Community_BoardDTO> list =new ArrayList<>();
-        for(int i=0; i<6; i++){
-            list.add(new CommunityDTOS().new Community_BoardDTO("" + i, "" + i, "" + i));
-
-        }return list;
+        List<CommunityDTOS.Community_BoardDTO> list =getBoardArrayList();
+        List<CommunityDTOS.Community_BoardDTO> recentList = new ArrayList<>();
+        for (int i = 0; i < Math.min(list.size(), 4); i++) {
+            //List의 크기가 4보다 작으면 boardList의 크기만큼만 반복하고, 4 이상이면 4번만 반복하도록!
+            recentList.add(list.get(i));
+        }
+        return recentList;
     }
 
     public List<CommunityDTOS.Community_BoardDTO> getBoardArrayList() {
@@ -51,9 +53,9 @@ public class CommunityDAO {
         //  공지사항 데이터
 
         ArrayList<CommunityDTOS.Community_NoticeDTO> list=new ArrayList<>();
-        list.add(new CommunityDTOS().new Community_NoticeDTO("필독","앱관련 공지사항","2020.03.04","17:00"));
-        list.add(new CommunityDTOS().new Community_NoticeDTO("정보","웨어러블 뇌졸증미리예방센서 개발!!","2020.03.02","10:00"));
-        list.add(new CommunityDTOS().new Community_NoticeDTO("필독","2024.02.23 앱 업데이트","2020.01.31","3:40"));
+        list.add(new CommunityDTOS().new Community_NoticeDTO("필독","앱관련 공지사항","2020.03.04","17:00","서비스 점검으로 인하여 2024년03월28일 02:00 ~ 2024년03월 28일 04:00까지 서비스가 일부 작동이 원황하지 않을 수 있습니다. \n 불편을 드려 매우 죄송합니다\n 빠르게 서비스가 원활할게 돌아가도록 하겠습니다."));
+        list.add(new CommunityDTOS().new Community_NoticeDTO("정보","웨어러블 뇌졸증 미리 예방센서 개발!!","2020.03.02","10:00","ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇddddddd"));
+        list.add(new CommunityDTOS().new Community_NoticeDTO("필독","2024.02.23 앱 업데이트","2020.01.31","3:40","odeielsjfjsdjllasdflasdfasdfasdfatgtadfhkkkkkkkkkkihhhhhhhhhhhhhhhhhiofghhhhhhhhhhhhh"));
 
         return list;
     }

@@ -59,9 +59,12 @@ public class CCTVActivity extends AppCompatActivity {
         backHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                startActivity(new Intent(CCTVActivity.this, MainActivity.class));
+                finish();
             }
         });
+
+
     }
 
     @Override
