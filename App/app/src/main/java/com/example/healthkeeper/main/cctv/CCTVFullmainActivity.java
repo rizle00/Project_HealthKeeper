@@ -1,4 +1,4 @@
-package com.example.healthkeeper.main;
+package com.example.healthkeeper.main.cctv;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -50,6 +50,7 @@ public class CCTVFullmainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(CCTVFullmainActivity.this, CCTVActivity.class));
+                finish();// 액티비티 종료
             }
         });
 

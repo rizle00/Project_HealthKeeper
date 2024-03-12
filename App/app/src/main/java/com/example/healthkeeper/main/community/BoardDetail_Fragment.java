@@ -1,19 +1,17 @@
-package com.example.healthkeeper.main;
+package com.example.healthkeeper.main.community;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.LongDef;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.FragmentBoardDetailBinding;
+import com.example.healthkeeper.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +65,7 @@ public class BoardDetail_Fragment extends Fragment {
 
 
     private void MainActivity(){
-        Intent intent=new Intent(getActivity(),MainActivity.class);
+        Intent intent=new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
         getActivity().finish();
 

@@ -115,7 +115,7 @@ public class ModifyPatientActivity extends AppCompatActivity {
 
 
     public boolean socialCheck(String member_id){
-        SharedPreferences pref = this.getActivity().getSharedPreferences("PROJECT_MEMBER", Context.MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences("PROJECT_MEMBER", Context.MODE_PRIVATE);
         binding.edtUserName.setText(pref.getString("user_name","익명")+ "님");
         pref.getString("user_id","");
         return true;
