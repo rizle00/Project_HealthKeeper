@@ -11,6 +11,8 @@ import android.os.IBinder;
 import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.ServiceCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import com.example.healthkeeper.App;
 import com.example.healthkeeper.R;
 
@@ -29,10 +31,9 @@ public class BluetoothService extends Service {
     private BluetoothAdapter adapter;
     private BluetoothScanner mBtScanner;
 
-   
-
     private BluetoothConnector mBtConnector;
     private BluetoothRepository repository;
+    private BluetoothViewModel viewModel;
 
 
     public BluetoothConnector getmBtConnector() {
@@ -138,9 +139,12 @@ public class BluetoothService extends Service {
         this.executor = ((App) getApplication()).executorService;
         initRepository();
         initialize();
-        this.mBtConnector = new BluetoothConnector(mContext, adapter, repository);
-        mBound = mBtConnector.isConnected();
+        // 뷰모델 초기화
+        viewModel = ((App) getApplicationContext()).getSharedViewModel();;
 
+        this.mBtConnector = new BluetoothConnector(mContext, adapter, repository, viewModel);
+        mBound = mBtConnector.isConnected();
+        active = true;
     }
 
     @Override

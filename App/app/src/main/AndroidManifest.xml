@@ -18,8 +18,10 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/> <!-- 서비스 시행시 꺼지지 않게 -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE"/> <!-- 서비스 시행시 꺼지지 않게 -->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/> <!-- 페어링 설정 -->
-    <uses-feature android:name="android.software.companion_device_setup"/>
+    <uses-feature android:name="android.software.companion_device_setup"/> <!-- 페어링 설정 -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/> <!-- 알림 권한 허용 -->
+    <uses-feature android:name="android.hardware.telephony" android:required="true"/> <!-- 전화 권한 허용 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" /> <!-- 전화 권한 허용 -->
 
     <application
             android:name=".App"

@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.healthkeeper.R;
+import com.example.healthkeeper.bluetooth.BluetoothViewModel;
 import com.example.healthkeeper.databinding.ActivityConditionBinding;
 
 import com.google.android.material.chip.ChipGroup;
@@ -29,6 +30,7 @@ public class ConditionActivity extends AppCompatActivity {
         binding = ActivityConditionBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+//        BluetoothViewModel viewModel = ((MainActivity) getactivity).getViewModel();
 
         ActionBar actionBar = getSupportActionBar();
         int customTextColor = getResources().getColor(R.color.white);

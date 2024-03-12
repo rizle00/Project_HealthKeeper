@@ -18,36 +18,30 @@ public class BluetoothConnector {
     private BluetoothAdapter mBluetoothAdapter;
     private BluetoothGatt mBluetoothGatt;
     private String mBluetoothDeviceAddress;
-
-    public boolean isConnected() {
-        return mConnectionState;
-    }
-
     private boolean mConnectionState;
     private Context mContext;
     private BluetoothRepository repository;
 
-    public MutableLiveData<String> heartLiveData = new MutableLiveData<>("0");
-    public MutableLiveData<String> accidentLiveData = new MutableLiveData<>("0");
-    public MutableLiveData<String> tempLiveData = new MutableLiveData<>("0");
-    public MutableLiveData<String> btLiveData = new MutableLiveData<>("on");
-
-
+    BluetoothViewModel viewModel;
 
     // 생성자에서 컨텍스트 초기화
-    public BluetoothConnector(Context context, BluetoothAdapter adapter, BluetoothRepository repository) {
+    public BluetoothConnector(Context context, BluetoothAdapter adapter, BluetoothRepository repository, BluetoothViewModel viewModel) {
         this.mContext = context;
         this.mBluetoothAdapter = adapter;
         this.repository = repository;
+        this.viewModel = viewModel;
     }
-
+    public boolean isConnected() {
+        return mConnectionState;
+    }
     // 블루투스 연결 시도
     @SuppressLint("MissingPermission")
     public boolean connect(final String address) {
         Log.d(TAG, "connect: " + mBluetoothAdapter);
         if (mBluetoothAdapter == null || address == null) {
             Log.w(TAG, "BluetoothAdapter not initialized or unspecified address.");
-            btLiveData.postValue("off");
+//            btLiveData.postValue("off");
+            viewModel.setBtData("off");
             return false;
         }
 
@@ -57,10 +51,12 @@ public class BluetoothConnector {
             Log.d(TAG, "Trying to use an existing mBluetoothGatt for connection.");
             if (mBluetoothGatt.connect()) {
                 mConnectionState = true;
-                btLiveData.postValue("on");
+//                btLiveData.postValue("on");
+                viewModel.setBtData("on");
                 return true;
             } else {
-                btLiveData.postValue("off");
+//                btLiveData.postValue("off");
+                viewModel.setBtData("off");
                 return false;
             }
         }
@@ -68,14 +64,16 @@ public class BluetoothConnector {
         final BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
         if (device == null) {
             Log.w(TAG, "Device not found.  Unable to connect.");
-            btLiveData.postValue("off");
+//            btLiveData.postValue("off");
+            viewModel.setBtData("off");
             return false;
         }
         mBluetoothGatt = device.connectGatt(mContext, true, mGattCallback);
         Log.d(TAG, "Trying to create a new connection.");
         mBluetoothDeviceAddress = address;
         mConnectionState = true;
-        btLiveData.postValue("on");
+//        btLiveData.postValue("on");
+        viewModel.setBtData("off");
         return true;
     }
 
@@ -88,7 +86,8 @@ public class BluetoothConnector {
         }
         mBluetoothGatt.disconnect();
         mBluetoothGatt.close();
-        btLiveData.postValue("off");
+//        btLiveData.postValue("off");
+        viewModel.setBtData("off");
         mBluetoothGatt = null;
     }
 
@@ -100,14 +99,16 @@ public class BluetoothConnector {
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             if (newState == BluetoothProfile.STATE_CONNECTED) {
                 mConnectionState = true;
-                btLiveData.postValue("on");
+//                btLiveData.postValue("on");
+                viewModel.setBtData("on");
                 Log.d(TAG, "onConnectionStateChange: 커넥트 성공");
                 mBluetoothGatt.discoverServices();// 서비스 찾기
 
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
 
                 mConnectionState = false;
-                btLiveData.postValue("off");
+//                btLiveData.postValue("off");
+                viewModel.setBtData("off");
             }
         }
 
@@ -147,11 +148,10 @@ public class BluetoothConnector {
         }
     };
 
-    public HashMap<String, String > handleData(BluetoothGattCharacteristic characteristic) {
+    public HashMap<String, Object > handleData(BluetoothGattCharacteristic characteristic) {
         // 데이터 추출 및 세팅
         final byte[] data = characteristic.getValue();
         HashMap<String, String> extractedData = new HashMap<>();
-        HashMap<String, String > dataMap = new HashMap<>();
         if (data != null && data.length > 1) {
             String strData = new String(data, StandardCharsets.UTF_8);
             String[] items = strData.split(",");
@@ -159,22 +159,33 @@ public class BluetoothConnector {
             for (int i = 0; i < items.length; i += 2) {
                 extractedData.put(items[i], items[i + 1]);
             }
-            dataMap.put("heart", extractedData.get("hr"));
-            dataMap.put("temp", extractedData.get("tp"));
-            dataMap.put("accident", extractedData.get("ac"));
-            Log.d(TAG, "handleData: " + dataMap.toString());
-            setLiveData(dataMap);
+
+            Log.d(TAG, "handleData: " + extractedData.toString());
+
         }
-        return dataMap;
+        return setLiveData(extractedData);
     }
 
-    private void setLiveData(HashMap<String, String> dataMap) {
-        String heart = dataMap.get("heart").toString();
-        String temp = dataMap.get("temp").toString();
-        String accident = dataMap.get("accident").toString();
-        heartLiveData.postValue(heart);
-        tempLiveData.postValue(temp);
-        accidentLiveData.postValue(accident);
+    private HashMap<String, Object> setLiveData(HashMap<String, String> extractedData) {
+        HashMap<String, Object > map = new HashMap<>();
+        String heart = extractedData.get("hr") != null ? extractedData.get("hr").toString() : "0";
+        String temp = extractedData.get("tp") != null ? extractedData.get("tp").toString() : "0";
+        String accident = extractedData.get("ac") != null ? extractedData.get("ac").toString() : "0";
+        int heartRate = Integer.parseInt(heart);
+        double temperature = Double.parseDouble(temp);
+        if (heartRate < 50 || heartRate >= 180) {
+            heartRate = 0;
+        }
+        if (temperature <= 34.5 || temperature >= 39.5) {
+            temperature = 0;
+        }
+        map.put("heart", String.valueOf(heartRate));
+        map.put("temp", temperature);
+        map.put("accident", accident);
+        viewModel.setHeartData(heartRate);
+        viewModel.setTempData(temperature);
+        viewModel.setAccidentData(accident);
+        return map;
     }
 
 

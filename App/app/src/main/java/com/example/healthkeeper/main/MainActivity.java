@@ -29,9 +29,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.lifecycle.Observer;
+import com.example.healthkeeper.App;
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.bluetooth.BluetoothConnector;
 import com.example.healthkeeper.bluetooth.BluetoothService;
+import com.example.healthkeeper.bluetooth.BluetoothViewModel;
 import com.example.healthkeeper.databinding.ActivityMainBinding;
 import com.example.healthkeeper.setting.SettingFragment;
 import com.gun0912.tedpermission.PermissionListener;
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
     private boolean doubleBackToExitPressedOnce = false;
+    private BluetoothViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,12 @@ public class MainActivity extends AppCompatActivity {
         bottomNavSetting();
 
 
+    }
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
     }
 
     private void bottomNavSetting() {
@@ -125,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 if(!sBound){// 서비스 바인드 풀렸을시
                     Intent intent = new Intent(MainActivity.this, BluetoothService.class);
                     bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
+
                 }
             } else {
                 menu.getItem(1).setIcon(R.drawable.baseline_bluetooth_no_conn);
@@ -133,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -165,9 +177,11 @@ public class MainActivity extends AppCompatActivity {
             // 블루투스 버튼 클릭 했는데 서비스 o
 
             bluetoothService.stopService();
-            unbindService(mServiceConnection);
-            sBound = false; // 바인드 상태 갱신
-            active = false;
+            active = bluetoothService.getActive();
+            if (sBound) {
+                unbindService(mServiceConnection);
+                sBound = false; // 바인드 상태 갱신
+            }
             item.setIcon(R.drawable.baseline_bluetooth_no_conn);
             return true;
         }else if (id == android.R.id.home) {
@@ -288,7 +302,9 @@ public class MainActivity extends AppCompatActivity {
                         Manifest.permission.BLUETOOTH_SCAN,
                         Manifest.permission.BLUETOOTH_CONNECT,
                         Manifest.permission.POST_NOTIFICATIONS,
+                        Manifest.permission.CALL_PHONE,
                         Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+
                 .check();
     }
 
@@ -333,31 +349,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void observeData() {
+
         if (bluetoothService != null) {
             btConnector = bluetoothService.getmBtConnector();
+
             Log.d(TAG, "observeData: "+btConnector);
             if (btConnector != null) {
-                btConnector.heartLiveData.observe(MainActivity.this, new Observer<String>() {
-                    @Override
-                    public void onChanged(String  data) {
-//                        heart = data;
-//                        Log.d(TAG, "live"+heart);
-                    }
-                });
-                btConnector.tempLiveData.observe(MainActivity.this, new Observer<String>() {
-                    @Override
-                    public void onChanged(String  data) {
-//                        temp = data;
-                    }
-                });
-                btConnector.accidentLiveData.observe(MainActivity.this, new Observer<String>() {
-                    @Override
-                    public void onChanged(String  data) {
-//                        accident = data;
-                    }
-                });
-
-                btConnector.btLiveData.observe(MainActivity.this, new Observer<String>() {
+                viewModel.getBtLiveData().observe(MainActivity.this, new Observer<String>() {
                     @Override
                     public void onChanged(String  data) {
                         Log.d(TAG, "onChanged: "+data);
@@ -368,6 +366,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+
             }
         }
     }
@@ -384,13 +383,17 @@ public class MainActivity extends AppCompatActivity {
             if(!active){// 앱 처음 시작시 포그라운드 서비스를 실행하지 않았을때 포그라운드가 시행중이면 다시 시작x
                 ContextCompat.startForegroundService(MainActivity.this,
                         new Intent(MainActivity.this, BluetoothService.class));
-                active = true;
+                active = bluetoothService.getActive();
             }
 
             // 서비스가 연결되어 있는 경우 스위치를 켜기
+            if(btItem != null){
+
             btItem.setIcon(R.drawable.baseline_bluetooth_conn);
+            }
 
             Log.d(TAG, "onServiceConnected: "+sBound);
+            viewModel = ((App) getApplicationContext()).getSharedViewModel();
             observeData();
         }
 
