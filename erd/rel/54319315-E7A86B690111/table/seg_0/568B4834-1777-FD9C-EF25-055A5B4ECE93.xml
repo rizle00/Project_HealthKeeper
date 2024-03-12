@@ -1,0 +1,131 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="568B4834-1777-FD9C-EF25-055A5B4ECE93" schemaObject="EC29E7B1-260E-82F6-B69B-C690B656C283" name="CONDITIONS">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ATEAM</sourceObjSchema>
+<sourceObjName>CONDITIONS</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CONDITION_ID" id="2EC63F7D-5B7C-EFA9-784E-F9EDDB1CCDE7">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>CONDITIONS</sourceObjSchema>
+<sourceObjName>CONDITION_ID</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CONDITION_PULSE" id="D29ECCC7-352B-683D-D766-635EFCDA41AC">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>CONDITIONS</sourceObjSchema>
+<sourceObjName>CONDITION_PULSE</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CONDITION_TEMPERATURE" id="D0E23254-DA4E-9CFF-565F-987D19FF133F">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>CONDITIONS</sourceObjSchema>
+<sourceObjName>CONDITION_TEMPERATURE</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CONDITION_TIME" id="67266499-A6C8-BC8C-D492-98129FDE4E62">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>CONDITIONS</sourceObjSchema>
+<sourceObjName>CONDITION_TIME</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<defaultValue>SYSDATE</defaultValue>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MEMBER_ID" id="3B640BD3-2EE6-0065-12F6-FFD81E103380">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>CONDITIONS</sourceObjSchema>
+<sourceObjName>MEMBER_ID</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="03F21121-B063-FD25-9175-4B67F6BFA2B4" referredColumn="4310E022-8B93-D76F-A327-96C57579AE1E"/>
+</associations>
+</Column>
+<Column name="CONDITION_ACCIDENT" id="80D6C32F-9F8F-1311-9B00-64926E428B22">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>CONDITIONS</sourceObjSchema>
+<sourceObjName>CONDITION_ACCIDENT</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<constraintName>SYS_C008664</constraintName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>1 BYTE</dataTypeSize>
+<listOfValues>
+<valueDef value="&apos;N&apos;" description=""/>
+<valueDef value="&apos;Y&apos;" description=""/>
+</listOfValues>
+<defaultValue>&apos;N&apos;</defaultValue>
+<ownDataTypeParameters>1 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="3BC7E3AD-8794-8531-2FA2-F985E17AF124" schemaObject="EC29E7B1-260E-82F6-B69B-C690B656C283" name="CONDITIONS_PK">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ATEAM</sourceObjSchema>
+<sourceObjName>SYS_C008665</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:18 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2EC63F7D-5B7C-EFA9-784E-F9EDDB1CCDE7"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B4555F4C-B9CA-9464-05DC-F80D2C0E1875" name="FK_CONDITIONS_MEMBER_ID">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:18 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3B640BD3-2EE6-0065-12F6-FFD81E103380"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

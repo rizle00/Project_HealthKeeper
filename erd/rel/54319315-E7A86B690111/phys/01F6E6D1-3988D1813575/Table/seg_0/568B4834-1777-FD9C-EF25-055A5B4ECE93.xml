@@ -1,0 +1,69 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev20c class="oracle.dbtools.crest.model.design.storage.oracle.v20c.TableProxyOraclev20c" name="CONDITIONS" directorySegmentName="seg_0" id="568B4834-1777-FD9C-EF25-055A5B4ECE93">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>EC29E7B1-260E-82F6-B69B-C690B656C283</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>699DB0E8-CF9B-0FF8-12B7-A43B538FEC82</segment>
+<tableSpace>87CCF3AA-6EDF-B9B9-D530-F12D63892AD4</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="CONDITION_ID" id="2EC63F7D-5B7C-EFA9-784E-F9EDDB1CCDE7">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MEMBER_ID" id="3B640BD3-2EE6-0065-12F6-FFD81E103380">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CONDITION_TIME" id="67266499-A6C8-BC8C-D492-98129FDE4E62">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<defaultValue>SYSDATE</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="CONDITION_ACCIDENT" id="80D6C32F-9F8F-1311-9B00-64926E428B22">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<defaultValue>&apos;N&apos;</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="CONDITION_TEMPERATURE" id="D0E23254-DA4E-9CFF-565F-987D19FF133F">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CONDITION_PULSE" id="D29ECCC7-352B-683D-D766-635EFCDA41AC">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_CONDITIONS_MEMBER_ID" id="B4555F4C-B9CA-9464-05DC-F80D2C0E1875">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:18 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="CONDITIONS_PK" id="3BC7E3AD-8794-8531-2FA2-F985E17AF124">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:18 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>EC29E7B1-260E-82F6-B69B-C690B656C283</schemaObject>
+<segment>E46EA7CD-0F71-1E8E-B244-3FA87B032F23</segment>
+<tableSpace>87CCF3AA-6EDF-B9B9-D530-F12D63892AD4</tableSpace>
+<indexSegment>E46EA7CD-0F71-1E8E-B244-3FA87B032F23</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev20c>
