@@ -115,13 +115,15 @@ public class CommunityDTOS {
 
     public class Community_NoticeDTO {
 
-      private String category,noticeTitle,date, time;
+        private String category, noticeTitle, date, time, content;
 
-        public Community_NoticeDTO(String category, String noticeTitle, String date, String time) {
+
+        public Community_NoticeDTO(String category, String noticeTitle, String date, String time, String content) {
             this.category = category;
             this.noticeTitle = noticeTitle;
             this.date = date;
             this.time = time;
+            this.content = content;
         }
 
         public String getCategory() {
@@ -155,9 +157,15 @@ public class CommunityDTOS {
         public void setTime(String time) {
             this.time = time;
         }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+
     }
-
-
-
-
 }
