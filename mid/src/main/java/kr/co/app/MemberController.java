@@ -92,6 +92,9 @@ public class MemberController {
 		return "daum";
 	}
 	
-	
+	@PostMapping("")
+	public void socialCheck(String email){
+		service.socialIdCheck(email);
+	}
 	
 }
