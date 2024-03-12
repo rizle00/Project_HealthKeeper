@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Objects;
 
 
 @Service
@@ -12,6 +14,10 @@ public class MemberService {
 	@Autowired
 	@Qualifier("hanul")
 	SqlSession sql;
+
+	public int insert(HashMap<String, Object> map){
+		return sql.insert("test.insert", map);
+	}
 	
 	public MemberVO login(String email) {
 		return sql.selectOne("me.login", email);

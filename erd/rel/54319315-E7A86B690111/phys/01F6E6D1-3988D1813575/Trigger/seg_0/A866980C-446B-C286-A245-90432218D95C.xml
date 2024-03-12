@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TriggerOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.TriggerOraclev10g" name="MEMBER_ID_TRIGGER" directorySegmentName="seg_0" id="A866980C-446B-C286-A245-90432218D95C">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ATEAM</sourceObjSchema>
+<sourceObjName>MEMBER_ID_TRIGGER</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:18 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<actions>INSERT</actions>
+<body><![CDATA[BEGIN
+    SELECT member_id_seq.NEXTVAL
+    INTO :new.member_id
+    FROM dual;
+END;]]></body>
+<triggerTime>BEFORE</triggerTime>
+<owner>F46557C6-1721-5167-064F-9837E3CDBD11</owner>
+<table>F9296A1E-5675-6EEE-1DB9-E92E9F019CFF</table>
+</TriggerOraclev10g>
