@@ -18,8 +18,8 @@
 	SELECT EMAIL FROM MEMBER WHERE NAME = #{name} AND PHONE = #{phone}
 </select>
 
-<update id="resetpw">
-	UPDATE EMAIL	SET PW = #{pw} WHERE EMAIL = #{email}
+<update id="pwReset">
+	UPDATE MEMBER SET PW = #{pw} WHERE EMAIL = #{email}
 </update>
 <select id= "socialCheck" resultType="String">
 	SELECT COUNT(*) FROM MEMBER WHERE SOCIAL = #{social}
@@ -35,4 +35,7 @@
                  FROM MEMBER
                  WHERE EMAIL = #{email}) where EMAIL = #{guardian_id} 
 </update>
+<select id="findpw" resultType="String">
+	SELECT COUNT(*) FROM MEMBER WHERE EMAIL=#{email} AND NAME = #{name} AND PHONE = #{phone}
+</select>
 </mapper>
