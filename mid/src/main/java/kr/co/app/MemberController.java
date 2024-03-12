@@ -2,26 +2,22 @@ package kr.co.app;
 
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.filter.CharacterEncodingFilter;
 
 import com.google.gson.Gson;
 
+import kr.co.app.common.CommonUtility;
 import kr.co.app.member.MemberService;
 import kr.co.app.member.MemberVO;
-import oracle.sql.CharacterBuffer;
 
 @RequestMapping("and")
 @Controller
 public class MemberController {
+	@Autowired private CommonUtility common;
 
 	@Autowired
 	private MemberService service;
@@ -77,14 +73,19 @@ public class MemberController {
 		}
 	}
 
-	@RequestMapping("/andfindpw")
-	public void resetpw(String vo) {
+	@RequestMapping("/checkinfo")
+	public ResponseEntity<String> checkinfo(String vo,String mail) {
 		MemberVO find_info = new Gson().fromJson(vo, MemberVO.class);
-		String pw = UUID.randomUUID().toString();
-		find_info.setPw(pw);
-
-		if (service.resetpw(find_info) == 1) {
-
+		if(service.findpw(find_info).equals("0")) {
+			return ResponseEntity.ok("none");
+		}else {
+			String pw = UUID.randomUUID().toString();
+			pw= pw.substring(pw.lastIndexOf("-")+1);
+			find_info.setPw(pw);
+			
+			if(service.resetpw(find_info)==1&&common.sendPassword(mail,pw))
+			return ResponseEntity.ok("success");
+			else return ResponseEntity.ok("failure");
 		}
 	}
 

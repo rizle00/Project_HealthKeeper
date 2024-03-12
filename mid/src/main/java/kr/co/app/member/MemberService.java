@@ -37,8 +37,8 @@ public class MemberService {
 		return sql.selectOne("me.findid",vo);
 	}
 	
-	public int resetpw(MemberVO vo) {
-		return sql.update("me.resetPassword",vo);
+	public String findpw(MemberVO vo) {
+		return sql.selectOne("me.findpw",vo);
 	}
 	
 	public String socialIdCheck(String social) {
@@ -60,4 +60,10 @@ public class MemberService {
 	public void patientRegister(MemberVO vo) {
 		sql.update("me.patientRegister",vo);
 	}
+	
+	public int resetpw(MemberVO vo) {
+		return sql.update("me.pwReset", vo);
+	}
+	
+	
 }
