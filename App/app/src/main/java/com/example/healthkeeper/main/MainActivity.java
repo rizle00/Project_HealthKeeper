@@ -8,6 +8,7 @@ import android.content.*;
 import android.os.IBinder;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +36,11 @@ import com.example.healthkeeper.bluetooth.BluetoothConnector;
 import com.example.healthkeeper.bluetooth.BluetoothService;
 import com.example.healthkeeper.bluetooth.BluetoothViewModel;
 import com.example.healthkeeper.databinding.ActivityMainBinding;
+import com.example.healthkeeper.main.community.CommunityActivity;
 import com.example.healthkeeper.setting.SettingFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.normal.TedPermission;
 
@@ -50,12 +55,15 @@ public class MainActivity extends AppCompatActivity {
     private final BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
     private BluetoothConnector btConnector;
     private MenuItem btItem;
+
+    private BluetoothViewModel viewModel;
     //------------------------------------
     private AlertDialog alertDialog;
     private ActivityMainBinding binding;
 
     private boolean doubleBackToExitPressedOnce = false;
-    private BluetoothViewModel viewModel;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +85,31 @@ public class MainActivity extends AppCompatActivity {
 
         
         bottomNavSetting();// 메뉴 선택 리스너
+        token();
 
 
     }
 
+    private void token(){
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+
+                        // Log and toast
+//                        String msg = getString(R.string.msg_token_fmt, token);
+                        Log.d(TAG, token);
+                        Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
     @Override
     protected void onResume() {
 
@@ -98,7 +127,8 @@ public class MainActivity extends AppCompatActivity {
                 setToolbarMenu(R.menu.toolbar_home);
                 return true;
             } else if (itemId == R.id.nav_119) {
-                showEmergencyDialog();
+                checkCallPermission();
+
                 return true;
             } else if (itemId == R.id.nav_commu) {
                 Intent intent = new Intent(this, CommunityActivity.class);
@@ -167,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
             // 블루투스 버튼 클릭 했는데 서비스 x
             if(!sBound){
                 if (isOn()) { // 블루투스 사용 가능한 경우
-                    checkPermission();
+                    checkBtPermission();
                 } else { // 블루투스 활성화가 필요한 경우
                     requestBluetoothActivation(MainActivity.this);
                 }
@@ -280,12 +310,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // 활성 확인 시 권한체크, 취소 시 알림
+    // 블루투스 활성 확인 시 권한체크, 취소 시 알림
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == INTENT_REQUEST_BLUETOOTH_ENABLE && resultCode == RESULT_OK) {
-            checkPermission();
+            checkBtPermission();
         } else if (requestCode == INTENT_REQUEST_BLUETOOTH_ENABLE && resultCode == RESULT_CANCELED) {
             Toast.makeText(MainActivity.this, "블루투스 활성화가 필요합니다", Toast.LENGTH_SHORT).show();
         } else {
@@ -294,23 +324,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // 권한체크
-    private void checkPermission() {
+    // 권한체크 - 블루투스
+    private void checkBtPermission() {
         TedPermission.create()
-                .setPermissionListener(permissionListener)
+                .setPermissionListener(bTPermissionListener)
                 .setDeniedMessage("Denied Permission.")
                 .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.BLUETOOTH_SCAN,
                         Manifest.permission.BLUETOOTH_CONNECT,
                         Manifest.permission.POST_NOTIFICATIONS,
-                        Manifest.permission.CALL_PHONE,
                         Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+                .check();
+    }
+    // 권한 체크 - 전화
+    private void checkCallPermission() {
+        TedPermission.create()
+                .setPermissionListener(callPermissionListener)
+                .setDeniedMessage("Denied Permission.")
+                .setPermissions(
+                        Manifest.permission.CALL_PHONE
+                        )
 
                 .check();
     }
+    private final PermissionListener callPermissionListener = new PermissionListener() {
+        @Override
+        public void onPermissionGranted() {
+            // 권한 설정됨, 긴급전화 시행
+            showEmergencyDialog();
+        }
 
-    //  권한 체크 리스너 등록
-    private final PermissionListener permissionListener = new PermissionListener() {
+        @Override
+        public void onPermissionDenied(List<String> deniedPermissions) {
+            //권한 거부
+            makeDenyDialog("call");
+
+        }
+    };
+    //  권한 체크 리스너 등록 -블루투스
+    private final PermissionListener bTPermissionListener = new PermissionListener() {
         @Override
         public void onPermissionGranted() {
             // 권한 설정됨, 블루투스 초기화 시행
@@ -321,15 +373,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onPermissionDenied(List<String> deniedPermissions) {
             //권한 거부
-            makeDenyDialog();
+            makeDenyDialog("bt");
 
         }
     };
 
-    private void makeDenyDialog() {
+    private void makeDenyDialog(String name) {
         new AlertDialog.Builder(getApplicationContext())
                 .setTitle("권한 요청")
-                .setMessage("권한이 반드시 필요합니다.!!미허용시 앱 사용 불가!")
+                .setMessage("권한이 반드시 필요합니다.!!미허용시 기능 사용 불가!")
                 .setNegativeButton("취소",
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -341,7 +393,12 @@ public class MainActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                checkPermission();
+
+                                if(name.equals("bt")){
+                                    checkBtPermission();
+                                } else if (name.equals("call")){
+                                    checkCallPermission();
+                                }
                             }
                         })
 

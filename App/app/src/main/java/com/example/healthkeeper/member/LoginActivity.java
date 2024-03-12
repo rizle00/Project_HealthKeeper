@@ -41,12 +41,17 @@ public class LoginActivity extends AppCompatActivity {
 
 
     ActivityLoginBinding binding;
+    SharedPreferences preference;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         NaverIdLoginSDK.INSTANCE.initialize(this, "g7xZnTgyOkVBFJ6ZtVS7", "KgZQDe7BOj","healthkeeper");
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        preference = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
+        editor = preference.edit();
 
         binding.tvJoin.setOnClickListener(v -> {
             Intent  intent = new Intent(this, JoinTypeActivity.class);
@@ -81,9 +86,15 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void login(String email,String pw){
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        loginFailed();
+    }
+
+    public void login(String email, String pw){
         /*로그인 유지*/
-        SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
+//        SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
         CommonConn conn = new CommonConn("andlogin",this);
 
         conn.addParamMap("email" , email);
@@ -98,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this,"아이디 또는 패스워드 틀림",Toast.LENGTH_SHORT).show();
 
             }else{
-                SharedPreferences.Editor editor = preference.edit();
+//                SharedPreferences.Editor editor = preference.edit();
                 editor.putString("user_id",vo.getMember_id());
                 editor.putString("user_name",vo.getName());
                 editor.apply();
@@ -107,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 
     public void getHashKey(){
         PackageInfo packageInfo = null;
@@ -168,9 +180,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
                                 }else { //로그인 성공
-                                    SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
+//                                    SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
                                     MemberVO kakaoVo = new Gson().fromJson(data, MemberVO.class);
-                                    SharedPreferences.Editor editor = preference.edit();
+//                                    SharedPreferences.Editor editor = preference.edit();
                                     editor.putString("user_id", kakaoVo.getMember_id());
                                     editor.putString("user_name", kakaoVo.getName());
                                     editor.apply();
@@ -252,9 +264,9 @@ public class LoginActivity extends AppCompatActivity {
                                 AlertDialog dialog = builder.create();
                                 dialog.show();
                             } else { //로그인 성공
-                                SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
+//                                SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
                                 MemberVO kakaoVo = new Gson().fromJson(data, MemberVO.class);
-                                SharedPreferences.Editor editor = preference.edit();
+//                                SharedPreferences.Editor editor = preference.edit();
                                 editor.putString("user_id", kakaoVo.getMember_id());
                                 editor.putString("user_name", kakaoVo.getName().toString());
                                 Log.d("setName", "onSuccess: "+kakaoVo.getName().toString());
@@ -268,14 +280,24 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void loginSuccess() {
+    private void loginSuccess() {
         /*기존에 켜져있는 액티비티 종료*/
-        LoginBeforeActivity lba = (LoginBeforeActivity)LoginBeforeActivity._loginBeforeActivity;
-        lba.getLifecycle();
-        lba.finish();
+//        LoginBeforeActivity lba = (LoginBeforeActivity)LoginBeforeActivity._loginBeforeActivity;
+//        lba.getLifecycle();
+//        lba.finish();
+//
+//        Intent intent = new Intent(this,MainActivity.class);
+//        startActivity(intent);
+//        finish();
+        Intent resultIntent = new Intent();
+        setResult(RESULT_OK, resultIntent);
+        finish();
+    }
 
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
+    private void loginFailed() {
+        // 로그인 실패 시
+        Intent resultIntent = new Intent();
+        setResult(RESULT_CANCELED, resultIntent);
         finish();
     }
 }

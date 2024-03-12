@@ -1,8 +1,5 @@
-package com.example.healthkeeper.main;
+package com.example.healthkeeper.main.monitor;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
-import android.content.Context;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -11,11 +8,9 @@ import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.healthkeeper.R;
-import com.example.healthkeeper.bluetooth.BluetoothViewModel;
 import com.example.healthkeeper.databinding.ActivityConditionBinding;
 
 import com.google.android.material.chip.ChipGroup;

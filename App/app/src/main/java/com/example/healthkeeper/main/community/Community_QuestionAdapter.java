@@ -1,4 +1,4 @@
-package com.example.healthkeeper.main;
+package com.example.healthkeeper.main.community;
 
 import android.content.Context;
 import android.view.LayoutInflater;
