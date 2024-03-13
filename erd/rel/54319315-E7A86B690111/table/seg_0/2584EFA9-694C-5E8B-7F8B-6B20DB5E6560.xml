@@ -1,0 +1,85 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="2584EFA9-694C-5E8B-7F8B-6B20DB5E6560" schemaObject="EC29E7B1-260E-82F6-B69B-C690B656C283" name="MEMBER_HOSPITALS">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ATEAM</sourceObjSchema>
+<sourceObjName>MEMBER_HOSPITALS</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="MEMBER_ID" id="59870274-6F39-2621-081B-9FCE6BCA094A">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>MEMBER_HOSPITALS</sourceObjSchema>
+<sourceObjName>MEMBER_ID</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="4E9660F9-14B3-F836-7091-A7BA4875A12A" referredColumn="4310E022-8B93-D76F-A327-96C57579AE1E"/>
+</associations>
+</Column>
+<Column name="HOSPITAL_ID" id="AABE35C4-5694-06DB-3194-ADD6FB003232">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>MEMBER_HOSPITALS</sourceObjSchema>
+<sourceObjName>HOSPITAL_ID</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="31A9C866-0A0B-3597-905A-E99A3BF05D98" referredColumn="4F845ED2-97F9-61E8-F8DF-9EF9D1010CD1"/>
+</associations>
+</Column>
+<Column name="DOCTOR_NAME" id="6847CBC2-DA5D-4FDC-D483-804816312CF2">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>MEMBER_HOSPITALS</sourceObjSchema>
+<sourceObjName>DOCTOR_NAME</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="BD4419CE-40F0-14A9-5250-C7B1AB4E8341" name="FK_MEMBER_HOSPITALS_HOSPITAL_ID">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:18 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AABE35C4-5694-06DB-3194-ADD6FB003232"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F39A376C-5FE9-BBB8-9D9B-A89FC50B3726" name="FK_MEMBER_HOSPITALS_MEMBER_ID">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:19 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="59870274-6F39-2621-081B-9FCE6BCA094A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

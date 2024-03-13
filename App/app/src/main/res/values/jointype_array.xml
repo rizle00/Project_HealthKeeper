@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="type">
+        <item>환자 등록</item>
+        <item>보호자 등록</item>
+    </string-array>
+</resources>

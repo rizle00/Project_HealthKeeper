@@ -1,0 +1,125 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="9A0AAB7A-5718-8DFC-8E61-B3656F8329F2" schemaObject="EC29E7B1-260E-82F6-B69B-C690B656C283" name="ANSWER">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ATEAM</sourceObjSchema>
+<sourceObjName>ANSWER</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ANS_ID" id="E0D95A9C-BE23-FB02-A3B4-6FB976A66DA5">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ANSWER</sourceObjSchema>
+<sourceObjName>ANS_ID</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CONTENT" id="EBA92447-E7A8-EC5D-9119-92E125412195">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ANSWER</sourceObjSchema>
+<sourceObjName>CONTENT</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1000 BYTE</dataTypeSize>
+<ownDataTypeParameters>1000 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="QUE_ID" id="736D54AC-1609-4EDD-5F75-95D8FD7459B4">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ANSWER</sourceObjSchema>
+<sourceObjName>QUE_ID</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="8602542A-88BE-84A1-424C-20B1D745A983" referredColumn="494F36D3-2F5F-0118-4AA0-A818D97B571A"/>
+</associations>
+</Column>
+<Column name="ADMIN_ID" id="A1935554-13AE-B083-543A-9A5E3E8521AB">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ANSWER</sourceObjSchema>
+<sourceObjName>ADMIN_ID</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="141A82CC-C9C6-2DAC-E105-A705FD3E1997" referredColumn="4310E022-8B93-D76F-A327-96C57579AE1E"/>
+</associations>
+</Column>
+<Column name="TIME" id="BC972027-59BB-47DE-123F-7824785BB467">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ANSWER</sourceObjSchema>
+<sourceObjName>TIME</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<defaultValue>SYSDATE</defaultValue>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="5E927C27-9BB6-E891-6BD5-B4567F001511" schemaObject="EC29E7B1-260E-82F6-B69B-C690B656C283" name="ANSWER_PK">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ATEAM</sourceObjSchema>
+<sourceObjName>SYS_C008720</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:18 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E0D95A9C-BE23-FB02-A3B4-6FB976A66DA5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7236F424-8D53-0586-F213-FAAF58FCDC43" name="FK_ANSWER_ADMIN_ID">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:18 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A1935554-13AE-B083-543A-9A5E3E8521AB"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C2DEF810-FB37-17FE-ECF9-A9122312CAA3" name="FK_ANSWER_QUE_ID">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:18 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="736D54AC-1609-4EDD-5F75-95D8FD7459B4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

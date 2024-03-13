@@ -12,6 +12,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.healthkeeper.R;
@@ -30,6 +31,7 @@ public class SimpleJoinActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("joinintent", "onCreate: "+getIntent().getStringExtra("social"));
         binding = ActivitySimpleJoinBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
@@ -37,11 +39,9 @@ public class SimpleJoinActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), PopupSearchAddressActivity.class);
             startActivityForResult(intent, SEARCH_ADDRESS_ACTIVITY);
         });
-        CommonService apiInterface = CommonClient.getRetrofit().create(CommonService.class);
-        HashMap<String, Object> params = new HashMap<>();
 
-        binding.btnIdCheck.setOnClickListener(v -> {
-
+        binding.llPartner.setOnClickListener(v -> {
+            partnerCheck();
         });
 
         usableIdCheck();
@@ -68,6 +68,20 @@ public class SimpleJoinActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        switch (requestCode) {
+            case SEARCH_ADDRESS_ACTIVITY:
+                if (resultCode == RESULT_OK) {
+                    String data = intent.getExtras().getString("data");
+                    if (data != null) {
+                        binding.edtAddress.setText(data);
+                    }
+                }
+        }
+    }
+
     public void idDupCheck() {
         binding.btnIdCheck.setOnClickListener(v -> {
             idDupCheck(binding.edtEmail.getText().toString());
@@ -92,15 +106,19 @@ public class SimpleJoinActivity extends AppCompatActivity {
                 + binding.tvWarningPhone.getVisibility() + binding.tvWarningGender.getVisibility();
         if (num == 32) {
 
-            Intent intent = getIntent();
+
             JoinTypeActivity jta = (JoinTypeActivity) JoinTypeActivity.joinTypeActivity;
             CommonConn conn = new CommonConn("andjoin", this);
             MemberVO vo = new MemberVO();
             vo.setEmail(binding.edtEmail.getText().toString());
-            vo.setSocial(intent.getStringExtra("social"));
             vo.setPhone(binding.edtUserPhone.getText().toString());
             vo.setGuardian_id(binding.edtGuardianId.getText().toString());
             vo.setName(binding.edtUserName.getText().toString());
+            vo.setSocial(getIntent().getStringExtra("social").toString());
+            vo.setAddress(binding.edtAddress.getText().toString());
+            vo.setAddress_detail(binding.edtAddressDetail.getText().toString());
+
+            vo.setBlood(binding.spnBloodType.getSelectedItem().toString());
             if (binding.rgFemale.isChecked()) {
                 vo.setGender("Female");
             } else {
@@ -108,6 +126,8 @@ public class SimpleJoinActivity extends AppCompatActivity {
             }
             String voJson = new Gson().toJson(vo);
             conn.addParamMap("vo", voJson);
+            conn.addParamMap("type",getIntent().getStringExtra("type").toString());
+            conn.addParamMap("partner",binding.edtGuardianId.getText().toString());
 
 
             conn.onExcute((isResult, data) -> {
@@ -212,5 +232,34 @@ public class SimpleJoinActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+    }
+    /* 보호자 / 환자 아이디 확인 */
+    public void partnerCheck() {
+        CommonConn conn = new CommonConn("partnercheck", this);
+        String partner;
+        EditText edt = new EditText(this);
+        if (isPatient(getIntent().getStringExtra("type"))) {
+            partner = "보호자";
+        } else {
+            partner = "환자";
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(partner + " 등록")
+                .setMessage(partner + " 아이디를 입력해주세요")
+                .setView(edt).setPositiveButton("등록하기", (dialog, which) -> {
+                    conn.addParamMap("partner_id", edt.getText().toString());
+                    conn.addParamMap("type",getIntent().getStringExtra("type"));
+                    conn.onExcute((isResult, data) -> {
+                        if (data.equals("1")) {
+                            binding.edtGuardianId.setText(edt.getText().toString());
+                            binding.btnGuardianFind.setText("취소");
+                        } else {
+                            AlertDialog builder1 = new AlertDialog.Builder(this).setMessage("존재하지 않는 회원입니다").show();
+                        }
+                    });
+                }).setNegativeButton("취소", (dialog, which) -> {
+                    dialog.dismiss();
+                });
+        builder.show();
+
     }
 }

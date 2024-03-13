@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'// 파이어베이스
 }
 
 
@@ -49,7 +50,6 @@ dependencies {
     }
     //네아로 
     implementation 'com.navercorp.nid:oauth:5.9.0'
-
     //카카오 로그인 모듈
     implementation "com.kakao.sdk:v2-user:2.19.0"
     /*롬복 */
@@ -57,9 +57,23 @@ dependencies {
     implementation "androidx.webkit:webkit:1.8.0"//webView API
     implementation 'com.airbnb.android:lottie:5.0.2'//동적이미지 추가 라이브러리
 
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.20" //코틀린 중복 오류 해결
+    implementation "androidx.core:core:1.12.0"// 안드로이드 코어 버전 , 포그라운드 서비스 이용시 필요
+
+    implementation 'com.github.Jasonchenlijian:FastBle:2.4.0'// ble 블루투스 연결 라이브러리
+    implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'// 권한 허용 라이브러리
+
+    implementation "androidx.lifecycle:lifecycle-livedata:2.7.0"// 라이브 데이터
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.7.0"// 뷰모델
+
+    implementation platform('com.google.firebase:firebase-bom:32.7.4')// 파이어베이스
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-messaging'// 푸시알림
+
+    implementation 'com.ms-square:expandableTextView:0.1.4'//
+
     implementation 'com.github.lakue119:LakuePagingButton:1.0.0'//Paging라이브러리
-//    implementation "androidx.paging:paging-runtime:3.0.1"
-    implementation 'com.ms-square:expandableTextView:0.1.4'
+   
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
