@@ -98,3 +98,4 @@ Project02_Last/app/src/main/res/values/key_social.xml
 **/*.rvi
 **/.#*
 **/CVS/**
+mid/src/main/resources/info.properties
