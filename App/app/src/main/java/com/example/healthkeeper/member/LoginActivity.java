@@ -269,6 +269,7 @@ public class LoginActivity extends AppCompatActivity {
 //                                SharedPreferences.Editor editor = preference.edit();
                                 editor.putString("user_id", kakaoVo.getMember_id());
                                 editor.putString("user_name", kakaoVo.getName().toString());
+                                editor.putString("user_social",kakaoVo.getSocial().toString());
                                 Log.d("setName", "onSuccess: "+kakaoVo.getName().toString());
                                 editor.apply();
                                 loginSuccess();

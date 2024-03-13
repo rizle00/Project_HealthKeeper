@@ -151,8 +151,8 @@ public class JoinActivity extends AppCompatActivity {
             vo.setGuardian_id(binding.edtPatientId.getText().toString());
             vo.setName(binding.edtUserName.getText().toString());
             vo.setAddress(binding.edtAddress.getText().toString());
+            vo.setGuardian_id(binding.edtPatientId.getText().toString());
             vo.setAddress_detail(binding.edtAddressDetail.getText().toString());
-
             vo.setSocial(getIntent().getStringExtra("social"));
 
             SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
@@ -171,7 +171,7 @@ public class JoinActivity extends AppCompatActivity {
 
             String voJson = new Gson().toJson(vo);
             conn.addParamMap("vo", voJson);
-
+            conn.addParamMap("type",getIntent().getStringExtra("type").toString());
             conn.onExcute((isResult, data) -> {
 
             });
@@ -300,8 +300,8 @@ public class JoinActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(partner + " 등록")
                 .setMessage(partner + " 아이디를 입력해주세요")
                 .setView(edt).setPositiveButton("등록하기", (dialog, which) -> {
-
                     conn.addParamMap("partner_id", edt.getText().toString());
+                    conn.addParamMap("type",getIntent().getStringExtra("type"));
                     conn.onExcute((isResult, data) -> {
                         if (data.equals("1")) {
                             binding.edtPatientId.setText(edt.getText().toString());

@@ -22,7 +22,7 @@
 	<bean class="org.mybatis.spring.SqlSessionTemplate" id="hanul">
 		<constructor-arg name="sqlSessionFactory" ref="factory" />
 	</bean>
-	<!-- <bean
+	<bean
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
-	</bean> -->
+	</bean> 
 </beans>

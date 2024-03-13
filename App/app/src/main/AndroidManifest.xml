@@ -92,7 +92,7 @@
 
         <activity
 
-            android:name=".setting.ModifyPatientActivity"
+            android:name=".setting.ModifyActivity"
             android:exported="false" />
         <activity
                 android:name=".setting.ModifyGuardianActivity"
