@@ -150,7 +150,7 @@ public class JoinActivity extends AppCompatActivity {
             vo.setGuardian_id(binding.edtPatientId.getText().toString());
             vo.setAddress_detail(binding.edtAddressDetail.getText().toString());
             vo.setSocial(getIntent().getStringExtra("social"));
-            if(getIntent().getStringExtra("type").toString().equals("guardian")){
+            if(getIntent().getStringExtra("type").equals("guardian")){
                 vo.setBlood(null);
             }else{
                 vo.setBlood(binding.spnBloodType.getSelectedItem().toString());
