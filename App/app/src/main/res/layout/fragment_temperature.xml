@@ -5,7 +5,7 @@
     android:id="@+id/temperatureLinearlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.TemperatureFragment"
+    tools:context=".main.monitor.TemperatureFragment"
     android:background="@color/main_color"
     android:orientation="vertical">
 

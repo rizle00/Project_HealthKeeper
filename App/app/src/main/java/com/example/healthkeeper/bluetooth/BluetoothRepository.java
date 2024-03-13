@@ -10,29 +10,51 @@ import java.util.HashMap;
 import java.util.concurrent.Executor;
 
 public class BluetoothRepository {
-// 추후 조회하기 등 백그라운드 작업 추가
+    // 추후 조회하기 등 백그라운드 작업 추가
     private static final String TAG = BluetoothRepository.class.getSimpleName();
     private final Executor executor;
-    private final CommonConn commonConn;
-    public BluetoothRepository( Executor executor, Context context) {
+    private CommonConn commonConn;
+    private final Context mContext;
+
+    public BluetoothRepository(Executor executor, Context context) {
         this.executor = executor;
-        this.commonConn = new CommonConn("test/insert", context);
+        this.mContext = context;
+
     }
 
     public void insertData(HashMap<String, Object> map) {
+        commonConn = new CommonConn("test/insert", mContext);
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                String json =  new Gson().toJson(map);
-                commonConn.addParamMap("params",json);
-                Log.d(TAG, "run: "+map);
+                String json = new Gson().toJson(map);
+                commonConn.addParamMap("params", json);
+                Log.d(TAG, "run: " + map);
                 commonConn.onExcute((isResult, data) -> {
 
-                    Log.d("Common", "onResult: "+data);
-                    Log.d("Common", "onResult: "+isResult);
+                    Log.d("Common", "onResult: " + data);
+                    Log.d("Common", "onResult: " + isResult);
 
                 });
+            }
+        });
     }
-});
+
+    public void insertAlarm(HashMap<String, Object> map) {
+        commonConn = new CommonConn("/api/fcm", mContext);
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                String json = new Gson().toJson(map);
+                commonConn.addParamMap("params", json);
+                Log.d(TAG, "run: " + map);
+                commonConn.onExcute((isResult, data) -> {
+
+                    Log.d("Common", "onResult: " + data);
+                    Log.d("Common", "onResult: " + isResult);
+
+                });
+            }
+        });
     }
 }

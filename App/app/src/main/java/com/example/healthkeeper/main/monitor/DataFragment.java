@@ -1,4 +1,4 @@
-package com.example.healthkeeper.main;
+package com.example.healthkeeper.main.monitor;
 
 import android.os.Bundle;
 
