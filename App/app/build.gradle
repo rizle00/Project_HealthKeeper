@@ -39,6 +39,9 @@ android {
 }
 
 dependencies {
+    /*토글버튼 쓰려고만듬ㅎ.ㅎ*/
+    implementation 'com.google.android.material:material:1.11.0'
+
     /*duplcate 에러 방지용 모듈*/
     modules {
         module("org.jetbrains.kotlin:kotlin-stdlib-jdk7") {

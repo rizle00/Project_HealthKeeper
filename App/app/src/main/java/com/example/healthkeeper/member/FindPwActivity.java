@@ -51,11 +51,10 @@ public class FindPwActivity extends AppCompatActivity {
         conn.addParamMap("mail",binding.edtMail.getText().toString());
         conn.onExcute((isResult, data) -> {
             if(data.equals("success")){
-                Intent intent = new Intent(this,FindResultActivity.class);
-                builder.setMessage("완료되었습니다");
+                builder.setMessage("완료되었습니다 메일을 확인해주세요").setPositiveButton("확인",(dialog, which) -> {
+                    finish();
+                });
                 builder.show();
-                startActivity(intent);
-                finish();
             }else if(data.equals("none")){
                 Toast.makeText(this, "정보가 일치하지않습니다",Toast.LENGTH_SHORT).show();
             }else if(data.equals("failure")){

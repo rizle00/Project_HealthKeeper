@@ -8,20 +8,17 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.healthkeeper.App;
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.common.CommonConn;
 import com.example.healthkeeper.databinding.ActivityJoinBinding;
-import com.example.healthkeeper.main.MainActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
 import java.util.regex.Matcher;
@@ -235,7 +232,6 @@ public class JoinActivity extends AppCompatActivity {
                     binding.tvWarningPw.setVisibility(View.GONE);
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -323,7 +319,6 @@ public class JoinActivity extends AppCompatActivity {
         conn.addParamMap("email", email);
 
         conn.onExcute((isResult, data) -> {
-            Log.i(TAG, "idDupCheck: " + data);
 
             if (data.equals("0")) {
                 binding.btnIdCheck.setVisibility(View.GONE);

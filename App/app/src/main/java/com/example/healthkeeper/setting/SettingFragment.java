@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.healthkeeper.databinding.FragmentSettingBinding;
+import com.example.healthkeeper.member.PopupResiterActivity;
 
 
 public class SettingFragment extends Fragment {
@@ -19,6 +20,11 @@ public class SettingFragment extends Fragment {
 
         binding.llMemberModify.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), ModifyActivity.class);
+            startActivity(intent);
+        });
+
+        binding.llMemberRegister.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), PopupResiterActivity.class);
             startActivity(intent);
         });
         return binding.getRoot();

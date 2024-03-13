@@ -37,8 +37,8 @@ public class ModifyActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         pwPattern();
         binding.btnModify.setOnClickListener(v -> {
-            joinClick();
             pwCheck();
+            joinClick();
         });
         binding.edtAddress.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), PopupSearchAddressActivity.class);
@@ -63,7 +63,7 @@ public class ModifyActivity extends AppCompatActivity {
             String voJson = new Gson().toJson(vo);
             conn.addParamMap("vo",voJson);
             conn.onExcute((isResult, data) -> {
-                if(data=="success"){
+                if(data.equals("success")){
                     Toast.makeText(this,"회원정보 변경이 완료되었습니다",Toast.LENGTH_SHORT).show();
                     finish();
                 }else{
