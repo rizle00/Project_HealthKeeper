@@ -104,7 +104,13 @@ public class MemberController {
 	}
 	
 	@PostMapping("/andmodify")
-	public void modify(MemberVO vo) {
-		service.modify(vo);
+	public ResponseEntity<String>  modify(String vo) {
+		MemberVO infoVO = new Gson().fromJson(vo, MemberVO.class);
+		
+		if(service.modify(infoVO)==1) {
+			return ResponseEntity.ok("success");
+		}else {
+			return ResponseEntity.ok("fail");
+		}
 	}
 }
