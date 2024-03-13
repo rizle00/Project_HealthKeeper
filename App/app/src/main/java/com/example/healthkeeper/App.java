@@ -1,6 +1,7 @@
 package com.example.healthkeeper;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import androidx.core.os.HandlerCompat;
@@ -13,10 +14,12 @@ import java.util.concurrent.Executors;
 public class App extends Application {
 
     private BluetoothViewModel sharedViewModel;
+    private SharedPreferences preferences;
     @Override
     public void onCreate() {
         super.onCreate();
         sharedViewModel = new ViewModelProvider.AndroidViewModelFactory(this).create(BluetoothViewModel.class);
+        preferences = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
     }
 
     public BluetoothViewModel getSharedViewModel() {
@@ -27,4 +30,8 @@ public class App extends Application {
     // 앱 전체적인 스레드 생성
     public ExecutorService executorService = Executors.newFixedThreadPool(NUMBER_OF_CORES);
    public Handler mainThreadHandler = HandlerCompat.createAsync(Looper.getMainLooper());
+
+    public SharedPreferences getPreferences() {
+        return preferences;
+    }
 }

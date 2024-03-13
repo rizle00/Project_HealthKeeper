@@ -85,31 +85,13 @@ public class MainActivity extends AppCompatActivity {
 
         
         bottomNavSetting();// 메뉴 선택 리스너
-        token();
+        PermissionUtils.checkNotiPermission(this, notiPermissionListener);
+
 
 
     }
 
-    private void token(){
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                            return;
-                        }
 
-                        // Get new FCM registration token
-                        String token = task.getResult();
-
-                        // Log and toast
-//                        String msg = getString(R.string.msg_token_fmt, token);
-                        Log.d(TAG, token);
-                        Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
     @Override
     protected void onResume() {
 
@@ -322,7 +304,15 @@ public class MainActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-
+    private void checkNotiPermission() {
+        TedPermission.create()
+                .setPermissionListener(notiPermissionListener)
+                .setDeniedMessage("Denied Permission.")
+                .setPermissions(
+                        Manifest.permission.POST_NOTIFICATIONS
+                        )
+                .check();
+    }
 
     // 권한체크 - 블루투스
     private void checkBtPermission() {
@@ -332,7 +322,6 @@ public class MainActivity extends AppCompatActivity {
                 .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.BLUETOOTH_SCAN,
                         Manifest.permission.BLUETOOTH_CONNECT,
-                        Manifest.permission.POST_NOTIFICATIONS,
                         Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
                 .check();
     }
@@ -347,6 +336,19 @@ public class MainActivity extends AppCompatActivity {
 
                 .check();
     }
+    private final PermissionListener notiPermissionListener = new PermissionListener() {
+        @Override
+        public void onPermissionGranted() {
+            // 권한 설정됨, 긴급전화 시행
+        }
+
+        @Override
+        public void onPermissionDenied(List<String> deniedPermissions) {
+            //권한 거부
+            makeDenyDialog("noti");
+
+        }
+    };
     private final PermissionListener callPermissionListener = new PermissionListener() {
         @Override
         public void onPermissionGranted() {
@@ -398,6 +400,8 @@ public class MainActivity extends AppCompatActivity {
                                     checkBtPermission();
                                 } else if (name.equals("call")){
                                     checkCallPermission();
+                                }else if (name.equals("noti")){
+                                    checkNotiPermission();
                                 }
                             }
                         })
