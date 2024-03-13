@@ -11,12 +11,10 @@ import android.os.IBinder;
 import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.ServiceCompat;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.lifecycle.*;
 import com.example.healthkeeper.App;
 import com.example.healthkeeper.R;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.Executor;
 
@@ -48,19 +46,67 @@ public class BluetoothService extends Service {
         Log.d(TAG, "onStartCommand: 서비스 들어옴");
         bluetoothTask();
         startForeground();
-        observe();
+
         return START_STICKY;
     }
 
+    public static void showNotification(Context context, String title,
+                                        String message) {
+        // Pass the intent to switch to the MainActivity
+        Log.d("TAG", "onMessageReceived: 백그라운드??");
+//        Intent intent
+//                = new Intent(context, MainAlarmHistoryActivity.class);
+//        intent.putExtra("addFriend", true);
+//        intent.putExtra("title", title);
+//        intent.putExtra("message", message);
+        // Assign channel ID
+        String channel_id = "notification_channel";
+        // Here FLAG_ACTIVITY_CLEAR_TOP flag is set to clear
+        // the activities present in the activity stack,
+        // on the top of the Activity that is to be launched
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        // Pass the intent to PendingIntent to start the
+        // next Activity
+//        PendingIntent pendingIntent = PendingIntent.getActivity(
+//                context, 0, intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE
+//        );
+
+        // Create a Builder object using NotificationCompat
+        // class. This will allow control over all the flags
+        NotificationCompat.Builder builder
+                = new NotificationCompat
+                .Builder(context,
+                channel_id)
+                .setSmallIcon(com.nhn.android.oauth.R.drawable.naver_icon)
+                .setAutoCancel(true)
+                .setVibrate(new long[]{1000, 1000, 1000,
+                        1000, 1000})
+                .setOnlyAlertOnce(true)
+                .setContentTitle(title)
+                .setContentText(message);
+
+//                .setContentIntent(pendingIntent)
+//                .setCustomContentView(getCustomDesign(context, title, message));
+        NotificationManager notificationManager
+                = (NotificationManager) context.getSystemService(
+                Context.NOTIFICATION_SERVICE);
+        // Check if the Android Version is greater than Oreo
+        if (Build.VERSION.SDK_INT
+                >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel
+                    = new NotificationChannel(
+                    channel_id, "web_app",
+                    NotificationManager.IMPORTANCE_HIGH);
+            notificationManager.createNotificationChannel(
+                    notificationChannel);
+        }
+
+        notificationManager.notify(3, builder.build());
+//        uniqueRandomValue++;
+    }
+
     private void startForeground() {
-        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        createNotificationChannel();
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("fore service")
-                .setPriority(NotificationCompat.PRIORITY_LOW)
-                .setOngoing(true)
-                .build();
+        Notification notification = createNotification();
 
         int type = 0;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -69,6 +115,19 @@ public class BluetoothService extends Service {
         ServiceCompat.startForeground(this,2000,notification,type);
         active = true;
         Log.d(TAG, "onStartCommand: 포그라운드 서비스 시작?"+type+notification.priority);
+    }
+
+    @NotNull
+    private Notification createNotification() {
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        createNotificationChannel();
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("fore service")
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setOngoing(true)
+                .build();
+        return notification;
     }
 
     private void createNotificationChannel(){
@@ -143,8 +202,9 @@ public class BluetoothService extends Service {
         initRepository();
         initialize();
         // 뷰모델 초기화
-        viewModel = ((App) getApplicationContext()).getSharedViewModel();;
+        viewModel = ((App) getApplicationContext()).getSharedViewModel();
 
+        observe();
         this.mBtConnector = new BluetoothConnector(mContext, adapter, repository, viewModel);
         mBound = mBtConnector.isConnected();
         active = true;
@@ -203,9 +263,9 @@ public class BluetoothService extends Service {
 
     private void observe(){
 
-       viewModel.getHeartLiveData().observe((LifecycleOwner) this,heart -> {
-           viewModel.getTempLiveData().observe((LifecycleOwner) this, temp->{
-               viewModel.getAccidentLiveData().observe((LifecycleOwner) this, accident -> {
+       viewModel.getHeartLiveData().observeForever(heart -> {
+           viewModel.getTempLiveData().observeForever( temp->{
+               viewModel.getAccidentLiveData().observeForever(accident -> {
                    handleAccidentDetected(heart, temp, accident);
                });
            });
