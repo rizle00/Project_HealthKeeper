@@ -1,4 +1,4 @@
-package kr.co.app.config;
+package kr.co.app.firebase;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;

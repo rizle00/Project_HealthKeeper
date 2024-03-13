@@ -2,12 +2,8 @@ package kr.co.app;
 
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-
 import kr.co.app.common.DataHolder;
-import kr.co.app.config.FirebaseCloudMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;

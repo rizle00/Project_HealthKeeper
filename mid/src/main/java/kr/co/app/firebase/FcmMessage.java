@@ -1,4 +1,4 @@
-package kr.co.app.config;
+package kr.co.app.firebase;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
