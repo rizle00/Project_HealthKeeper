@@ -173,7 +173,7 @@ public class BluetoothConnector {
         String accident = extractedData.get("ac") != null ? extractedData.get("ac").toString() : "0";
         int heartRate = Integer.parseInt(heart);
         double temperature = Double.parseDouble(temp);
-        if (heartRate < 50 || heartRate >= 180) {
+        if (heartRate < 40 || heartRate >= 190) {
             heartRate = 0;
         }
         if (temperature <= 34.5 || temperature >= 39.5) {
