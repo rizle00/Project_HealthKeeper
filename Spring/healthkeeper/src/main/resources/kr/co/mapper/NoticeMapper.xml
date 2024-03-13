@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.mapper.NoticeMapper">
+ 
+ 	<!-- 공지사항 등록 -->
+ 	<insert id="notregistr" >
+    INSERT INTO NOTICE (TITLE, CONTENT, MEMBER_ID)
+    VALUES (#{TITLE, jdbcType=VARCHAR}, #{CONTENT, jdbcType=VARCHAR}, #{MEMBER_ID})
+</insert>
+ 	
+ 	<!-- 공지사항 목록 -->
+    <select id="getlist" resultType="kr.co.model.NoticeVO">
+ 		SELECT * FROM NOTICE
+ 		ORDER BY NOTICE_ID DESC
+    </select>
+    
+    <!-- 공지사항 목록(페이징 유지처리) -->
+    <select id="getListPaging" resultType="kr.co.model.NoticeVO">
+    <![CDATA[
+        SELECT NOTICE_ID, TITLE, CONTENT, MEMBER_ID, TIME, READ_CNT
+        FROM (
+              SELECT /*+INDEX_DESC(NOTICE PK_NOTICE) */ 
+              ROWNUM AS RN, NOTICE_ID, TITLE, CONTENT, MEMBER_ID, TIME, READ_CNT
+              FROM NOTICE 
+              WHERE ROWNUM <= #{pageNum} * #{amount} 
+              ]]>
+              <if test="keyword !=null">
+                <include refid="notcriteria"></include>
+              </if>
+    <![CDATA[
+              )
+        WHERE RN > (#{pageNum} -1) * #{amount}
+    	      ]]>
+	</select>
+    
+    <!-- 공지사항 조회 -->
+    <select id="getPage" resultType="kr.co.model.NoticeVO">
+        SELECT * FROM NOTICE 
+        WHERE NOTICE_ID = #{NOTICE_ID}
+    </select>
+    
+    <!-- 공지사항 수정 -->
+    <update id="notmodify">
+        UPDATE NOTICE 
+        SET TITLE = #{TITLE, jdbcType=VARCHAR},
+        CONTENT = #{CONTENT, jdbcType=VARCHAR}
+        WHERE NOTICE_ID = #{NOTICE_ID}
+    </update>
+    
+    <!-- 공지사항 삭제 -->
+    <delete id="notdelete">
+        DELETE FROM NOTICE 
+        WHERE NOTICE_ID = #{NOTICE_ID}
+    </delete>
+    
+    <!-- 공지사항 게시글 총 갯수 -->
+    <select id="getTotal" resultType="int">
+        SELECT COUNT(*) FROM NOTICE
+        <if test="keyword != null">
+        	WHERE NOTICE_ID > 0 <include refid="notcriteria"></include>
+        </if>
+    </select>
+    
+    <!-- 검색 조건문 -->
+    <sql id="notcriteria">
+        <trim prefix="AND (" suffix=")" prefixOverrides="OR">
+            <foreach collection="typeArr" item="type">
+                <trim prefix="OR">
+                    <choose>
+                        <when test="type == 'T'.toString()">
+                            TITLE LIKE '%'||#{keyword}||'%' 
+                        </when>
+                        <when test="type == 'C'.toString()">
+                            CONTENT LIKE '%'||#{keyword}||'%' 
+                        </when>
+                        <when test="type == 'W'.toString()">
+                            MEMBER_ID LIKE '%'||#{keyword}||'%' 
+                        </when>
+                    </choose>
+                </trim>
+            </foreach>
+        </trim>
+    </sql>
+    
+    <!-- 공지사항 조회수 -->
+    <update id="noticeViews">
+    	UPDATE NOTICE
+    	SET 
+    	READ_CNT = READ_CNT + 1
+    	WHERE NOTICE_ID = #{NOTICE_ID}
+    </update> 
+    
+    <!-- 공지사항 파일첨부 -->
+    <!-- <insert id="insertFile" parameterType="hashMap">
+    	INSERT INTO FILES( FILE_ID, FILE_NAME, FILE_PATH, FILE_SIZE, NOTICE_ID )
+    	VALUES(FILES_SEQ.NEXTVAL,#{FILE_NAME},#{FILE_PATH},#{FILE_SIZE},#{NOTICE_ID, jdbcType=NUMERIC})
+    </insert> -->
+    
+    <!-- 공지사항 수정시 파일추가 -->
+    <!-- <insert id="updateinsertFile" parameterType="hashMap">
+    INSERT INTO FILES (FILE_ID, FILE_NAME, FILE_PATH, FILE_SIZE, NOTICE_ID)
+    VALUES (FILES_SEQ.NEXTVAL, #{FILE_NAME}, #{FILE_PATH}, #{FILE_SIZE}, #{NOTICE_ID, jdbcType=NUMERIC})
+</insert> -->
+    
+    <!--  공지사항 첨부파일 조회 
+    <select id="selectFileList" parameterType="int" resultType="kr.co.model.FilesVO">
+    	SELECT FILE_ID, 
+           	   FILE_NAME,
+               FILE_PATH,
+               ROUND(FILE_SIZE/1024,1) AS FILE_SIZE,
+               FILE_REGDATE
+        FROM FILES
+        WHERE NOTICE_ID = #{NOTICE_ID}
+        ORDER BY FILE_ID ASC
+	</select> -->
+	
+	<!-- 공지사항 첨부파일 조회 -->
+    <!-- <select id="updateFileList" parameterType="int" resultType="kr.co.model.FilesVO">
+    	SELECT FILE_ID, 
+           	   FILE_NAME,
+               FILE_PATH,
+               ROUND(FILE_SIZE/1024,1) AS FILE_SIZE,
+               FILE_REGDATE
+        FROM FILES
+        WHERE NOTICE_ID = #{NOTICE_ID}
+        ORDER BY FILE_ID ASC
+	</select>
+	
+	공지사항 첨부파일 다운
+	<select id="selectFileInfo" parameterType="hashMap" resultType="hashMap">
+		SELECT FILE_NAME
+		FROM FILES
+		WHERE FILE_ID = #{FILE_ID}
+	</select>
+	
+	첨부파일 삭제
+	<delete id="deleteFile" parameterType="hashMap">
+		DELETE FROM FILES
+		WHERE NOTICE_ID = #{NOTICE_ID}
+	</delete> -->
+</mapper>
