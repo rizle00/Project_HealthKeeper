@@ -3,6 +3,7 @@ package com.example.healthkeeper.main;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -40,6 +41,14 @@ public class HeartRateFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 showColorChangeDialog();
+            }
+        });
+
+        binding.goHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), MainActivity.class));
+
             }
         });
 
@@ -84,17 +93,17 @@ public class HeartRateFragment extends Fragment {
                 if (checkedRadioButtonId != -1) { // 어떤 라디오 버튼이 선택되었는지 확인
                     RadioButton checkedRadioButton = dialogView.findViewById(checkedRadioButtonId);
 
-                    if (checkedRadioButton.getId() == R.id.radioColor1) {
+                    if (checkedRadioButton.getId() == R.id.radioColor1) {//화이트
                         selectedColor = ContextCompat.getColor(requireContext(), R.color.radioColor1);
                        selectedTextColor = Color.BLACK;
-                    } else if (checkedRadioButton.getId() == R.id.radioColor2) {
+                    } else if (checkedRadioButton.getId() == R.id.radioColor2) {//민트
                         selectedColor = ContextCompat.getColor(requireContext(), R.color.radioColor2);
-                    } else if (checkedRadioButton.getId() == R.id.radioColor3) {
+                    } else if (checkedRadioButton.getId() == R.id.radioColor3) {//블랙
                         selectedColor = ContextCompat.getColor(requireContext(), R.color.radioColor3);
                         selectedTextColor2=Color.WHITE;
-                    } else if (checkedRadioButton.getId() == R.id.radioColor4) {
+                    } else if (checkedRadioButton.getId() == R.id.radioColor4) {//핑크
                         selectedColor = ContextCompat.getColor(requireContext(), R.color.radioColor4);
-                    } else if (checkedRadioButton.getId() == R.id.radioColor5) {
+                    } else if (checkedRadioButton.getId() == R.id.radioColor5) {//엘로우
                         selectedColor = ContextCompat.getColor(requireContext(), R.color.radioColor5);
                     }
                 }
