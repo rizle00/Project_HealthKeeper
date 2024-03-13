@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 @RestController
 @RequiredArgsConstructor
-public class FirebaseController {
+public class FirebaseMessageController {
 
-    private final FirebaseCloudMessageService firebaseCloudMessageService;
+    private final FirebaseMessageService firebaseCloudMessageService;
 
     @PostMapping("/api/fcm")
     public ResponseEntity pushMessage(@RequestBody RequestDTO requestDTO) throws IOException {
