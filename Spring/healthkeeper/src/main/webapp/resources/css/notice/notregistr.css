@@ -1,0 +1,63 @@
+/* 공지사항 작성페이지 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* 배경색상 변경 */
+}
+
+h1 {
+    text-align: center;
+    margin-top: 50px;
+    color: #007bff; /* 헤더 색상 변경 */
+}
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff; /* 폼 배경색상 변경 */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+}
+
+.input_wrap {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 18px;
+    color: #555; /* 라벨 텍스트 색상 변경 */
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* 입력란의 크기를 패딩과 테두리까지 포함한 크기로 지정 */
+    margin-top: 5px;
+}
+
+textarea {
+    height: 150px;
+}
+
+.notbtn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.notbtn:hover {
+    background-color: #0056b3; /* 호버 시 배경색 변경 */
+}
