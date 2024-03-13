@@ -1,0 +1,73 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="4249BD54-02B5-D71A-697B-B5244B32E51C" schemaObject="EC29E7B1-260E-82F6-B69B-C690B656C283" name="MEMBER_DISEASES">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>ATEAM</sourceObjSchema>
+<sourceObjName>MEMBER_DISEASES</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="MEMBER_ID" id="C063FE98-B0B5-7D2D-E778-DFCE7C035E40">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>MEMBER_DISEASES</sourceObjSchema>
+<sourceObjName>MEMBER_ID</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="CF09B770-4508-339C-A8E3-5033D3BB1CDC" referredColumn="4310E022-8B93-D76F-A327-96C57579AE1E"/>
+</associations>
+</Column>
+<Column name="DISEASE_NAME" id="E290012E-366C-91CC-4A8B-3857EB4AB816">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>MEMBER_DISEASES</sourceObjSchema>
+<sourceObjName>DISEASE_NAME</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DESCRIPTION" id="9FD4044A-B29F-ACA7-6A05-CBECAD53595D">
+<sourceConnName>TeamA</sourceConnName>
+<sourceObjSchema>MEMBER_DISEASES</sourceObjSchema>
+<sourceObjName>DESCRIPTION</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255 BYTE</dataTypeSize>
+<ownDataTypeParameters>255 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="B8312DAE-DE60-4768-7F4C-F913E1562231" name="FK_MEMBER_DISEASES_ID">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:18 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C063FE98-B0B5-7D2D-E778-DFCE7C035E40"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

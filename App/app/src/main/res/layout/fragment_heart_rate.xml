@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".main.HeartRateFragment"
+    tools:context=".main.monitor.HeartRateFragment"
     android:background="@color/main_color"
     android:paddingTop="20dp"
     android:orientation="vertical">

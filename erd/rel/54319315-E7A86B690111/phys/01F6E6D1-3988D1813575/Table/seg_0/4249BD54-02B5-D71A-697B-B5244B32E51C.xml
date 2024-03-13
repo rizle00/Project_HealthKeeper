@@ -1,0 +1,39 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev20c class="oracle.dbtools.crest.model.design.storage.oracle.v20c.TableProxyOraclev20c" name="MEMBER_DISEASES" directorySegmentName="seg_0" id="4249BD54-02B5-D71A-697B-B5244B32E51C">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>EC29E7B1-260E-82F6-B69B-C690B656C283</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>699DB0E8-CF9B-0FF8-12B7-A43B538FEC82</segment>
+<tableSpace>87CCF3AA-6EDF-B9B9-D530-F12D63892AD4</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="DESCRIPTION" id="9FD4044A-B29F-ACA7-6A05-CBECAD53595D">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MEMBER_ID" id="C063FE98-B0B5-7D2D-E778-DFCE7C035E40">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DISEASE_NAME" id="E290012E-366C-91CC-4A8B-3857EB4AB816">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_MEMBER_DISEASES_ID" id="B8312DAE-DE60-4768-7F4C-F913E1562231">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:18 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+</TableProxyOraclev20c>

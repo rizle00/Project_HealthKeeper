@@ -18,12 +18,9 @@ public class SettingFragment extends Fragment {
         binding = FragmentSettingBinding.inflate(getLayoutInflater());
 
         binding.llMemberModify.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), ModifyGuardianActivity.class);
+            Intent intent = new Intent(getActivity(), ModifyActivity.class);
             startActivity(intent);
         });
-
-
-
         return binding.getRoot();
     }
 

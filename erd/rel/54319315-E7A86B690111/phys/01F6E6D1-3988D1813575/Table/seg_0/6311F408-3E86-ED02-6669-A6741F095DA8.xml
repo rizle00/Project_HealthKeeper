@@ -1,0 +1,71 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev20c class="oracle.dbtools.crest.model.design.storage.oracle.v20c.TableProxyOraclev20c" name="EMERGENCY" directorySegmentName="seg_0" id="6311F408-3E86-ED02-6669-A6741F095DA8">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>EC29E7B1-260E-82F6-B69B-C690B656C283</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>699DB0E8-CF9B-0FF8-12B7-A43B538FEC82</segment>
+<tableSpace>87CCF3AA-6EDF-B9B9-D530-F12D63892AD4</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="LOG_ID" id="37EE2586-46D3-3909-F28F-4F79851F848D">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="TIME" id="536C9D3C-DC2B-B77E-6B8F-F6A427F99F55">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<defaultValue>SYSDATE</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="MEMBER_ID" id="7224DAB0-0616-B491-24FB-3AF0B3DACF89">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CATEGORY_ID" id="E7AACA9E-A18A-08B4-A4C9-E475EDE6E79D">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_EMERGENCY_MEMBER_ID" id="A518F0F9-0344-9F09-24D5-B7B767FDFAE9">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:18 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="EMERGENCY_PK" id="251C0CCE-B949-69A7-C6EB-0DC12E5833E3">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:18 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>EC29E7B1-260E-82F6-B69B-C690B656C283</schemaObject>
+<segment>E46EA7CD-0F71-1E8E-B244-3FA87B032F23</segment>
+<tableSpace>87CCF3AA-6EDF-B9B9-D530-F12D63892AD4</tableSpace>
+<indexSegment>E46EA7CD-0F71-1E8E-B244-3FA87B032F23</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+<uniqueKeys>
+<UniqueKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UniqueOraclev10g" name="EMERGENCY_CATEGORY_ID_UN" id="76DF8207-350B-5254-5C7D-C004A7544424">
+<createdBy>admin</createdBy>
+<createdTime>2024-03-07 06:00:18 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>EC29E7B1-260E-82F6-B69B-C690B656C283</schemaObject>
+<segment>E46EA7CD-0F71-1E8E-B244-3FA87B032F23</segment>
+<tableSpace>87CCF3AA-6EDF-B9B9-D530-F12D63892AD4</tableSpace>
+<indexSegment>E46EA7CD-0F71-1E8E-B244-3FA87B032F23</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</UniqueKey>
+</uniqueKeys>
+</TableProxyOraclev20c>

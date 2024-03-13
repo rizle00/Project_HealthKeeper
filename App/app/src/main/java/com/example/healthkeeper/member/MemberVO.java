@@ -6,7 +6,7 @@ import lombok.Setter;
 
 public class MemberVO {
 
-     private String member_id, guardian_id, pw, name, phone, birth, gender, blood, social, email, address, address_detail, alarm, role;
+     private String member_id, guardian_id, pw, name, phone, birth, gender, blood, social, email, address, address_detail, alarm, role, token;
 
      public String getMember_id() {
           return member_id;
@@ -118,5 +118,13 @@ public class MemberVO {
 
      public void setRole(String role) {
           this.role = role;
+     }
+
+     public String getToken() {
+          return token;
+     }
+
+     public void setToken(String token) {
+          this.token = token;
      }
 }

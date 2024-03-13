@@ -1,6 +1,5 @@
 package com.example.healthkeeper.main;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -17,8 +16,11 @@ import android.widget.TextView;
 
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.FragmentHomeBinding;
+import com.example.healthkeeper.main.cctv.CCTVActivity;
+import com.example.healthkeeper.main.community.CommunityActivity;
+import com.example.healthkeeper.main.monitor.ConditionActivity;
 
-import java.util.Map;
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class HomeFragment extends Fragment {
@@ -30,7 +32,6 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -146,7 +147,7 @@ public class HomeFragment extends Fragment {
         }
 
         public void setUserName(){
-            SharedPreferences pref = this.getActivity().getSharedPreferences("PROJECT_MEMBER",Context.MODE_PRIVATE);
+            SharedPreferences pref = this.getActivity().getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
             binding.edtUserName.setText(pref.getString("user_name","익명")+ "님");
         }
 
