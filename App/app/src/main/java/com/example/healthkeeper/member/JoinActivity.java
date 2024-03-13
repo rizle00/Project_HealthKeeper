@@ -1,23 +1,27 @@
 package com.example.healthkeeper.member;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.*;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.healthkeeper.App;
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.common.CommonConn;
 import com.example.healthkeeper.databinding.ActivityJoinBinding;
+import com.example.healthkeeper.main.MainActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
 import java.util.regex.Matcher;
@@ -150,7 +154,11 @@ public class JoinActivity extends AppCompatActivity {
             vo.setGuardian_id(binding.edtPatientId.getText().toString());
             vo.setAddress_detail(binding.edtAddressDetail.getText().toString());
             vo.setSocial(getIntent().getStringExtra("social"));
-            if(getIntent().getStringExtra("type").equals("guardian")){
+
+            SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
+            
+            vo.setToken(preference.getString("token",  null));
+            if(getIntent().getStringExtra("type").toString().equals("guardian")){
                 vo.setBlood(null);
             }else{
                 vo.setBlood(binding.spnBloodType.getSelectedItem().toString());

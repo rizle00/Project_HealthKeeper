@@ -1,6 +1,5 @@
-package com.example.healthkeeper.main;
+package com.example.healthkeeper.main.community;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,8 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.FragmentCommunityBinding;
 
-
-import com.example.healthkeeper.databinding.FragmentCommunityBinding;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.healthkeeper.main;
+package com.example.healthkeeper.main.monitor;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -21,8 +21,6 @@ import com.example.healthkeeper.R;
 
 import com.example.healthkeeper.bluetooth.BluetoothViewModel;
 import com.example.healthkeeper.databinding.FragmentTemperatureBinding;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 
 public class TemperatureFragment extends Fragment {
 

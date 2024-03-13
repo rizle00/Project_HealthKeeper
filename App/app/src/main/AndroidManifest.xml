@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools">
-
+          xmlns:tools="http://schemas.android.com/tools"
+         >
+    <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+    <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" /> <!-- 자동 초기화 방지 -->
     <uses-feature
             android:name="android.hardware.bluetooth_le"
             android:required="true"/>
@@ -39,7 +45,16 @@
                 android:name=".bluetooth.BluetoothService"
                 android:foregroundServiceType="connectedDevice"
                 android:enabled="true"
-                android:exported="true">
+                android:exported="false">
+        </service>
+
+        <service
+                android:name=".firebase.FirebaseMessagingService"
+                android:exported="false"
+                >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
         </service>
 
         <activity
@@ -51,17 +66,17 @@
             android:name=".member.SimpleJoinActivity"
             android:exported="false" /> <!-- android:screenOrientation="portrait:cctvfullActivity에서 가로방향으로 화면 설정 -->
         <activity
-                android:name=".main.CCTVFullmainActivity"
+                android:name=".main.cctv.CCTVFullmainActivity"
                 android:exported="false"
                 android:screenOrientation="portrait"/>
         <activity
-                android:name=".main.CCTVActivity"
+                android:name=".main.cctv.CCTVActivity"
                 android:exported="false"
                 android:screenOrientation="portrait"/>
            
 
         <activity
-                android:name=".main.ConditionActivity"
+                android:name=".main.monitor.ConditionActivity"
                 android:exported="false"/>
 
         <activity
@@ -93,7 +108,7 @@
                 android:name=".main.ChatActivity"
                 android:exported="false"/>
         <activity
-                android:name=".main.CommunityActivity"
+                android:name=".main.community.CommunityActivity"
                 android:exported="false"/>
         <activity
                 android:name=".main.QAActivity"

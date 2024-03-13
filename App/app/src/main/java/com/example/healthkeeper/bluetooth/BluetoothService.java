@@ -11,6 +11,8 @@ import android.os.IBinder;
 import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.ServiceCompat;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import com.example.healthkeeper.App;
@@ -46,6 +48,7 @@ public class BluetoothService extends Service {
         Log.d(TAG, "onStartCommand: 서비스 들어옴");
         bluetoothTask();
         startForeground();
+        observe();
         return START_STICKY;
     }
 
@@ -198,6 +201,36 @@ public class BluetoothService extends Service {
         mBtConnector.disconnect();
     }
 
+    private void observe(){
+
+       viewModel.getHeartLiveData().observe((LifecycleOwner) this,heart -> {
+           viewModel.getTempLiveData().observe((LifecycleOwner) this, temp->{
+               viewModel.getAccidentLiveData().observe((LifecycleOwner) this, accident -> {
+                   handleAccidentDetected(heart, temp, accident);
+               });
+           });
+       });
+
+    }
+
+    private void handleAccidentDetected(Integer heart, Double temp, String accident) {
+        if(heart != 0 && temp !=0){
+            if(accident.equals("1")){
+                //낙상발생
+            } else{
+                if(heart >160){
+                    //심박이 높음
+                } else if(heart <60){
+                    //심박이 낮음
+                }
+                if(temp >37.5){
+                    //체온이높음
+                } else if (temp <35.5) {
+                    //체온이 낮음
+                }
+            }
+        }
+    }
 
 
 }

@@ -8,10 +8,8 @@
 	SELECT COUNT(*) FROM MEMBER WHERE EMAIL = #{email}
 </select>
 <insert id="join">
-	INSERT INTO MEMBER (EMAIL, GUARDIAN_ID, PW, NAME, PHONE, BIRTH, GENDER, BLOOD,  ADDRESS, ADDRESS_DETAIL, SOCIAL) 
-	VALUES (#{email}, (SELECT MEMBER_ID
-                 FROM MEMBER
-                 WHERE EMAIL = #{guardian_id}), #{pw}, #{name}, #{phone}, #{birth}, #{gender}, #{blood}, #{address}, #{address_detail},#{social})
+	INSERT INTO MEMBER (EMAIL, GUARDIAN_ID, PW, NAME, PHONE, BIRTH, GENDER, BLOOD,  ADDRESS, ADDRESS_DETAIL, SOCIAL, TOKEN)
+	VALUES (#{email}, #{guardian_id}, #{pw}, #{name}, #{phone}, #{birth}, #{gender}, #{blood}, #{address}, #{address_detail},#{social}, #{TOKEN})
 </insert>
 
 <select id="findid" resultType="String">
