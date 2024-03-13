@@ -4,10 +4,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
-import kr.co.app.common.DataHolder;
 import lombok.RequiredArgsConstructor;
 import okhttp3.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -17,16 +15,14 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class FirebaseCloudMessageService {
+public class FirebaseMessageService {
 
     private final String API_URL = "https://fcm.googleapis.com/v1/projects/health-f5329/messages:send";  // 요청을 보낼 엔드포인트
     private ObjectMapper objectMapper;
 
-    @Autowired
-    private DataHolder dataHolder;
     public void sendMessageTo(String targetToken, String title, String body) throws IOException {
-        String token = dataHolder.getData();
-        String message = makeMessage(token, title, body);
+//        String token = dataHolder.getData();
+        String message = makeMessage(targetToken, title, body);
 //        dLFqJnOtSkiO8fx-bngRk9:APA91bG3-Xb-DF3BNIQtR65Uy4x2smS5FfZJ_TIrJ19svYLRVdhwv3m-mjtY652Sg9o0gpsmECflC_G13IkyJsLn7Wsn9o8xpzOstwmVUwI4lyIB5cHusTbQpMikTXZEbsTflysYfJ3w
         OkHttpClient client = new OkHttpClient();
 
@@ -41,7 +37,8 @@ public class FirebaseCloudMessageService {
 
         Response response = client.newCall(request).execute();
 
-        System.out.println(response.body().string());
+
+        System.out.println("11111"+response.body().string());
     }
 
     private String makeMessage(String targetToken, String title, String body) throws JsonParseException, JsonProcessingException {
