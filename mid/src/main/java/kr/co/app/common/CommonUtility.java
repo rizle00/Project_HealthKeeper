@@ -31,7 +31,7 @@ public class CommonUtility {
 		
 		try {
 			mail.setFrom(EMAIL,"healthKeeper");
-			mail.addTo(email);
+			mail.addTo(email ,"이름이빠져서?");
 			
 			//메일 제목
 			mail.setSubject( "스마트 IoT 로그인 임시비밀번호 발급" );
