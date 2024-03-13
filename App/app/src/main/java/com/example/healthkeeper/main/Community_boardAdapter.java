@@ -42,7 +42,7 @@ public class Community_boardAdapter extends RecyclerView.Adapter<Community_board
         return List.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         RecvCommunityBoardBinding binding;
         public ViewHolder(@NonNull RecvCommunityBoardBinding binding) {
             super(binding.getRoot());

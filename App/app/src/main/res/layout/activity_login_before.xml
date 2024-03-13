@@ -77,8 +77,18 @@
             android:orientation="vertical">
 
 
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+
+
+
 
             <!--두번쨰구간에서 첫번째 HorizontalScrollView구간 -->
+<!--
           <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -241,6 +251,7 @@
 
         </LinearLayout>
     </HorizontalScrollView>
+-->
 
 
 

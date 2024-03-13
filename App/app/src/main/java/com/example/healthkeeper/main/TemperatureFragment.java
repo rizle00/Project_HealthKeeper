@@ -3,6 +3,7 @@ package com.example.healthkeeper.main;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -45,6 +46,12 @@ public class TemperatureFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 showColorChangeDialog();
+            }
+        });
+        binding.goHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(),MainActivity.class));
             }
         });
 
