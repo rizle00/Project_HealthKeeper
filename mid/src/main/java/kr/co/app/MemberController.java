@@ -4,8 +4,10 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import kr.co.app.common.DataHolder;
 import kr.co.app.config.FirebaseCloudMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,9 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 
+	@Autowired
+	private DataHolder dataHolder;
+
 	@PostMapping("/andlogin")
 	public ResponseEntity<String> login(String email, String pw) {
 		System.out.println("요청");
@@ -34,6 +39,7 @@ public class MemberController {
 		
 		System.out.println(email.toString() + pw.toString());
 		if (pwEncoder.matches(pw, vo.getPw())) {
+			dataHolder.setData(vo.getToken());
 			return ResponseEntity.ok(new Gson().toJson(vo));
 		} else {
 			return null;
