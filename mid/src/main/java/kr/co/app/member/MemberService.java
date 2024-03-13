@@ -54,7 +54,7 @@ public class MemberService {
 	}
 
 	public int modify(MemberVO vo){
-		return 0;
+		return sql.update("me.modify",vo);
 	}
 	
 	public void patientRegister(MemberVO vo) {
