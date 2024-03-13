@@ -2,26 +2,24 @@ package kr.co.app;
 
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.filter.CharacterEncodingFilter;
 
 import com.google.gson.Gson;
 
+import kr.co.app.common.CommonUtility;
 import kr.co.app.member.MemberService;
 import kr.co.app.member.MemberVO;
-import oracle.sql.CharacterBuffer;
 
 @RequestMapping("and")
 @Controller
 public class MemberController {
+	@Autowired private CommonUtility common;
+	@Autowired private BCryptPasswordEncoder pwEncoder;
 
 	@Autowired
 	private MemberService service;
@@ -30,8 +28,9 @@ public class MemberController {
 	public ResponseEntity<String> login(String email, String pw) {
 		System.out.println("요청");
 		MemberVO vo = service.login(email);
+		
 		System.out.println(email.toString() + pw.toString());
-		if (vo.getPw().equals(pw)) {// 나중에 encoding해야함
+		if (pwEncoder.matches(pw, vo.getPw())) {
 			return ResponseEntity.ok(new Gson().toJson(vo));
 		} else {
 			return null;
@@ -49,6 +48,7 @@ public class MemberController {
 	public void join(String vo, String type) {
 		System.out.println(type + "으로 가입");
 		MemberVO info = new Gson().fromJson(vo, MemberVO.class);
+		info.setPw(pwEncoder.encode(info.getPw()));
 		if (type.equals("patient")) {
 			service.join(info);
 		} else {
@@ -77,14 +77,19 @@ public class MemberController {
 		}
 	}
 
-	@RequestMapping("/andfindpw")
-	public void resetpw(String vo) {
+	@RequestMapping("/checkinfo")
+	public ResponseEntity<String> checkinfo(String vo,String mail) {
 		MemberVO find_info = new Gson().fromJson(vo, MemberVO.class);
-		String pw = UUID.randomUUID().toString();
-		find_info.setPw(pw);
-
-		if (service.resetpw(find_info) == 1) {
-
+		if(service.findpw(find_info).equals("0")) {
+			return ResponseEntity.ok("none");
+		}else {
+			String pw = UUID.randomUUID().toString();
+			pw= pw.substring(pw.lastIndexOf("-")+1);
+			find_info.setPw(pw);
+			
+			if(service.resetpw(find_info)==1&&common.sendPassword(mail,pw))
+			return ResponseEntity.ok("success");
+			else return ResponseEntity.ok("failure");
 		}
 	}
 
@@ -97,9 +102,9 @@ public class MemberController {
 	public String address() {
 		return "daum";
 	}
-
-	@PostMapping("")
-	public void socialCheck(String email) {
-		service.socialIdCheck(email);
+	
+	@PostMapping("/andmodify")
+	public void modify(MemberVO vo) {
+		service.modify(vo);
 	}
 }
