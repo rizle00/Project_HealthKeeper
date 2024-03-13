@@ -9,38 +9,43 @@
             android:name="firebase_analytics_collection_enabled"
             android:value="false" /> <!-- 자동 초기화 방지 -->
     <uses-feature
-            android:name="android.hardware.bluetooth_le"
-            android:required="true"/>
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
 
-    <uses-permission android:name="android.permission.INTERNET"/> <!-- 앱이 블루투스 장치에 연결할 수 있도록 허용하는 레거시 권한입니다. -->
-    <uses-permission android:name="android.permission.BLUETOOTH"/> <!-- 앱이 블루투스 장치를 검색하고 결합할 수 있도록 허용하는 레거시 권한입니다 -->
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission
-            android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/> <!-- 포그라운드 서비스 허용, 배터리 최적화를 위한 종료 방지 -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/> <!-- 서비스 시행시 꺼지지 않게 -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE"/> <!-- 서비스 시행시 꺼지지 않게 -->
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/> <!-- 페어링 설정 -->
-    <uses-feature android:name="android.software.companion_device_setup"/> <!-- 페어링 설정 -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/> <!-- 알림 권한 허용 -->
-    <uses-feature android:name="android.hardware.telephony" android:required="true"/> <!-- 전화 권한 허용 -->
-    <uses-permission android:name="android.permission.CALL_PHONE" /> <!-- 전화 권한 허용 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 앱이 블루투스 장치에 연결할 수 있도록 허용하는 레거시 권한입니다. -->
+    <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- 앱이 블루투스 장치를 검색하고 결합할 수 있도록 허용하는 레거시 권한입니다 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- 포그라운드 서비스 허용, 배터리 최적화를 위한 종료 방지 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- 서비스 시행시 꺼지지 않게 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" /> <!-- 서비스 시행시 꺼지지 않게 -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" /> <!-- 페어링 설정 -->
+    <uses-feature android:name="android.software.companion_device_setup" /> <!-- 페어링 설정 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- 알림 권한 허용 -->
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="true" /> <!-- 전화 권한 허용 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
-            android:name=".App"
-            android:allowBackup="true"
-            android:dataExtractionRules="@xml/data_extraction_rules"
-            android:fullBackupContent="@xml/backup_rules"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/Theme.HealthKeeper"
-            android:usesCleartextTraffic="true"
-            tools:targetApi="31">
+        android:name=".App"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.HealthKeeper"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+        <activity
+            android:name=".member.PopupResiterActivity"
+            android:theme="@style/Theme.MaterialComponents.Dialog"
+            android:exported="false" />
         <service
                 android:name=".bluetooth.BluetoothService"
                 android:foregroundServiceType="connectedDevice"
@@ -59,10 +64,9 @@
 
         <activity
             android:name=".member.PopupSearchAddressActivity"
-            android:theme="@style/Theme.MaterialComponents.Dialog"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents.Dialog" />
         <activity
-
             android:name=".member.SimpleJoinActivity"
             android:exported="false" /> <!-- android:screenOrientation="portrait:cctvfullActivity에서 가로방향으로 화면 설정 -->
         <activity
@@ -80,86 +84,72 @@
                 android:exported="false"/>
 
         <activity
-                android:name=".setting.NoticeActivity"
-                android:exported="false"/>
+            android:name=".setting.NoticeActivity"
+            android:exported="false" />
         <activity
-                android:name=".main.LoginBeforeActivity"
-                android:exported="false"/>
+            android:name=".main.LoginBeforeActivity"
+            android:exported="false" />
         <activity
-                android:name=".member.FindResultActivity"
-                android:exported="false"/>
-
-
-        <activity
-
             android:name=".setting.ModifyActivity"
             android:exported="false" />
         <activity
-                android:name=".setting.ModifyGuardianActivity"
-                android:exported="false"/>
+            android:name=".member.FindPwActivity"
+            android:exported="false" />
         <activity
-                android:name=".member.FindPwActivity"
-                android:exported="false"/>
+            android:name=".member.JoinTypeActivity"
+            android:exported="false" />
         <activity
-                android:name=".member.JoinTypeActivity"
-                android:exported="false"/>
-
-        <activity
-                android:name=".main.ChatActivity"
-                android:exported="false"/>
+            android:name=".main.ChatActivity"
+            android:exported="false" />
         <activity
                 android:name=".main.community.CommunityActivity"
                 android:exported="false"/>
         <activity
-                android:name=".main.QAActivity"
-                android:exported="false"/>
+            android:name=".main.QAActivity"
+            android:exported="false" />
         <activity
-                android:name=".main.MonitoringActivity"
-                android:exported="false"/>
-
+            android:name=".member.FindIdActivity"
+            android:exported="false" />
         <activity
-                android:name=".member.FindIdActivity"
-                android:exported="false"/>
+            android:name=".setting.HelpActivity"
+            android:exported="false" />
         <activity
-                android:name=".setting.HelpActivity"
-                android:exported="false"/>
+            android:name=".setting.SettingActivity"
+            android:exported="false" />
         <activity
-                android:name=".setting.SettingActivity"
-                android:exported="false"/>
+            android:name=".main.MainActivity"
+            android:exported="false" />
         <activity
-                android:name=".main.MainActivity"
-                android:exported="false"/>
-        <activity
-                android:name=".member.PatientJoinActivity"
-                android:exported="false"/>
+            android:name=".member.PatientJoinActivity"
+            android:exported="false" />
         <activity
             android:name=".member.JoinActivity"
             android:exported="false" />
         <activity
-                android:name=".member.LoginActivity"
-                android:exported="false"/>
+            android:name=".member.LoginActivity"
+            android:exported="false" />
         <activity
-                android:name=".main.SplashActivity"
-                android:exported="true">
+            android:name=".main.SplashActivity"
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-                android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
-                android:exported="true">
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
                 <data
-                        android:host="oauth"
-                        android:scheme="kakao1cf34851d43903b60a3c465f4245ef4f"/>
+                    android:host="oauth"
+                    android:scheme="kakao1cf34851d43903b60a3c465f4245ef4f" />
             </intent-filter>
         </activity>
     </application>

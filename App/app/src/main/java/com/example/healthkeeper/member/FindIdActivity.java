@@ -1,5 +1,6 @@
 package com.example.healthkeeper.member;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -38,10 +39,11 @@ public class FindIdActivity extends AppCompatActivity {
         conn.addParamMap("vo",voJson);
         conn.onExcute((isResult, data) -> {
             if(!data.equals("")){
-                Intent intent = new Intent(this,FindResultActivity.class);
-                intent.putExtra("id_result",data);
-                startActivity(intent);
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("회원님의 아이디는 '"+data + "' 입니다").setPositiveButton("확인",(dialog, which) -> {
+                    finish();
+                        })
+                .show();
             }else{
                 Toast.makeText(this, "해당 정보의 아이디는 없습니다",Toast.LENGTH_SHORT).show();
             }
