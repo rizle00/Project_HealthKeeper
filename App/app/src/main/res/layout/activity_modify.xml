@@ -93,6 +93,7 @@
         android:textColor="#FF5B5B"
         android:visibility="gone"/>
     <EditText
+        android:focusable="false"
         android:layout_marginTop="10dp"
         android:id="@+id/edt_address"
         android:layout_marginHorizontal="20dp"
@@ -110,33 +111,7 @@
         android:hint=" 상세주소"
         android:background="@drawable/edittext_rounded"
         />
-    <LinearLayout
-        android:id="@+id/ll_partner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <EditText
-            android:focusable="false"
-            android:layout_marginTop="10dp"
-            android:id="@+id/edt_patient_id"
-            android:layout_marginHorizontal="20dp"
-            android:layout_width="0dp"
-            android:layout_weight="7"
-            android:layout_height="40dp"
-            android:hint=" 환자 / 보호자 아이디"
-            android:background="@drawable/edittext_rounded"
-            />
-        <Button
-            android:layout_marginTop="10dp"
-            android:visibility="visible"
-            android:background="@drawable/button_customize"
-            android:id="@+id/btn_guardian_find"
-            android:layout_width="0dp"
-            android:layout_weight="4"
-            android:layout_height="40dp"
-            android:text="아이디 확인"
-            android:layout_marginRight="20dp"/>
-    </LinearLayout>
+
     <LinearLayout
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
