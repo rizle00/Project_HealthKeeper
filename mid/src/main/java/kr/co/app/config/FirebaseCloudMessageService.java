@@ -20,7 +20,6 @@ public class FirebaseCloudMessageService {
 
     private final String API_URL = "https://fcm.googleapis.com/v1/projects/health-f5329/messages:send";  // 요청을 보낼 엔드포인트
     private ObjectMapper objectMapper;
-
     public void sendMessageTo(String targetToken, String title, String body) throws IOException {
         String message = makeMessage(targetToken, title, body);
 //        dLFqJnOtSkiO8fx-bngRk9:APA91bG3-Xb-DF3BNIQtR65Uy4x2smS5FfZJ_TIrJ19svYLRVdhwv3m-mjtY652Sg9o0gpsmECflC_G13IkyJsLn7Wsn9o8xpzOstwmVUwI4lyIB5cHusTbQpMikTXZEbsTflysYfJ3w
@@ -65,4 +64,5 @@ public class FirebaseCloudMessageService {
         googleCredentials.refreshIfExpired();
         return googleCredentials.getAccessToken().getTokenValue();
     }
+
 }
