@@ -106,7 +106,7 @@ public class MemberController {
 	@PostMapping("/andmodify")
 	public ResponseEntity<String>  modify(String vo) {
 		MemberVO infoVO = new Gson().fromJson(vo, MemberVO.class);
-		
+		infoVO.setPw(pwEncoder.encode(infoVO.getPw()));
 		if(service.modify(infoVO)==1) {
 			return ResponseEntity.ok("success");
 		}else {

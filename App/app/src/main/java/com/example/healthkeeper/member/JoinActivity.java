@@ -227,7 +227,6 @@ public class JoinActivity extends AppCompatActivity {
                     binding.tvWarningPw.setVisibility(View.GONE);
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -315,7 +314,6 @@ public class JoinActivity extends AppCompatActivity {
         conn.addParamMap("email", email);
 
         conn.onExcute((isResult, data) -> {
-            Log.i(TAG, "idDupCheck: " + data);
 
             if (data.equals("0")) {
                 binding.btnIdCheck.setVisibility(View.GONE);

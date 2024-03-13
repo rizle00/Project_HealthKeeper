@@ -49,7 +49,6 @@ public class SimpleJoinActivity extends AppCompatActivity {
         /*아이디중복확인*/
         idDupCheck();
 
-
         binding.btnJoin.setOnClickListener(v -> {
             joinClick();
         });
