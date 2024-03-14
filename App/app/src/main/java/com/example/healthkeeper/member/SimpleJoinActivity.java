@@ -39,8 +39,6 @@ public class SimpleJoinActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), PopupSearchAddressActivity.class);
             startActivityForResult(intent, SEARCH_ADDRESS_ACTIVITY);
         });
-        CommonService apiInterface = CommonClient.getRetrofit().create(CommonService.class);
-        HashMap<String, Object> params = new HashMap<>();
 
         binding.llPartner.setOnClickListener(v -> {
             partnerCheck();

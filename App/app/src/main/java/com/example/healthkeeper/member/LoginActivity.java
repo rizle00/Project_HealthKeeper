@@ -112,6 +112,12 @@ public class LoginActivity extends AppCompatActivity {
 //                SharedPreferences.Editor editor = preference.edit();
                 editor.putString("user_id",vo.getMember_id());
                 editor.putString("user_name",vo.getName());
+                editor.putString("token", vo.getToken());
+                if(vo.getRole().equals("patient"))
+                editor.putString("guardian", vo.getGuardian_id());
+                editor.putString("address", vo.getAddress()+" "+vo.getAddress_detail());
+
+
                 editor.apply();
 
                loginSuccess();

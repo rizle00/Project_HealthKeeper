@@ -36,4 +36,7 @@
 <select id="findpw" resultType="String">
 	SELECT COUNT(*) FROM MEMBER WHERE EMAIL=#{email} AND NAME = #{name} AND PHONE = #{phone}
 </select>
+<update id="modify">
+	UPDATE MEMBER SET PW=#{pw} , NAME=#{name},PHONE=#{phone},ADDRESS=#{address} ,ADDRESS_DETAIL=#{address_detail}  WHERE MEMBER_ID=#{member_id}
+</update>
 </mapper>
