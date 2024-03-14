@@ -77,7 +77,7 @@ public class BluetoothService extends Service {
                 = new NotificationCompat
                 .Builder(context,
                 channel_id)
-                .setSmallIcon(com.nhn.android.oauth.R.drawable.naver_icon)
+                .setSmallIcon(R.drawable.heart_1)
                 .setAutoCancel(true)
                 .setVibrate(new long[]{1000, 1000, 1000,
                         1000, 1000})
