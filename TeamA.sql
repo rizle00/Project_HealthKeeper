@@ -165,9 +165,13 @@ CREATE TABLE emergency (
     category_id NUMBER NOT NULL unique,
     CONSTRAINT fk_emergency_member_id
         FOREIGN KEY (member_id)
-        REFERENCES member(member_id)
+        REFERENCES member(member_id),
+        CONSTRAINT fk_emergency_type_category_id
+        FOREIGN KEY (category_id)
+        REFERENCES emergency_type(category_id)
 );
-
+drop sequence emergency_log_id_seq;
+drop TRIGGER emergency_log_id_trigger;
 CREATE SEQUENCE emergency_log_id_seq
 START WITH 1
 INCREMENT BY 1
@@ -183,14 +187,29 @@ BEGIN
     FROM dual;
 END;
 
-CREATE TABLE emergency_type (
+CREATE TABLE emergency_type ( --alarm_type
     category_id NUMBER PRIMARY KEY,
     title VARCHAR2(20) NOT NULL,
-    content VARCHAR2(100) NOT NULL,
-    CONSTRAINT fk_emergency_type_category_id
-        FOREIGN KEY (category_id)
-        REFERENCES emergency(category_id)
+    content VARCHAR2(100) NOT NULL   
 );
+
+rename emergency_type to alarm_type; 
+-- 시퀀스 생성
+CREATE SEQUENCE category_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+-- 트리거 생성
+CREATE OR REPLACE TRIGGER trg_emergency_type_category_id
+BEFORE INSERT ON emergency_type
+FOR EACH ROW
+BEGIN
+    SELECT category_id_seq.nextval
+    INTO :new.category_id
+    FROM dual;
+END;
 --공지사항
 CREATE TABLE notice (
     notice_id NUMBER PRIMARY KEY,
@@ -311,7 +330,21 @@ CREATE TABLE alarmLog (
     CONSTRAINT fk_alarmLog_member_id
         FOREIGN KEY (member_id)
         REFERENCES member(member_id) -- 예시, 실제 멤버 테이블을 참조하도록 변경해야 합니다
+        CONSTRAINT fk_alarmLog_category_id
+        FOREIGN KEY (category_id)
+        REFERENCES alarm_type(category_id)
 );
+-- 제목과 내용 열 삭제
+ALTER TABLE alarmLog DROP COLUMN title;
+ALTER TABLE alarmLog DROP COLUMN content;
+
+-- 카테고리 아이디 열 추가
+ALTER TABLE alarmLog ADD category_id NUMBER NOT NULL;
+
+-- 외래 키 제약 조건 추가
+ALTER TABLE alarmLog ADD CONSTRAINT fk_alarmLog_category_id
+    FOREIGN KEY (category_id)
+    REFERENCES alarm_type(category_id);
 
 CREATE SEQUENCE alarm_id_seq
 START WITH 1
@@ -390,3 +423,17 @@ BEGIN
 END;
 
 commit;
+
+insert into emergency_type (title, content)
+values('낙상발생', '낙상이 발생했습니다');--1
+insert into emergency_type (title, content)
+values('맥박 상승', '심박이 너무 높습니다');--2
+insert into emergency_type (title, content)
+values('맥박 하락', '심박이 너무 낮습니다');--3
+insert into emergency_type (title, content)
+values('체온 상승', '체온이 너무 높습니다');--4
+insert into emergency_type (title, content)
+values('체온 하락', '체온이 너무 낮습니다');--5
+
+commit;
+ 

@@ -11,14 +11,11 @@ import android.os.IBinder;
 import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.ServiceCompat;
-import androidx.lifecycle.*;
 import com.example.healthkeeper.App;
 import com.example.healthkeeper.R;
-import com.example.healthkeeper.main.AlarmActivity;
+import com.example.healthkeeper.firebase.AlarmActivity;
 import com.example.healthkeeper.main.MainActivity;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
 import java.util.concurrent.Executor;
 
 public class BluetoothService extends Service {
@@ -268,26 +265,26 @@ public class BluetoothService extends Service {
                 if (heart > 160) {
                     //심박이 높음
                     builder.setContentText(contents[1]);
-                    intent.setType("심박 주의");
+                    intent.setType("맥박 상승");
                     intent.putExtra("content", texts[1]);
                     notificationManager.notify(1002, builder.build());
                 } else if (heart < 60) {
                     //심박이 낮음
                     builder.setContentText(contents[2]);
-                    intent.setType("심박 주의");
+                    intent.setType("맥박 하락");
                     intent.putExtra("content", texts[2]);
                     notificationManager.notify(1003, builder.build());
                 }
                 if (temp > 37.5) {
                     //체온이높음
                     builder.setContentText(contents[3]);
-                    intent.setType("체온 주의");
+                    intent.setType("체온 상승");
                     intent.putExtra("content", texts[3]);
                     notificationManager.notify(1004, builder.build());
                 } else if (temp < 35.5) {
                     //체온이 낮음
                     builder.setContentText(contents[4]);
-                    intent.setType("체온 주의");
+                    intent.setType("체온 하락");
                     intent.putExtra("content", texts[4]);
                     notificationManager.notify(1005, builder.build());
                 }

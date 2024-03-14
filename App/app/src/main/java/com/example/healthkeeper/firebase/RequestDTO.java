@@ -1,4 +1,4 @@
-package com.example.testapplication.firebase;
+package com.example.healthkeeper.firebase;
 
 import lombok.Getter;
 import lombok.Setter;

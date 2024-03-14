@@ -1,6 +1,7 @@
 package com.example.testapplication;
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.testapplication.common.CommonConn;
@@ -23,6 +25,8 @@ import com.gun0912.tedpermission.normal.TedPermission;
 import lombok.Lombok;
 
 import java.util.List;
+import java.util.Set;
+
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     private final long timeCount = 5*1000;
@@ -38,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private String type, content;
     private CommonConn commonConn;
+
+    private static String test;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
 //        map.put("body",text);
         Log.d("TAG", "onFinish: push ");
 //        SendSMS("01051760118",text);
-
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
@@ -136,13 +141,16 @@ public class MainActivity extends AppCompatActivity {
 
                         // Get new FCM registration token
                         String token = task.getResult();
-//                        map.put("token", token);
-                        vo.setTargetToken(token);
+                        test = token;
+
+
                     }
                 });
         vo.setBody(text);
         vo.setTitle(type);
-        vo.setGuardian_id(1);
+        vo.setGuardian_id("1");
+        vo.setTargetToken(test);
+        Log.d("TAG", "test: "+test);
       String json =  new Gson().toJson(vo);
         commonConn.addParamMap("params", json);
         commonConn.onExcute((isResult, data) -> {

@@ -8,6 +8,7 @@ import java.util.HashMap;
 public interface CommonService {
 
     @FormUrlEncoded
+//    @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")
     @POST
     Call<String> clientPostMethod(@Url String url, @FieldMap HashMap<String, Object> params);
 
