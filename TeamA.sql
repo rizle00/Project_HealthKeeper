@@ -26,6 +26,7 @@ CREATE TABLE member (
     role VARCHAR2(4) DEFAULT 'm' NOT NULL 
 );
 
+ALTER TABLE member add (token varchar2(400));
 ALTER TABLE member
 ADD CONSTRAINT fk_member_guardian_id
 FOREIGN KEY (guardian_id)

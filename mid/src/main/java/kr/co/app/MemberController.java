@@ -2,7 +2,6 @@ package kr.co.app;
 
 import java.util.UUID;
 
-import kr.co.app.common.DataHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.gson.Gson;
 
-import kr.co.app.common.CommonUtility;
 import kr.co.app.member.MemberService;
 import kr.co.app.member.MemberVO;
 
@@ -25,8 +23,6 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 
-	@Autowired
-	private DataHolder dataHolder;
 
 	@PostMapping("/andlogin")
 	public ResponseEntity<String> login(String email, String pw) {
@@ -35,7 +31,7 @@ public class MemberController {
 		
 		System.out.println(email.toString() + pw.toString());
 		if (pwEncoder.matches(pw, vo.getPw())) {
-			dataHolder.setData(vo.getToken());
+//			dataHolder.setData(vo.getToken());
 			return ResponseEntity.ok(new Gson().toJson(vo));
 		} else {
 			return null;
@@ -91,7 +87,7 @@ public class MemberController {
 			String pw = UUID.randomUUID().toString();
 			pw= pw.substring(pw.lastIndexOf("-")+1);
 			find_info.setPw(pw);
-			
+
 			if(service.resetpw(find_info)==1&&common.sendPassword(mail,pw))
 			return ResponseEntity.ok("success");
 			else return ResponseEntity.ok("failure");
@@ -109,7 +105,13 @@ public class MemberController {
 	}
 	
 	@PostMapping("/andmodify")
-	public void modify(MemberVO vo) {
-		service.modify(vo);
+	public ResponseEntity<String>  modify(String vo) {
+		MemberVO infoVO = new Gson().fromJson(vo, MemberVO.class);
+		
+		if(service.modify(infoVO)==1) {
+			return ResponseEntity.ok("success");
+		}else {
+			return ResponseEntity.ok("fail");
+		}
 	}
 }
