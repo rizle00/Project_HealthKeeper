@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         PermissionUtils.checkNotiPermission(this, notiPermissionListener);
 
 
-
     }
 
 

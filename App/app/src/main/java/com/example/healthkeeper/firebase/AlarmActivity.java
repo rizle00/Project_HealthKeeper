@@ -1,20 +1,17 @@
-package com.example.healthkeeper.main;
+package com.example.healthkeeper.firebase;
 
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.telephony.SmsManager;
-import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.healthkeeper.App;
-import com.example.healthkeeper.R;
 import com.example.healthkeeper.bluetooth.BluetoothRepository;
 import com.example.healthkeeper.databinding.ActivityAlarmBinding;
 
 import java.util.HashMap;
 import java.util.concurrent.Executor;
-import java.util.concurrent.TimeUnit;
 
 public class AlarmActivity extends AppCompatActivity {
     ActivityAlarmBinding binding;
@@ -68,25 +65,17 @@ public class AlarmActivity extends AppCompatActivity {
     }
     private void startTimer(){ // 타이머 시작
         if (timerStatus == TimerStatus.STOPPED) {
-
-
             setProgressBarValues();
-
-
             timerStatus = TimerStatus.STARTED;
-
             startCountDownTimer();}
-
     }
 
     private void setProgressBarValues() { // 프로그래스바 세팅
-
         progressBarCircle.setMax((int) timeCount / 1000);
         progressBarCircle.setProgress((int) timeCount / 1000);
     }
     private void stopTimer() { // 타이머 종료
         timerStatus = TimerStatus.STOPPED;
-
         countDownTimer.cancel();
         Toast.makeText(AlarmActivity.this,"알람이 종료되었습니다", Toast.LENGTH_SHORT).show();
     }
@@ -95,38 +84,28 @@ public class AlarmActivity extends AppCompatActivity {
         countDownTimer = new CountDownTimer(timeCount, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-
                 tv_time.setText(hmsTimeFormatter(millisUntilFinished));
-
                 progressBarCircle.setProgress((int) (millisUntilFinished / 1000));
-
             }
 
             @Override
             public void onFinish() {// 타이머 종료시에만 시행
-
                 tv_time.setText(hmsTimeFormatter(timeCount));
-
                 setProgressBarValues();
                 createPush();
-
-
-
-
                 timerStatus = TimerStatus.STOPPED;
             }
 
         }.start();
     }
     private void createPush() {// 푸시 생성, 및 알람로그 인서트 요청
-        HashMap<String,Object> map = new HashMap<>();
-//        map.put("token",pref.getString("token",""));
         String text = pref.getString("user_name","")+"님의"+content;
-        map.put("guardian_id", pref.getString("guardian_id",""));
-        map.put("title",type);
-        map.put("body",text);
-
-        repository.insertAlarm(map);
+        RequestDTO vo = new RequestDTO();
+        // 타입, 멤버 id,네임?, 가디언 id
+        vo.setBody(text);
+        vo.setTitle(type);
+        vo.setGuardian_id(pref.getString("guardian_id",""));
+        repository.insertAlarm(vo);
         SendSMS("01051760118",text);
     }
     public void SendSMS(String number, String msg){// 문자보내기
