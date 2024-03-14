@@ -309,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPermissionListener(notiPermissionListener)
                 .setDeniedMessage("Denied Permission.")
                 .setPermissions(
-                        Manifest.permission.POST_NOTIFICATIONS
+                        Manifest.permission.POST_NOTIFICATIONS, Manifest.permission.SEND_SMS
                         )
                 .check();
     }
