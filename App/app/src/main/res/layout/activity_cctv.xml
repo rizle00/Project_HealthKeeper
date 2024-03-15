@@ -45,17 +45,7 @@
             android:textSize="15dp"
             android:text="전 체 화 면"/>
 
-        <Button
-            android:id="@+id/restoreButton"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_width="match_parent"
-            android:textSize="15dp"
-            android:backgroundTint="@color/main_color"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="이 전 화 면"
-            android:visibility="gone"/>
+
     </LinearLayout>
 
     <Button
