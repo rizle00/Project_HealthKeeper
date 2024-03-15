@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 
 @Service
@@ -12,7 +13,10 @@ public class MemberService {
 	@Autowired
 	@Qualifier("hanul")
 	SqlSession sql;
-	
+
+	public List<QueVO>  list(){
+		return sql.selectList("me.list");
+	}
 	public MemberVO login(String user_id) {
 		return sql.selectOne("me.login", user_id);
 	}

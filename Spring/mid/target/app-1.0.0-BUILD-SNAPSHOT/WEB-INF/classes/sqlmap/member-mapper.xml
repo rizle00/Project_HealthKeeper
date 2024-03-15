@@ -4,10 +4,15 @@
 <select id="login" resultType="member">
 	SELECT * FROM PROJECT_MEMBER WHERE GUARDIAN_ID = #{guardian_id}
 </select>
-
+	<select id="list" resultType="que">
+	 	select  * from notice
+	</select>
 	<select id="guardian" resultType="member">
 		SELECT * FROM member WHERE member_id = #{guardian_id}
 	</select>
+	<insert id="insertAlarm">
+		insert into
+	</insert>
 <select id="idcheck" resultType="String">
 	SELECT COUNT(*) FROM PROJECT_MEMBER WHERE GUARDIAN_ID = #{guardian_id}
 </select>
