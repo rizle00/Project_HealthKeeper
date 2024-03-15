@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.healthkeeper.databinding.RecvCommunityBoardBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Community_boardAdapter extends RecyclerView.Adapter<Community_boardAdapter.ViewHolder> {
     LayoutInflater inflater;
-    ArrayList<CommunityDTOS.Community_BoardDTO> List;
+    List<CommunityDTOS.Community_BoardDTO> List;
     Context context;
 
-    public Community_boardAdapter (LayoutInflater inflater, ArrayList<CommunityDTOS.Community_BoardDTO>  boardList, Context context){
+    public Community_boardAdapter (LayoutInflater inflater, List<CommunityDTOS.Community_BoardDTO>  boardList, Context context){
         this.context=context;
         this. List= boardList;
         this.inflater=inflater;

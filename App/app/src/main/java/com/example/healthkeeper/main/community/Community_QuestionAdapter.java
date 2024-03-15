@@ -10,15 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.healthkeeper.databinding.RecvCommunityQuestionBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Community_QuestionAdapter extends RecyclerView.Adapter<Community_QuestionAdapter.ViewHolder> {
 
     LayoutInflater inflater;
     Context context;
-    ArrayList<CommunityDTOS.Community_QuestionDTO> list;
+   List<CommunityDTOS.Community_QuestionDTO> list;
 
 
-    public Community_QuestionAdapter(LayoutInflater inflater, ArrayList<CommunityDTOS.Community_QuestionDTO> list, Context context) {
+    public Community_QuestionAdapter(LayoutInflater inflater, List<CommunityDTOS.Community_QuestionDTO> list, Context context) {
         this.inflater=inflater;
         this.context=context;
         this.list=list;

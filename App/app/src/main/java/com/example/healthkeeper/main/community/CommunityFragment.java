@@ -14,32 +14,42 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.healthkeeper.App;
 import com.example.healthkeeper.R;
+import com.example.healthkeeper.common.CommonRepository;
 import com.example.healthkeeper.databinding.FragmentCommunityBinding;
+import com.example.healthkeeper.member.MemberVO;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class CommunityFragment extends Fragment {
     FragmentCommunityBinding binding;
     CommunityDAO communityDAO;
-
+    CommonRepository repository;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCommunityBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        repository = new CommonRepository(((App) requireActivity().getApplication()).executorService, getContext());
+        HashMap<String, Object> map = new HashMap<>();
 
 
+        repository.selectData("question/list",map).thenAccept(result->{
+            createQues(result, inflater);
+        });
 
         CommunityDAO communityDAO = new CommunityDAO();
 
         // 게시판 어뎁터
         List<CommunityDTOS.Community_BoardDTO> recentList = communityDAO.getRecentBoardList();
-        Community_boardAdapter recentBoardAdapter = new Community_boardAdapter(inflater, (ArrayList<CommunityDTOS.Community_BoardDTO>) communityDAO.getRecentBoardList(), getContext());
-        binding.board.setAdapter(recentBoardAdapter);
-        binding.board.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
 
         // 자주묻는 질문 어뎁터
         List<CommunityDTOS.Community_QuestionDTO> questionList = communityDAO.getQuestionArrayList();
@@ -140,7 +150,23 @@ public class CommunityFragment extends Fragment {
     }
 
 
+    private void createBoard(String result, LayoutInflater inflater) {
+        // JSON 문자열을 파싱하여 리스트로 변환
+        List<CommunityDTOS.Community_BoardDTO> list = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_BoardDTO>>(){}.getType());
 
+        // RecyclerView에 어댑터 설정
+        Community_boardAdapter recentBoardAdapter = new Community_boardAdapter(inflater, list, getContext());
+        binding.board.setAdapter(recentBoardAdapter);
+        binding.board.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    private void createQues(String result, LayoutInflater inflater) {
+        // JSON 문자열을 파싱하여 리스트로 변환
+        List<CommunityDTOS.Community_QuestionDTO> list = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>(){}.getType());
+        // RecyclerView에 어댑터 설정
+        binding.question.setAdapter(new Community_QuestionAdapter(inflater, list, getContext()));
+        binding.question.setLayoutManager((new LinearLayoutManager(getContext())));
+    }
 
 
 

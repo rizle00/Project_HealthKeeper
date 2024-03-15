@@ -29,8 +29,8 @@ public class BoardDetail_Fragment extends Fragment {
 
         CommunityDAO communityDAO = new CommunityDAO();
 
-        List<CommunityDTOS.Community_BoardDTO> allList = communityDAO.getBoardArrayList();
-        Community_boardAdapter allBoardAdapter = new Community_boardAdapter(inflater, (ArrayList<CommunityDTOS.Community_BoardDTO>) communityDAO.getBoardArrayList(), getContext());
+        List<CommunityDTOS.Community_BoardDTO> allList = communityDAO.getBoardList();
+        Community_boardAdapter allBoardAdapter = new Community_boardAdapter(inflater, allList, getContext());
         binding.boardDetailList.setAdapter(allBoardAdapter);
         binding.boardDetailList.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -77,7 +77,7 @@ public class BoardDetail_Fragment extends Fragment {
 
 
     private ArrayList<CommunityDTOS.Community_BoardDTO> getBoardArrayList() {
-      return (ArrayList<CommunityDTOS.Community_BoardDTO>) communityDAO.getBoardArrayList();
+      return (ArrayList<CommunityDTOS.Community_BoardDTO>) communityDAO.getBoardList();
     }
 
 
