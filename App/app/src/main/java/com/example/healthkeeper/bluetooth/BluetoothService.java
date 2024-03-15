@@ -241,15 +241,18 @@ public class BluetoothService extends Service {
 
         //7 -> 낙상 8-> 맥박상승 9 -> 맥박하락 10 -> 체온상승 11-> 체온하락
         if (heart != 0 && temp != 0) {
+            //앱 노티 용
             String contents[] = {"낙상이 발생했습니까? 확인해주세요",
                     "심박이 너무 높습니다. 확인해주세요", "심박이 너무 낮습니다. 확인해주세요",
                     "체온이 너무 높습니다. 확인해주세요", "체온이 너무 낮습니다. 확인해주세요"
             };
+            // sms 보내기용
             String texts[] = {"낙상이 발생했습니다",
                     "심박이 너무 높습니다", "심박이 너무 낮습니다",
                     "체온이 너무 높습니다", "체온이 너무 낮습니다"
             };
             Intent intent = new Intent(this, AlarmActivity.class);
+
 
             builder.setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setOngoing(true)
@@ -259,34 +262,39 @@ public class BluetoothService extends Service {
             if (accident.equals("1")) {
                 //낙상발생
                 builder.setContentText(contents[0]);
-                intent.setType("낙상 발생");
+                intent.setType("7");
                 intent.putExtra("content", texts[0]);
+                intent.putExtra("notifyId", 1001);
                 notificationManager.notify(1001, builder.build());
             } else {
                 if (heart > 160) {
                     //심박이 높음
                     builder.setContentText(contents[1]);
-                    intent.setType("맥박 상승");
+                    intent.setType("8");
                     intent.putExtra("content", texts[1]);
+                    intent.putExtra("notifyId", 1002);
                     notificationManager.notify(1002, builder.build());
                 } else if (heart < 60) {
                     //심박이 낮음
                     builder.setContentText(contents[2]);
-                    intent.setType("맥박 하락");
+                    intent.setType("9");
                     intent.putExtra("content", texts[2]);
+                    intent.putExtra("notifyId", 1003);
                     notificationManager.notify(1003, builder.build());
                 }
                 if (temp > 37.5) {
                     //체온이높음
                     builder.setContentText(contents[3]);
-                    intent.setType("체온 상승");
+                    intent.setType("10");
                     intent.putExtra("content", texts[3]);
+                    intent.putExtra("notifyId", 1004);
                     notificationManager.notify(1004, builder.build());
                 } else if (temp < 35.5) {
                     //체온이 낮음
                     builder.setContentText(contents[4]);
-                    intent.setType("체온 하락");
+                    intent.setType("11");
                     intent.putExtra("content", texts[4]);
+                    intent.putExtra("notifyId", 1005);
                     notificationManager.notify(1005, builder.build());
                 }
             }
