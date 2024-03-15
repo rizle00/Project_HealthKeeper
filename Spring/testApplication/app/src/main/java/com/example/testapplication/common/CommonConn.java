@@ -40,7 +40,7 @@ public class CommonConn {
     }
 
     public void onExcute(appCallBack callBack){
-//        onPreExcute();
+        onPreExcute();
         CommonService service = CommonClient.getRetrofit().create(CommonService.class);
 
         service.clientPostMethod(url,paramMap).enqueue(new Callback<String>() {
@@ -61,7 +61,7 @@ public class CommonConn {
                 callBack.onResult(false,t.getMessage());
             }
         });
-//        onPostExcute();
+        onPostExcute();
     }
 
     private void onPostExcute() {
