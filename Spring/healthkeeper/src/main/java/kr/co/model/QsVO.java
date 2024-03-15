@@ -23,6 +23,8 @@ public class QsVO {
 	
 	// 게시판 카테고리?
 	private int CATEGORY_ID;
+	
+	private CateGoryVO category; // CategoryVO 객체
 		
 	// 게시판 조회수
 	private int READ_CNT;

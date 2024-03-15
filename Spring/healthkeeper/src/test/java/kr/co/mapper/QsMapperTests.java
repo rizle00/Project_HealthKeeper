@@ -78,14 +78,23 @@ public class QsMapperTests {
 //	}
 	
 	// 게시판 페이징 테스트
+//	@Test
+//	public void listpaging() {
+//		QsCriteria qcri = new QsCriteria();
+//		
+//		qcri.setPageNum(2);
+//		
+//		List list = mapper.getlistPaging(qcri);
+//		
+//		list.forEach(qs -> log.info("" + qs));
+//	}
+	
+	/* 카테고리 리스트 */
 	@Test
-	public void listpaging() {
-		QsCriteria qcri = new QsCriteria();
+	public void cateListTest() throws Exception{
 		
-		qcri.setPageNum(2);
+		System.out.println("cateList()..........." + mapper.catelist());
 		
-		List list = mapper.getlistPaging(qcri);
-		
-		list.forEach(qs -> log.info("" + qs));
 	}
+	
 }
