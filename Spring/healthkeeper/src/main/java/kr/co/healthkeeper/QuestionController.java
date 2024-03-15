@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import kr.co.model.CateGoryVO;
 import kr.co.model.QsCriteria;
 import kr.co.model.QsPageMakeDTO;
 import kr.co.model.QsReplyVO;
@@ -59,7 +60,8 @@ public class QuestionController {
 		List list = service.catelist();
 		
 		String catelist = objm.writeValueAsString(list);
-		model.addAttribute("catelist", catelist);
+		model.addAttribute("catelist", list);
+//		model.addAttribute("catelist", catelist);
 		
 		log.info("변경 전......." + list);
 		log.info("변경 후......." + catelist);
@@ -71,27 +73,42 @@ public class QuestionController {
 		log.info("QsVO :" + qs);
 		service.qsregistr(qs);
 		rttr.addFlashAttribute("result", "registr success");
+		
+		
+		ObjectMapper objm = new ObjectMapper();
+	    List list = service.catelist();
+	    String catelist = objm.writeValueAsString(list);
+	    model.addAttribute("catelist", catelist);
+		
 		return "redirect:/question/qslist";
 	}
 	
 	// 질문게시판 조회
 	@GetMapping("/qsget")
-	public void qsGetPageGET(int QUE_ID, QsVO vo, Model model, QsCriteria qcri) {
+	public void qsGetPageGET(int QUE_ID, QsVO vo, Model model, QsCriteria qcri) throws Exception {
+		
 		// 조회수 관련 로직
 		service.qsViews(QUE_ID);
 		
-		model.addAttribute("pageInfo", service.getpage(QUE_ID));
+		vo = service.getpage(QUE_ID);
+		vo.setCategory(service.cate(vo.getCATEGORY_ID()));
+		
+		model.addAttribute("pageInfo", vo);
+		
 		model.addAttribute("qcri", qcri);
 		
-		List<QsReplyVO> replyList = replyservice.readReply(vo.getQUE_ID());
-		model.addAttribute("replyList", replyList);
+		//List<QsReplyVO> replyList = replyservice.readReply(vo.getQUE_ID());
+		//model.addAttribute("replyList", replyList);
 	}
 	
 	// 질문게시판 수정페이지 진입
 	@GetMapping("/qsupdate")
-	public void qsUpdateGET(int QUE_ID, Model model, QsCriteria qcri) {
+	public void qsUpdateGET(int QUE_ID,QsVO vo, Model model, QsCriteria qcri) {
 		
-		model.addAttribute("pageInfo", service.getpage(QUE_ID));
+		vo = service.getpage(QUE_ID);
+		vo.setCategory(service.cate(vo.getCATEGORY_ID()));
+		
+		model.addAttribute("pageInfo", vo);
 		model.addAttribute("qcri", qcri);
 	}
 	
@@ -116,70 +133,70 @@ public class QuestionController {
 	}
 	
 	// 질문게시판 댓글작성
-	@PostMapping("/replyRegistr")
-	public String replyRegistrPOST(QsReplyVO replyvo, QsCriteria qcri, RedirectAttributes rttr) {
-		replyservice.registrReply(replyvo);
-		
-		rttr.addAttribute("QS_BNO", replyvo.getQS_BNO());
-		rttr.addAttribute("pageNum", qcri.getPageNum());
-		rttr.addAttribute("amount", qcri.getAmount());
-		rttr.addAttribute("keyword", qcri.getKeyword());
-		rttr.addAttribute("type", qcri.getType());
-		
-		return "redirect:/question/qsget";
-	}
+//	@PostMapping("/replyRegistr")
+//	public String replyRegistrPOST(QsReplyVO replyvo, QsCriteria qcri, RedirectAttributes rttr) {
+//		replyservice.registrReply(replyvo);
+//		
+//		rttr.addAttribute("QS_BNO", replyvo.getQUE_ID());
+//		rttr.addAttribute("pageNum", qcri.getPageNum());
+//		rttr.addAttribute("amount", qcri.getAmount());
+//		rttr.addAttribute("keyword", qcri.getKeyword());
+//		rttr.addAttribute("type", qcri.getType());
+//		
+//		return "redirect:/question/qsget";
+//	}
 	
 	// 질문게시판 댓글수정 페이지 진입
-	@GetMapping("/replyupdate")
-	public void replyUpdateGET(QsCriteria qcri, Model model,QsReplyVO replyvo){
-		
-		model.addAttribute("replyupdate", replyservice.selectReply(replyvo.getQRNO()));
-		model.addAttribute("qcri", qcri);
-		
-	}
+//	@GetMapping("/replyupdate")
+//	public void replyUpdateGET(QsCriteria qcri, Model model,QsReplyVO replyvo){
+//		
+//		model.addAttribute("replyupdate", replyservice.selectReply(replyvo.getQRNO()));
+//		model.addAttribute("qcri", qcri);
+//		
+//	}
 	
 	// 질문게시판 댓글수정
-	@PostMapping("/replyupdate")
-	public String replyUpdatePOST(QsReplyVO replyvo, QsCriteria qcri, RedirectAttributes rttr){
-		
-		log.info("reply update");
-		
-		replyservice.updateReply(replyvo);
-		
-		rttr.addAttribute("QS_BNO", replyvo.getQS_BNO());
-		rttr.addAttribute("QRNO", replyvo.getQRNO());
-		rttr.addAttribute("pageNum", qcri.getPageNum());
-		rttr.addAttribute("amount", qcri.getAmount());
-		rttr.addAttribute("keyword", qcri.getKeyword());
-		rttr.addAttribute("type", qcri.getType());
-		
-		return "redirect:/question/qsget";
-		
-	}
+//	@PostMapping("/replyupdate")
+//	public String replyUpdatePOST(QsReplyVO replyvo, QsCriteria qcri, RedirectAttributes rttr){
+//		
+//		log.info("reply update");
+//		
+//		replyservice.updateReply(replyvo);
+//		
+//		rttr.addAttribute("QS_BNO", replyvo.getQUE_ID());
+//		rttr.addAttribute("QRNO", replyvo.getQRNO());
+//		rttr.addAttribute("pageNum", qcri.getPageNum());
+//		rttr.addAttribute("amount", qcri.getAmount());
+//		rttr.addAttribute("keyword", qcri.getKeyword());
+//		rttr.addAttribute("type", qcri.getType());
+//		
+//		return "redirect:/question/qsget";
+//		
+//	}
 	
 	// 질문게시판 댓글삭제 페이지 진입
-	@GetMapping("/replydelete")
-	public void replyDeleteGET(QsCriteria qcri, Model model, int QUE_ID){
-			
-		model.addAttribute("replydelete", replyservice.selectReply(QUE_ID));
-		model.addAttribute("qcri", qcri);
-			
-	}
+//	@GetMapping("/replydelete")
+//	public void replyDeleteGET(QsCriteria qcri, Model model, int QUE_ID){
+//			
+//		model.addAttribute("replydelete", replyservice.selectReply(QUE_ID));
+//		model.addAttribute("qcri", qcri);
+//			
+//	}
 	
 	
 	// 질문게시판 댓글삭제
-	@PostMapping("/replydelete")
-	public String replyDeletePOST(@RequestParam int QRNO, QsReplyVO replyvo, QsCriteria qcri, RedirectAttributes rttr) {
-		
-		replyservice.deleteReply(QRNO);
-		
-		rttr.addAttribute("QS_BNO", replyvo.getQS_BNO());
-		rttr.addAttribute("QRNO", replyvo.getQRNO());
-		rttr.addAttribute("pageNum", qcri.getPageNum());
-		rttr.addAttribute("amount", qcri.getAmount());
-		rttr.addAttribute("keyword", qcri.getKeyword());
-		rttr.addAttribute("type", qcri.getType());
-		
-		return "redirect:/question/qsget";
-	}
+//	@PostMapping("/replydelete")
+//	public String replyDeletePOST(@RequestParam int QRNO, QsReplyVO replyvo, QsCriteria qcri, RedirectAttributes rttr) {
+//		
+//		replyservice.deleteReply(QRNO);
+//		
+//		rttr.addAttribute("QS_BNO", replyvo.getQUE_ID());
+//		rttr.addAttribute("QRNO", replyvo.getQRNO());
+//		rttr.addAttribute("pageNum", qcri.getPageNum());
+//		rttr.addAttribute("amount", qcri.getAmount());
+//		rttr.addAttribute("keyword", qcri.getKeyword());
+//		rttr.addAttribute("type", qcri.getType());
+//		
+//		return "redirect:/question/qsget";
+//	}
 }

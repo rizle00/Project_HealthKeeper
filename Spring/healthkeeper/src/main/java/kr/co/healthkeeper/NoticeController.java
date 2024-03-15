@@ -111,13 +111,12 @@ public class NoticeController {
     
     // 공지사항 수정
     @PostMapping("/notmodify")
-    public String noticeModifyPOST(NoticeVO notice, RedirectAttributes rttr,
-                                   HttpServletRequest request,
-                                   MultipartHttpServletRequest notRequest) throws Exception {
+    public String noticeModifyPOST(NoticeVO notice, RedirectAttributes rttr
+                                   ) throws Exception {
 
         // 파일 삭제 파라미터 추출
-        String[] files = request.getParameterValues("fileIdDel[]");
-        String[] fileNames = request.getParameterValues("fileNameDel[]");
+        //String[] files = request.getParameterValues("fileIdDel[]");
+        //String[] fileNames = request.getParameterValues("fileNameDel[]");
 
         // 첨부파일 삭제
 //        int NOTICE_ID = notice.getNOTICE_ID();
@@ -125,10 +124,10 @@ public class NoticeController {
 
 
         // 공지사항 수정
-        service.notmodify(notice, files, fileNames, notRequest);
+        service.notmodify(notice);
 
         // 공지사항 수정에 성공한 경우에만 삭제된 파일 ID 목록을 모델에 추가
-        rttr.addFlashAttribute("result", "notmodify success");
+        //rttr.addFlashAttribute("result", "notmodify success");
         return "redirect:/notice/notlist";
     }
 

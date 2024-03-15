@@ -9,7 +9,7 @@ import kr.co.model.QsReplyVO;
 public interface QsReplyMapper {
 	
 	// 질문게시판 댓글조회
-	public List<QsReplyVO> readReply(int QS_BNO);
+	//public List<QsReplyVO> readReply(int QUE_ID);
 	
 	// 질문게시판 댓글작성
 	public void registrReply(QsReplyVO qsreplyvo);

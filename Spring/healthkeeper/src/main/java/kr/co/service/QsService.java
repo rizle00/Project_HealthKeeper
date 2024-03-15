@@ -33,6 +33,8 @@ public interface QsService {
 	public int qsViews(int QUE_ID);
 	
 	// 카테고리 리스트
-	public List<CateGoryVO> catelist();
+	public List<CateGoryVO> catelist() throws Exception;
+	
+	public CateGoryVO cate(int CATEGORY_ID);
 
 }

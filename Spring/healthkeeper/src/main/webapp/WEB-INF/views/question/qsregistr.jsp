@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,6 +50,17 @@ body {
 <form action="/question/qsregistr" method="post">
 <h3 class="h1 mt-5 text-center" style="color: black;">질문게시판 등록</h3>
     <div class="container mt-5">
+    <div class="input_wrap" >
+    		<div class="cate_wrap">
+    <span>질문하실 카테고리를 선택해주세요</span>
+    <select class="form-control cate1" name="category.CATEGORY_ID">
+            <option selected value="none">선택</option>
+        <c:forEach items="${catelist}" var="category">
+            <option value="${category.CATEGORY_ID}">${category.NAME}</option>
+        </c:forEach>
+    </select>
+</div>
+		</div>
         <div class="input_wrap">
             <label class="label">제목</label>
             <input class="form-control" name="TITLE">
@@ -62,27 +73,34 @@ body {
             <label class="label">작성자</label>
             <input class="form-control" name="MEMBER_ID">
         </div>
-        <div class="input_wrap">
-    <label class="form-control" style="display: none;">카테고리 선택</label>
-    <div class="cate_wrap">
-    <span>질문하실 카테고리를 선택해주세요</span>
-    <select class="form-control cate1" >
-    <option selected value="1">선택</option>
-    <c:forEach items="${catelist}" var="category">
-        <option value="${category.CATEGORY_ID}">${category.NAME}</option>
-    </c:forEach>
-</select>
-</div>
-</div>
+        
         <button class="btn qsbtn">등록</button>
     </div>
 </form>
 <jsp:include page="/WEB-INF/views/include/footer.jsp"/>
 <script>
+	// 카테코리 출력 js 코드
+let catelist = JSON.parse('${catelist}');
 
-$(document).ready(function(){
-	console.log('${catelist}');
-});
+let cate1Array = new Array();
+let cate1Obj = new Object();
+let cateSelect1 = $(".cate1");
+
+/* 카테고리 배열 초기화 메서드 */
+function makeCateArray(obj,array,catelist){
+    for(let i = 0; i < catelist.length; i++){
+        obj = new Object();
+        obj.name = catelist[i].name;
+        array.push(obj);                
+    }
+}
+
+/* 배열 초기화 */
+makeCateArray(cate1Obj,cate1Array,catelist);
+
+for(let i = 0; i < cate1Array.length; i++){
+    cateSelect1.append("<option value='"+cate1Array[i].category_ID+"'>" + cate1Array[i].name + "</option>");
+}
 </script>
 </body>
 </html>
