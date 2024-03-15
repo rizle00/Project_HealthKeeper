@@ -1,0 +1,7 @@
+{
+    "targetToken":"REPLACE_WITH_DEVICE_FCM_TOKEN"
+    ,
+    "title":"테스트11",
+    "body":"입니다"
+
+}
