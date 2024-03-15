@@ -9,6 +9,8 @@
 	<typeAliases>
 		<typeAlias type="kr.co.app.member.MemberVO"
 			alias="member" />
+		<typeAlias type="kr.co.app.member.QueVO"
+				   alias="que" />
 	</typeAliases>
 </configuration>
 

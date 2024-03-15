@@ -8,7 +8,7 @@ import java.util.HashMap;
 public interface CommonService {
 
     @FormUrlEncoded
-//    @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")
+    @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")// 한글 깨짐 방지
     @POST
     Call<String> clientPostMethod(@Url String url, @FieldMap HashMap<String, Object> params);
 
