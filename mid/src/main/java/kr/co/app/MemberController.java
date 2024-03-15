@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.gson.Gson;
 
+import kr.co.app.common.CommonUtility;
 import kr.co.app.member.MemberService;
 import kr.co.app.member.MemberVO;
 
