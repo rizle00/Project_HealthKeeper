@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommunityDAO {
-    List<CommunityDTOS.Community_BoardDTO> getRecentBoardList() {
-        List<CommunityDTOS.Community_BoardDTO> list =new ArrayList<>();
-        for(int i=0; i<6; i++){
-            list.add(new CommunityDTOS().new Community_BoardDTO("" + i, "" + i, "" + i));
-
-        }return list;
+    List<CommunityDTOS.Community_BoardDTO> getRecentBoardList() {//getBoardArrayList 중 게시글 4개만 보여주기
+        List<CommunityDTOS.Community_BoardDTO> list =getBoardArrayList();
+        List<CommunityDTOS.Community_BoardDTO> recentList = new ArrayList<>();
+        for (int i = 0; i < Math.min(list.size(), 4); i++) {
+            //List의 크기가 4보다 작으면 boardList의 크기만큼만 반복하고, 4 이상이면 4번만 반복하도록!
+            recentList.add(list.get(i));
+        }
+        return recentList;
     }
 
     public List<CommunityDTOS.Community_BoardDTO> getBoardArrayList() {
@@ -24,12 +26,12 @@ public class CommunityDAO {
         list.add(new CommunityDTOS().new Community_BoardDTO("금요일","와따시와","어제"));
         list.add(new CommunityDTOS().new Community_BoardDTO("토요일","하지원","어제"));
         list.add(new CommunityDTOS().new Community_BoardDTO("일요일","데스네","2020.03.01"));
-        list.add(new CommunityDTOS().new Community_BoardDTO("오늘은 웨어러블 산날! 기분좋아","황승은","18:20"));
-        list.add(new CommunityDTOS().new Community_BoardDTO("ㅋㅋ! 기분좋아","이정은","16:30"));
-        list.add(new CommunityDTOS().new Community_BoardDTO("월요일","송차은","15:30"));
-        list.add(new CommunityDTOS().new Community_BoardDTO("화요일","황지정","13:29"));
-        list.add(new CommunityDTOS().new Community_BoardDTO("수요일","하지매","12:03"));
-        list.add(new CommunityDTOS().new Community_BoardDTO("목요일","마시뗴","09:20"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("오늘은 웨어러블 산날! 기분좋아","황승은","2020.03.01"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("ㅋㅋ! 기분좋아","이정은","2020.02.26"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("월요일","송차은","2020.02.26"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("화요일","황지정","2020.02.24"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("수요일","하지매","2020.02.23"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("목요일","마시뗴","2020.02.21"));
 
 
 
@@ -51,9 +53,9 @@ public class CommunityDAO {
         //  공지사항 데이터
 
         ArrayList<CommunityDTOS.Community_NoticeDTO> list=new ArrayList<>();
-        list.add(new CommunityDTOS().new Community_NoticeDTO("필독","앱관련 공지사항","2020.03.04","17:00"));
-        list.add(new CommunityDTOS().new Community_NoticeDTO("정보","웨어러블 뇌졸증미리예방센서 개발!!","2020.03.02","10:00"));
-        list.add(new CommunityDTOS().new Community_NoticeDTO("필독","2024.02.23 앱 업데이트","2020.01.31","3:40"));
+        list.add(new CommunityDTOS().new Community_NoticeDTO("필독","앱관련 공지사항","2020.03.04","17:00","서비스 점검으로 인하여 2024년03월28일 02:00 ~ 2024년03월 28일 04:00까지 서비스가 일부 작동이 원황하지 않을 수 있습니다. \n 불편을 드려 매우 죄송합니다\n 빠르게 서비스가 원활할게 돌아가도록 하겠습니다."));
+        list.add(new CommunityDTOS().new Community_NoticeDTO("정보","웨어러블 뇌졸증 미리 예방센서 개발!!","2020.03.02","10:00","ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇddddddd"));
+        list.add(new CommunityDTOS().new Community_NoticeDTO("필독","2024.02.23 앱 업데이트","2020.01.31","3:40","odeielsjfjsdjllasdflasdfasdfasdfatgtadfhkkkkkkkkkkihhhhhhhhhhhhhhhhhiofghhhhhhhhhhhhh"));
 
         return list;
     }

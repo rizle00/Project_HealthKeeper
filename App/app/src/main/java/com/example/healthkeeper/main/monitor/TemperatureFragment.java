@@ -3,6 +3,7 @@ package com.example.healthkeeper.main.monitor;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.example.healthkeeper.R;
 
 import com.example.healthkeeper.bluetooth.BluetoothViewModel;
 import com.example.healthkeeper.databinding.FragmentTemperatureBinding;
+import com.example.healthkeeper.main.MainActivity;
 
 public class TemperatureFragment extends Fragment {
 
@@ -50,10 +52,18 @@ public class TemperatureFragment extends Fragment {
         });
         loadColorSettings();
 
-        binding.colorChangeButton.setOnClickListener(new View.OnClickListener() {
+        binding.colorChangeButton.setOnClickListener(new View.OnClickListener() {//배경색 변경 다이얼로그 띄우기
             @Override
             public void onClick(View v) {
                 showColorChangeDialog();
+            }
+        });
+
+        binding.goHome.setOnClickListener(new View.OnClickListener() {//홈으로!
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), MainActivity.class));
+
             }
         });
         return view;
