@@ -54,13 +54,13 @@
     </div>
 </form>
 <form id="infoForm" action="/notice/notmodify" method="get">
-    <input type="hidden" id="NOTICE_ID" name="NOTICE_ID" value='<c:out value="${pageInfo.NOTICE_ID}"/>'>
+    <input type="hidden" id="notice_id" name="NOTICE_ID" value='<c:out value="${pageInfo.NOTICE_ID}"/>'>
     <input type="hidden" name="pageNum" value='<c:out value="${ncri.pageNum}"/>'>
     <input type="hidden" name="amount" value='<c:out value="${ncri.amount}"/>'>
     <input type="hidden" name="type" value="${ncri.type }">
     <input type="hidden" name="keyword" value="${ncri.keyword }"> 
-    <input type="hidden" id="fileIdDel" name="fileIdDel[]" value=""> 
-    <input type="hidden" id="fileNameDel" name="fileNameDel[]" value=""> 
+    <!-- <input type="hidden" id="fileIdDel" name="fileIdDel[]" value=""> 
+    <input type="hidden" id="fileNameDel" name="fileNameDel[]" value=""> --> 
 </form>
 <script>
 $(document).ready(function() {
