@@ -2,6 +2,7 @@ package kr.co.service;
 
 import java.util.List;
 
+import kr.co.model.CateGoryVO;
 import kr.co.model.QsCriteria;
 import kr.co.model.QsVO;
 
@@ -30,5 +31,8 @@ public interface QsService {
 	
 	// 게시판 조회수
 	public int qsViews(int QUE_ID);
+	
+	// 카테고리 리스트
+	public List<CateGoryVO> catelist();
 
 }

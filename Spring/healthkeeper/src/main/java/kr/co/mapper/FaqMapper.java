@@ -12,8 +12,6 @@ public interface FaqMapper {
 	// FAQ 게시판 목록
 	public List<FaqVO> faqlist();
 	
-	
-	
 	// FAQ 게시판 수정
 	public int faqupdate(FaqVO faqvo);
 
