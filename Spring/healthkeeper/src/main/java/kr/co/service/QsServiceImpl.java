@@ -42,8 +42,8 @@ public class QsServiceImpl implements QsService{
 
 	// 게시판 조회
 	@Override
-	public QsVO getpage(int QS_BNO) {
-		return mapper.getpage(QS_BNO);
+	public QsVO getpage(int QUE_ID) {
+		return mapper.getpage(QUE_ID);
 	}
 
 	// 게시판 수정
@@ -54,20 +54,25 @@ public class QsServiceImpl implements QsService{
 
 	// 게시판 삭제
 	@Override
-	public int delete(int QS_BNO) {
-		return mapper.delete(QS_BNO);
+	public int delete(int QUE_ID) {
+		return mapper.delete(QUE_ID);
 	}
 
 	// 게시판 조회수
 	@Override
-	public int qsViews(int QS_BNO) {
-		return mapper.qsViews(QS_BNO);
+	public int qsViews(int QUE_ID) {
+		return mapper.qsViews(QUE_ID);
 	}
 
 	// 카테고리 리스트
 	@Override
-	public List<CateGoryVO> catelist() {
+	public List<CateGoryVO> catelist() throws Exception{
 		return mapper.catelist();
+	}
+
+	@Override
+	public CateGoryVO cate(int CATEGORY_ID) {
+		return mapper.cate(CATEGORY_ID);
 	}
 
 }

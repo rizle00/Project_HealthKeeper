@@ -34,5 +34,7 @@ public interface QsMapper {
 	
 	// 게시판 카테고리
 	public List<CateGoryVO> catelist();
+	
+	public CateGoryVO cate(int CATEGORY_ID);
 
 }

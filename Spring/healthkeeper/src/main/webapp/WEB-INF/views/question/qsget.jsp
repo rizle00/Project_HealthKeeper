@@ -13,24 +13,28 @@
 <body>
 <h1>조회 페이지</h1>
 	<div class="input_wrap">
-		<label>공지사항 번호</label>
-		<input name="bno" readonly="readonly" value='<c:out value="${pageInfo.QS_BNO}"/>' >
+		<label>번호</label>
+		<input name="que_id" readonly="readonly" value='<c:out value="${pageInfo.QUE_ID}"/>' >
+	</div>
+    <div class="input_wrap">
+        <label>질문</label>
+        <input name="CATEGORY_ID" readonly="readonly" value='<c:out value="${pageInfo.category.NAME}"/>' >
+    </div>
+	<div class="input_wrap">
+		<label>제목</label>
+		<input name="TITLE" readonly="readonly" value='<c:out value="${pageInfo.TITLE}"/>' >
 	</div>
 	<div class="input_wrap">
-		<label>공지사항 제목</label>
-		<input name="title" readonly="readonly" value='<c:out value="${pageInfo.QS_TITLE}"/>' >
+		<label>내용</label>
+		<textarea rows="3" name="CONTENT" readonly="readonly"><c:out value="${pageInfo.CONTENT}"/></textarea>
 	</div>
 	<div class="input_wrap">
-		<label>공지사항 내용</label>
-		<textarea rows="3" name="content" readonly="readonly"><c:out value="${pageInfo.QS_CONTENT}"/></textarea>
+		<label>작성자</label>
+		<input name="MEMBER_ID" readonly="readonly" value='<c:out value="${pageInfo.MEMBER_ID}"/>' >
 	</div>
 	<div class="input_wrap">
-		<label>공지사항 작성자</label>
-		<input name="writer" readonly="readonly" value='<c:out value="${pageInfo.QS_WRITER}"/>' >
-	</div>
-	<div class="input_wrap">
-		<label>공지사항 등록일</label>
-		<input name="regdate" readonly="readonly" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${pageInfo.QS_REGDATE}"/>' >
+		<label>등록일</label>
+		<input name="TIME" readonly="readonly" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${pageInfo.TIME}"/>' >
 	</div>
 	<hr>
 	<span>파일 목록</span>
@@ -61,7 +65,7 @@
 	</div>
 	
 	<form name="replyForm" method="post">
-  		<input type="hidden" id="qs_bno" name="QS_BNO" value="${pageInfo.QS_BNO}" />
+  		<input type="hidden" id="QUE_ID" name="QUE_ID" value="${pageInfo.QUE_ID}" />
   		<input type="hidden" id="pageNum" name="pageNum" value="${qcri.pageNum}"> 
   		<input type="hidden" id="amount" name="amount" value="${qcri.amount}"> 
   		<input type="hidden" id="keyword" name="keyword" value="${qcri.keyword}"> 
@@ -85,7 +89,7 @@
 	
 
 	<form id="qsinfoForm" action="/question/qsupdate" method="get">
-		<input type="hidden" id="qs_bno" name="QS_BNO" value='<c:out value="${pageInfo.QS_BNO}"/>'>
+		<input type="hidden" id="que_id" name="QUE_ID" value='<c:out value="${pageInfo.QUE_ID}"/>'>
 		<input type="hidden" name="pageNum" value='<c:out value="${qcri.pageNum}"/>'>
         <input type="hidden" name="amount" value='<c:out value="${qcri.amount}"/>'>
         <input type="hidden" name="keyword" value="${qcri.keyword }">
@@ -97,10 +101,16 @@
 	
 	// 공지사항 목록화면 이동 js 코드
 	$("#qslist_btn").on("click", function(e){
-		form.find("#QS_BNO").remove();
+		form.find("#QUE_ID").remove();
 		form.attr("action", "/question/qslist");
 		form.submit();
 	});
+	
+	// 조회 페이지에서 조회 후 마우스로 뒤로가기 누를시 id값 중복안되게 하는 쿼리
+	window.addEventListener('popstate', function(event) {
+    // 현재 페이지의 URL에서 쿼리 매개변수 제거
+    history.replaceState(null, null, window.location.pathname);
+});
 	
 	// 공지사항 수정화면 이동 js 코드
 	$("#qsupdate_btn").on("click", function(e){
