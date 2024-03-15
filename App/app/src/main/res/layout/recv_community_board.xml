@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
 
        <!--데이터 바인딩을 사용하면 뷰 모델의 데이터를 XML 레이아웃과 연결할 수 있다-->
@@ -41,6 +44,7 @@
             android:layout_height="35dp"/>
     </androidx.cardview.widget.CardView>
     <LinearLayout
+        android:id="@+id/click_content_open"
         android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -48,15 +52,33 @@
         android:layout_marginRight="5dp"
         android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="8"
             android:layout_height="wrap_content"
-            android:text="제목"
             android:clickable="true"
-            android:textStyle="bold"
+            android:text="제목"
             android:textSize="15dp"
-            />
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/img_less"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/more"
+            android:textColor="#0B4F92"
+            android:textSize="19dp"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+            android:textStyle="bold" />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -88,7 +110,55 @@
                 android:textSize="10dp"
                 android:layout_marginLeft="5dp"
                 android:text="|"/>
+
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="5dp"
+            android:background="#33A297"/>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                    <TextView
+                        android:id="@+id/tv_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="9"
+                        android:layout_height="wrap_content"
+                        android:text="내용"
+                        android:padding="3dp"
+                        android:clickable="true"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:inputType="textMultiLine"
+                        android:visibility="visible"
+                        />
+
+                <ImageView
+                    android:id="@+id/img_more"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/less"
+                    android:textColor="#0B4F92"
+                    android:textSize="19dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:visibility="visible"
+                    android:paddingRight="10dp"
+                    android:onClick="noticeContentvisibled"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
     <RelativeLayout
@@ -117,4 +187,4 @@
 
 </LinearLayout>
     </androidx.cardview.widget.CardView>
-</layout>
+</LinearLayout>

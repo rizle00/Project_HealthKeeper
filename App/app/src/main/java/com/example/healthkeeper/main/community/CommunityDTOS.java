@@ -7,8 +7,15 @@ public class CommunityDTOS {
 
   public class Community_BoardDTO{
         private int  member_age, member_number;
-        private String writer, title,msg, time, comments;
+        private String writer, title,msg, time, comments,content;
 
+      public String getContent() {
+          return content;
+      }
+
+      public void setContent(String content) {
+          this.content = content;
+      }
 
       public String getTime() {
           return time;

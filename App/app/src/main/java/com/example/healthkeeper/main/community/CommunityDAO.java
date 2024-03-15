@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommunityDAO {
-    List<CommunityDTOS.Community_BoardDTO> getRecentBoardList() {
+    List<CommunityDTOS.Community_BoardDTO> getRecentBoardList() {//getBoardArrayList 중 게시글 4개만 보여주기
         List<CommunityDTOS.Community_BoardDTO> list =getBoardArrayList();
         List<CommunityDTOS.Community_BoardDTO> recentList = new ArrayList<>();
         for (int i = 0; i < Math.min(list.size(), 4); i++) {
@@ -26,12 +26,12 @@ public class CommunityDAO {
         list.add(new CommunityDTOS().new Community_BoardDTO("금요일","와따시와","어제"));
         list.add(new CommunityDTOS().new Community_BoardDTO("토요일","하지원","어제"));
         list.add(new CommunityDTOS().new Community_BoardDTO("일요일","데스네","2020.03.01"));
-        list.add(new CommunityDTOS().new Community_BoardDTO("오늘은 웨어러블 산날! 기분좋아","황승은","18:20"));
-        list.add(new CommunityDTOS().new Community_BoardDTO("ㅋㅋ! 기분좋아","이정은","16:30"));
-        list.add(new CommunityDTOS().new Community_BoardDTO("월요일","송차은","15:30"));
-        list.add(new CommunityDTOS().new Community_BoardDTO("화요일","황지정","13:29"));
-        list.add(new CommunityDTOS().new Community_BoardDTO("수요일","하지매","12:03"));
-        list.add(new CommunityDTOS().new Community_BoardDTO("목요일","마시뗴","09:20"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("오늘은 웨어러블 산날! 기분좋아","황승은","2020.03.01"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("ㅋㅋ! 기분좋아","이정은","2020.02.26"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("월요일","송차은","2020.02.26"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("화요일","황지정","2020.02.24"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("수요일","하지매","2020.02.23"));
+        list.add(new CommunityDTOS().new Community_BoardDTO("목요일","마시뗴","2020.02.21"));
 
 
 

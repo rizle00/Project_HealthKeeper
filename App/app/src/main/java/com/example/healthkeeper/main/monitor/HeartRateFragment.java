@@ -21,6 +21,7 @@ import com.example.healthkeeper.App;
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.bluetooth.BluetoothViewModel;
 import com.example.healthkeeper.databinding.FragmentHeartRateBinding;
+import com.example.healthkeeper.main.MainActivity;
 
 public class HeartRateFragment extends Fragment {
 
@@ -37,6 +38,8 @@ public class HeartRateFragment extends Fragment {
         binding = FragmentHeartRateBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         textView = binding.trueHeartrate;
+
+
         BluetoothViewModel sharedViewModel = ((App) requireActivity().getApplicationContext()).getSharedViewModel();
         sharedViewModel.getHeartLiveData().observe(getViewLifecycleOwner(), data -> {
 
@@ -47,14 +50,14 @@ public class HeartRateFragment extends Fragment {
         });
         loadColorSettings();
 
-        binding.colorChangeButton.setOnClickListener(new View.OnClickListener() {
+        binding.colorChangeButton.setOnClickListener(new View.OnClickListener() {//배경색 변경 다이얼로그 띄우기
             @Override
             public void onClick(View v) {
                 showColorChangeDialog();
             }
         });
 
-        binding.goHome.setOnClickListener(new View.OnClickListener() {
+        binding.goHome.setOnClickListener(new View.OnClickListener() {//홈으로!
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), MainActivity.class));

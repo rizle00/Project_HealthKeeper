@@ -48,7 +48,7 @@ public class BluetoothService extends Service {
         Log.d(TAG, "onStartCommand: 서비스 들어옴");
         bluetoothTask();
         startForeground();
-        observe();
+//        observe();
         return START_STICKY;
     }
 

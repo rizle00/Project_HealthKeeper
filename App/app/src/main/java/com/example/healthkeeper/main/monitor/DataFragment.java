@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.databinding.FragmentDataBinding;
+import com.example.healthkeeper.main.MainActivity;
 
 
 public class DataFragment extends Fragment {
