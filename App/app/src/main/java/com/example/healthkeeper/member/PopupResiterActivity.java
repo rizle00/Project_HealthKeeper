@@ -1,5 +1,6 @@
 package com.example.healthkeeper.member;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -31,7 +32,12 @@ public class PopupResiterActivity extends AppCompatActivity {
             conn.addParamMap("type", type);
             conn.onExcute((isResult, data) -> {
                 if(data.equals("success")){
-
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage("완료되었습니다").setPositiveButton("확인",(dialog, which) -> {
+                       finish();
+                    });
+                }else{
+                    Toast
                 }
             }
         });
