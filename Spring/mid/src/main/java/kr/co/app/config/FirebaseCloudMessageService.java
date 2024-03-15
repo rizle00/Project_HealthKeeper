@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FirebaseCloudMessageService {
 
-    private final String API_URL = "https://fcm.googleapis.com/v1/projects/health-f5329/messages:send";  // 요청을 보낼 엔드포인트
+    private final String API_URL = "https://fcm.googleapis.com/v1/projects/health-f5329/messages:send";  // �슂泥��쓣 蹂대궪 �뿏�뱶�룷�씤�듃
     private  ObjectMapper objectMapper;
 
     public void sendMessageTo(String targetToken, String title, String body) throws IOException {
@@ -39,7 +39,7 @@ public class FirebaseCloudMessageService {
         Response response = client.newCall(request).execute();
 
 //        System.out.println("1111"+response.body().string());
-        System.out.println("응답 :"+ response.code());
+        System.out.println("�쓳�떟 :"+ response.code());
     }
 
     private String makeMessage(String targetToken, String title, String body) throws JsonParseException, JsonProcessingException {
@@ -61,7 +61,7 @@ public class FirebaseCloudMessageService {
 
         GoogleCredentials googleCredentials = GoogleCredentials
                 .fromStream(new ClassPathResource(firebaseConfigPath).getInputStream())
-                .createScoped(List.of("https://www.googleapis.com/auth/cloud-platform"));           //엑세스 토큰 받아오기
+                .createScoped(List.of("https://www.googleapis.com/auth/cloud-platform"));           //�뿊�꽭�뒪 �넗�겙 諛쏆븘�삤湲�
 
         googleCredentials.refreshIfExpired();
         return googleCredentials.getAccessToken().getTokenValue();

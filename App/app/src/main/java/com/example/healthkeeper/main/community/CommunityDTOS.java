@@ -1,6 +1,7 @@
 package com.example.healthkeeper.main.community;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 public class CommunityDTOS {
@@ -8,7 +9,6 @@ public class CommunityDTOS {
   public class Community_BoardDTO{
         private int  member_age, member_number;
         private String writer, title,msg, time, comments,content;
-
       public String getContent() {
           return content;
       }
@@ -82,6 +82,8 @@ public class CommunityDTOS {
 
       public void getId() {
       }
+
+
   }
 
 

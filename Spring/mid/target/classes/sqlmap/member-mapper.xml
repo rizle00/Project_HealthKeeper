@@ -8,6 +8,9 @@
 	<select id="guardian" resultType="member">
 		SELECT * FROM member WHERE member_id = #{guardian_id}
 	</select>
+	<insert id="insertAlarm">
+		insert into
+	</insert>
 <select id="idcheck" resultType="String">
 	SELECT COUNT(*) FROM PROJECT_MEMBER WHERE GUARDIAN_ID = #{guardian_id}
 </select>
