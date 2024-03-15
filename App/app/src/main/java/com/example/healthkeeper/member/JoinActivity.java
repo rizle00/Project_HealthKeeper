@@ -170,7 +170,9 @@ public class JoinActivity extends AppCompatActivity {
             conn.addParamMap("vo", voJson);
             conn.addParamMap("type",getIntent().getStringExtra("type").toString());
             conn.onExcute((isResult, data) -> {
-
+                if(isResult){
+//                    token();
+                }
             });
             jta.finish();
             finish();
@@ -340,4 +342,41 @@ public class JoinActivity extends AppCompatActivity {
             return false;
         }
     }
+
+    private void token(){
+        SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
+        String savedToken = preference.getString("token", null);
+        SharedPreferences.Editor editor = preference.edit();
+
+
+        // 이미 저장된 토큰이 있다면 getToken() 호출을 생략합니다.
+        // 새로운 토큰 추후에..
+//        if (savedToken != null) {
+//            Log.d(TAG, "Token already saved: " + savedToken);
+//            return; // 이미 저장된 토큰이 있으므로 더 이상 진행하지 않습니다.
+//        }
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+                        CommonConn conn = new CommonConn("updateToken", JoinActivity.this);
+                        conn.addParamMap("token", token);
+                        conn.onExcute((isResult, data) -> {
+
+                        });
+
+                        Log.d(TAG, token);
+                    }
+                });
+        Log.d(TAG, "token: "+preference.getString("toke",""));
+    }
+
 }

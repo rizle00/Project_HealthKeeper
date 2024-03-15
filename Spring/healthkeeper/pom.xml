@@ -16,6 +16,13 @@
 	<dependencies>
 	
 	
+		<!-- Jackson-databind 라이브러리 추가 -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.12.1</version>
+		</dependency>
+	
 		<!-- BCryptPasswordEncoder 기본 설정 -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
