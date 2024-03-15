@@ -20,43 +20,43 @@ public class PopupResiterActivity extends AppCompatActivity {
         binding = ActivityPopupResiterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
+        //등록하기 클릭 리스너
         binding.btnRegister.setOnClickListener(v -> {
-            if(binding.tgbtn.getCheckedButtonId()==0){
-                type="guardian";
-            }else{
-                type="patient"
+            if (binding.tgbtn.getCheckedButtonId() == 0) {
+                type = "guardian";
+            } else {
+                type = "patient";
             }
-        if(binding.btnIdCheck.getVisibility()==View.GONE) {
-            CommonConn conn = new CommonConn("partnerRegister", this);
-            conn.addParamMap("partner", binding.edtPartnerId.getText().toString());
-            conn.addParamMap("type", type);
-            conn.onExcute((isResult, data) -> {
-                if(data.equals("success")){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage("완료되었습니다").setPositiveButton("확인",(dialog, which) -> {
-                       finish();
-                    });
-                }else{
-                    Toast
-                }
+            if (binding.btnIdCheck.getVisibility() == View.GONE) {
+                CommonConn conn = new CommonConn("partnerRegister", this);
+                conn.addParamMap("partner", binding.edtPartnerId.getText().toString());
+                conn.addParamMap("type", type);
+                conn.onExcute((isResult, data) -> {
+                    if (data.equals("success")) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("완료되었습니다").setPositiveButton("확인", (dialog, which) -> {
+                            finish();
+                        });
+                    } else {
+                        Toast.makeText(this, "오류가 발생했습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
-        });
-        };
 
-
-
-        binding.btnIdCheck.setOnClickListener(v -> {
-            CommonConn conn = new CommonConn("/partnercheck",this);
-            conn.addParamMap("partner_id",binding.edtPartnerId.getText().toString());
-            conn.onExcute((isResult, data) -> {
-                if(data.equals("success")){
-                    binding.btnIdCheck.setVisibility(View.GONE);
-                    binding.edtPartnerId.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.img_check, 0);
-                }else{
-                    Toast.makeText(this, "존재하지 않는 아이디입니다", Toast.LENGTH_SHORT).show();
-                }
+            //보호자, 환자 아이디 확인 클릭 리스너
+            binding.btnIdCheck.setOnClickListener(v1 ->  {
+                CommonConn conn = new CommonConn("/partnercheck", this);
+                conn.addParamMap("partner_id", binding.edtPartnerId.getText().toString());
+                conn.onExcute((isResult, data) -> {
+                    if (data.equals("success")) {
+                        binding.btnIdCheck.setVisibility(View.GONE);
+                        binding.edtPartnerId.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.img_check, 0);
+                    } else {
+                        Toast.makeText(this, "존재하지 않는 아이디입니다", Toast.LENGTH_SHORT).show();
+                    }
+                });
             });
         });
-
     }
 }
