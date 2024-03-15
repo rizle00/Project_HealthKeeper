@@ -10,7 +10,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
+import com.example.healthkeeper.common.CommonConn;
 import com.example.healthkeeper.databinding.ActivitySplashBinding;
+import com.example.healthkeeper.member.JoinActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -26,10 +28,9 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        token();
         Log.d(TAG, "onCreate");
 //      String name =  preference.getString("user_name","Guest");
-
+        token();
       String name = "a";
 
         new Handler().postDelayed(() -> {
@@ -49,9 +50,8 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void token(){
-        SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
+        preference = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
         String savedToken = preference.getString("token", null);
-        SharedPreferences.Editor editor = preference.edit();
 
 
         // 이미 저장된 토큰이 있다면 getToken() 호출을 생략합니다.
@@ -70,19 +70,18 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                             return;
                         }
 
-                        // Get new FCM registration token
+                        // 토큰 미리 담아두기, 시점에따라 안들어갈수 있어서
                         String token = task.getResult();
+                        SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
+
+                        SharedPreferences.Editor editor = preference.edit();
                         editor.putString("token", token);
                         editor.apply();
-                        // Log and toast
-//                        String msg = getString(R.string.msg_token_fmt, token);
 
                         Log.d(TAG, token);
                     }
                 });
-
     }
-
     @Override
     public void onClick(View v) {
 
