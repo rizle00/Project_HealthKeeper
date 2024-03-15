@@ -59,25 +59,25 @@ public class CommunityFragment extends Fragment {
                 BoardDetail_Fragment();
             }
 
-        private void BoardDetail_Fragment() {
-                BoardDetail_Fragment boardDetailFragment = new BoardDetail_Fragment();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, boardDetailFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                private void BoardDetail_Fragment() {
+                        BoardDetail_Fragment boardDetailFragment = new BoardDetail_Fragment();
+                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                        transaction.replace(R.id.container, boardDetailFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
 
-            }
-        });
+                    }
+                });
 
         //=================================================================================================================
-        binding.tvNewWriting.setOnClickListener(new View.OnClickListener() {
+        binding.tvNewWriting.setOnClickListener(new View.OnClickListener() {//글쓰기 버튼
             @Override
             public void onClick(View view) {
                 binding.tvNewWritingShow.setVisibility(View.VISIBLE);
                 binding.tvNewWriting.setVisibility(View.INVISIBLE);
             }
         });
-        binding.saveNewWrite.setOnClickListener(new View.OnClickListener() {//저장된 정보를 db와..연결?????????????해야함.???
+        binding.saveNewWrite.setOnClickListener(new View.OnClickListener() {//쓴글 저장.저장된 정보를 db와..연결?????????????해야함.???
             @Override
             public void onClick(View view) {
 
@@ -145,15 +145,15 @@ public class CommunityFragment extends Fragment {
 
 
 
-    private List<CommunityDTOS.Community_BoardDTO> getRecentBoardList() {
+    private List<CommunityDTOS.Community_BoardDTO> getRecentBoardList() {//게시판 리스트
         return communityDAO.getRecentBoardList();
     }
 
-    private List<CommunityDTOS.Community_QuestionDTO> getQuestionArrayList() {
+    private List<CommunityDTOS.Community_QuestionDTO> getQuestionArrayList() {//자주하는 질문 리스트
         return communityDAO.getQuestionArrayList();
     }
 
-    private List<CommunityDTOS.Community_NoticeDTO> getNoticeArrayList() {
+    private List<CommunityDTOS.Community_NoticeDTO> getNoticeArrayList() {//공지사항 리스트
         return communityDAO.getNoticeArrayList();
     }
 

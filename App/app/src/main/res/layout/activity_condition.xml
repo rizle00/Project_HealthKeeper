@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="20dp"
+
     android:orientation="vertical"
     tools:context=".main.monitor.ConditionActivity">
 
@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         app:selectionRequired="true"
         app:singleSelection="true"
+        android:paddingTop="20dp"
         app:chipGroupStyle="@drawable/chip_background_selector">
 
         <!-- 체온 Chip -->

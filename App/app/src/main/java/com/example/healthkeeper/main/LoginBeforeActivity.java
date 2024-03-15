@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.View;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentManager;
+
 import com.example.healthkeeper.databinding.ActivityLoginBeforeBinding;
 import com.example.healthkeeper.member.LoginActivity;
 
@@ -18,7 +20,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class LoginBeforeActivity extends AppCompatActivity {
-    ViewPager viewPager;
+//    ViewPager viewPager;
     /* 로그인 되면 종료하게 하기위함*/
 //    public static LoginBeforeActivity _loginBeforeActivity;
 //    private SharedPreferences sharedPreferences;
@@ -85,20 +87,20 @@ public class LoginBeforeActivity extends AppCompatActivity {
 
         // 이미지 리소스 ID 목록 생성
         ArrayList<Integer> imageResources = new ArrayList<>();
-        imageResources.add(R.drawable.watch_img1);
-        imageResources.add(R.drawable.img_cctv);
-        imageResources.add(R.drawable.watch_img2);
-        imageResources.add(R.drawable.watch_img6);
-        imageResources.add(R.drawable.watch_img5);
-        imageResources.add(R.drawable.watch_img1);
+//        imageResources.add(R.drawable.watch_img1);
+//        imageResources.add(R.drawable.img_cctv);
+//        imageResources.add(R.drawable.watch_img2);
+//        imageResources.add(R.drawable.watch_img6);
+//        imageResources.add(R.drawable.watch_img5);
+//        imageResources.add(R.drawable.watch_img1);
 
         // FragmentManager를 가져옴
         FragmentManager fragmentManager = getSupportFragmentManager();
         // Autoimg_Adapter를 생성하고 ViewPager에 설정
         Autoimg_Adapter adapter = new Autoimg_Adapter(fragmentManager, imageResources);
-        viewPager = findViewById(R.id.viewPager);
-
-        viewPager.setAdapter(adapter);
+//        viewPager = findViewById(R.id.viewPager);
+//
+//        viewPager.setAdapter(adapter);
 
         // 타이머 설정하여 이미지 자동 전환
         Timer timer = new Timer();
@@ -108,11 +110,11 @@ public class LoginBeforeActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (viewPager.getCurrentItem() < adapter.getCount() - 1) {
-                            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-                        } else {
-                            viewPager.setCurrentItem(0);
-                        }
+//                        if (viewPager.getCurrentItem() < adapter.getCount() - 1) {
+//                            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+//                        } else {
+//                            viewPager.setCurrentItem(0);
+//                        }
                     }
                 });
             }
