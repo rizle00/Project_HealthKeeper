@@ -238,7 +238,7 @@ public class BluetoothService extends Service {
 
     private void handleAccidentDetected(Integer heart, Double temp, String accident) {
 
-
+        //7 -> 낙상 8-> 맥박상승 9 -> 맥박하락 10 -> 체온상승 11-> 체온하락
         if (heart != 0 && temp != 0) {
             String contents[] = {"낙상이 발생했습니까? 확인해주세요",
                     "심박이 너무 높습니다. 확인해주세요", "심박이 너무 낮습니다. 확인해주세요",
