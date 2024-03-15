@@ -16,10 +16,10 @@ public class QsReplyServiceImpl implements QsReplyService{
 	private QsReplyMapper mapper;
 	
 	// 질문게시판 댓글조회
-	@Override
-	public List<QsReplyVO> readReply(int QS_BNO) {
-		return mapper.readReply(QS_BNO);
-	}
+//	@Override
+//	public List<QsReplyVO> readReply(int QUE_ID) {
+//		return mapper.readReply(QUE_ID);
+//	}
 	
 	// 질문게시판 댓글작성
 	@Override

@@ -60,10 +60,7 @@ public class NoticeServiceImpl implements NoticeService{
 
 	// 공지사항 수정
 	@Override
-	public int notmodify(NoticeVO notice, 
-	                     String[] files, 
-	                     String[] fileNames,
-	                     MultipartHttpServletRequest notRequest) throws Exception {
+	public int notmodify(NoticeVO notice) throws Exception {
 	    
 	    // 파일 삭제 여부와 관계없이 게시글 정보만 업데이트
 	    return mapper.notmodify(notice);

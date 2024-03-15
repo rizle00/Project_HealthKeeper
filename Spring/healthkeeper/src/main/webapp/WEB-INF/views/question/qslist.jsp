@@ -124,6 +124,7 @@
 	 
     $(".move").on("click", function(e){
         e.preventDefault();
+        moveForm.find("[name=QUE_ID]").remove();
         
         moveForm.append("<input type='hidden' name='QUE_ID' value='"+ $(this).attr("href")+ "'>");
         moveForm.attr("action", "/question/qsget");
