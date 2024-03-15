@@ -1,14 +1,14 @@
-package com.example.healthkeeper.common;
-
-import java.util.HashMap;
+package com.example.testapplication.common;
 
 import retrofit2.Call;
 import retrofit2.http.*;
 
+import java.util.HashMap;
+
 public interface CommonService {
 
     @FormUrlEncoded
-    @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")// 한글 깨짐 방지
+//    @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")
     @POST
     Call<String> clientPostMethod(@Url String url, @FieldMap HashMap<String, Object> params);
 
