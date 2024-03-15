@@ -3,7 +3,6 @@ package com.example.testapplication.common;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
-import com.example.testapplication.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,7 +32,7 @@ public class CommonConn {
         if (context != null && dialog == null) {
             dialog = new ProgressDialog(context);
             dialog.setProgress(ProgressDialog.STYLE_SPINNER);
-            dialog.setTitle(context.getString(R.string.app_name));
+//            dialog.setTitle(context.getString(R.string.app_name));
             dialog.setMessage("현재 데이터 로딩중");
             dialog.setCancelable(false);
             dialog.show();
@@ -41,7 +40,7 @@ public class CommonConn {
     }
 
     public void onExcute(appCallBack callBack){
-        onPreExcute();
+//        onPreExcute();
         CommonService service = CommonClient.getRetrofit().create(CommonService.class);
 
         service.clientPostMethod(url,paramMap).enqueue(new Callback<String>() {
@@ -62,7 +61,7 @@ public class CommonConn {
                 callBack.onResult(false,t.getMessage());
             }
         });
-        onPostExcute();
+//        onPostExcute();
     }
 
     private void onPostExcute() {

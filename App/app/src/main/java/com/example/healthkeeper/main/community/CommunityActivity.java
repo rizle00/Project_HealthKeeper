@@ -1,6 +1,5 @@
 package com.example.healthkeeper.main.community;
 
-        import static android.app.PendingIntent.getActivity;
 
         import android.Manifest;
         import android.content.DialogInterface;
