@@ -10,46 +10,57 @@
 
 
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
 
             <!-- 게시판  -->
-            <Button
+            <android.widget.Button
                 android:id="@+id/button1"
-
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="게시판"
-
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"/>
+                android:textStyle="bold"
+                android:backgroundTint="@drawable/selector_community_title"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:clickable="true"
+                />
+                <!--style="@android:style/Widget.Button"-->
 
             <!-- 자주묻는 질문 -->
-            <Button
+            <android.widget.Button
                 android:id="@+id/button2"
-
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:textStyle="bold"
+                android:backgroundTint="@drawable/selector_community_title"
                 android:layout_height="wrap_content"
                 android:text="자주묻는 질문"
-                android:layout_toRightOf="@id/button1"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"/>
+                android:clickable="true"
+
+
+                />
 
             <!-- 공지사항  -->
-            <Button
+            <android.widget.Button
                 android:id="@+id/button3"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="공지사항"
-                android:layout_toRightOf="@id/button2"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"/>
+                android:textStyle="bold"
+                android:backgroundTint="@drawable/selector_community_title"
+                android:layout_marginStart="5dp"
+                android:layout_marginRight="10dp"
+                android:clickable="true"
 
+                />
 
+        </LinearLayout>
 
             <!-- ScrollView -->
             <androidx.core.widget.NestedScrollView
@@ -72,6 +83,7 @@
 
                     <View
                         style="@style/gray_view_line1dp"
+                        android:id="@+id/view1"
                         android:background="#123"
                         android:layout_height="1dp"
                         />
@@ -79,9 +91,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:background="#E4ECEB"
+                        android:backgroundTint="#F2ECEE"
                         >
                         <TextView
+                            android:id="@+id/tv_boardTitle"
                             android:layout_centerVertical="true"
                             android:textSize="20dp"
                             android:textStyle="bold"
@@ -92,13 +105,103 @@
 
                             />
 
-                        <ImageView
+                        <Button
+                            android:id="@+id/tv_new_writing"
                             android:layout_alignParentRight="true"
                             android:src="@drawable/img_alam"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"/>
+                            android:text="글쓰기"
+                            android:textStyle="bold"
+                            android:layout_width="100dp"
+                            android:backgroundTint="#F29B80"
+                            android:paddingBottom="2dp"
+                            android:layout_height="35dp"/>
 
                     </RelativeLayout>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/tv_new_writing_show"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        app:cardCornerRadius="10dp"
+                        android:backgroundTint="#FFFFFF"
+                        android:elevation="20dp"
+                        android:visibility="gone"
+                        >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                >
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="제  목"
+                                    android:textStyle="bold"
+                                    android:textSize="15dp"
+                                    />
+
+                                <com.google.android.material.textfield.TextInputLayout
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="제목을 입력해주세요"
+                                    app:endIconMode="clear_text"
+                                    android:layout_margin="10dp"
+                                    >
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/edt_tltleName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="text"
+                                        />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="내용"
+                                    android:textStyle="bold"
+                                    android:textSize="15dp"
+                                    />
+
+                                <com.google.android.material.textfield.TextInputLayout
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="내용을 입력해주세요"
+                                app:endIconMode="clear_text"
+                                android:layout_margin="10dp"
+                                >
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/edt_tltleContent"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textMultiLine"
+                                    />
+                                    <!-- android:inputType="textMultiLine":엔터키를 사용하여 아랫줄로 내려갈 수 있게 됨-->
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                                <Button
+                                    android:id="@+id/save_new_write"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="35dp"
+                                    android:text="글 올리기"
+                                    android:paddingBottom="3dp"
+                                    android:textStyle="bold|italic"
+                                    android:layout_gravity="right"
+                                    android:layout_marginRight="30dp"
+                                    android:textSize="14dp"
+                                    android:textColor="#FAB348"
+                                    android:backgroundTint="#FFFFFF"
+                                    />
+                            </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/board"
@@ -106,19 +209,20 @@
                         android:layout_height="wrap_content" />
 
                     <Button
-    android:id="@+id/clickButton"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Read more"
-    android:layout_gravity="right"
-    android:layout_marginRight="30dp"
-    android:textSize="14dp"
-    android:textColor="#3B7CBD"
-    android:backgroundTint="#FFFFFF"
-    />
+                            android:id="@+id/clickButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Read more"
+                            android:layout_gravity="right"
+                            android:layout_marginRight="30dp"
+                            android:textSize="14dp"
+                            android:textColor="#3B7CBD"
+                            android:backgroundTint="#FFFFFF"
+                            />
 
 
                     <View
+                        android:id="@+id/view2"
                         style="@style/gray_view_line1dp"
                         android:background="#123"
                         android:layout_height="1dp"
@@ -129,6 +233,7 @@
                         android:layout_marginBottom="10dp"
                         >
                         <TextView
+                            android:id="@+id/tv_questionTitle"
                             android:layout_centerVertical="true"
                             android:text="자주묻는질문"
                             android:textSize="20dp"
@@ -137,6 +242,7 @@
                             android:layout_height="wrap_content"/>
 
                         <ImageView
+
                             android:layout_alignParentRight="true"
                             android:src="@drawable/img_alam"
                             android:layout_width="20dp"
@@ -151,8 +257,8 @@
                         />
 
                     <View
+                        android:id="@+id/view3"
                         style="@style/gray_view_line1dp"
-
                         android:background="#123"
                         />
 
@@ -165,12 +271,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp">
                         <TextView
+                            android:id="@+id/tv_noticeTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:text="공지사항"
                             android:textSize="20dp"
                             android:textStyle="bold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            />
 
                         <ImageView
                             android:layout_alignParentRight="true"
@@ -188,8 +296,7 @@
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 
-        </RelativeLayout>
+        </LinearLayout>
 
 
 
-</LinearLayout>

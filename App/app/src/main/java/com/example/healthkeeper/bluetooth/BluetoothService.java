@@ -48,6 +48,7 @@ public class BluetoothService extends Service {
         bluetoothTask();
         startForeground();
 
+       observe();
         return START_STICKY;
     }
 

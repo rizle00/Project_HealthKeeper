@@ -3,6 +3,7 @@ package com.example.healthkeeper.main.monitor;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.example.healthkeeper.App;
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.bluetooth.BluetoothViewModel;
 import com.example.healthkeeper.databinding.FragmentHeartRateBinding;
+import com.example.healthkeeper.main.MainActivity;
 
 public class HeartRateFragment extends Fragment {
 
@@ -36,6 +38,8 @@ public class HeartRateFragment extends Fragment {
         binding = FragmentHeartRateBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         textView = binding.trueHeartrate;
+
+
         BluetoothViewModel sharedViewModel = ((App) requireActivity().getApplicationContext()).getSharedViewModel();
         sharedViewModel.getHeartLiveData().observe(getViewLifecycleOwner(), data -> {
 
@@ -46,10 +50,18 @@ public class HeartRateFragment extends Fragment {
         });
         loadColorSettings();
 
-        binding.colorChangeButton.setOnClickListener(new View.OnClickListener() {
+        binding.colorChangeButton.setOnClickListener(new View.OnClickListener() {//배경색 변경 다이얼로그 띄우기
             @Override
             public void onClick(View v) {
                 showColorChangeDialog();
+            }
+        });
+
+        binding.goHome.setOnClickListener(new View.OnClickListener() {//홈으로!
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), MainActivity.class));
+
             }
         });
 
@@ -93,17 +105,17 @@ public class HeartRateFragment extends Fragment {
                 if (checkedRadioButtonId != -1) { // 어떤 라디오 버튼이 선택되었는지 확인
                     RadioButton checkedRadioButton = dialogView.findViewById(checkedRadioButtonId);
 
-                    if (checkedRadioButton.getId() == R.id.radioColor1) {
+                    if (checkedRadioButton.getId() == R.id.radioColor1) {//화이트
                         selectedColor = ContextCompat.getColor(requireContext(), R.color.radioColor1);
                         selectedTextColor = Color.BLACK;
                     } else if (checkedRadioButton.getId() == R.id.radioColor2) {
                         selectedColor = ContextCompat.getColor(requireContext(), R.color.radioColor2);
-                    } else if (checkedRadioButton.getId() == R.id.radioColor3) {
+                    } else if (checkedRadioButton.getId() == R.id.radioColor3) {//블랙
                         selectedColor = ContextCompat.getColor(requireContext(), R.color.radioColor3);
                         selectedTextColor2 = Color.WHITE;
                     } else if (checkedRadioButton.getId() == R.id.radioColor4) {
                         selectedColor = ContextCompat.getColor(requireContext(), R.color.radioColor4);
-                    } else if (checkedRadioButton.getId() == R.id.radioColor5) {
+                    } else if (checkedRadioButton.getId() == R.id.radioColor5) {//엘로우
                         selectedColor = ContextCompat.getColor(requireContext(), R.color.radioColor5);
                     }
                 }
