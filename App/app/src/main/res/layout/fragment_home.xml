@@ -339,7 +339,7 @@
                     <RelativeLayout
                         android:id="@+id/case1"
                         android:layout_width="match_parent"
-                        android:layout_height="140dp"
+                        android:layout_height="120dp"
                         android:clickable="true"
                         android:background="#8A90AE"
                         tools:ignore="DuplicateIds">
@@ -398,7 +398,7 @@
                     <RelativeLayout
                         android:id="@+id/case2"
                         android:layout_width="match_parent"
-                        android:layout_height="140dp"
+                        android:layout_height="120dp"
                         android:clickable="true"
                         android:background="#89ABA8"
                         tools:ignore="DuplicateIds">
@@ -457,7 +457,7 @@
                     <RelativeLayout
                         android:id="@+id/case3"
                         android:layout_width="match_parent"
-                        android:layout_height="140dp"
+                        android:layout_height="120dp"
                         android:clickable="true"
                         android:background="#ECD2AC"
                         tools:ignore="DuplicateIds">
@@ -509,7 +509,7 @@
                     <RelativeLayout
                         android:id="@+id/case4"
                         android:layout_width="match_parent"
-                        android:layout_height="140dp"
+                        android:layout_height="120dp"
                         android:clickable="true"
                         android:background="#D4BED8"
                         tools:ignore="DuplicateIds">

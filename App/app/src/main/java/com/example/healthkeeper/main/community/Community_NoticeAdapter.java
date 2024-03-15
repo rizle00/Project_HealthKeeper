@@ -2,6 +2,7 @@ package com.example.healthkeeper.main.community;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -34,8 +35,38 @@ public class Community_NoticeAdapter extends RecyclerView.Adapter<Community_Noti
         holder.binding.tvNoticeTitle.setText(list.get(i).getNoticeTitle());
         holder.binding.tvDate.setText(list.get(i).getDate());
         holder.binding.tvTime.setText(list.get(i).getTime());
+        holder.binding.tvContent.setText(list.get(i).getContent());
+
+        holder.binding.tvNoticeTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.binding.tvContent.setVisibility(View.VISIBLE);
+                holder.binding.imgLess.setVisibility(View.VISIBLE);
+                holder.binding.imgMore.setVisibility(View.GONE);
+            }
+        });
+        holder.binding.imgMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.binding.tvContent.setVisibility(View.VISIBLE);
+                holder.binding.imgLess.setVisibility(View.VISIBLE);
+                holder.binding.imgMore.setVisibility(View.GONE);
+            }
+        });
+        holder.binding.imgLess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.binding.tvContent.setVisibility(View.GONE);
+                holder.binding.imgLess.setVisibility(View.GONE);
+                holder.binding.imgMore.setVisibility(View.VISIBLE);
+
+            }
+        });
+
 
     }
+
+
 
     @Override
     public int getItemCount() {
