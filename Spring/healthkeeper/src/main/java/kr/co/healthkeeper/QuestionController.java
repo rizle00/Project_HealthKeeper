@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import kr.co.model.QsCriteria;
 import kr.co.model.QsPageMakeDTO;
 import kr.co.model.QsReplyVO;
@@ -48,13 +51,23 @@ public class QuestionController {
 
 	// 질문게시판 등록페이지 진입
 	@GetMapping("/qsregistr")
-	public void qsRegistrGET() {
+	public void qsRegistrGET(Model model) throws Exception{
 		log.info("질문게시판 등록 페이지 진입");
+
+		
+		ObjectMapper objm = new ObjectMapper();
+		List list = service.catelist();
+		
+		String catelist = objm.writeValueAsString(list);
+		model.addAttribute("catelist", catelist);
+		
+		log.info("변경 전......." + list);
+		log.info("변경 후......." + catelist);
 	}
 	
 	// 질문게시판 등록
 	@PostMapping("/qsregistr")
-	public String qsRegistrPOST(QsVO qs, RedirectAttributes rttr) {
+	public String qsRegistrPOST(QsVO qs, RedirectAttributes rttr, Model model) throws Exception {
 		log.info("QsVO :" + qs);
 		service.qsregistr(qs);
 		rttr.addFlashAttribute("result", "registr success");

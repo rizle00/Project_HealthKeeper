@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 import com.example.healthkeeper.common.CommonConn;
+import com.example.healthkeeper.firebase.RequestDTO;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -40,14 +41,13 @@ public class BluetoothRepository {
         });
     }
 
-    public void insertAlarm(HashMap<String, Object> map) {
-        commonConn = new CommonConn("/api/fcm", mContext);
+    public void insertAlarm(RequestDTO dto) {
+        commonConn = new CommonConn("api/fcm", mContext);
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                String json = new Gson().toJson(map);
+                String json = new Gson().toJson(dto);
                 commonConn.addParamMap("params", json);
-                Log.d(TAG, "run: " + map);
                 commonConn.onExcute((isResult, data) -> {
 
                     Log.d("Common", "onResult: " + data);

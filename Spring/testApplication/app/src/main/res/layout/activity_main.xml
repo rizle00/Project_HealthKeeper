@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context=".MainActivity">
+    <FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                 android:layout_marginTop="40dp"
+                 android:layout_marginLeft="20dp"
+                 android:layout_marginRight="20dp"
+                 android:layout_gravity="center">
+        <ImageView android:layout_width="180dp" android:layout_height="180dp"
+                   android:layout_gravity="center"
+                   android:layout_margin="20dp"
+                   android:src="@drawable/alarm"/>
+        <ProgressBar
+                android:id="@+id/progressBarCircle"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/circle_inner"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="100"
+                android:progressDrawable="@drawable/circle_outer"
+                android:rotation="-90"
+        />
+    </FrameLayout>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="알람을 종료해주세요\n종료하지 않을시\n 자동 신고됩니다"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:layout_above="@id/tv_time"
+            android:layout_centerInParent="true"/>
+    <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="60:00"
+            android:textColor="@color/black"
+            android:textSize="80dp"
+            android:layout_gravity="center"
+            android:layout_above="@id/btn_close_alarm"
+            android:layout_marginBottom="20dp"
+            android:layout_centerInParent="true"/>
+
+
+    <Button
+            android:id="@+id/btn_close_alarm"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="알람 종료"
+            android:textSize="40dp"
+            android:background="#FFD700"
+            android:layout_alignParentBottom="true" />
+
+
+</RelativeLayout>
