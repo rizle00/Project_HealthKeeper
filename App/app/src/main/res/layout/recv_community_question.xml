@@ -42,15 +42,15 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="7dp"
         android:visibility="visible"
         app:cardCornerRadius="15dp"
-        android:layout_marginBottom="10dp"
+
         >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#E2F1EF"
+            android:padding="10dp"
+            android:background="#FAF4F6"
             >
 
             <TextView
@@ -61,7 +61,7 @@
                 android:text="자주하는 질문에 대한 답변.어릴 때 작은 집들과 조각들에 대한 책을 가지고 있었어요. 항상 그러한 동화, 호빗, 고블린에 대해 생각했고 크면 그러한 것을 만들고 싶었어요"
                 android:textStyle="bold|italic"
                 android:textSize="14dp"
-                android:maxLines="2"
+                android:maxLines="20"
                 android:ellipsize="end"
                 />
 

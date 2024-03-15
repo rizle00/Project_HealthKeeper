@@ -10,6 +10,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 
 import com.example.healthkeeper.databinding.ActivityCctvBinding;
+import com.example.healthkeeper.main.MainActivity;
 
 public class CCTVActivity extends AppCompatActivity {
     public static final String CCTV_URL = "https://www.bing.com/videos/riverview/relatedvideo?&q=%ec%98%81%ec%83%81&&mid=B2606CE5715B5C8884B2B2606CE5715B5C8884B2&&FORM=GVRPTV";
@@ -60,9 +61,12 @@ public class CCTVActivity extends AppCompatActivity {
         backHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                startActivity(new Intent(CCTVActivity.this, MainActivity.class));
+                finish();
             }
         });
+
+
     }
 
     @Override

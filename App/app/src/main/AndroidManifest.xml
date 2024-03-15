@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-         >
+          xmlns:tools="http://schemas.android.com/tools">
+
     <meta-data
             android:name="firebase_messaging_auto_init_enabled"
-            android:value="false" />
+            android:value="false"/>
     <meta-data
             android:name="firebase_analytics_collection_enabled"
-            android:value="false" /> <!-- 자동 초기화 방지 -->
+            android:value="false"/> <!-- 자동 초기화 방지 -->
     <uses-feature
         android:name="android.hardware.bluetooth_le"
         android:required="true" />
-
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 앱이 블루투스 장치에 연결할 수 있도록 허용하는 레거시 권한입니다. -->
-    <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- 앱이 블루투스 장치를 검색하고 결합할 수 있도록 허용하는 레거시 권한입니다 -->
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- 포그라운드 서비스 허용, 배터리 최적화를 위한 종료 방지 -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- 서비스 시행시 꺼지지 않게 -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" /> <!-- 서비스 시행시 꺼지지 않게 -->
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" /> <!-- 페어링 설정 -->
-    <uses-feature android:name="android.software.companion_device_setup" /> <!-- 페어링 설정 -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- 알림 권한 허용 -->
+    <uses-permission android:name="android.permission.INTERNET"/> <!-- 앱이 블루투스 장치에 연결할 수 있도록 허용하는 레거시 권한입니다. -->
+    <uses-permission android:name="android.permission.BLUETOOTH"/> <!-- 앱이 블루투스 장치를 검색하고 결합할 수 있도록 허용하는 레거시 권한입니다 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission
+        android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/> <!-- 포그라운드 서비스 허용, 배터리 최적화를 위한 종료 방지 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/> <!-- 서비스 시행시 꺼지지 않게 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE"/> <!-- 서비스 시행시 꺼지지 않게 -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/> <!-- 페어링 설정 -->
+    <uses-feature android:name="android.software.companion_device_setup"/> <!-- 페어링 설정 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/> <!-- 알림 권한 허용 -->
     <uses-feature
         android:name="android.hardware.telephony"
-        android:required="true" /> <!-- 전화 권한 허용 -->
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+        android:required="true"/> <!-- 전화 권한 허용 -->
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.SEND_SMS" /><!-- 문자보내기 허용-->
 
     <application
         android:name=".App"
@@ -42,33 +43,31 @@
         android:theme="@style/Theme.HealthKeeper"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".member.PopupResiterActivity"
-            android:theme="@style/Theme.MaterialComponents.Dialog"
-            android:exported="false" />
+    <activity
+        android:name=".firebase.AlarmActivity"
+        android:exported="false"/>
+
+
         <service
                 android:name=".bluetooth.BluetoothService"
-                android:foregroundServiceType="connectedDevice"
                 android:enabled="true"
-                android:exported="false">
+                android:exported="false"
+                android:foregroundServiceType="connectedDevice">
         </service>
-
         <service
                 android:name=".firebase.FirebaseMessagingService"
-                android:exported="false"
-                >
+                android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
-
         <activity
-            android:name=".member.PopupSearchAddressActivity"
-            android:exported="false"
-            android:theme="@style/Theme.MaterialComponents.Dialog" />
+        android:name=".member.PopupSearchAddressActivity"
+        android:exported="false"
+        android:theme="@style/Theme.MaterialComponents.Dialog"/>
         <activity
             android:name=".member.SimpleJoinActivity"
-            android:exported="false" /> <!-- android:screenOrientation="portrait:cctvfullActivity에서 가로방향으로 화면 설정 -->
+            android:exported="false"/> <!-- android:screenOrientation="portrait:cctvfullActivity에서 가로방향으로 화면 설정 -->
         <activity
                 android:name=".main.cctv.CCTVFullmainActivity"
                 android:exported="false"
@@ -77,12 +76,9 @@
                 android:name=".main.cctv.CCTVActivity"
                 android:exported="false"
                 android:screenOrientation="portrait"/>
-           
-
         <activity
                 android:name=".main.monitor.ConditionActivity"
                 android:exported="false"/>
-
         <activity
             android:name=".setting.NoticeActivity"
             android:exported="false" />
@@ -123,8 +119,8 @@
             android:name=".member.PatientJoinActivity"
             android:exported="false" />
         <activity
-            android:name=".member.JoinActivity"
-            android:exported="false" />
+                android:name=".member.JoinActivity"
+                android:exported="false"/>
         <activity
             android:name=".member.LoginActivity"
             android:exported="false" />

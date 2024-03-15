@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 버튼이 선택되었을 때 -->
+    <item
+        android:state_selected="true"
+        android:drawable="@color/pink" />
+
+    <!-- 기본 상태 -->
+    <item
+        android:drawable="@color/radioColor1" />
+
+</selector>

@@ -73,16 +73,23 @@ public class QsServiceTests {
 //	}
 	
 	// 게시판 목록 (페이징 적용)
-	@Test
-	public void listPaging() {
-		
-		QsCriteria qcri = new QsCriteria();
-		
-		qcri.setPageNum(2);
-		
-		List list = service.getlistPaging(qcri);
-		
-		list.forEach(qs -> log.info("" + qs));
-	}
+//	@Test
+//	public void listPaging() {
+//		
+//		QsCriteria qcri = new QsCriteria();
+//		
+//		qcri.setPageNum(2);
+//		
+//		List list = service.getlistPaging(qcri);
+//		
+//		list.forEach(qs -> log.info("" + qs));
+//	}
 
+	/* 카테고리 리스트 */
+	@Test
+	public void cateListTest() throws Exception{
+		
+		System.out.println("cateList()..........." + service.catelist());
+		
+	}
 }

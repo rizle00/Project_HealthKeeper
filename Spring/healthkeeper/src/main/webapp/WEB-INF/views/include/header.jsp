@@ -24,7 +24,6 @@
                          <!-- 로그인 하지 않은 상태 -->
                             <c:if test="${ member == null }">
                             	<li class="nav-item"><a class="nav-link" href="<c:url value='/question/qslist'/>">질문게시판</a></li>
-                            	<li class="nav-item"><a class="nav-link" href="contact.html">통계</a></li>
                             	<li class="nav-item"><a class="nav-link" href="<c:url value='/notice/notlist'/>">공지사항</a></li>
                             	<li class="nav-item"><a class="nav-link" href="<c:url value='/faq/faqlist'/>">FAQ</a></li>
                             	<li class="nav-item"><a class="nav-link" href="<c:url value='/member/login'/>">로그인</a></li>
@@ -34,7 +33,6 @@
                          <!-- 로그인한 상태 -->
 							<c:if test="${member != null }">
     							<li class="nav-item"><a class="nav-link" href="<c:url value='/question/qslist'/>">질문게시판</a></li>
-    							<li class="nav-item"><a class="nav-link" href="contact.html">통계</a></li>
     							<li class="nav-item"><a class="nav-link" href="<c:url value='/notice/notlist'/>">공지사항</a></li>
     							<li class="nav-item"><a class="nav-link" href="<c:url value='/faq/faqlist'/>">FAQ</a></li>
     							<li class="nav-item dropdown">

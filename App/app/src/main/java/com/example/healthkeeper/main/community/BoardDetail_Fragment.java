@@ -34,7 +34,22 @@ public class BoardDetail_Fragment extends Fragment {
         binding.boardDetailList.setAdapter(allBoardAdapter);
         binding.boardDetailList.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        binding.tvNewWriting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.tvNewWritingShow.setVisibility(View.VISIBLE);
+                binding.tvNewWriting.setVisibility(View.INVISIBLE);
+            }
+        });
+        binding.saveNewWrite.setOnClickListener(new View.OnClickListener() {//저장된 정보를 db와..연결?????????????해야함.???
+            @Override
+            public void onClick(View view) {
 
+                binding.tvNewWritingShow.setVisibility(View.GONE);
+                binding.tvNewWriting.setVisibility(View.VISIBLE);
+
+            }
+        });
 
 
                 binding.goHome.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +70,9 @@ public class BoardDetail_Fragment extends Fragment {
 
         return view;
     }
+
+
+
 
 
 

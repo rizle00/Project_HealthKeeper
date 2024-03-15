@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.mapper.QsMapper;
+import kr.co.model.CateGoryVO;
 import kr.co.model.QsCriteria;
 import kr.co.model.QsVO;
 
@@ -61,6 +62,12 @@ public class QsServiceImpl implements QsService{
 	@Override
 	public int qsViews(int QS_BNO) {
 		return mapper.qsViews(QS_BNO);
+	}
+
+	// 카테고리 리스트
+	@Override
+	public List<CateGoryVO> catelist() {
+		return mapper.catelist();
 	}
 
 }

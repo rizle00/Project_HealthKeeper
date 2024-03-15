@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         int customTextColor = getResources().getColor(R.color.white);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//툴바에 뒤로가기 아이콘 생성
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         
         bottomNavSetting();// 메뉴 선택 리스너
         PermissionUtils.checkNotiPermission(this, notiPermissionListener);
-
 
 
     }
@@ -309,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPermissionListener(notiPermissionListener)
                 .setDeniedMessage("Denied Permission.")
                 .setPermissions(
-                        Manifest.permission.POST_NOTIFICATIONS
+                        Manifest.permission.POST_NOTIFICATIONS, Manifest.permission.SEND_SMS
                         )
                 .check();
     }
