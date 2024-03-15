@@ -1,7 +1,13 @@
 package com.example.testapplication;
 
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -13,9 +19,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.core.app.NotificationCompat;
 import com.example.testapplication.common.CommonConn;
 import com.example.testapplication.common.CommonRepository;
 import com.example.testapplication.databinding.ActivityMainBinding;
+import com.example.testapplication.firebase.ReqDTO;
 import com.example.testapplication.firebase.RequestDTO;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -44,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private String type, content;
     private CommonConn commonConn;
+    private CommonRepository repository;
+    private NotificationManager notificationManager;
+    private NotificationCompat.Builder builder;
 
     private static String test;
     @Override
@@ -51,12 +62,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        createNotificationChannel();
         checkNotiPermission();
         initViews();
         startTimer();
+
         btn_stop.setOnClickListener(view -> {
 //            stopTimer();
-            createPush();
+//            createPush();
+            push();
         });
 
     }
@@ -65,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         progressBarCircle =  binding.progressBarCircle;
         tv_time = binding.tvTime;
         btn_stop = binding.btnCloseAlarm;
+        initRep();
 
     }
     private void startTimer(){ // 타이머 시작
@@ -110,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
                 tv_time.setText(hmsTimeFormatter(timeCount));
 
                 setProgressBarValues();
-                createPush();
-
+//                createPush();
+                push();
 
 
                 timerStatus = TimerStatus.STOPPED;
@@ -119,6 +134,58 @@ public class MainActivity extends AppCompatActivity {
 
         }.start();
     }
+
+    private void push(){
+        ReqDTO dto = new ReqDTO();
+        // 타입, 멤버 id,네임?, 가디언
+        dto.setMember_id("1");
+        dto.setName("테스트");
+        dto.setGuardian_id("2");
+        dto.setCategory_id("7");
+        repository.insertData("api/fcm", dto);
+        createNoti();
+
+
+    }
+    private void createNotificationChannel() {
+        Log.d("TAG", "createNotificationChannel: noti");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "notification channel";
+            String description = "ground channel";
+            int importance = NotificationManager.IMPORTANCE_LOW;
+            NotificationChannel channel = null;
+
+
+            channel = new NotificationChannel("noti", name, importance);
+
+            channel.setDescription(description);
+            notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(channel);
+            builder = new NotificationCompat.Builder(this, "noti");
+            builder.setSmallIcon(R.drawable.alarm)
+                    .setContentTitle("Health Keeper");
+        }
+    }
+
+    private void initRep() {
+        repository = new CommonRepository(((App) getApplication()).executorService, this);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("key","asd");
+    }
+    private void createNoti(){
+        Intent intent = new Intent(this, testActivity.class);
+        intent.putExtra("id",  1001);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1001, intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
+        builder.setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setOngoing(true)
+                .setContentIntent(pendingIntent)
+                .setVibrate(new long[]{1000, 1000, 1000,
+                        1000, 1000});
+        builder.setContentText("테스트입니당");
+        notificationManager.notify(1001, builder.build());
+
+    }
+
     private void createPush() {// 푸시 생성, 및 알람로그 인서트 요청
 //        HashMap<String,Object> map = new HashMap<>();
 //        map.put("token",pref.getString("token",""));

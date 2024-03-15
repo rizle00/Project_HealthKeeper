@@ -14,13 +14,14 @@ Adafruit_ADXL345_Unified accel = Adafruit_ADXL345_Unified(0x53);
 
 PulseSensorPlayground pulseSensor;  // Creates an instance of the PulseSensorPlayground object called "pulseSensor"
 
-SoftwareSerial BTSerial(8,7);
-const int PulseWire = A2;       // PulseSensor PURPLE WIRE connected to ANALOG PIN A2
-const int btn = 10;
+SoftwareSerial BTSerial(12,11);
+const int PulseWire = A0;       // PulseSensor PURPLE WIRE connected to ANALOG PIN A2
 
-float temp;
-int index = 0;
 int x, y, z;
+
+unsigned long previousMillis = 0;
+const long interval = 5000; // 5초마다 보낼 것
+
 void setup() {
  Serial.begin(9600);        
 BTSerial.begin(9600);     //블루투스 
@@ -28,7 +29,7 @@ BTSerial.begin(9600);     //블루투스
     Serial.println("Could not find a valid ADXL345 sensor, check wiring!");
     while (1);
   }
-pinMode(btn, INPUT); // 버튼
+
 mlx.begin();  //온도센서
 pulseSensor.analogInput(PulseWire);   
 pulseSensor.setThreshold(550);//심박 딜레이 기본 값
@@ -39,23 +40,31 @@ pulseSensor.setThreshold(550);//심박 딜레이 기본 값
 }
 
 void loop() {
-   int myBPM = pulseSensor.getBeatsPerMinute(); // 심박
-  temp += mlx.readObjectTempC(); // 체온 c
-  index++;
-  //0 1 2 3 4 (5)
-  if(index >= 5){
-    //결과출력
-    temp = temp/5;
-    Serial.println(temp);
-    temp = 0;
-    index =0;
-  }
-  // Serial.print("Ambient = "); Serial.print(mlx.readAmbientTempC()); 
-  // Serial.print("*C\tObject = "); Serial.print(mlx.readObjectTempC()); Serial.println("*C");
-//가속도
-   sensors_event_t event;
-  accel.getEvent(&event);
+  unsigned long currentMillis = millis();
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis;
 
+     // 체온 측정
+    float temperature = mlx.readObjectTempC();
+
+    // 심박 측정
+    int heartRate = pulseSensor.getBeatsPerMinute();
+
+    // 사고 여부 판단
+    sensors_event_t event;
+    accel.getEvent(&event);
+    float svm = calculateSVM(event.acceleration.x, event.acceleration.y, event.acceleration.z);
+    bool accident = svm >= 60; // 예시에서는 SVM이 60 이상이면 사고로 판단
+
+    BTSerial.print(temperature);
+    BTSerial.print(",");
+    BTSerial.print(heartRate);
+    BTSerial.print(",");
+    BTSerial.println(accident ? "1" : "0");
+
+    Serial.print("Temperature: "); Serial.println(temperature);
+    Serial.print("Heart Rate: "); Serial.println(heartRate);
+    Serial.print("Accident: "); Serial.println(accident ? "Yes" : "No");
   Serial.print("X: "); Serial.print(event.acceleration.x); Serial.print("  ");
   Serial.print("Y: "); Serial.print(event.acceleration.y); Serial.print("  ");
   Serial.print("Z: "); Serial.print(event.acceleration.z); Serial.println();
@@ -65,17 +74,13 @@ void loop() {
   Serial.println();
    }
   
-
-  delay(500);
-
-  
-
+}
 if(BTSerial.available())//  블루투스에서 데이터 보냄
         Serial.write(BTSerial.read());
 
 if(Serial.available())
         BTSerial.write(Serial.read());   
-delay(500);
+
 }
 
 float calculateSVM(float x, float y, float z) {
