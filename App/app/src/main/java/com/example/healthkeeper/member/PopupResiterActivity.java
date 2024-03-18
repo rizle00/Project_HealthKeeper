@@ -23,19 +23,20 @@ public class PopupResiterActivity extends AppCompatActivity {
             if(binding.tgbtn.getCheckedButtonId()==0){
                 type="guardian";
             }else{
-                type="patient"
+                type="patient";
             }
-        if(binding.btnIdCheck.getVisibility()==View.GONE) {
-            CommonConn conn = new CommonConn("partnerRegister", this);
-            conn.addParamMap("partner", binding.edtPartnerId.getText().toString());
-            conn.addParamMap("type", type);
-            conn.onExcute((isResult, data) -> {
-                if(data.equals("success")){
+            if(binding.btnIdCheck.getVisibility()==View.GONE) {
+                CommonConn conn = new CommonConn("partnerRegister", this);
+                conn.addParamMap("partner", binding.edtPartnerId.getText().toString());
+                conn.addParamMap("type", type);
+                conn.onExcute((isResult, data) -> {
+                    if (data.equals("success")) {
 
-                }
-            }
-        });
-        };
+                    }
+
+                });
+             }
+            });
 
 
 

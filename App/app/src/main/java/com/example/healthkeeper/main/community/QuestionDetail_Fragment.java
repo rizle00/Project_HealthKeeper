@@ -10,27 +10,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.healthkeeper.App;
+import com.example.healthkeeper.common.CommonRepository;
 import com.example.healthkeeper.databinding.FragmentBoardDetailBinding;
 import com.example.healthkeeper.main.MainActivity;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
-public class BoardDetail_Fragment extends Fragment {
-    private static final String TAG = BoardDetail_Fragment.class.getSimpleName();
+public class QuestionDetail_Fragment extends Fragment {
+    private static final String TAG = QuestionDetail_Fragment.class.getSimpleName();
     FragmentBoardDetailBinding binding;
-    CommunityDAO communityDAO;
+    CommonRepository repository;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
                binding=FragmentBoardDetailBinding.inflate(inflater, container, false);
                 View view=binding.getRoot();
+        repository = new CommonRepository(((App) requireActivity().getApplication()).executorService, getContext());
+        HashMap<String, Object> map = new HashMap<>();
 
 
-        CommunityDAO communityDAO = new CommunityDAO();
 
-        List<CommunityDTOS.Community_BoardDTO> allList = communityDAO.getBoardList();
-        Community_boardAdapter allBoardAdapter = new Community_boardAdapter(inflater, allList, getContext());
+
+        List<CommunityDTOS.Community_faqDTO> allList =((CommunityFragment) getParentFragment()).getcreateFaq();
+        Community_FaqAdapter allBoardAdapter = new Community_FaqAdapter(inflater, allList, getContext());
         binding.boardDetailList.setAdapter(allBoardAdapter);
         binding.boardDetailList.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -72,13 +79,19 @@ public class BoardDetail_Fragment extends Fragment {
     }
 
 
+    public void createAllBoard(String result, LayoutInflater inflater) {
+        // JSON 문자열을 파싱하여 리스트로 변환
+        List<CommunityDTOS.Community_faqDTO> list = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_faqDTO>>(){}.getType());
 
-
-
-
-    private ArrayList<CommunityDTOS.Community_BoardDTO> getBoardArrayList() {
-      return (ArrayList<CommunityDTOS.Community_BoardDTO>) communityDAO.getBoardList();
+        // RecyclerView에 어댑터 설정
+        Community_FaqAdapter recentBoardAdapter = new Community_FaqAdapter(inflater, list, getContext());
+        binding.boardDetailList.setAdapter(recentBoardAdapter);
+        binding.boardDetailList.setLayoutManager(new LinearLayoutManager(getContext()));
     }
+
+
+
+
 
 
 

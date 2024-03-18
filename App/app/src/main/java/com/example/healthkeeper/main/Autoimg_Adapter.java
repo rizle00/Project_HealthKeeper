@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.healthkeeper.databinding.FragmentAutoimgBinding;
-import com.example.healthkeeper.databinding.RecvCommunityBoardBinding;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.healthkeeper.databinding.RecvCommunityNoticeBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Community_NoticeAdapter extends RecyclerView.Adapter<Community_NoticeAdapter.ViewHolder> {
     LayoutInflater inflater;
-    ArrayList<CommunityDTOS.Community_NoticeDTO> list;
+    List<CommunityDTOS.Community_NoticeDTO> list;
     Context context;
 
-    public Community_NoticeAdapter(LayoutInflater inflater, ArrayList<CommunityDTOS.Community_NoticeDTO> list, Context context){
+    public Community_NoticeAdapter(LayoutInflater inflater, List<CommunityDTOS.Community_NoticeDTO> list, Context context){
         this.context=context;
         this.list=list;
         this.inflater=inflater;
@@ -31,11 +32,10 @@ public class Community_NoticeAdapter extends RecyclerView.Adapter<Community_Noti
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
-        holder.binding.tvCategory.setText(list.get(i).getCategory());
-        holder.binding.tvNoticeTitle.setText(list.get(i).getNoticeTitle());
-        holder.binding.tvDate.setText(list.get(i).getDate());
-        holder.binding.tvTime.setText(list.get(i).getTime());
-        holder.binding.tvContent.setText(list.get(i).getContent());
+
+        holder.binding.tvNoticeTitle.setText(list.get(i).getTITLE());
+        holder.binding.tvDate.setText(list.get(i).getTIME());
+        holder.binding.tvContent.setText(list.get(i).getCONTENT());
 
         holder.binding.tvNoticeTitle.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+
+        >
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Q."
+            android:textStyle="bold|italic"
+            android:textSize="25dp"
+        />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="어떤 질문에 대한 답변을 원하시나요"
+            android:layout_marginBottom="10dp"
+            android:maxLines="2"
+            android:textStyle="bold|italic"
+            android:textSize="17dp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:src="@drawable/plus_2"/>
+
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:cardCornerRadius="15dp"
+
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="#FAF4F6"
+            >
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="자주하는 질문에 대한 답변.어릴 때 작은 집들과 조각들에 대한 책을 가지고 있었어요. 항상 그러한 동화, 호빗, 고블린에 대해 생각했고 크면 그러한 것을 만들고 싶었어요"
+                android:textStyle="bold|italic"
+                android:textSize="14dp"
+                android:maxLines="20"
+                android:ellipsize="end"
+                />
+
+        <!--android:maxLines="1" :줄제한
+            android:ellipsize="end" :텍스트가 잘리는 경우 생략 부호를 표시-->
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>
