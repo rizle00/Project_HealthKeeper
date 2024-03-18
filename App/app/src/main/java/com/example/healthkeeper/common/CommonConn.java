@@ -25,6 +25,11 @@ public class CommonConn {
         this.paramMap = new HashMap<>();
         this.context = context;
     }
+    public CommonConn(String url) {
+        this.url = url;
+        this.paramMap = new HashMap<>();
+
+    }
 
     public CommonConn addParamMap(String key, Object value){
         if(key ==null) return this;
