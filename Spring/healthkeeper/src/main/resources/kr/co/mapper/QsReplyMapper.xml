@@ -5,36 +5,36 @@
 <mapper namespace="kr.co.mapper.QsReplyMapper">
 
 	<!-- 댓글 조회 -->
-	<select id="readReply" parameterType="int" resultType="kr.co.model.QsReplyVO">
-		SELECT QS_BNO,QRNO,CONTENT,WRITER,REGDATE
+	<!-- <select id="readReply" parameterType="int" resultType="kr.co.model.QsReplyVO">
+		SELECT QUE_ID,QRNO,CONTENT,WRITER,REGDATE
 		FROM QS_REPLY
-		WHERE QS_BNO = #{QS_BNO}
-	</select>
+		WHERE QUE_ID = #{QUE_ID}
+	</select> -->
 	
 	<!-- 댓글 작성 -->
-	<insert id="registrReply">
-		INSERT INTO QS_REPLY(QS_BNO,QRNO,CONTENT,WRITER)
-		VALUES(#{QS_BNO},QS_REPLY_SEQ.NEXTVAL,#{CONTENT},#{WRITER})
-	</insert>
+	<!-- <insert id="registrReply">
+		INSERT INTO QS_REPLY(QUE_ID,QRNO,CONTENT,WRITER)
+		VALUES(#{QUE_ID},QS_REPLY_SEQ.NEXTVAL,#{CONTENT},#{WRITER})
+	</insert> -->
 	
 	<!-- 댓글 수정 -->
-	<update id="updateReply">
+	<!-- <update id="updateReply">
 		UPDATE QS_REPLY 
 		SET
 		CONTENT = #{CONTENT}
 		WHERE QRNO = #{QRNO}
-	</update>
+	</update> -->
 	
 	<!-- 댓글 삭제 -->
-	<delete id="deleteReply" parameterType="kr.co.model.QsReplyVO">
+	<!-- <delete id="deleteReply" parameterType="kr.co.model.QsReplyVO">
 		DELETE FROM QS_REPLY
 		WHERE QRNO = #{QRNO}
-	</delete>
+	</delete> -->
 	
 	<!-- 선택된 댓글조회 -->
-	<select id="selectReply" resultType="kr.co.model.QsReplyVO">
+	<!-- <select id="selectReply" resultType="kr.co.model.QsReplyVO">
 		SELECT QS_BNO,QRNO,CONTENT,WRITER,REGDATE
 		FROM QS_REPLY
 		WHERE QRNO = #{QRNO}
-	</select>
+	</select> -->
 </mapper>

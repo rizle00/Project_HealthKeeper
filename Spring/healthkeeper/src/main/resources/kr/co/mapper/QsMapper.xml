@@ -97,4 +97,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM CATEGORY
 		ORDER BY CATEGORY_ID
 	</select>
+	
+	<select id="cate" resultType="kr.co.model.CateGoryVO">
+		SELECT * FROM CATEGORY
+		WHERE CATEGORY_ID = #{ CATEGORY_ID }
+	</select>
+	
+	
 </mapper>

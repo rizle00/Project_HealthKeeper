@@ -8,7 +8,7 @@ import lombok.Data;
 public class QsReplyVO {
 	
 	// 게시글? 번호
-	private int QS_BNO;
+	private int QUE_ID;
 	
 	// 댓글 번호
 	private int QRNO;

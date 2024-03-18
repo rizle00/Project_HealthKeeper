@@ -1,5 +1,7 @@
 package com.example.healthkeeper.firebase;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.telephony.SmsManager;
@@ -31,6 +33,7 @@ public class AlarmActivity extends AppCompatActivity {
     private BluetoothRepository repository;
     private Executor executor;
     private String type, content;
+    NotificationManager notificationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,7 @@ public class AlarmActivity extends AppCompatActivity {
         btn_stop.setOnClickListener(view -> {
             stopTimer();
             finish();
+
         });
     }
     private void initViews() { // 초기화
@@ -56,6 +60,8 @@ public class AlarmActivity extends AppCompatActivity {
         btn_stop = binding.btnCloseAlarm;
         this.executor = ((App) getApplication()).executorService;
         initRepository();
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
     }
     private void initRepository() {
         repository = new BluetoothRepository(
@@ -77,6 +83,7 @@ public class AlarmActivity extends AppCompatActivity {
     private void stopTimer() { // 타이머 종료
         timerStatus = TimerStatus.STOPPED;
         countDownTimer.cancel();
+        notificationManager.cancel(getIntent().getIntExtra("notifyId",0));
         Toast.makeText(AlarmActivity.this,"알람이 종료되었습니다", Toast.LENGTH_SHORT).show();
     }
     private void startCountDownTimer() {// 타이머 시작
@@ -92,25 +99,39 @@ public class AlarmActivity extends AppCompatActivity {
             public void onFinish() {// 타이머 종료시에만 시행
                 tv_time.setText(hmsTimeFormatter(timeCount));
                 setProgressBarValues();
-                createPush();
+
+                String guardian_id = pref.getString("guardian_id","");
+                String name = pref.getString("user_name","");
+                String address = pref.getString("address","");
+
+                SendSMS(name,"01051760118", address);
+                if(!guardian_id.equals("")){
+                    createPush(name,guardian_id);
+
+                }
+
                 timerStatus = TimerStatus.STOPPED;
             }
 
         }.start();
     }
-    private void createPush() {// 푸시 생성, 및 알람로그 인서트 요청
-        String text = pref.getString("user_name","")+"님의"+content;
-        RequestDTO vo = new RequestDTO();
-        // 타입, 멤버 id,네임?, 가디언 id
-        vo.setBody(text);
-        vo.setTitle(type);
-        vo.setGuardian_id(pref.getString("guardian_id",""));
-        repository.insertAlarm(vo);
-        SendSMS("01051760118",text);
+    private void createPush(String name, String id) {// 푸시 생성, 및 알람로그 인서트 요청
+
+        RequestDTO dto = new RequestDTO();
+        // 타입, 멤버 id,네임?, 가디언
+        dto.setMember_id(pref.getString("user_id",""));
+        dto.setName(name);
+        dto.setGuardian_id(id);
+        dto.setCategory_id(type);
+        repository.insertAlarm(dto);
+        notificationManager.cancel(getIntent().getIntExtra("notifyId",0));
+
     }
-    public void SendSMS(String number, String msg){// 문자보내기
+    public void SendSMS(String name,String number, String address){// 문자보내기
+        String text = name+"님의"+content+"\n주소 : "+address;
         SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(number,null, msg,null,null);
+        sms.sendTextMessage(number,null, text,null,null);
+        Toast.makeText(AlarmActivity.this,"문자 신고가 발송되었습니다", Toast.LENGTH_SHORT).show();
     }
 
     private String hmsTimeFormatter(long milliSeconds) { // 타이머 포매팅

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.healthkeeper.App;
 import com.example.healthkeeper.R;
+import com.example.healthkeeper.common.CommonConn;
 import com.example.healthkeeper.common.CommonRepository;
 import com.example.healthkeeper.databinding.FragmentCommunityBinding;
 import com.google.common.reflect.TypeToken;
@@ -32,8 +33,7 @@ public class CommunityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCommunityBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
-        repository = new CommonRepository(((App) requireActivity().getApplication()).executorService, getContext());
+        repository = new CommonRepository(((App) requireActivity().getApplication()).executorService);
         HashMap<String, Object> map = new HashMap<>();
 
 //======================================================================================================
@@ -43,9 +43,28 @@ public class CommunityFragment extends Fragment {
         repository.selectData("question/list", map).thenAccept(result -> {
             createQues(result, inflater);
         });
-        repository.selectData("notice/list", map).thenAccept(result -> {
-            createNotice(result, inflater);
+        CommonConn conn = new CommonConn("asd");
+        conn.addParamMap("key", 1);
+        repository.select(conn).thenAccept(result->{
+
         });
+
+        CommunityDAO communityDAO = new CommunityDAO();
+
+        // 게시판 어뎁터
+        List<CommunityDTOS.Community_BoardDTO> recentList = communityDAO.getRecentBoardList();
+
+
+
+        // 자주묻는 질문 어뎁터
+        List<CommunityDTOS.Community_QuestionDTO> questionList = communityDAO.getQuestionArrayList();
+        binding.question.setAdapter(new Community_QuestionAdapter(inflater, (ArrayList<CommunityDTOS.Community_QuestionDTO>) communityDAO.getQuestionArrayList(), getContext()));
+        binding.question.setLayoutManager((new LinearLayoutManager(getContext())));
+
+        // 공지사항 어뎁터
+        List<CommunityDTOS.Community_NoticeDTO> noticeList = communityDAO.getNoticeArrayList();
+        binding.notice.setAdapter(new Community_NoticeAdapter(inflater, (ArrayList<CommunityDTOS.Community_NoticeDTO>) communityDAO.getNoticeArrayList(), getContext()));
+        binding.notice.setLayoutManager(new LinearLayoutManager(getContext()));
 
         //================================================================================================================
         binding.clickButton.setOnClickListener(new View.OnClickListener() {//read more를 누를시 전체 목록 나오게이동
