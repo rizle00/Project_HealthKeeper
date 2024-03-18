@@ -24,10 +24,7 @@ public interface NoticeService {
 	public NoticeVO getPage(int NOTICE_ID);
 	
 	// 공지사항 수정
-	public int notmodify(NoticeVO notice, 
-						 String[] files, 
-						 String[] fileNames,
-						 MultipartHttpServletRequest notRequest) throws Exception;
+	public int notmodify(NoticeVO notice) throws Exception;
 	
 	// 공지사항 삭제
 	public int notdelete(int NOTICE_ID);

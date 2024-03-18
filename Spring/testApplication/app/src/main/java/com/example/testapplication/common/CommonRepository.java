@@ -2,6 +2,8 @@ package com.example.testapplication.common;
 
 import android.content.Context;
 import android.util.Log;
+import com.example.testapplication.firebase.ReqDTO;
+import com.example.testapplication.firebase.RequestDTO;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -23,14 +25,14 @@ public class CommonRepository {
         result = new CompletableFuture<>();
     }
 
-    public CompletableFuture<String> insertData(String url, HashMap<String, Object> map) {
+    public CompletableFuture<String> insertData(String url, ReqDTO dto) {
         conn = new CommonConn(url, mContext);
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                String json = new Gson().toJson(map);
+                String json = new Gson().toJson(dto);
                 conn.addParamMap("params", json);
-                Log.d(TAG, "run: " + map);
+                Log.d(TAG, "run: " + dto);
                 conn.onExcute((isResult, data) -> {
 
                     Log.d("Common", "onResult: " + data);

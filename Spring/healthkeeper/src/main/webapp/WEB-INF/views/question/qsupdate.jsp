@@ -15,23 +15,27 @@
 	<form id="qsupdateForm" action="/question/qsupdate" method="post">
 	<div class="input_wrap">
 		<label>공지사항 번호</label>
-		<input name="QS_BNO" readonly="readonly" value='<c:out value="${pageInfo.QS_BNO}"/>' >
+		<input name="QUE_ID" readonly="readonly" value='<c:out value="${pageInfo.QUE_ID}"/>' >
 	</div>
 	<div class="input_wrap">
+        <label>질문</label>
+        <input name="category.NAME" readonly="readonly" value='<c:out value="${pageInfo.category.NAME}"/>' >
+    </div>
+	<div class="input_wrap">
 		<label>공지사항 제목</label>
-		<input name="QS_TITLE" value='<c:out value="${pageInfo.QS_TITLE}"/>' >
+		<input name="TITLE" value='<c:out value="${pageInfo.TITLE}"/>' >
 	</div>
 	<div class="input_wrap">
 		<label>공지사항 내용</label>
-		<textarea rows="3" name="QS_CONTENT" ><c:out value="${pageInfo.QS_CONTENT}"/></textarea>
+		<textarea rows="3" name="CONTENT" ><c:out value="${pageInfo.CONTENT}"/></textarea>
 	</div>
 	<div class="input_wrap">
 		<label>공지사항 작성자</label>
-		<input name="QS_WRITER" readonly="readonly" value='<c:out value="${pageInfo.QS_WRITER}"/>' >
+		<input name="MEMBER_ID" readonly="readonly" value='<c:out value="${pageInfo.MEMBER_ID}"/>' >
 	</div>
 	<div class="input_wrap">
 		<label>공지사항 등록일</label>
-		<input name="QS_REGDATE" readonly="readonly" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${pageInfo.QS_REGDATE}"/>' >
+		<input name="TIME" readonly="readonly" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${pageInfo.TIME}"/>' >
 	</div>
 	<hr>
 	<span>파일 목록</span>
@@ -51,7 +55,7 @@
 	</div>
 	</form>
 	<form id="infoForm" action="/question/qsupdate" method="get">
-		<input type="hidden" id="QS_BNO" name="QS_BNO" value='<c:out value="${pageInfo.QS_BNO}"/>'>
+		<input type="hidden" id="que_id" name="QUE_ID" value='<c:out value="${pageInfo.QUE_ID}"/>'>
 		<input type="hidden" name="pageNum" value='<c:out value="${qcri.pageNum}"/>'>
         <input type="hidden" name="amount" value='<c:out value="${qcri.amount}"/>'>
         <input type="hidden" name="keyword" value="${qcri.keyword }">
@@ -62,7 +66,7 @@
 	
 	// 공지사항 목록화면 이동 js 코드
 	$("#qslist_btn").on("click", function(e){
-		form.find("#QS_BNO").remove();
+		form.find("#QUE_ID").remove();
 		form.attr("action", "/question/qslist");
 		form.submit();
 	});

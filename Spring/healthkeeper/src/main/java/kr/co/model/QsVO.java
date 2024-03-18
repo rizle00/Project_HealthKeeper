@@ -21,7 +21,7 @@ public class QsVO {
 	// 게시판 작성자
 	private int MEMBER_ID;
 	
-	// 게시판 카테고리?
+	// 게시판 카테고리
 	private int CATEGORY_ID;
 	
 	private CateGoryVO category; // CategoryVO 객체
