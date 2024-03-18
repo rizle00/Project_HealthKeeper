@@ -30,7 +30,7 @@ public class QuestionDetail_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
                binding=FragmentBoardDetailBinding.inflate(inflater, container, false);
                 View view=binding.getRoot();
-        repository = new CommonRepository(((App) requireActivity().getApplication()).executorService, getContext());
+        repository = new CommonRepository(((App) requireActivity().getApplication()).executorService);
         HashMap<String, Object> map = new HashMap<>();
 
 

@@ -132,7 +132,49 @@ public class CommunityDTOS {
 
     }
 
+    public class AnswerDTO{
+      private String  ANS_ID, CONTENT, QUE_ID, ADMIN_ID, TIME;
 
+        public String getANS_ID() {
+            return ANS_ID;
+        }
+
+        public void setANS_ID(String ANS_ID) {
+            this.ANS_ID = ANS_ID;
+        }
+
+        public String getCONTENT() {
+            return CONTENT;
+        }
+
+        public void setCONTENT(String CONTENT) {
+            this.CONTENT = CONTENT;
+        }
+
+        public String getQUE_ID() {
+            return QUE_ID;
+        }
+
+        public void setQUE_ID(String QUE_ID) {
+            this.QUE_ID = QUE_ID;
+        }
+
+        public String getADMIN_ID() {
+            return ADMIN_ID;
+        }
+
+        public void setADMIN_ID(String ADMIN_ID) {
+            this.ADMIN_ID = ADMIN_ID;
+        }
+
+        public String getTIME() {
+            return TIME;
+        }
+
+        public void setTIME(String TIME) {
+            this.TIME = TIME;
+        }
+    }
 
 
 
