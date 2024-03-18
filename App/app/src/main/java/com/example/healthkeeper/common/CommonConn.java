@@ -55,6 +55,7 @@ public class CommonConn {
         service.clientPostMethod(url,paramMap).enqueue(new Callback<String>() {
             @Override
             public void onResponse(retrofit2.Call<String> call, Response<String> response) {
+                Log.d(TAG, "onResponse: ");
                 Log.i(TAG, "onResponse: " + response.body());
                 Log.i(TAG, "onResponse: " + response.errorBody());
                 if(response.errorBody() ==null){
