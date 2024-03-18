@@ -14,18 +14,16 @@ public class CommonRepository {
     private static final String TAG = CommonRepository.class.getSimpleName();
     private final Executor executor;
     private CommonConn conn;
-    private final Context mContext;
     //Future 또는 CompletableFuture를 사용하여 비동기 작업의 결과를 처리할 수 있습니다. 이를 사용하면 비동기 작업이 완료될 때까지 대기하거나 결과를 처리할 수 있습니다.
     private final CompletableFuture<String> result;
 
-    public CommonRepository(Executor executor, Context context) {
+    public CommonRepository(Executor executor) {
         this.executor = executor;
-        mContext = context;
         result = new CompletableFuture<>();
     }
 
     public CompletableFuture<String> insertData(String url, HashMap<String, Object> map) {
-        conn = new CommonConn(url, mContext);
+        conn = new CommonConn(url);
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -46,13 +44,35 @@ public class CommonRepository {
     public CompletableFuture<String> selectData(String url, HashMap<String, Object> map) {
 
 
-        conn = new CommonConn(url, mContext);
+        conn = new CommonConn(url);
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 String json = new Gson().toJson(map);
                 conn.addParamMap("params", json);
                 Log.d(TAG, "run: " + map);
+                conn.onExcute((isResult, data) -> {
+
+                    Log.d("Common", "onResult: " + data);
+                    Log.d("Common", "onResult: " + isResult);
+                    if (isResult)
+                        result.complete(data); // 결과 완료
+                });
+            }
+        });
+        return result;
+    }
+
+    public CompletableFuture<String> select(CommonConn conn) {
+
+
+//        conn = new CommonConn(url, mContext);
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+//                String json = new Gson().toJson(map);
+//                conn.addParamMap("params", json);
+//                Log.d(TAG, "run: " + map);
                 conn.onExcute((isResult, data) -> {
 
                     Log.d("Common", "onResult: " + data);

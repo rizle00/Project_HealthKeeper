@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.healthkeeper.App;
 import com.example.healthkeeper.R;
+import com.example.healthkeeper.common.CommonConn;
 import com.example.healthkeeper.common.CommonRepository;
 import com.example.healthkeeper.databinding.FragmentCommunityBinding;
 import com.example.healthkeeper.member.MemberVO;
@@ -36,12 +37,17 @@ public class CommunityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCommunityBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        repository = new CommonRepository(((App) requireActivity().getApplication()).executorService, getContext());
+        repository = new CommonRepository(((App) requireActivity().getApplication()).executorService);
         HashMap<String, Object> map = new HashMap<>();
 
 
         repository.selectData("question/list",map).thenAccept(result->{
             createQues(result, inflater);
+        });
+        CommonConn conn = new CommonConn("asd");
+        conn.addParamMap("key", 1);
+        repository.select(conn).thenAccept(result->{
+
         });
 
         CommunityDAO communityDAO = new CommunityDAO();

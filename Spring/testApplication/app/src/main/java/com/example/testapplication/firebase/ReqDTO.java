@@ -1,11 +1,11 @@
-package com.example.healthkeeper.firebase;
+package com.example.testapplication.firebase;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class RequestDTO {
+public class ReqDTO {
 
     private String CATEGORY_ID;
     private String name;
