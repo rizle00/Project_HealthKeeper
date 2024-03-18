@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comm">
+
+<select id="que" resultType="que"><!-- 자주하는 질문 -->
+	 	select  * from notice
+</select>
+	
+<select id="faq" resultType="faq">
+        select * from faq
+</select>
+
+<select id="notice" resultType="notice">
+        select * from notice
+</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+<select id="login" resultType="member">
+	SELECT * FROM MEMBER WHERE EMAIL = #{email}
+</select>
+<select id="idcheck" resultType="String">
+	SELECT COUNT(*) FROM MEMBER WHERE EMAIL = #{email}
+</select>
+<insert id="join">
+	INSERT INTO MEMBER (EMAIL, GUARDIAN_ID, PW, NAME, PHONE, BIRTH, GENDER, BLOOD,  ADDRESS, ADDRESS_DETAIL, SOCIAL, TOKEN)
+	VALUES (#{email}, #{guardian_id}, #{pw}, #{name}, #{phone}, #{birth}, #{gender}, #{blood}, #{address}, #{address_detail},#{social}, #{TOKEN})
+</insert>
+
+<select id="findid" resultType="String">
+	SELECT EMAIL FROM MEMBER WHERE NAME = #{name} AND PHONE = #{phone}
+</select>
+
+<update id="pwReset">
+	UPDATE MEMBER SET PW = #{pw} WHERE EMAIL = #{email}
+</update>
+<select id= "socialCheck" resultType="String">
+	SELECT COUNT(*) FROM MEMBER WHERE SOCIAL = #{social}
+</select>
+<select id="socialLogin" resultType="member">
+	SELECT * FROM MEMBER WHERE SOCIAL = #{social}
+</select>
+<select id="partnerCheck" resultType="String">
+	SELECT COUNT(*) FROM MEMBER WHERE EMAIL = #{partner_id}
+</select>
+<update id="patientRegister">
+	update member SET GUARDIAN_ID = (SELECT MEMBER_ID
+                 FROM MEMBER
+                 WHERE EMAIL = #{email}) where EMAIL = #{guardian_id} 
+</update>
+<select id="findpw" resultType="String">
+	SELECT COUNT(*) FROM MEMBER WHERE EMAIL=#{email} AND NAME = #{name} AND PHONE = #{phone}
+</select>
+<update id="modify">
+	UPDATE MEMBER SET PW=#{pw} , NAME=#{name},PHONE=#{phone},ADDRESS=#{address} ,ADDRESS_DETAIL=#{address_detail}  WHERE MEMBER_ID=#{member_id}
+</update>
+</mapper>

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.community.BoardDetail_Fragment"
+    tools:context=".main.community.QuestionDetail_Fragment"
     android:orientation="vertical">
     <android.widget.Button
         android:id="@+id/button1"
@@ -137,33 +137,23 @@
     </androidx.cardview.widget.CardView>
 
 
-
-
-
     <androidx.core.widget.NestedScrollView
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="8"
-
-
-
-
-
-      >
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_weight="1"
-        android:id="@+id/boardDetailList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0dp"
+        android:layout_weight="8"
+
+
+        >
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/boardDetailList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
 
     </androidx.core.widget.NestedScrollView>
-
-
-
-
 
     <LinearLayout
         android:layout_width="match_parent"

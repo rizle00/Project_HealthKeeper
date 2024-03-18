@@ -20,9 +20,9 @@
             <android.widget.Button
                 android:id="@+id/button1"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:layout_height="wrap_content"
-                android:text="게시판"
+                android:text="질문게시판"
                 android:textStyle="bold"
                 android:backgroundTint="@drawable/selector_community_title"
                 android:layout_marginStart="5dp"
@@ -35,11 +35,11 @@
             <android.widget.Button
                 android:id="@+id/button2"
                 android:layout_width="0dp"
-                android:layout_weight="1.5"
+                android:layout_weight="1"
                 android:textStyle="bold"
                 android:backgroundTint="@drawable/selector_community_title"
                 android:layout_height="wrap_content"
-                android:text="자주묻는 질문"
+                android:text="F	&amp;Q"
                 android:clickable="true"
 
 
@@ -99,7 +99,7 @@
                             android:textSize="20dp"
                             android:textStyle="bold"
 
-                            android:text="게 시 판"
+                            android:text="faq"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
 
@@ -204,7 +204,7 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/board"
+                        android:id="@+id/question"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
@@ -250,7 +250,7 @@
 
                     </RelativeLayout>
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/question"
+                        android:id="@+id/faq"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 

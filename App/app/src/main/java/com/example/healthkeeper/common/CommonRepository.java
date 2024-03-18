@@ -56,7 +56,7 @@ public class CommonRepository {
                 conn.onExcute((isResult, data) -> {
 
                     Log.d("Common", "onResult: " + data);
-                    Log.d("Common", "onResult: " + isResult);
+                    Log.d("FKD", "onResult: " + isResult);
                     if (isResult)
                         result.complete(data); // 결과 완료
                 });

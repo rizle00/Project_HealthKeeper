@@ -7,8 +7,14 @@
 	<setting name="jdbcTypeForNull" value="NULL"/>
 </settings>
 	<typeAliases>
-		<typeAlias type="kr.co.app.member.MemberVO"
-			alias="member" />
+		
+			<typeAlias type="kr.co.app.community.QueVO"
+				   alias="que" />
+		   <typeAlias type="kr.co.app.community.NoticeVO"
+				   alias="notice" />
+		   <typeAlias type="kr.co.app.community.FaqVO"
+				   alias="faq" />
+			<typeAlias type="kr.co.app.member.MemberVO" alias="member"/>
 	</typeAliases>
 </configuration>
 

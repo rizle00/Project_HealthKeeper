@@ -6,84 +6,46 @@ import java.util.List;
 
 public class CommunityDTOS {
 
-  public class Community_BoardDTO{
-        private int  member_age, member_number;
-        private String writer, title,msg, time, comments,content;
-      public String getContent() {
-          return content;
+  public class Community_faqDTO{//자주하는 질문 게시판
+      private  String FAQ_ID, TITLE, CONTENT, MEMBER_ID;
+
+      public Community_faqDTO(String TITLE, String CONTENT, String MEMBER_ID) {
+          this.TITLE = TITLE;
+          this.CONTENT = CONTENT;
+          this.MEMBER_ID = MEMBER_ID;
       }
 
-      public void setContent(String content) {
-          this.content = content;
+      public String getFAQ_ID() {
+          return FAQ_ID;
       }
 
-      public String getTime() {
-          return time;
+      public void setFAQ_ID(String FAQ_ID) {
+          this.FAQ_ID = FAQ_ID;
       }
 
-      public void setTime(String time) {
-          this.time = time;
+      public String getTITLE() {
+          return TITLE;
       }
 
-      public String getComments() {
-          return comments;
+      public void setTITLE(String TITLE) {
+          this.TITLE = TITLE;
       }
 
-      public void setComments(String comments) {
-          this.comments = comments;
+      public String getCONTENT() {
+          return CONTENT;
       }
 
-      public Community_BoardDTO(String title, String writer, String time) {
-            this.title = title;
-            this.writer = writer;
-            this.time = time;
-        }
-
-        public int getMember_number() {
-            return member_number;
-        }
-
-        public void setMember_number(int member_number) {
-            this.member_number = member_number;
-        }
-
-        public int getMember_age() {
-            return member_age;
-        }
-
-        public void setMember_age(int member_age) {
-            this.member_age = member_age;
-        }
-
-        public String getWriter() {
-            return writer;
-        }
-
-        public void setWriter(String writer) {
-            this.writer = writer;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getMsg() {
-            return msg;
-        }
-
-        public void setMsg(String msg) {
-            this.msg = msg;
-        }
-
-
-      public void getId() {
+      public void setCONTENT(String CONTENT) {
+          this.CONTENT = CONTENT;
       }
 
+      public String getMEMBER_ID() {
+          return MEMBER_ID;
+      }
 
+      public void setMEMBER_ID(String MEMBER_ID) {
+          this.MEMBER_ID = MEMBER_ID;
+      }
   }
 
 
@@ -91,90 +53,146 @@ public class CommunityDTOS {
 
 
 
-    public class Community_QuestionDTO{
-      private String question,answer;
-
-        public Community_QuestionDTO(String question, String answer) {
-            this.question = question;
-            this.answer = answer;
+    public class Community_QuestionDTO{//질문 게시판
+      private String QUE_ID, TITLE, CONTENT, TIME, MEMBER_ID, SECRET, CATEGORY_ID, READ_CNT;
+        public Community_QuestionDTO(String TITLE, String CONTENT, String TIME, String MEMBER_ID, String SECRET, String CATEGORY_ID, String READ_CNT) {
+            this.TITLE = TITLE;
+            this.CONTENT = CONTENT;
+            this.TIME = TIME;
+            this.MEMBER_ID = MEMBER_ID;
+            this.SECRET = SECRET;
+            this.CATEGORY_ID = CATEGORY_ID;
+            this.READ_CNT = READ_CNT;
         }
 
-        public String getQuestion() {
-            return question;
+        public String getQUE_ID() {
+            return QUE_ID;
         }
 
-        public void setQuestion(String question) {
-            this.question = question;
+        public void setQUE_ID(String QUE_ID) {
+            this.QUE_ID = QUE_ID;
         }
 
-        public String getAnswer() {
-            return answer;
+        public String getTITLE() {
+            return TITLE;
         }
 
-        public void setAnswer(String answer) {
-            this.answer = answer;
-        }
-    }
-
-
-
-
-
-
-
-    public class Community_NoticeDTO {
-
-        private String category, noticeTitle, date, time, content;
-
-
-        public Community_NoticeDTO(String category, String noticeTitle, String date, String time, String content) {
-            this.category = category;
-            this.noticeTitle = noticeTitle;
-            this.date = date;
-            this.time = time;
-            this.content = content;
+        public void setTITLE(String TITLE) {
+            this.TITLE = TITLE;
         }
 
-        public String getCategory() {
-            return category;
+        public String getCONTENT() {
+            return CONTENT;
         }
 
-        public void setCategory(String category) {
-            this.category = category;
+        public void setCONTENT(String CONTENT) {
+            this.CONTENT = CONTENT;
         }
 
-        public String getNoticeTitle() {
-            return noticeTitle;
+        public String getTIME() {
+            return TIME;
         }
 
-        public void setNoticeTitle(String noticeTitle) {
-            this.noticeTitle = noticeTitle;
+        public void setTIME(String TIME) {
+            this.TIME = TIME;
         }
 
-        public String getDate() {
-            return date;
+        public String getMEMBER_ID() {
+            return MEMBER_ID;
         }
 
-        public void setDate(String date) {
-            this.date = date;
+        public void setMEMBER_ID(String MEMBER_ID) {
+            this.MEMBER_ID = MEMBER_ID;
         }
 
-        public String getTime() {
-            return time;
+        public String getSECRET() {
+            return SECRET;
         }
 
-        public void setTime(String time) {
-            this.time = time;
+        public void setSECRET(String SECRET) {
+            this.SECRET = SECRET;
         }
 
-        public String getContent() {
-            return content;
+        public String getCATEGORY_ID() {
+            return CATEGORY_ID;
         }
 
-        public void setContent(String content) {
-            this.content = content;
+        public void setCATEGORY_ID(String CATEGORY_ID) {
+            this.CATEGORY_ID = CATEGORY_ID;
+        }
+
+        public String getREAD_CNT() {
+            return READ_CNT;
+        }
+
+        public void setREAD_CNT(String READ_CNT) {
+            this.READ_CNT = READ_CNT;
         }
 
 
     }
+
+
+
+
+
+
+
+    public class Community_NoticeDTO {//공지사항 게시판
+
+        private String    NOTICE_ID,READ_CNT, TITLE, CONTENT, TIME, MEMBER_ID;
+
+
+
+        public Community_NoticeDTO(String READ_CNT, String TITLE, String CONTENT, String TIME, String MEMBER_ID) {
+            this.READ_CNT = READ_CNT;
+            this.TITLE = TITLE;
+            this.CONTENT = CONTENT;
+            this.TIME = TIME;
+            this.MEMBER_ID = MEMBER_ID;
+        }
+
+
+        public String getREAD_CNT() {
+            return READ_CNT;
+        }
+
+        public void setREAD_CNT(String READ_CNT) {
+            this.READ_CNT = READ_CNT;
+        }
+
+        public String getTITLE() {
+            return TITLE;
+        }
+
+        public void setTITLE(String TITLE) {
+            this.TITLE = TITLE;
+        }
+
+        public String getCONTENT() {
+            return CONTENT;
+        }
+
+        public void setCONTENT(String CONTENT) {
+            this.CONTENT = CONTENT;
+        }
+
+        public String getTIME() {
+            return TIME;
+        }
+
+        public void setTIME(String TIME) {
+            this.TIME = TIME;
+        }
+
+        public String getMEMBER_ID() {
+            return MEMBER_ID;
+        }
+
+        public void setMEMBER_ID(String MEMBER_ID) {
+            this.MEMBER_ID = MEMBER_ID;
+        }
+    }
+
+
 }
