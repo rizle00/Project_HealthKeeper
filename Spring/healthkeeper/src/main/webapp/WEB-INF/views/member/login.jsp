@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<style>
-		.kakao	{background: url("<c:url value='/resources/assets/img/kakao_login_medium_wide.png'/>") center/contain no-repeat;}
+		#kakao	{background: url("<c:url value='/resources/assets/img/kakao_login_medium_wide.png'/>") center/contain no-repeat;}
 	</style>
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
@@ -41,7 +41,7 @@
         		</fieldset>
         		<button type="submit" class="login_button">Login</button>
 				<hr>
-					<input type="button" class="form-control p-3 kakao" />
+					<input type="button" class="form-control p-3 "id="kakao" />
       		</form>
     		</div>
     		<div class="form-wrapper">
@@ -65,7 +65,7 @@
         			<button type="submit" class="login_button">Login</button>
 					<hr>
 
-						<input type="button" class="form-control p-3 kakao"  />
+						<input type="button" class="form-control p-3 " id="kakao"  />
       			</form>
     		</div>
   		</div>
@@ -86,6 +86,12 @@
 			this.parentElement.classList.add('is-active')
 		})
 	})
+</script>
+<script>
+	$("#kakao").click(function (){
+		location = $(this).attr("id")+"Login";
+	})
+
 </script>
 </body>
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />
