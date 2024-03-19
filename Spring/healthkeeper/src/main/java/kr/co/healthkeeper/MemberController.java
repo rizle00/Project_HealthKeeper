@@ -3,23 +3,36 @@ package kr.co.healthkeeper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import kr.co.common.CommonUtility;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.model.MemberVO;
 import kr.co.service.MemberService;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.UUID;
+
 @Controller
+@PropertySource("classpath:info.properties") //카카오 앱 키 저장용
 @RequestMapping("/member/*")
 public class MemberController {
+	@Autowired
+	CommonUtility common;
 
 	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
 	
@@ -100,5 +113,53 @@ public class MemberController {
 		session.invalidate(); // 세션 전체를 무효화하는 메서드, 세션 제거
 		
 		return "redirect:/main";
+	}
+
+	@Value("${KAKAO_REST_API}") private  String KAKAO_REST_API;
+	@Value("${NAVER_CLIENT_ID}") private String NAVER_CLIENT_ID;
+	@Value("${NAVER_SECRET}") private String NAVER_SECRET;
+	@RequestMapping("kakaoLogin")
+	public String kakaoLogin(HttpServletRequest request){
+		StringBuffer url = new StringBuffer("https://kauth.kakao.com/oauth/authorize?response_type=code");
+		url.append("&client_id=").append(KAKAO_REST_API);
+		url.append("&redirect_uri=").append(common.appURL(request)).append("/member/kakaocallback");//https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code
+		return "redirect:" + url.toString();
+	}
+
+	@RequestMapping("kakaocallback")
+	public String kakaocallback(String code,HttpSession session, Model model){
+		if(code ==null) return "redirect:/main";
+
+		StringBuffer url = new StringBuffer("https://kauth.kakao.com/oauth/token?grant_type=authorization_code");
+		url	.append( "&client_id=" ).append( KAKAO_REST_API )
+				.append( "&code=" ).append( code );
+		String response = common.requestAPI(url.toString());
+		JSONObject json = new JSONObject(response);
+		String token_type = json.getString("token_type");
+		String access_token = json.getString("access_token");
+
+		response = common.requestAPI("https://kapi.kakao.com/v2/user/me", token_type +" "+access_token);
+		json =  new JSONObject(response);
+		if(! json.isEmpty()) {
+			String social = String.valueOf(json.getLong("id"));
+			json = json.getJSONObject("kakao_account");
+
+			MemberVO vo = new MemberVO();
+			vo.setSOCIAL(social);
+			session.setAttribute("social",social);
+		}
+		return "redirect:/main/member/join";
+	}
+
+
+	@RequestMapping("naverlogin")
+	public String naverLogin(HttpSession session, HttpServletRequest request){
+		String state = UUID.randomUUID().toString();
+		session.setAttribute("state",state);
+
+		StringBuffer url = new StringBuffer("https://nid.naver.com/oauth2.0/authorize?response_type=code");
+		url.append("&client_id=").append(NAVER_CLIENT_ID);
+
+		return null;
 	}
 }
