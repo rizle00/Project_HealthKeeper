@@ -42,6 +42,7 @@
         		<button type="submit" class="login_button">Login</button>
 				<hr>
 					<input type="button" class="form-control p-3 "id="kakao" />
+					<input type="button" class="form-control p-3 " id="naver">
       		</form>
     		</div>
     		<div class="form-wrapper">
@@ -66,6 +67,7 @@
 					<hr>
 
 						<input type="button" class="form-control p-3 " id="kakao"  />
+						<input type="button" class="form-control p-3 " id="naver">
       			</form>
     		</div>
   		</div>
