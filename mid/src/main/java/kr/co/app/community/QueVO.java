@@ -1,8 +1,12 @@
 package kr.co.app.community;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter@Setter
 public class QueVO {
    private String QUE_ID, TITLE, CONTENT, TIME, MEMBER_ID, SECRET, CATEGORY_ID, READ_CNT;
-
+   private AnswerVO vo;
 public String getQUE_ID() {
 	return QUE_ID;
 }

@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="comm">
+	<resultMap id="queResult" type="que">
+		<id property="QUE_ID" column="QUE_ID"/>
+		<result property="TITLE" column="TITLE"/>
+		<result property="CONTENT" column="CONTENT"/>
+		<result property="TIME" column="TIME"/>
+		<result property="MEMBER_ID" column="MEMBER_ID"/>
+		<result property="SECRET" column="SECRET"/>
+		<result property="CATEGORY_ID" column="CATEGORY_ID"/>
+		<result property="READ_CNT" column="READ_CNT"/>
+
+		<!-- 답변 VO 매핑 -->
+		<association property="answer" javaType="answer">
+			<id property="ANS_ID" column="ANS_ID"/>
+			<result property="CONTENT" column="CONTENT"/>
+			<result property="QUE_ID" column="QUE_ID"/>
+			<result property="ADMIN_ID" column="ADMIN_ID"/>
+			<result property="TIME" column="TIME"/>
+		</association>
+	</resultMap>
+	<!-- 질문과 답변 함께 조회하는 쿼리 -->
+	<select id="getQuestionWithAnswer" resultMap="queResult">
+		SELECT q.*, a.*
+		FROM question_table q
+				 LEFT JOIN answer_table a ON q.QUE_ID = a.QUE_ID
+		WHERE q.QUE_ID = #{QUE_ID}
+	</select>
+
 
 <select id="que" resultType="que"><!-- 자주하는 질문 -->
 	 	select  * from notice

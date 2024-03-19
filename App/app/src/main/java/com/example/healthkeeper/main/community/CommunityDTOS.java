@@ -55,7 +55,8 @@ public class CommunityDTOS {
 
     public class Community_QuestionDTO{//질문 게시판
       private String QUE_ID, TITLE, CONTENT, TIME, MEMBER_ID, SECRET, CATEGORY_ID, READ_CNT;
-        public Community_QuestionDTO(String TITLE, String CONTENT, String TIME, String MEMBER_ID, String SECRET, String CATEGORY_ID, String READ_CNT) {
+      private AnswerDTO dto;
+      public Community_QuestionDTO(String TITLE, String CONTENT, String TIME, String MEMBER_ID, String SECRET, String CATEGORY_ID, String READ_CNT) {
             this.TITLE = TITLE;
             this.CONTENT = CONTENT;
             this.TIME = TIME;
@@ -130,6 +131,13 @@ public class CommunityDTOS {
         }
 
 
+        public AnswerDTO getDto() {
+            return dto;
+        }
+
+        public void setDto(AnswerDTO dto) {
+            this.dto = dto;
+        }
     }
 
     public class AnswerDTO{
