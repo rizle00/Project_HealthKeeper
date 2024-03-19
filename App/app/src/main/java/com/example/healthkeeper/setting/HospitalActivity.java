@@ -6,10 +6,13 @@ import android.content.SharedPreferences;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.healthkeeper.App;
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.common.CommonConn;
@@ -20,6 +23,7 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class HospitalActivity extends AppCompatActivity {
@@ -28,7 +32,12 @@ public class HospitalActivity extends AppCompatActivity {
     private Spinner hospitalSpinner;
     private Button btn_search, btn_addDoc, btn_insert;
     CommonRepository repository;
+    CommonConn conn;
     SharedPreferences pref;
+    private String searchName;
+    private RecyclerView rev;
+    private RevAdapter adapter; // 어댑터 객체 선언
+    private List<String> doctorsList, newList;
 
     MemberHospitalVO vo;
     @Override
@@ -42,6 +51,10 @@ public class HospitalActivity extends AppCompatActivity {
         btn_insert = binding.btnInsertHospital;
         btn_addDoc = binding.btnAddDoctor;
         repository = new CommonRepository(((App)getApplication()).executorService);
+
+
+
+
         vo =  new MemberHospitalVO();
         pref = getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
         vo.setMEMBER_ID(pref.getString("user_id",""));
@@ -49,33 +62,28 @@ public class HospitalActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 사용자가 입력한 병원 이름을 가져옴
-                String hospitalName = edt_hospital.getText().toString().trim();
-                Log.d("TAG", "onClick: "+hospitalName);
+                searchName = edt_hospital.getText().toString().trim();
+                Log.d("TAG", "onClick: "+searchName);
                 // 서버에서 병원 목록을 가져와서 스피너에 표시하는 메서드 호출
-                fetchHospitalListFromServer(hospitalName);
+                fetchHospitalListFromServer(searchName);
+            }
+        });
+        btn_addDoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAddDoctorDialog(edt_hospital.getText().toString());
             }
         });
 
-        hospitalSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // 사용자가 선택한 병원 이름을 가져옴
-                String selectedHospital = parent.getItemAtPosition(position).toString();
-                // 의사 이름을 입력하는 다이얼로그를 표시
-                showAddDoctorDialog(HospitalActivity.this, selectedHospital);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
     }
 
-    private void fetchHospitalListFromServer(String hospitalName) {
+
+
+    private void fetchHospitalListFromServer(String searchName) {
         // 여기서 서버에서 병원 목록을 가져와야 합니다.
         // 이 예제에서는 임의의 데이터를 사용합니다.
-        CommonConn conn =  new CommonConn("member/hospital");
-        conn.addParamMap("name", hospitalName);
+         conn =  new CommonConn("member/hospital");
+        conn.addParamMap("name", searchName);
         repository.select(conn).thenAccept(result->{
             List<HospitalVO> list = new Gson().fromJson(result,new TypeToken<List<HospitalVO>>(){}.getType() );
             // 병원 이름을 담을 새로운 리스트 생성
@@ -94,6 +102,18 @@ public class HospitalActivity extends AppCompatActivity {
                     String selectedHospital = hospitals.get(i);
                    vo.setHOSPITAL_ID(list.get(i).getHOSPITAL_ID());
                     edt_hospital.setText(selectedHospital);
+                   conn = new CommonConn("member/doctor");
+                   conn.addParamMap("params", new Gson().toJson(vo) );
+                   repository.select(conn).thenAccept(result->{
+                       if(!result.isEmpty()){
+                         doctorsList  = new Gson().fromJson(result, new TypeToken<List<String>>(){}.getType());
+                            newList = doctorsList;
+                       } else {
+                           newList = new ArrayList<>();
+
+                       }
+                       createRev();
+                   });
                 }
 
                 @Override
@@ -109,12 +129,45 @@ public class HospitalActivity extends AppCompatActivity {
 
     }
 
-    private void showAddDoctorDialog(Context context, String hospitalName) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    private void createRev() {
+        rev = binding.revDoctor;
+
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this);
+        horizontalLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rev.setLayoutManager(horizontalLayoutManager);
+
+
+        adapter = new RevAdapter(newList);
+        rev.setAdapter(adapter);
+
+        SwipeDismissRecyclerViewTouchListener listener = new SwipeDismissRecyclerViewTouchListener.Builder(
+                rev,
+                new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
+                    @Override
+                    public boolean canDismiss(int position) {
+                        return true;
+                    }
+
+                    @Override
+                    public void onDismiss(View view) {
+                        int id = rev.getChildPosition(view);
+                        adapter.mDataset.remove(id);
+                        adapter.notifyDataSetChanged();
+
+                        Toast.makeText(getBaseContext(), String.format("Delete item %d",id),Toast.LENGTH_SHORT).show();
+                    }
+                }).setIsVertical(true).create();
+
+
+        rev.setOnTouchListener(listener);
+    }
+
+    private void showAddDoctorDialog(String hospitalName) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(HospitalActivity.this);
         builder.setTitle(hospitalName + " - 의사 추가");
 
         // 의사 이름을 입력할 EditText 추가
-        final EditText doctorInput = new EditText(context);
+        final EditText doctorInput = new EditText(HospitalActivity.this);
         doctorInput.setInputType(InputType.TYPE_CLASS_TEXT);
         doctorInput.setHint("의사 이름을 입력하세요.");
         builder.setView(doctorInput);
@@ -125,9 +178,8 @@ public class HospitalActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 // 입력된 의사 이름
                 String doctorName = doctorInput.getText().toString().trim();
-
-                // 여기서 입력된 의사 이름을 사용하여 작업을 수행합니다.
-                // 예를 들어, 데이터베이스에 새로운 의사 정보를 추가하는 등의 작업을 수행할 수 있습니다.
+                newList.add(doctorName);
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -143,4 +195,41 @@ public class HospitalActivity extends AppCompatActivity {
         // 다이얼로그 표시
         builder.show();
     }
+
+    public class RevAdapter extends RecyclerView.Adapter<RevAdapter.ViewHolder>{
+
+        public List<String> mDataset;
+
+        public RevAdapter(List<String> dataset) {
+            super();
+            mDataset = dataset;
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            View view = View.inflate(viewGroup.getContext(), android.R.layout.simple_list_item_1, null);
+            ViewHolder holder = new ViewHolder(view);
+            return holder;
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder viewHolder, int i) {
+            viewHolder.mTextView.setText(mDataset.get(i));
+        }
+
+        @Override
+        public int getItemCount() {
+            return mDataset.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder{
+
+            public TextView mTextView;
+            public ViewHolder(View itemView) {
+                super(itemView);
+                mTextView = (TextView) itemView;
+            }
+        }
+    }
+
 }
