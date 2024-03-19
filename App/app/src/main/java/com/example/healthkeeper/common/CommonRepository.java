@@ -84,4 +84,26 @@ public class CommonRepository {
         });
         return result;
     }
+
+    public CompletableFuture<String> insert(CommonConn conn) {
+
+
+//        conn = new CommonConn(url, mContext);
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+//                String json = new Gson().toJson(map);
+//                conn.addParamMap("params", json);
+//                Log.d(TAG, "run: " + map);
+                conn.onExcute((isResult, data) -> {
+
+                    Log.d("Common", "onResult: " + data);
+                    Log.d("Common", "onResult: " + isResult);
+                    if (isResult)
+                        result.complete(data); // 결과 완료
+                });
+            }
+        });
+        return result;
+    }
 }
