@@ -30,6 +30,12 @@
             android:layout_height="wrap_content"
             android:text="의사 추가"
             android:layout_marginTop="8dp" />
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rev_doctor"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:scrollbars="vertical"/>
+
     <Button
             android:id="@+id/btn_insert_hospital"
             android:layout_width="wrap_content"

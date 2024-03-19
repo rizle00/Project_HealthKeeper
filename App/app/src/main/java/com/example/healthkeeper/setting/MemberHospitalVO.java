@@ -1,5 +1,7 @@
 package com.example.healthkeeper.setting;
 
+import java.util.List;
+
 public class MemberHospitalVO {
     public String getMEMBER_ID() {
         return MEMBER_ID;
@@ -26,5 +28,15 @@ public class MemberHospitalVO {
     }
 
     private String MEMBER_ID, HOSPITAL_ID, DOCTOR_NAME;
+
+    public List<String> getDoctors() {
+        return doctors;
+    }
+
+    public void setDoctors(List<String> doctors) {
+        this.doctors = doctors;
+    }
+
+    private List<String> doctors;
 
 }

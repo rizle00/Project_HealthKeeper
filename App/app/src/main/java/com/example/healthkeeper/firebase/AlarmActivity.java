@@ -17,7 +17,7 @@ import java.util.concurrent.Executor;
 
 public class AlarmActivity extends AppCompatActivity {
     ActivityAlarmBinding binding;
-    private final long timeCount = 60*1000;
+    private final long timeCount = 3*1000;
     private enum TimerStatus {
         STARTED,
         STOPPED
@@ -32,8 +32,8 @@ public class AlarmActivity extends AppCompatActivity {
     private SharedPreferences pref;
     private BluetoothRepository repository;
     private Executor executor;
-    private String type, content;
-    NotificationManager notificationManager;
+    private String type, content, text;
+//    NotificationManager notificationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +43,7 @@ public class AlarmActivity extends AppCompatActivity {
         if(!getIntent().getType().isEmpty()){ // 인텐트가 있을때만 시행
             type = getIntent().getType();
             content = getIntent().getStringExtra("content");
+            text = getIntent().getStringExtra("texts");
             initViews();
             startTimer();
         } else finish();
@@ -60,7 +61,7 @@ public class AlarmActivity extends AppCompatActivity {
         btn_stop = binding.btnCloseAlarm;
         this.executor = ((App) getApplication()).executorService;
         initRepository();
-        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
     }
     private void initRepository() {
@@ -83,7 +84,7 @@ public class AlarmActivity extends AppCompatActivity {
     private void stopTimer() { // 타이머 종료
         timerStatus = TimerStatus.STOPPED;
         countDownTimer.cancel();
-        notificationManager.cancel(getIntent().getIntExtra("notifyId",0));
+//        notificationManager.cancel(getIntent().getIntExtra("notifyId",0));
         Toast.makeText(AlarmActivity.this,"알람이 종료되었습니다", Toast.LENGTH_SHORT).show();
     }
     private void startCountDownTimer() {// 타이머 시작
@@ -124,13 +125,13 @@ public class AlarmActivity extends AppCompatActivity {
         dto.setGuardian_id(id);
         dto.setCategory_id(type);
         repository.insertAlarm(dto);
-        notificationManager.cancel(getIntent().getIntExtra("notifyId",0));
+//        notificationManager.cancel(getIntent().getIntExtra("notifyId",0));
 
     }
     public void SendSMS(String name,String number, String address){// 문자보내기
-        String text = name+"님의"+content+"\n주소 : "+address;
+        String msg = name+"님의"+text+"\n주소 : "+address;
         SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(number,null, text,null,null);
+        sms.sendTextMessage(number,null, msg,null,null);
         Toast.makeText(AlarmActivity.this,"문자 신고가 발송되었습니다", Toast.LENGTH_SHORT).show();
     }
 

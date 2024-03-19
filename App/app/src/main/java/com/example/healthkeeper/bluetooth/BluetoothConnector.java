@@ -142,6 +142,7 @@ public class BluetoothConnector {
                                             BluetoothGattCharacteristic characteristic) {
             if (characteristic.getValue().length > 1) {// byte가 0 이 되는 경우가 있음
                 Log.d(TAG, "onCharacteristicChanged: "+characteristic.getValue().length);
+                Log.d(TAG, "onCharacteristicChanged: "+new String(characteristic.getValue()));
                 repository.insertData(handleData(characteristic));
             }
 
@@ -179,12 +180,13 @@ public class BluetoothConnector {
         if (temperature <= 34.5 || temperature >= 39.5) {
             temperature = 0;
         }
-        map.put("heart", String.valueOf(heartRate));
+        map.put("heart", heartRate);
         map.put("temp", temperature);
         map.put("accident", accident);
         viewModel.setHeartData(heartRate);
         viewModel.setTempData(temperature);
-        viewModel.setAccidentData(accident);
+//        viewModel.setAccidentData(accident);
+        viewModel.setData(map);
         return map;
     }
 

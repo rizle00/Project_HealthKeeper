@@ -6,15 +6,15 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.normal.TedPermission;
 
 public class PermissionUtils {
-    public static void checkNotiPermission(Context context, PermissionListener permissionListener) {
+    public void checkPermission(PermissionListener permissionListener) {
         TedPermission.create()
                 .setPermissionListener(permissionListener)
                 .setDeniedMessage("Denied Permission.")
-                .setPermissions(Manifest.permission.POST_NOTIFICATIONS)
+                .setPermissions(Manifest.permission.POST_NOTIFICATIONS, Manifest.permission.SEND_SMS)
                 .check();
     }
 
-    public static void checkBtPermission(Context context, PermissionListener permissionListener) {
+    public void checkBtPermission(PermissionListener permissionListener) {
         TedPermission.create()
                 .setPermissionListener(permissionListener)
                 .setDeniedMessage("Denied Permission.")
@@ -26,7 +26,7 @@ public class PermissionUtils {
                 .check();
     }
 
-    public static void checkCallPermission(Context context, PermissionListener permissionListener) {
+    public void checkCallPermission(PermissionListener permissionListener) {
         TedPermission.create()
                 .setPermissionListener(permissionListener)
                 .setDeniedMessage("Denied Permission.")
