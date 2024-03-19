@@ -9,4 +9,8 @@ public interface MemberMapper {
 	
 	// 로그인
 	public MemberVO memberlogin(MemberVO member);
+
+	public int socialCheck(String social);
+
+	public MemberVO socialLogin(String social);
 }
