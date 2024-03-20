@@ -7,7 +7,8 @@
 	<setting name="jdbcTypeForNull" value="NULL"/>
 </settings>
 	<typeAliases>
-		
+			<typeAlias type="kr.co.app.community.AnswerVO"
+				   alias="answer" />
 			<typeAlias type="kr.co.app.community.QueVO"
 				   alias="que" />
 		   <typeAlias type="kr.co.app.community.NoticeVO"

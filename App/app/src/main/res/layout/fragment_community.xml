@@ -99,7 +99,7 @@
                             android:textSize="20dp"
                             android:textStyle="bold"
 
-                            android:text="faq"
+                            android:text="질문게시판"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
 
@@ -235,7 +235,7 @@
                         <TextView
                             android:id="@+id/tv_questionTitle"
                             android:layout_centerVertical="true"
-                            android:text="자주묻는질문"
+                            android:text="F	&amp;Q"
                             android:textSize="20dp"
                             android:textStyle="bold"
                             android:layout_width="wrap_content"
