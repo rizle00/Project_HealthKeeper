@@ -14,4 +14,6 @@ public interface MemberService {
 
 	public MemberVO socialLogin(String social);
 
+	public int checkDuplicateEmail(String email);
+	
 }
