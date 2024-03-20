@@ -227,12 +227,22 @@ public class BluetoothService extends Service {
 
     private void observe() {
 
-        viewModel.getHeartLiveData().observeForever(heart -> {
-            viewModel.getTempLiveData().observeForever(temp -> {
-                viewModel.getAccidentLiveData().observeForever(accident -> {
-                    handleAccidentDetected(heart, temp, accident);
-                });
-            });
+//        viewModel.getHeartLiveData().observeForever(heart -> {
+//            viewModel.getTempLiveData().observeForever(temp -> {
+//                viewModel.getAccidentLiveData().observeForever(accident -> {
+//                    handleAccidentDetected(heart, temp, accident);
+//                    Log.d(TAG, "observe: "+heart+"t"+temp);
+//                });
+//            });
+//        }); 맵으로 처리
+        viewModel.getData().observeForever(data->{
+            if(data != null){
+                int heart = (int) data.get("heart");
+                double temp = (double) data.get("temp");
+                String accident = (String) data.get("accident");
+                handleAccidentDetected(heart, temp, accident);
+            }
+
         });
 
     }
@@ -252,50 +262,69 @@ public class BluetoothService extends Service {
                     "체온이 너무 높습니다", "체온이 너무 낮습니다"
             };
             Intent intent = new Intent(this, AlarmActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
 
-            builder.setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setOngoing(true)
-                    .setContentIntent(getPendingIntent(intent))
-                    .setVibrate(new long[]{1000, 1000, 1000,
-                            1000, 1000});
+//            builder.setPriority(NotificationCompat.PRIORITY_HIGH)
+//                    .setOngoing(true)
+//                    .setVibrate(new long[]{1000, 1000, 1000,
+//                            1000, 1000});
             if (accident.equals("1")) {
                 //낙상발생
-                builder.setContentText(contents[0]);
+
                 intent.setType("7");
-                intent.putExtra("content", texts[0]);
-                intent.putExtra("notifyId", 1001);
-                notificationManager.notify(1001, builder.build());
+                intent.putExtra("content", contents[0]);
+                intent.putExtra("text", texts[0]);
+//                intent.putExtra("notifyId", 1001);
+//                builder.setContentText(contents[0])
+//                        .setContentIntent(getPendingIntent(intent));
+//                notificationManager.notify(1001, builder.build());
+
+                this.startActivity(intent);
+                startActivity(intent);
             } else {
                 if (heart > 160) {
                     //심박이 높음
-                    builder.setContentText(contents[1]);
+
                     intent.setType("8");
-                    intent.putExtra("content", texts[1]);
-                    intent.putExtra("notifyId", 1002);
-                    notificationManager.notify(1002, builder.build());
+                    intent.putExtra("content", contents[1]);
+                    intent.putExtra("text", texts[1]);
+//                    intent.putExtra("notifyId", 1002);
+//                    builder.setContentText(contents[1])
+//                            .setContentIntent(getPendingIntent(intent));
+//                    notificationManager.notify(1002, builder.build());
+                    startActivity(intent);
                 } else if (heart < 60) {
                     //심박이 낮음
-                    builder.setContentText(contents[2]);
                     intent.setType("9");
-                    intent.putExtra("content", texts[2]);
-                    intent.putExtra("notifyId", 1003);
-                    notificationManager.notify(1003, builder.build());
+                    intent.putExtra("content", contents[2]);
+                    intent.putExtra("text", texts[2]);
+//                    intent.putExtra("notifyId", 1003);
+//                    builder.setContentText(contents[2])
+//                            .setContentIntent(getPendingIntent(intent));
+//                    notificationManager.notify(1003, builder.build());
+                    startActivity(intent);
                 }
                 if (temp > 37.5) {
                     //체온이높음
-                    builder.setContentText(contents[3]);
                     intent.setType("10");
-                    intent.putExtra("content", texts[3]);
-                    intent.putExtra("notifyId", 1004);
-                    notificationManager.notify(1004, builder.build());
+                    intent.putExtra("content", contents[3]);
+                    intent.putExtra("text", texts[3]);
+//                    intent.putExtra("notifyId", 1004);
+//                    builder.setContentText(contents[3])
+//                            .setContentIntent(getPendingIntent(intent));
+//                    notificationManager.notify(1004, builder.build());
+                    startActivity(intent);
                 } else if (temp < 35.5) {
                     //체온이 낮음
-                    builder.setContentText(contents[4]);
                     intent.setType("11");
-                    intent.putExtra("content", texts[4]);
-                    intent.putExtra("notifyId", 1005);
-                    notificationManager.notify(1005, builder.build());
+                    intent.putExtra("content", contents[4]);
+                    intent.putExtra("text", texts[4]);
+//                    intent.putExtra("notifyId", 1005);
+//                    builder.setContentText(contents[4])
+//                            .setContentIntent(getPendingIntent(intent));
+//                    notificationManager.notify(1005, builder.build());
+                    startActivity(intent);
                 }
             }
         }
