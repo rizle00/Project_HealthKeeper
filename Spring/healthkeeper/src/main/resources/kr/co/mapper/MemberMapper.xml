@@ -30,4 +30,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE EMAIL = #{EMAIL}
 	</select>
 
+	<!-- 소셜 가입여부 확인-->
+	<select id= "socialCheck" resultType="Integer">
+		SELECT COUNT(*) FROM MEMBER WHERE SOCIAL = #{social}
+	</select>
+
+	<!-- 소셜 로그인-->
+	<select id="socialLogin" resultType="kr.co.model.MemberVO">
+		SELECT * FROM MEMBER WHERE SOCIAL = #{social}
+	</select>
+
+
 </mapper>
