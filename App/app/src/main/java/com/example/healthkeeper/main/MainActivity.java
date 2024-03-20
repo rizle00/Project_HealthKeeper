@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     private AlertDialog alertDialog;
     private ActivityMainBinding binding;
 
+    private final PermissionUtils permission = new PermissionUtils();
+
     private boolean doubleBackToExitPressedOnce = false;
 
 
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
         
         bottomNavSetting();// 메뉴 선택 리스너
-        PermissionUtils.checkNotiPermission(this, notiPermissionListener);
+        permission.checkPermission(permissionListener);
 
 
     }
@@ -109,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 setToolbarMenu(R.menu.toolbar_home);
                 return true;
             } else if (itemId == R.id.nav_119) {
-                checkCallPermission();
+                permission.checkCallPermission(callPermissionListener);
 
                 return true;
             } else if (itemId == R.id.nav_commu) {
@@ -179,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
             // 블루투스 버튼 클릭 했는데 서비스 x
             if(!sBound){
                 if (isOn()) { // 블루투스 사용 가능한 경우
-                    checkBtPermission();
+                    permission.checkBtPermission(bTPermissionListener);
                 } else { // 블루투스 활성화가 필요한 경우
                     requestBluetoothActivation(MainActivity.this);
                 }
@@ -297,46 +299,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == INTENT_REQUEST_BLUETOOTH_ENABLE && resultCode == RESULT_OK) {
-            checkBtPermission();
+            permission.checkBtPermission(bTPermissionListener);
         } else if (requestCode == INTENT_REQUEST_BLUETOOTH_ENABLE && resultCode == RESULT_CANCELED) {
             Toast.makeText(MainActivity.this, "블루투스 활성화가 필요합니다", Toast.LENGTH_SHORT).show();
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-    private void checkNotiPermission() {
-        TedPermission.create()
-                .setPermissionListener(notiPermissionListener)
-                .setDeniedMessage("Denied Permission.")
-                .setPermissions(
-                        Manifest.permission.POST_NOTIFICATIONS, Manifest.permission.SEND_SMS
-                        )
-                .check();
-    }
 
-    // 권한체크 - 블루투스
-    private void checkBtPermission() {
-        TedPermission.create()
-                .setPermissionListener(bTPermissionListener)
-                .setDeniedMessage("Denied Permission.")
-                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.BLUETOOTH_SCAN,
-                        Manifest.permission.BLUETOOTH_CONNECT,
-                        Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
-                .check();
-    }
-    // 권한 체크 - 전화
-    private void checkCallPermission() {
-        TedPermission.create()
-                .setPermissionListener(callPermissionListener)
-                .setDeniedMessage("Denied Permission.")
-                .setPermissions(
-                        Manifest.permission.CALL_PHONE
-                        )
-
-                .check();
-    }
-    private final PermissionListener notiPermissionListener = new PermissionListener() {
+    private final PermissionListener permissionListener = new PermissionListener() {
         @Override
         public void onPermissionGranted() {
             // 권한 설정됨, 긴급전화 시행
@@ -397,11 +368,11 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 if(name.equals("bt")){
-                                    checkBtPermission();
+                                    permission.checkBtPermission(bTPermissionListener);
                                 } else if (name.equals("call")){
-                                    checkCallPermission();
+                                    permission.checkCallPermission(callPermissionListener);
                                 }else if (name.equals("noti")){
-                                    checkNotiPermission();
+                                    permission.checkPermission(permissionListener);
                                 }
                             }
                         })
