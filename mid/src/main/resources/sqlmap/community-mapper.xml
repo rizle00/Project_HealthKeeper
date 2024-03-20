@@ -21,23 +21,53 @@
 		</association>
 	</resultMap>
 	<!-- 질문과 답변 함께 조회하는 쿼리 -->
-	<select id="getQuestionWithAnswer" resultMap="queResult">
+	<select id="question" resultMap="queResult">
 		SELECT q.*, a.*
-		FROM question_table q
-				 LEFT JOIN answer_table a ON q.QUE_ID = a.QUE_ID
-		WHERE q.QUE_ID = #{QUE_ID}
+		 FROM(
+    SELECT row_number() over(ORDER BY time DESC) no , q.* 
+    FROM question q 
+) q 
+LEFT outer JOIN ANSWER a ON q.QUE_ID = a.QUE_ID
+		
+		<if test="number>0">
+where no &lt; #{number}
+</if>
 	</select>
 
 
-<select id="que" resultType="que"><!-- 자주하는 질문 -->
-	 	select  * from notice
+
+<select id="answer" resultType="answer"><!-- question에서 운영자 답글가져오기 -->
+		<!-- 	SELECT A.CONTENT, A.TIME, A.QUE_ID
+			FROM ANSWER A
+			INNER JOIN QUESTION Q
+			ON A.QUE_ID = Q.QUE_ID -->
+			
+	SELECT A.CONTENT, A.TIME
+	FROM ANSWER A
+	LEFT OUTER JOIN QUESTION Q
+	ON A.QUE_ID = #{params}
+</select>
+
+<select id="que4" resultType="que"> 질문게시판
+select  * from question
+
+
+</select> 
+
+<select id="que" resultType="que"><!--질문게시판  상세페이지-->
+	 	select * from (
+    SELECT row_number() over(ORDER BY time DESC) no , q.* FROM question q 
+)
+ <if test="number>0">
+where no &lt; #{number}
+</if>
 </select>
 	
-<select id="faq" resultType="faq">
+<select id="faq" resultType="faq"><!--자주하는 질문   -->
         select * from faq
 </select>
 
-<select id="notice" resultType="notice">
+<select id="notice" resultType="notice"><!--공지사항   -->
         select * from notice
 </select>
 	

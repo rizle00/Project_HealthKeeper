@@ -2,13 +2,13 @@ package com.example.healthkeeper.main.community;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.healthkeeper.common.CommonRepository;
 import com.example.healthkeeper.databinding.RecvCommunityFaqBinding;
 
 import java.util.List;
@@ -17,8 +17,9 @@ public class Community_FaqAdapter extends RecyclerView.Adapter<Community_FaqAdap
     LayoutInflater inflater;
     List<CommunityDTOS.Community_faqDTO> List;
     Context context;
+    CommonRepository repository;
 
-    public Community_FaqAdapter(LayoutInflater inflater, List<CommunityDTOS.Community_faqDTO>  boardList, Context context){
+    public Community_FaqAdapter(LayoutInflater inflater, CommonRepository repository, List<CommunityDTOS.Community_faqDTO>  boardList, Context context){
         this.context=context;
         this. List= boardList;
         this.inflater=inflater;
@@ -55,6 +56,7 @@ public class Community_FaqAdapter extends RecyclerView.Adapter<Community_FaqAdap
 
             binding.tvTitle.setText(item.getTITLE());//게시글 제목
             binding.tvContent.setText(item.getCONTENT());//게시글내용
+
 
         }
     }

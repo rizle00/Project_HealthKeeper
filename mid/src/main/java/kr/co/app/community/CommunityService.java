@@ -17,9 +17,16 @@ public class CommunityService {
 	@Autowired
 	@Qualifier("hanul")
 	SqlSession sql;
+	public List<AnswerVO> answer(String params){
+		return sql.selectList("comm.answer", params);
+	}
 
-	public List<QueVO>  list(){
-		return sql.selectList("comm.que");
+	
+	  public List<QueVO> que4(){ 
+		  return sql.selectList("comm.que4"); }
+	 
+	public List<QueVO>  list(String number){
+		return sql.selectList("comm.question", number);
 	}
 	public List<FaqVO>  faq(){
 		return sql.selectList("comm.faq");
@@ -27,6 +34,7 @@ public class CommunityService {
 	public List<NoticeVO> notice(){
 		return sql.selectList("comm.notice");
 	}
+	
 	
 	
 }
