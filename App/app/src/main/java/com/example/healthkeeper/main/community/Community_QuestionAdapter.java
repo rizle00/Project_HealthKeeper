@@ -9,14 +9,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.healthkeeper.App;
 import com.example.healthkeeper.common.CommonConn;
 import com.example.healthkeeper.common.CommonRepository;
 import com.example.healthkeeper.databinding.RecvCommunityQuestionBinding;
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Community_QuestionAdapter extends RecyclerView.Adapter<Community_QuestionAdapter.ViewHolder> {
@@ -24,21 +21,12 @@ public class Community_QuestionAdapter extends RecyclerView.Adapter<Community_Qu
     LayoutInflater inflater;
     Context context;
    List<CommunityDTOS.Community_QuestionDTO> List;
-    private List<CommunityDTOS.AnswerDTO> answerList;
-    CommonRepository repository;
 
 
-    public Community_QuestionAdapter(LayoutInflater inflater,CommonRepository repository, List<CommunityDTOS.Community_QuestionDTO> list, Context context) {
+    public Community_QuestionAdapter(LayoutInflater inflater, List<CommunityDTOS.Community_QuestionDTO> list, Context context) {
         this.inflater=inflater;
         this.context=context;
         this.List=list;
-//        this.answerList=answerList;
-        this.repository = repository;
-
-        for (CommunityDTOS.Community_QuestionDTO question : List) {
-            answerList(question.getQUE_ID());
-        }
-
 
     }
 
@@ -56,45 +44,11 @@ public class Community_QuestionAdapter extends RecyclerView.Adapter<Community_Qu
         if (List == null) return; // List가 null이면 종료
         CommunityDTOS.Community_QuestionDTO item = List.get(i);
         Log.d("TAG", "aaaa: "+ List.size());
-        // 해당 질문에 대한 답변을 가져오기
-//        answerList(item.getQUE_ID(), holder);
 
         // 질문 정보를 ViewHolder에 바인딩
         holder.bind(item);
-        holder.loadAnswer(item.getQUE_ID());
 
 
-//        answerList = new ArrayList<>();
-
-//        item.getQUE_ID().equals()
-//        if (answerList == null || i >= answerList.size()) {
-//            holder.bind(item, null); // answerList가 null이거나 해당 인덱스의 답변이 없는 경우
-//        } else {
-//            CommunityDTOS.AnswerDTO item_answer = answerList.get(i);
-//            holder.bind(item, item_answer);
-//        }
-    }
-    private void answerList(String questionId, ViewHolder holder){
-        CommonConn conn4 = new CommonConn("question/answer");
-        conn4.addParamMap("params", questionId);
-        repository.select(conn4).thenAccept(result -> {
-            // 서버에서 답변을 가져온 후에 실행될 작업들을 여기에 작성
-            CommunityDTOS.AnswerDTO answer = new Gson().fromJson(result, CommunityDTOS.AnswerDTO.class);
-
-            // 가져온 답변을 ViewHolder에 전달하여 UI 업데이트
-            holder.updateAnswer(answer);
-        });
-    }
-    private void answerList(String params){
-        CommonConn conn4 = new CommonConn("question/answer");
-        conn4.addParamMap("params", params);
-        repository.select(conn4).thenAccept(result ->{
-            CommunityDTOS.AnswerDTO answer = new Gson().fromJson(result, CommunityDTOS.AnswerDTO.class);
-            Log.d("TAG", "bbb: "+params);
-            Log.d("TAG", "bbb: "+answer.getQUE_ID());
-            answerList.add(answer);
-
-        });
     }
 
 
@@ -112,41 +66,14 @@ public class Community_QuestionAdapter extends RecyclerView.Adapter<Community_Qu
             this.binding=binding;
 
         }
-        public void loadAnswer(String questionId) {
-            CommonConn conn4 = new CommonConn("question/answer");
-            conn4.addParamMap("params", questionId);
-            repository.select(conn4).thenAccept(result -> {
-
-                CommunityDTOS.AnswerDTO answer = new Gson().fromJson(result, CommunityDTOS.AnswerDTO.class);
-                updateAnswer(answer);
-                Log.d("TAG1", "answerList: "+questionId);
-                Log.d("TAG1", "answerList: "+answer.getQUE_ID());
-            });
-        }
-        public void updateAnswer(CommunityDTOS.AnswerDTO answer) {
-            // 여기에 가져온 답변을 이용하여 UI를 업데이트하는 작업을 수행
-            if (answer != null) {
-                binding.tvReadCnt.setVisibility(View.VISIBLE);
-                binding.tvAnswerContent.setText(answer.getANSWER_CONTENT());
-                binding.tvAnswerTime.setText(answer.getTIME());
-            } else {
-                binding.tvReadCnt.setVisibility(View.GONE);
-            }
-        }
         public void bind(CommunityDTOS.Community_QuestionDTO item) {
-            Log.d("TAG", "bind: "+item.getTITLE());
-            Log.d("TAG", "bind: "+item.getMEMBER_ID());
             binding.tvTile.setText(item.getTITLE());
             binding.tvWriter.setText(item.getMEMBER_ID());
             binding.tvWriteTime.setText(item.getTIME());
             binding.tvContent.setText(item.getCONTENT());
-//            binding.tvAnswerContent.setText(item_answer.getANSWER_CONTENT());
-//            binding.tvAnswerTime.setText(item_answer.getTIME());
-
-
-
-
-
+            binding.tvAnswerContent.setText(item.getDto().getANSWER_CONTENT());
+            binding.tvAnswerTime.setText(item.getDto().getTIME());
+            Log.d("TAG", "qqqqqqq: "+item.getDto().getANSWER_CONTENT());
 // tvReadCnt 클릭 이벤트 처리
             binding.tvReadCnt.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -28,7 +28,7 @@ public class QuestionDetail_Fragment extends Fragment {
     private static final String TAG = QuestionDetail_Fragment.class.getSimpleName();
     FragmentQuestionDetailBinding binding;
     private List<CommunityDTOS.Community_QuestionDTO> questionList;
-    private List<CommunityDTOS.AnswerDTO> answerList;
+    private List<CommunityDTOS.AnswerVO> answerList;
     CommonRepository repository;
 
     @Override
@@ -44,7 +44,7 @@ public class QuestionDetail_Fragment extends Fragment {
             questionList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
             }.getType());
             Log.d(TAG, "onCreateView: "+questionList.size());
-            binding.questionDetailList.setAdapter(new Community_QuestionAdapter(inflater,repository, questionList, getContext()));
+            binding.questionDetailList.setAdapter(new Community_QuestionAdapter(inflater, questionList, getContext()));
             binding.questionDetailList.setLayoutManager((new LinearLayoutManager(getContext())));
             // queList에서 각 Community_QuestionDTO 객체의 id 값을 추출하여 리스트에 추가
 

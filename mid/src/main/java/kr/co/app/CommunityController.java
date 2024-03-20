@@ -52,10 +52,13 @@ public class CommunityController {
 //		System.out.println(params);
 		
 	List<QueVO>  result =	service.list(params);
+	result.get(0).getQUE_ID();
+	result.get(0).getAnswer().getQUE_ID();
 	System.out.println("qqq"+result.size());
 	
 
     String json = new Gson().toJson(result);
+    System.out.println(json);
 
 		return ResponseEntity.ok(json);
 	} 

@@ -20,8 +20,6 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -50,10 +48,13 @@ public class CommunityFragment extends Fragment {
        CommonConn conn1 = new CommonConn("question/list");
        conn1.addParamMap("params", 5);
         repository.select(conn1).thenAccept(result -> {
+
             queList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
             }.getType());
             Log.d("TAG", "qqqq: "+queList.size());
-            binding.question.setAdapter(new Community_QuestionAdapter(inflater,repository, queList, getContext()));
+            Log.d("TAG", "qqqq: "+result);
+
+            binding.question.setAdapter(new Community_QuestionAdapter(inflater, queList, getContext()));
             binding.question.setLayoutManager((new LinearLayoutManager(getContext())));
 
             // queList에서 각 Community_QuestionDTO 객체의 id 값을 추출하여 리스트에 추가
@@ -66,11 +67,19 @@ public class CommunityFragment extends Fragment {
         repository.select(conn2).thenAccept(result ->{
             faqList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_faqDTO>>() {
             }.getType());
+
+            binding.question.setAdapter(new Community_FaqAdapter(inflater,repository, faqList, getContext()));
+            binding.question.setLayoutManager((new LinearLayoutManager(getContext())));
         });
-        CommonConn conn3 = new CommonConn("notice/list");
+
+
+      CommonConn conn3 = new CommonConn("notice/list");
         repository.select(conn3).thenAccept(result ->{
             notiList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_NoticeDTO>>() {
             }.getType());
+
+            binding.question.setAdapter(new Community_NoticeAdapter(inflater,repository, notiList, getContext()));
+            binding.question.setLayoutManager((new LinearLayoutManager(getContext())));
         });
 
 
@@ -181,7 +190,7 @@ public class CommunityFragment extends Fragment {
     }
 
 
-    private void createAnswer(String result, LayoutInflater inflater) {//질문게시판
+    //private void createAnswer(String result, LayoutInflater inflater) {//질문게시판
         // JSON 문자열을 파싱하여 리스트로 변환
 //        List<CommunityDTOS.Community_QuestionDTO> questionList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
 //        }.getType());
@@ -194,30 +203,30 @@ public class CommunityFragment extends Fragment {
 //        binding.question.setLayoutManager((new LinearLayoutManager(getContext())));
     }
 
+//
+//    public void createFaq(String result, LayoutInflater inflater) {//자주묻는게시판
+//        // JSON 문자열을 파싱하여 리스트로 변환
+//        List<CommunityDTOS.Community_faqDTO> list = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_faqDTO>>() {
+//        }.getType());
+//
+//        Log.d("TAG", "createFaq: "+list.get(0));
+//        // RecyclerView에 어댑터 설정
+//        Community_FaqAdapter recentBoardAdapter = new Community_FaqAdapter(inflater, repository, list, getContext());
+//        binding.faq.setAdapter(recentBoardAdapter);
+//        binding.faq.setLayoutManager(new LinearLayoutManager(getContext()));
+//    }
+//
+//    private void createNotice(String result, LayoutInflater inflater) {//공지사항
+//        // JSON 문자열을 파싱하여 리스트로 변환
+//        List<CommunityDTOS.Community_NoticeDTO> list = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_NoticeDTO>>() {
+//        }.getType());
+//        // RecyclerView에 어댑터 설정
+//        binding.notice.setAdapter(new Community_NoticeAdapter(inflater, repository, list, getContext()));
+//        binding.notice.setLayoutManager((new LinearLayoutManager(getContext())));
+//
+//
+//    }
 
-    public void createFaq(String result, LayoutInflater inflater) {//자주묻는게시판
-        // JSON 문자열을 파싱하여 리스트로 변환
-        List<CommunityDTOS.Community_faqDTO> list = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_faqDTO>>() {
-        }.getType());
-
-        Log.d("TAG", "createFaq: "+list.get(0));
-        // RecyclerView에 어댑터 설정
-        Community_FaqAdapter recentBoardAdapter = new Community_FaqAdapter(inflater, list, getContext());
-        binding.faq.setAdapter(recentBoardAdapter);
-        binding.faq.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
-
-    private void createNotice(String result, LayoutInflater inflater) {//공지사항
-        // JSON 문자열을 파싱하여 리스트로 변환
-        List<CommunityDTOS.Community_NoticeDTO> list = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_NoticeDTO>>() {
-        }.getType());
-        // RecyclerView에 어댑터 설정
-        binding.notice.setAdapter(new Community_NoticeAdapter(inflater, list, getContext()));
-        binding.notice.setLayoutManager((new LinearLayoutManager(getContext())));
-
-
-    }
 
 
 
-}
