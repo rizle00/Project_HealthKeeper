@@ -14,6 +14,7 @@
         <org.slf4j-version>1.6.6</org.slf4j-version>
     </properties>
     <dependencies>
+    
         <!--네이버 토큰 발급을 위한 gson-->
         <dependency>
             <groupId>com.google.code.gson</groupId>

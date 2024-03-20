@@ -45,18 +45,18 @@ public class FaqServiceTests {
 //			}
 //	 }
 	 // FAQ 게시판 수정테스트
-//	 @Test
-//	 public void faqupdate() {
-//		 
-//		 FaqVO vo = new FaqVO();
-//		 
-//		 vo.setFAQ_ID(10);
-//		 vo.setTITLE("service Test");
-//		 vo.setCONTENT("service Test중입니다.");
-//		 
-//		 int result = service.faqupdate(vo);
-//		 log.info("result :" + result);
-//	 }
+	 @Test
+	 public void faqupdate() {
+		 
+		 FaqVO vo = new FaqVO();
+		 
+		 vo.setFAQ_ID(10);
+		 vo.setTITLE("service Test");
+		 vo.setCONTENT("service Test중입니다.");
+		 
+		 int result = service.faqupdate(vo);
+		 log.info("result :" + result);
+	 }
 	 
 	 // FAQ 게시판 조회테스트
 //	 @Test

@@ -53,18 +53,38 @@ public class FaqController {
 		return "redirect:/faq/faqlist";
 	}
 	
+	// FAQ 게시판 조회
+	@GetMapping("/faqget")
+	public void faqgetGET(int FAQ_ID, Model model, FaqCriteria fcri) {
+		model.addAttribute("pageInfo", service.faqpage(FAQ_ID));
+		model.addAttribute("fcri", fcri);
+	}
+	
+	
 	// FAQ 수정페이지 이동
 	@GetMapping("/faqupdate")
-	public void faqupdateGET(int FAQ_ID, Model model) {
-		model.addAttribute("pageInfo", service.faqlist());
+	public void faqupdateGET(int FAQ_ID, Model model, FaqCriteria fcri) {
+		model.addAttribute("pageInfo", service.faqpage(FAQ_ID));
+		model.addAttribute("fcri",fcri);
 	}
 	
 	// FAQ 수정
 	@PostMapping("/faqupdate")
-	public String faqUpdatePOST(FaqVO faq , RedirectAttributes rttr) {
+	public String faqupdatePOST(FaqVO faq,RedirectAttributes rttr) {
 		
 		service.faqupdate(faq);
 		rttr.addFlashAttribute("result", "faqupdate success");
+		return "redirect:/faq/faqlist";
+	}
+	
+	// FAQ 공지사항 삭제
+	@PostMapping("/faqdelete")
+	public String faqdeletePOST(int FAQ_ID, RedirectAttributes rttr) {
+		
+		service.faqdelete(FAQ_ID);
+		
+		rttr.addFlashAttribute("result", "faqdelete success");
+		
 		return "redirect:/faq/faqlist";
 	}
 	
