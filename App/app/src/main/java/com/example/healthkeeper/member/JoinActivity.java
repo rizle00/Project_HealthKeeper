@@ -155,6 +155,7 @@ public class JoinActivity extends AppCompatActivity {
             vo.setGuardian_id(binding.edtPatientId.getText().toString());
             vo.setAddress_detail(binding.edtAddressDetail.getText().toString());
             vo.setSocial(getIntent().getStringExtra("social"));
+            vo.setRole(getIntent().getStringExtra("type"));
 
             SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
             
