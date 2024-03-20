@@ -1,12 +1,19 @@
 package kr.co.service;
 
+import kr.co.and.firebase.RequestDTO;
+import kr.co.and.firebase.TypeVO;
 import kr.co.mapper.AndMemberMapper;
 import kr.co.mapper.FaqMapper;
+import kr.co.model.DiseaseVO;
+import kr.co.model.HospitalVO;
+import kr.co.model.MemberHospitalVO;
 import kr.co.model.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
+
 @Service
 public class AndMemberServiceImpl implements AndMemberService {
 
@@ -70,5 +77,40 @@ public class AndMemberServiceImpl implements AndMemberService {
     @Override
     public int resetpw(MemberVO vo) {
         return mapper.resetpw(vo);
+    }
+
+    @Override
+    public MemberVO guardian(String user_id) {
+        return mapper.guardian(user_id);
+    }
+
+    @Override
+    public List<HospitalVO> hospitalList(String name) {
+        return mapper.hospitalList(name);
+    }
+
+    @Override
+    public List<String> doctorsList(MemberHospitalVO vo) {
+        return mapper.doctorsList(vo);
+    }
+
+    @Override
+    public HashMap<String, Object> condition(String id) {
+        return mapper.condition(id);
+    }
+
+    @Override
+    public TypeVO type(String category_id) {
+        return mapper.type(category_id);
+    }
+
+    @Override
+    public int insertAlarm(RequestDTO dto) {
+        return mapper.insertAlarm(dto);
+    }
+
+    @Override
+    public Integer insertDisease(DiseaseVO vo) {
+        return mapper.insertDisease(vo);
     }
 }

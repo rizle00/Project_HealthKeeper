@@ -34,7 +34,9 @@ public class CommunityService {
 	public List<NoticeVO> notice(){
 		return sql.selectList("comm.notice");
 	}
-
+	public List<CategoryVO> category(){
+		return sql.selectList("comm.category");
+	}
 
 	public int newWrite(QueVO vo) {
 		

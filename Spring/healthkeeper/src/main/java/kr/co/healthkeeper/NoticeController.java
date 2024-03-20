@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +27,9 @@ import kr.co.model.NotCriteria;
 import kr.co.model.NotPageMakeDTO;
 import kr.co.model.NoticeVO;
 import kr.co.service.NoticeService;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/notice/*")

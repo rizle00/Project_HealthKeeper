@@ -2,11 +2,7 @@ package kr.co.app;
 
 import com.google.gson.Gson;
 
-import kr.co.app.community.AnswerVO;
-import kr.co.app.community.CommunityService;
-import kr.co.app.community.FaqVO;
-import kr.co.app.community.NoticeVO;
-import kr.co.app.community.QueVO;
+import kr.co.app.community.*;
 import kr.co.app.member.MemberService;
 import kr.co.app.member.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +91,16 @@ public class CommunityController {
 
 			return ResponseEntity.ok(json);
 		
+	}
+
+	@PostMapping(value="category", produces = "application/text;charset=utf-8")
+	public ResponseEntity<String> category(String params){
+//		System.out.println(params);
+		List<CategoryVO> result = service.category();
+		String json = new Gson().toJson(result);
+
+		return ResponseEntity.ok(json);
+
 	}
 
 	

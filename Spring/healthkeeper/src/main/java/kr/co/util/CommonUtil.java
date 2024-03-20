@@ -1,20 +1,24 @@
-package kr.co.common;
+package kr.co.util;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
+
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 
-@Service @PropertySource("classpath:info.properties")
-public class CommonUtility {
+@Component("commonUtil")
+@PropertySource("classpath:info.properties")
+public class CommonUtil {
     public String requestAPI( String apiURL ) {
 
         try {

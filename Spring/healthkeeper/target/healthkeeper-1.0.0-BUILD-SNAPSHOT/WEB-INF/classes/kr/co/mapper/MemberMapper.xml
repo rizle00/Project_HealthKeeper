@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.mapper.MemberMapper">
+
+	<!-- 회원가입 -->
+	<insert id="memberjoin" parameterType="kr.co.model.MemberVO">
+		INSERT INTO MEMBER 
+		(EMAIL,PW,NAME,
+		 PHONE,BIRTH,GENDER,BLOOD,SOCIAL,
+		 ADDRESS,ADDRESS_DETAIL,ALARM,ROLE)
+		VALUES 
+		(#{EMAIL},#{PW},#{NAME},
+		#{PHONE},#{BIRTH},#{GENDER},#{BLOOD},#{SOCIAL},
+		#{ADDRESS},#{ADDRESS_DETAIL},#{ALARM},#{ROLE})
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id="memberlogin" resultType="kr.co.model.MemberVO">
+		SELECT EMAIL,PW,NAME
+		FROM MEMBER
+		WHERE EMAIL = #{EMAIL}
+	</select>
+	
+	
+	<!-- 아이디 중복검사 -->
+	<select id="idchk" resultType="int">
+		SELECT COUNT(*)FROM MEMBER
+		WHERE EMAIL = #{EMAIL}
+	</select>
+
+	<!-- 소셜 가입여부 확인-->
+	<select id= "socialCheck" resultType="Integer">
+		SELECT COUNT(*) FROM MEMBER WHERE SOCIAL = #{social}
+	</select>
+
+	<!-- 소셜 로그인-->
+	<select id="socialLogin" resultType="kr.co.model.MemberVO">
+		SELECT * FROM MEMBER WHERE SOCIAL = #{social}
+	</select>
+
+
+</mapper>

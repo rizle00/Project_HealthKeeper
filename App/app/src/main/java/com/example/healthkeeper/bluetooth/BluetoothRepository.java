@@ -24,7 +24,7 @@ public class BluetoothRepository {
     }
 
     public void insertData(HashMap<String, Object> map) {
-        commonConn = new CommonConn("test/insert", mContext);
+        commonConn = new CommonConn("and/insertData", mContext);
         executor.execute(new Runnable() {
             @Override
             public void run() {
