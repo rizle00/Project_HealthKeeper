@@ -14,62 +14,61 @@ public class AndMemberServiceImpl implements AndMemberService {
     private AndMemberMapper mapper;
     @Override
     public int insert(HashMap<String, Object> map) {
-        return mapper.insert("test.insert", map);;
+        return mapper.insert(map);
     }
 
     @Override
     public MemberVO login(String email) {
-        return mapper.login("me.login", email);;
+        return mapper.login(email);
     }
 
     @Override
     public String idcheck(String member_id) {
-        return mapper.idcheck("me.idcheck",member_id);;
+        return mapper.idcheck(member_id);
     }
 
     @Override
     public void join(MemberVO vo) {
-        mapper.join("me.join",vo);
+        mapper.join(vo);
     }
 
     @Override
     public String findid(MemberVO vo) {
-        return mapper.findid("me.findid",vo);
+        return mapper.findid(vo);
     }
 
     @Override
     public String findpw(MemberVO vo) {
-        return mapper.findpw("me.findpw",vo);;
+        return mapper.findpw(vo);
     }
 
     @Override
     public String socialIdCheck(String social) {
-        return mapper.socialIdCheck("me.socialCheck",social);;
+        return mapper.socialIdCheck(social);
     }
 
     @Override
     public MemberVO socialLogin(String social) {
-        return mapper.socialLogin("me.socialLogin",social);;
+        return mapper.socialLogin(social);
     }
 
     @Override
     public String partnerCheck(String partner_id) {
-        return mapper.partnerCheck("me.partnerCheck",partner_id);;
+        return mapper.partnerCheck(partner_id);
     }
 
     @Override
     public int modify(MemberVO vo) {
-        return  mapper.modify("me.modify",vo);;
+        return  mapper.modify(vo);
     }
 
     @Override
     public void patientRegister(MemberVO vo) {
-        mapper.patientRegister("me.patientRegister",vo);
-
+        mapper.patientRegister(vo);
     }
 
     @Override
     public int resetpw(MemberVO vo) {
-        return mapper.update("me.pwReset", vo);;
+        return mapper.resetpw(vo);
     }
 }

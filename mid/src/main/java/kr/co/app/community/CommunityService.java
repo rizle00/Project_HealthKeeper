@@ -36,9 +36,9 @@ public class CommunityService {
 	}
 
 
-	public List<QueVO> newWrite(String params) {
+	public int newWrite(QueVO vo) {
 		
-		return sql.selectList("comm.newWrite");
+		return sql.insert("comm.newWrite",  vo);
 	}
 	
 	

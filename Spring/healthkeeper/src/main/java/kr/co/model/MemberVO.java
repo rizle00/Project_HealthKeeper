@@ -7,10 +7,10 @@ import lombok.Data;
 public class MemberVO {
 	
 	// 회원 아이디
-	private int MEMBER_ID;
+	private String MEMBER_ID;
 	
 	// 보호자 아이디
-    private int GUARDIAN_ID;
+    private String GUARDIAN_ID;
     
     // 회원 비밀번호
     private String PW;
