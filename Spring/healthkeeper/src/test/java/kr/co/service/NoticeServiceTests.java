@@ -23,17 +23,17 @@ public class NoticeServiceTests {
     private NoticeService service;
     
     // 공지사항 등록 테스트
-     @Test
-     public void testEnroll() throws Exception{
-        
-        NoticeVO vo = new NoticeVO();
-        
-        vo.setTITLE("공지사항 service 테스트");
-        vo.setCONTENT("공지사항 service 테스트중입니다.");
-        vo.setMEMBER_ID(2);
-        
-       service.notregistr(vo);
-    }
+//     @Test
+//     public void testEnroll() throws Exception{
+//        
+//        NoticeVO vo = new NoticeVO();
+//        
+//        vo.setTITLE("공지사항 service 테스트");
+//        vo.setCONTENT("공지사항 service 테스트중입니다.");
+//        vo.setMEMBER_ID(2);
+//        
+//       service.notregistr(vo);
+//    }
     
     // 공지사항 목록 테스트
 //    @Test

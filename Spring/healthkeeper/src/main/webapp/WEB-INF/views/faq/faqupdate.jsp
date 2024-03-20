@@ -14,7 +14,6 @@
 </head>
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 <body>
-<a href="/faq/faqregistr">게시판 등록</a>
     <form id="faqupdateForm" action="/faq/faqupdate" method="post">
         <div id="faq">
             <h2>FAQ</h2>
@@ -43,7 +42,6 @@
         </div>
     </form>
     <form id="infoForm" action="/faq/faqupdate" method="get">
-		<input type="hidden" id="FAQ_ID" name="FAQ_ID" value='<c:out value="${pageInfo.FAQ_ID}"/>'>
 	</form>
 <script>
 // 글 목록을 접었다 폈다 하는 js코드
