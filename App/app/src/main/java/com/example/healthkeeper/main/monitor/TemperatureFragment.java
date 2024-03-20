@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -21,8 +23,13 @@ import com.example.healthkeeper.App;
 import com.example.healthkeeper.R;
 
 import com.example.healthkeeper.bluetooth.BluetoothViewModel;
+import com.example.healthkeeper.common.CommonConn;
+import com.example.healthkeeper.common.CommonRepository;
 import com.example.healthkeeper.databinding.FragmentTemperatureBinding;
 import com.example.healthkeeper.main.MainActivity;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
 
 public class TemperatureFragment extends Fragment {
 
@@ -35,7 +42,8 @@ public class TemperatureFragment extends Fragment {
     private String KEY_SELECTED_TEXT_COLOR = "selectedTextColor";
     private String KEY_SELECTED_TEXT_COLOR2 = "selectedTextColor";
 
-    TextView textView;
+    TextView textView, tv_time;
+    CommonRepository repository;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,12 +52,8 @@ public class TemperatureFragment extends Fragment {
         binding = FragmentTemperatureBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         textView = binding.trueTemperature;
-        BluetoothViewModel sharedViewModel = ((App) requireActivity().getApplicationContext()).getSharedViewModel();
-        sharedViewModel.getTempLiveData().observe(getViewLifecycleOwner(), data -> {
-
-                currentState(data);
-                textView.setText(String.valueOf(data));
-        });
+        tv_time = binding.tvTime;
+        Button btn = binding.btnRefresh;
         loadColorSettings();
 
         binding.colorChangeButton.setOnClickListener(new View.OnClickListener() {//배경색 변경 다이얼로그 띄우기
@@ -66,9 +70,38 @@ public class TemperatureFragment extends Fragment {
 
             }
         });
+        if(MainActivity.isPatient){
+            BluetoothViewModel sharedViewModel = ((App) requireActivity().getApplicationContext()).getSharedViewModel();
+            sharedViewModel.getHeartLiveData().observe(getViewLifecycleOwner(), data -> {
+                currentState(data);
+
+                textView.setText(String.valueOf(data));
+                btn.setVisibility(View.GONE);
+                tv_time.setVisibility(View.GONE);
+
+            });
+
+        } else {
+            loadTemp();
+            btn.setOnClickListener(v -> {
+                loadTemp();
+            });
+        }
+
         return view;
     }
-
+    private void loadTemp() {
+        repository = new CommonRepository(((App) requireActivity().getApplication()).executorService);
+        CommonConn conn = new CommonConn("member/condition");
+        conn.addParamMap("params", ((ConditionActivity) getActivity()).getUser_id());
+        conn.addParamMap("params",2);
+        repository.select(conn).thenAccept(result->{
+            HashMap<String, Object> map = new Gson().fromJson(result, HashMap.class);
+            textView.setText(map.get("CONDITION_TEMPERATURE").toString());
+            tv_time.setText(map.get("CONDITION_TIME").toString());
+            currentState(Double.parseDouble(map.get("CONDITION_TEMPERATURE").toString()));
+        });
+    }
 
     private void currentState(double trueTemperature) {// 체온결과에 따라 tv_sate 텍스트 업데이트해주도록 설정
 
