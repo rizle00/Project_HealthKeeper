@@ -19,7 +19,7 @@ public class Community_FaqAdapter extends RecyclerView.Adapter<Community_FaqAdap
     Context context;
     CommonRepository repository;
 
-    public Community_FaqAdapter(LayoutInflater inflater, CommonRepository repository, List<CommunityDTOS.Community_faqDTO>  boardList, Context context){
+    public Community_FaqAdapter(LayoutInflater inflater, List<CommunityDTOS.Community_faqDTO>  boardList, Context context){
         this.context=context;
         this. List= boardList;
         this.inflater=inflater;

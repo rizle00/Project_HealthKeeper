@@ -3,6 +3,7 @@ package kr.co.and;
 import com.google.gson.Gson;
 import kr.co.common.CommonUtility;
 import kr.co.model.MemberVO;
+import kr.co.service.AndMemberService;
 import kr.co.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,16 +21,16 @@ public class MemberController {
 	@Autowired private BCryptPasswordEncoder pwEncoder;
 
 	@Autowired
-	private MemberService service;
+	private AndMemberService service;
 
 
 	@PostMapping("/andlogin")
 	public ResponseEntity<String> login(String email, String pw) {
 		System.out.println("요청");
 		MemberVO vo = service.login(email);
-		
+
 		System.out.println(email.toString() + pw.toString());
-		if (pwEncoder.matches(pw, vo.getPw())) {
+		if (pwEncoder.matches(pw, vo.getPW())) {
 //			dataHolder.setData(vo.getToken());
 			return ResponseEntity.ok(new Gson().toJson(vo));
 		} else {
@@ -48,11 +49,11 @@ public class MemberController {
 	public void join(String vo, String type) {
 		System.out.println(type + "으로 가입");
 		MemberVO info = new Gson().fromJson(vo, MemberVO.class);
-		info.setPw(pwEncoder.encode(info.getPw()));
+		info.setPW(pwEncoder.encode(info.getPW()));
 		if (type.equals("patient")) {
 			service.join(info);
 		} else {
-			String patient = info.getGuardian_id();
+			String patient = info.getGUARDIAN_ID();
 			info.setGuardian_id(null);
 			service.join(info);
 			info.setGuardian_id(patient);

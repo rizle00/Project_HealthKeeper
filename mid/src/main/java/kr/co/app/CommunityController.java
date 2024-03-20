@@ -68,12 +68,11 @@ public class CommunityController {
 	
 	//자유게시판에서 글쓰기 insert!
 	@PostMapping(value="question/newWrite", produces = "applicateion/text;charset=utf-8")
-	public ResponseEntity<String> newWrite(String params){
-		List<QueVO>  result =	service.newWrite(params);
-		result.get(0).getCONTENT();
-		String json= new Gson().toJson(result);
-		System.out.println(json);
-		return ResponseEntity.ok(json);
+	public ResponseEntity<Integer> newWrite(String params){
+		QueVO vo = new Gson().fromJson(params, QueVO.class);
+
+
+		return ResponseEntity.ok(service.newWrite(vo));
 		
 		
 	}
