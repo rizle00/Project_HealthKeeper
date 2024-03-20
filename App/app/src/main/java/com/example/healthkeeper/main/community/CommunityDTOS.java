@@ -52,7 +52,6 @@ public class CommunityDTOS {
 
 
 
-
     public static class Community_QuestionDTO{//질문 게시판
       private String QUE_ID, TITLE, CONTENT, TIME, MEMBER_ID, SECRET, CATEGORY_ID, READ_CNT, Name;
       private AnswerVO answer;
