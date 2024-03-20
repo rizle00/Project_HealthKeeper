@@ -7,7 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<style>
-		#kakao	{background: url("<c:url value='/resources/assets/img/kakao_login_medium_wide.png'/>") center/contain no-repeat;}
+		#kakao	{background: url("<c:url value='/resources/assets/img/kakao_login_medium_wide.png'/>") center/contain no-repeat #FEE500;}
+		#naver	{background: url("<c:url value='/resources/assets/img/btn_naverlogin.png'/>") center/contain no-repeat #03c75a;}
 	</style>
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
@@ -41,7 +42,8 @@
         		</fieldset>
         		<button type="submit" class="login_button">Login</button>
 				<hr>
-					<input type="button" class="form-control p-3 "id="kakao" />
+					<input type="button" class="form-control p-3 mb-3"id="kakao" />
+					<input type="button" class="form-control p-3 " id="naver">
       		</form>
     		</div>
     		<div class="form-wrapper">
@@ -65,7 +67,8 @@
         			<button type="submit" class="login_button">Login</button>
 					<hr>
 
-						<input type="button" class="form-control p-3 " id="kakao"  />
+						<input type="button" class="form-control p-3 mb-3" id="kakao"  />
+						<input type="button" class="form-control p-3 " id="naver">
       			</form>
     		</div>
   		</div>
@@ -88,7 +91,7 @@
 	})
 </script>
 <script>
-	$("#kakao").click(function (){
+	$("#kakao, #naver").click(function (){
 		location = $(this).attr("id")+"Login";
 	})
 
