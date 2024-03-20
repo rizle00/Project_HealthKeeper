@@ -16,4 +16,6 @@ public interface MemberMapper {
 	public int socialCheck(String social);
 
 	public MemberVO socialLogin(String social);
+	
+	public int checkDuplicateEmail(String email);
 }
