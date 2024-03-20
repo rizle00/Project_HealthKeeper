@@ -2,11 +2,7 @@ package kr.co.app;
 
 import com.google.gson.Gson;
 
-import kr.co.app.community.AnswerVO;
-import kr.co.app.community.CommunityService;
-import kr.co.app.community.FaqVO;
-import kr.co.app.community.NoticeVO;
-import kr.co.app.community.QueVO;
+import kr.co.app.community.*;
 import kr.co.app.member.MemberService;
 import kr.co.app.member.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,12 +64,11 @@ public class CommunityController {
 	
 	//자유게시판에서 글쓰기 insert!
 	@PostMapping(value="question/newWrite", produces = "applicateion/text;charset=utf-8")
-	public ResponseEntity<String> newWrite(String params){
-		List<QueVO>  result =	service.newWrite(params);
-		result.get(0).getCONTENT();
-		String json= new Gson().toJson(result);
-		System.out.println(json);
-		return ResponseEntity.ok(json);
+	public ResponseEntity<Integer> newWrite(String params){
+		QueVO vo = new Gson().fromJson(params, QueVO.class);
+
+
+		return ResponseEntity.ok(service.newWrite(vo));
 		
 		
 	}
@@ -96,6 +91,16 @@ public class CommunityController {
 
 			return ResponseEntity.ok(json);
 		
+	}
+
+	@PostMapping(value="category", produces = "application/text;charset=utf-8")
+	public ResponseEntity<String> category(String params){
+//		System.out.println(params);
+		List<CategoryVO> result = service.category();
+		String json = new Gson().toJson(result);
+
+		return ResponseEntity.ok(json);
+
 	}
 
 	

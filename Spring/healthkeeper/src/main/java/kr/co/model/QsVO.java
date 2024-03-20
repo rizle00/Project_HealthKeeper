@@ -28,5 +28,7 @@ public class QsVO {
 		
 	// 게시판 조회수
 	private int READ_CNT;
+	private AnswerVO answer;
+	private String Name;
 
 }

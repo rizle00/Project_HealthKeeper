@@ -3,8 +3,7 @@ package kr.co.healthkeeper;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
+import kr.co.util.CommonUtil;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,21 +12,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import kr.co.common.CommonUtility;
 import kr.co.model.MemberVO;
 import kr.co.service.MemberService;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -35,18 +33,19 @@ import java.util.UUID;
 @PropertySource("classpath:info.properties") //카카오 앱 키 저장용
 @RequestMapping("/member/*")
 public class MemberController {
-	@Autowired
-	CommonUtility common;
+
+	@Resource(name="commonUtil")
+	CommonUtil common;
 
 	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired
 	private MemberService memberService;
 	
-	@Autowired
-	private BCryptPasswordEncoder pwEncoder;
+//	@Autowired
+	private BCryptPasswordEncoder pwEncoder = new BCryptPasswordEncoder();
 	
-	// 회원가입 페이지 이동 코드
+//	 회원가입 페이지 이동 코드
 	@GetMapping("/join")
 	public void memberjoinGET() {
 		log.info("회원가입 페이지 진입");
@@ -72,7 +71,7 @@ public class MemberController {
 	}
 	
 	// 아이디 중복검사 
-	@PostMapping("/memberIdChk")
+	@RequestMapping("/memberIdChk")
 	@ResponseBody
 	public String memberIdchkPOST(String email) throws Exception{
 		
@@ -90,7 +89,7 @@ public class MemberController {
 	}
 	
 	// 아이디 중복검사 
-		@PostMapping("/memberIdChk2")
+		@RequestMapping("/memberIdChk2")
 		@ResponseBody
 		public String memberIdchk2POST(String email) throws Exception{
 			
@@ -148,7 +147,7 @@ public class MemberController {
 	}
 	
 	// 로그아웃
-	@GetMapping("/logout")
+	@RequestMapping("/logout")
 	public String logoutGET(HttpServletRequest request) throws Exception {
 		log.info("로그아웃 메서드 진입");
 		

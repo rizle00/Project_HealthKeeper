@@ -28,7 +28,6 @@ public class QuestionDetail_Fragment extends Fragment {
     private static final String TAG = QuestionDetail_Fragment.class.getSimpleName();
     FragmentQuestionDetailBinding binding;
     private List<CommunityDTOS.Community_QuestionDTO> questionList;
-    private List<CommunityDTOS.AnswerVO> answerList;
     CommonRepository repository;
 
     @Override
@@ -39,7 +38,6 @@ public class QuestionDetail_Fragment extends Fragment {
         repository = new CommonRepository(((App) requireActivity().getApplication()).executorService);
 
         CommonConn conn = new CommonConn("question/list");
-//        conn.addParamMap("params","");
         repository.select(conn).thenAccept(result -> {
             questionList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
             }.getType());

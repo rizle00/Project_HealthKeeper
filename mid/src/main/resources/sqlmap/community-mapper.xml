@@ -37,10 +37,15 @@
 	
 	
 	<insert id="newWrite">
-	INSERT INTO question (QUE_ID, TITLE, CONTENT, MEMBER_ID, SECRET, CATEGORY_ID, READ_CNT)
-      VALUES (#{QUE_ID}, #{TITLE}, #{CONTENT}, #{MEMBER_ID}, #{SECRET}, #{CATEGORY_ID}, #{READ_CNT})
+	INSERT INTO question ( TITLE, CONTENT, MEMBER_ID, SECRET, CATEGORY_ID)
+      VALUES ( #{TITLE}, #{CONTENT}, #{MEMBER_ID}, #{SECRET}, #{CATEGORY_ID})
 	
 </insert>
+
+	<select id="category" resultType="category"><!--공지사항   -->
+		select * from category
+		where category_id &lt; 6
+	</select>
 
 
 
