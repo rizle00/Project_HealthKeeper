@@ -76,7 +76,7 @@
 <script>
 	// 로그인 버튼 클릭메서드
 	$(".login_button").click(function(){
-		$("#login_form").attr("action", "/member/login");
+		$("#login_form").attr("action", "login");
 		$("#login_form").submit();
 	});
 

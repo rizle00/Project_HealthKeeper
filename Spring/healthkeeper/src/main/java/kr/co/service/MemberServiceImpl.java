@@ -31,4 +31,9 @@ public class MemberServiceImpl implements MemberService{
 	public MemberVO socialLogin(String social){
 		return mapper.socialLogin(social);
 	}
+
+	@Override
+	public int checkDuplicateEmail(String email) {
+		return mapper.checkDuplicateEmail(email);
+	}
 }
