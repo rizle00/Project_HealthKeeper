@@ -10,6 +10,7 @@
 		<result property="SECRET" column="SECRET"/>
 		<result property="CATEGORY_ID" column="CATEGORY_ID"/>
 		<result property="READ_CNT" column="READ_CNT"/>
+		<result property="Name" column="Name"/>
 
 		<!-- 답변 VO 매핑 -->
 		<association property="answer" javaType="answer">
@@ -22,16 +23,16 @@
 	</resultMap>
 	<!-- 질문과 답변 함께 조회하는 쿼리 -->
 	<select id="question" resultMap="queResult">
-		SELECT q.*, a.*
-		 FROM(
-    SELECT row_number() over(ORDER BY time DESC) no , q.* 
-    FROM question q 
-) q 
-LEFT outer JOIN ANSWER a ON q.QUE_ID = a.QUE_ID
-		
+		SELECT q.*, a.*, m.name
+		FROM(
+		SELECT row_number() over(ORDER BY time DESC) no , q.*
+		FROM question q
+		) q
+		LEFT outer JOIN ANSWER a ON q.QUE_ID = a.QUE_ID
+		LEFT OUTER JOIN Member m on q.member_id = m.member_id
 		<if test="number>0">
-where no &lt; #{number}
-</if>
+			where no &lt; #{number}
+		</if>
 	</select>
 
 
