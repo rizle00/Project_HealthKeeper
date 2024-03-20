@@ -43,4 +43,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="modify">
 		UPDATE MEMBER SET PW=#{pw} , NAME=#{name},PHONE=#{phone},ADDRESS=#{address} ,ADDRESS_DETAIL=#{address_detail}  WHERE MEMBER_ID=#{member_id}
 	</update>
+
+	<select id="type" resultType = "kr.co.and.firebase.TypeVO">
+		select * from alarm_type where category_id = #{category_id}
+	</select>
+	<select id="guardian" resultType="kr.co.model.MemberVO">
+		SELECT * FROM member WHERE member_id = #{guardian_id}
+	</select>
+	<insert id="insertAlarm">
+		insert into Alarmlog (MEMBER_ID, CATEGORY_ID) values (#{guardian_id}, #{CATEGORY_ID})
+	</insert>
+
+	<insert id="insertDisease">
+		insert into MEMBER_DISEASES (MEMBER_ID, DISEASE_NAME, DESCRIPTION) values (#{MEMBER_ID}, #{DISEASE_NAME}, #{DESCRIPTION})
+	</insert>
+
+	<select id="hospital" resultType="kr.co.model.HospitalVO">
+		SELECT * FROM hospitals WHERE name LIKE '%'|| #{name}|| '%'
+	</select>
+
+	<select id="doctors" resultType="String">
+		select doctor_name from member_hospitals where member_id =#{member_id} and hospital_id =#{hospital_id};
+	</select>
+
+
+	<select id="condition" resultType="HashMap">
+		SELECT CONDITION_PULSE, condition_time, CONDITION_TEMPERATURE
+		FROM CONDITIONS
+		WHERE member_id = #{id}
+		  AND condition_time = (
+			SELECT MAX(condition_time)
+			FROM CONDITIONS
+			WHERE member_id = #{id}
+		)
+	</select>
+
+
 </mapper>

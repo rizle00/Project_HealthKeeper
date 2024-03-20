@@ -40,6 +40,7 @@ public class CommunityFragment extends Fragment {
     List<CommunityDTOS.Community_faqDTO> faqList;
     private Spinner spinner;
     CommonRepository repository;//스프링과 연결...
+    private CommunityDTOS.Community_QuestionDTO vo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -101,12 +102,13 @@ spinner = binding.spinnerCategory;
         binding.tvNewWriting.setOnClickListener(new View.OnClickListener() {//글쓰기 버튼
             @Override
             public void onClick(View view) {
-                CommunityDTOS.Community_QuestionDTO vo = new CommunityDTOS.Community_QuestionDTO();
+                vo = new CommunityDTOS.Community_QuestionDTO();
                 // 입력 폼을 보이도록 설정
                 binding.tvNewWritingShow.setVisibility(View.VISIBLE);
                 // 입력 폼을 초기화
                 binding.edtWriterTltle.setText("");
                 binding.edtWriterContent.setText("");
+                radioButton();
                  CommonConn reqCategory = new CommonConn("category");
                  repository.select(reqCategory).thenAccept(result->{
                    List<CommunityDTOS.CategoryVO> list = new Gson().fromJson(result,new TypeToken<List<CommunityDTOS.CategoryVO>>(){}.getType());
@@ -155,7 +157,6 @@ spinner = binding.spinnerCategory;
                             vo.setTITLE(title);
                             vo.setCONTENT(content);
                             vo.setMEMBER_ID(id);
-                            vo.setSECRET("n");
 
 
 
@@ -186,46 +187,16 @@ spinner = binding.spinnerCategory;
             }
         });
 
-        // 비밀글 선택 시
-        binding.radioButtonSecret.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 값이 "y"가 되도록 설정
-                String selectedValue = "y";
-                // 여기서는 선택된 값을 어떻게 활용할지에 대한 코드를 추가할 수 있습니다.
-            }
-        });
 
-        // 공개글 선택 시
-        binding.radioButtonPublic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 값이 "n"이 되도록 설정
-                String selectedValue = "n";
-                // 여기서는 선택된 값을 어떻게 활용할지에 대한 코드를 추가할 수 있습니다.
-            }
-        });
-
-
-        // 비밀글, 공개글 텍스트를 클릭하여 선택할 수 있도록 설정
-        binding.radioButtonSecret.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.radioButtonSecret.setChecked(true);
-                binding.radioButtonPublic.setChecked(false);
-            }
-        });
-
-        binding.radioButtonPublic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.radioButtonSecret.setChecked(false);
-                binding.radioButtonPublic.setChecked(true);
-            }
-        });
 
 
 //====================================================================================================
+        initButton();
+
+        return view;
+    }
+
+    private void initButton() {
         binding.button1.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.pink));//버튼 기본색상 변경
         binding.button2.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.white));
         binding.button3.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.white));
@@ -270,8 +241,48 @@ spinner = binding.spinnerCategory;
                 binding.scrollView.smoothScrollTo(0, binding.view3.getTop());
             }
         });
+    }
 
-        return view;
+    private void radioButton() {
+        // 비밀글 선택 시
+        binding.radioButtonSecret.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 값이 "y"가 되도록 설정
+                String selectedValue = "y";
+                // 여기서는 선택된 값을 어떻게 활용할지에 대한 코드를 추가할 수 있습니다.
+                vo.setSECRET("y");
+            }
+        });
+
+        // 공개글 선택 시
+        binding.radioButtonPublic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 값이 "n"이 되도록 설정
+                String selectedValue = "n";
+                // 여기서는 선택된 값을 어떻게 활용할지에 대한 코드를 추가할 수 있습니다.
+                vo.setSECRET("n");
+            }
+        });
+
+
+        // 비밀글, 공개글 텍스트를 클릭하여 선택할 수 있도록 설정
+        binding.radioButtonSecret.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.radioButtonSecret.setChecked(true);
+                binding.radioButtonPublic.setChecked(false);
+            }
+        });
+
+        binding.radioButtonPublic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.radioButtonSecret.setChecked(false);
+                binding.radioButtonPublic.setChecked(true);
+            }
+        });
     }
 
     private void createQuestion(LayoutInflater inflater) {
