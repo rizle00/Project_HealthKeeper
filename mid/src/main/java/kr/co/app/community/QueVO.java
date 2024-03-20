@@ -5,7 +5,32 @@ import lombok.Setter;
 
 @Getter@Setter
 public class QueVO {
-   private String QUE_ID, TITLE, CONTENT, TIME, MEMBER_ID, SECRET, CATEGORY_ID, READ_CNT;
+   private String QUE_ID;
+	private String TITLE;
+	private String CONTENT;
+	private String TIME;
+	private String MEMBER_ID;
+	private String SECRET;
+	private String CATEGORY_ID;
+	private String READ_CNT;
+
+	public String getName() {
+		return Name;
+	}
+
+	public void setName(String name) {
+		Name = name;
+	}
+
+	public AnswerVO getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(AnswerVO answer) {
+		this.answer = answer;
+	}
+
+	private String Name;
    private AnswerVO answer;
 public String getQUE_ID() {
 	return QUE_ID;

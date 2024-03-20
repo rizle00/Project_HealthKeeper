@@ -40,7 +40,7 @@ public class CommunityController {
 	
 	  @PostMapping(value = "question/que4", produces ="application/text;charset=utf-8") 
 	  public ResponseEntity<String> list4(String params) {
-		  System.out.println(params); 
+//		  System.out.println(params);
 		  List<QueVO> result = service.que4();
 	  System.out.println(result.size()); String json = new Gson().toJson(result);
 	  
@@ -65,7 +65,7 @@ public class CommunityController {
 	
 	@PostMapping(value="faq/list", produces = "application/text;charset=utf-8")
 	public ResponseEntity<String> faq(String params) {
-		System.out.println(params);
+//		System.out.println(params);
 	List<FaqVO>  result =	service.faq();
     String json = new Gson().toJson(result);
 
@@ -74,7 +74,7 @@ public class CommunityController {
 	
 	@PostMapping(value="notice/list", produces = "application/text;charset=utf-8")
 	public ResponseEntity<String> notice(String params){
-		System.out.println(params);
+//		System.out.println(params);
 		List<NoticeVO> result = service.notice();
 		 String json = new Gson().toJson(result);
 
