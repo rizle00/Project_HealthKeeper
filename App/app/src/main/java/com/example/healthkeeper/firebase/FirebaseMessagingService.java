@@ -23,6 +23,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     private static final String TAG = "FirebaseMsgService";
 
     private String msg, title;
+    private NotificationCompat.Builder builder;
+    private NotificationManager notificationManager;
+    private static final String CHANNEL_ID = "fore Channel";
 
     @Override
     public void onNewToken(@NonNull String token) {
@@ -33,87 +36,35 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        // 포그라운드 서비스에서 사용 중인 노티피케이션 채널 가져오기
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        builder = new NotificationCompat.Builder(this, CHANNEL_ID);
+        builder.setSmallIcon(R.drawable.smallheart);
+    }
+
+    @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Log.d(TAG, "onMessageReceived: "+remoteMessage.getNotification().getTitle());
+        Log.d(TAG, "onMessageReceived: " + remoteMessage.getNotification().getTitle());
         title = remoteMessage.getNotification().getTitle();
         msg = remoteMessage.getNotification().getBody();
-    showNotification(this, title, msg );
-//        Intent intent = new Intent(this, MainActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//
-//        PendingIntent contentIntent = PendingIntent.getActivity(this,0,new Intent(this,MainActivity.class), PendingIntent.FLAG_IMMUTABLE);
-//
-//        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.mipmap.ic_launcher)
-//                .setContentTitle(title)
-//                .setContentText(msg)
-//                .setAutoCancel(true)
-//                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-//                .setVibrate(new long[]{1,1000});
-//
-//        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            NotificationChannel channel = new NotificationChannel("push", "test", NotificationManager.IMPORTANCE_DEFAULT);
-//            notificationManager.createNotificationChannel(channel);
-//        }
-//        notificationManager.notify(0,mBuilder.build());
-//
-//        mBuilder.setContentIntent(contentIntent);
-//        Log.d(TAG, "onMessageReceived: "+msg);
-    }
-
-//    private static int uniqueRandomValue = new Random().nextInt();
-    public static void showNotification(Context context, String title,
-                                        String message) {
-        // Pass the intent to switch to the MainActivity
-        Log.d("TAG", "onMessageReceived: 백그라운드??");
-//        Intent intent
-//                = new Intent(context, MainAlarmHistoryActivity.class);
-//        intent.putExtra("addFriend", true);
-//        intent.putExtra("title", title);
-//        intent.putExtra("message", message);
-        // Assign channel ID
-        String channel_id = "notification_channel";
-        // Here FLAG_ACTIVITY_CLEAR_TOP flag is set to clear
-        // the activities present in the activity stack,
-        // on the top of the Activity that is to be launched
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        // Pass the intent to PendingIntent to start the
-        // next Activity
-//        PendingIntent pendingIntent = PendingIntent.getActivity(
-//                context, 0, intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE
-//        );
-
-        // Create a Builder object using NotificationCompat
-        // class. This will allow control over all the flags
-        NotificationCompat.Builder builder
-                = new NotificationCompat
-                .Builder(context,
-                channel_id)
-                .setSmallIcon(com.nhn.android.oauth.R.drawable.naver_icon)
-                .setAutoCancel(true)
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        builder.setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setOngoing(true)
                 .setVibrate(new long[]{1000, 1000, 1000,
                         1000, 1000})
-                .setOnlyAlertOnce(true)
                 .setContentTitle(title)
-                .setContentText(message);
+                .setContentText(msg)
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setContentIntent(contentIntent);
+        notificationManager.notify(1001, builder.build());
 
-//                .setContentIntent(pendingIntent)
-//                .setCustomContentView(getCustomDesign(context, title, message));
-        NotificationManager notificationManager
-                = (NotificationManager) context.getSystemService(
-                Context.NOTIFICATION_SERVICE);
-        // Check if the Android Version is greater than Oreo
-        if (Build.VERSION.SDK_INT
-                >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel
-                    = new NotificationChannel(
-                    channel_id, "web_app",
-                    NotificationManager.IMPORTANCE_HIGH);
-            notificationManager.createNotificationChannel(
-                    notificationChannel);
-        }
 
-        notificationManager.notify(3, builder.build());
-//        uniqueRandomValue++;
     }
+
+    //    private static int uniqueRandomValue = new Random().nextInt();
+
 }

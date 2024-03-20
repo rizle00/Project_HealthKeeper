@@ -293,6 +293,7 @@ public class LoginActivity extends AppCompatActivity {
 //        finish();
         editor.putString("user_id", vo.getMember_id());
         editor.putString("user_name", vo.getName());
+        editor.putString("role", vo.getRole());
         if (vo.getRole().equals("patient")) {
             editor.putString("token", vo.getToken());
             editor.putString("guardian_id", vo.getGuardian_id());
