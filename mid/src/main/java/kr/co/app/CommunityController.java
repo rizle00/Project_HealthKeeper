@@ -38,15 +38,17 @@ public class CommunityController {
 	} 
 
 	
-	  @PostMapping(value = "question/que4", produces ="application/text;charset=utf-8") 
-	  public ResponseEntity<String> list4(String params) {
-//		  System.out.println(params);
-		  List<QueVO> result = service.que4();
-	  System.out.println(result.size()); String json = new Gson().toJson(result);
-	  
-	  return ResponseEntity.ok(json); }
+//	  @PostMapping(value = "question/que4", produces ="application/text;charset=utf-8") 
+//	  public ResponseEntity<String> list4(String params) {
+////		  System.out.println(params);
+//		  List<QueVO> result = service.que4();
+//	  System.out.println(result.size()); String json = new Gson().toJson(result);
+//	  
+//	  return ResponseEntity.ok(json); }
 	
 	
+	
+	//자유게시판의 내용과 답변에관련된 정보가져오기
 	@PostMapping(value = "question/list", produces = "application/text;charset=utf-8")
 	public ResponseEntity<String> list(@RequestParam(defaultValue = "0") String params) {
 //		System.out.println(params);
@@ -62,6 +64,20 @@ public class CommunityController {
 
 		return ResponseEntity.ok(json);
 	} 
+	
+	
+	//자유게시판에서 글쓰기 insert!
+	@PostMapping(value="question/newWrite", produces = "applicateion/text;charset=utf-8")
+	public ResponseEntity<String> newWrite(String params){
+		List<QueVO>  result =	service.newWrite(params);
+		result.get(0).getCONTENT();
+		String json= new Gson().toJson(result);
+		System.out.println(json);
+		return ResponseEntity.ok(json);
+		
+		
+	}
+	
 	
 	@PostMapping(value="faq/list", produces = "application/text;charset=utf-8")
 	public ResponseEntity<String> faq(String params) {
