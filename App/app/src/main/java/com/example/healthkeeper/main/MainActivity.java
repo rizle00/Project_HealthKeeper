@@ -64,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
     private final PermissionUtils permission = new PermissionUtils();
 
     private boolean doubleBackToExitPressedOnce = false;
-
+    SharedPreferences pref;
+    boolean isPatient;
 
 
     @Override
@@ -73,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         active = isForegroundServiceRunning(MainActivity.this, 2000);
-
+        pref = getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
+         isPatient = pref.getString("role","").equals("patient");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -141,19 +143,34 @@ public class MainActivity extends AppCompatActivity {
         int selectedItem = binding.bottomNav.getSelectedItemId();
         if (selectedItem == R.id.nav_home) {
             getMenuInflater().inflate(R.menu.toolbar_home, menu);
+            if(!isPatient){
+                if (active) {
 
-            // 포그라운드 서비스 작동중일시, 블루투스버튼
-            if (active) {
+                    menu.getItem(1).setIcon(R.drawable.alarm_on);
+                    if(!sBound){// 서비스 바인드 풀렸을시
+                        Intent intent = new Intent(MainActivity.this, BluetoothService.class);
+                        bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
 
-                menu.getItem(1).setIcon(R.drawable.baseline_bluetooth_conn);
-                if(!sBound){// 서비스 바인드 풀렸을시
-                    Intent intent = new Intent(MainActivity.this, BluetoothService.class);
-                    bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
-
+                    }
+                } else {
+                    menu.getItem(1).setIcon(R.drawable.alaram_off);
                 }
-            } else {
-                menu.getItem(1).setIcon(R.drawable.baseline_bluetooth_no_conn);
+
+            } else{
+                // 포그라운드 서비스 작동중일시, 블루투스버튼
+                if (active) {
+
+                    menu.getItem(1).setIcon(R.drawable.baseline_bluetooth_conn);
+                    if(!sBound){// 서비스 바인드 풀렸을시
+                        Intent intent = new Intent(MainActivity.this, BluetoothService.class);
+                        bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
+
+                    }
+                } else {
+                    menu.getItem(1).setIcon(R.drawable.baseline_bluetooth_no_conn);
+                }
             }
+
         }
 
         return true;
