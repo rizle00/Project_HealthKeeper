@@ -43,8 +43,7 @@ public class Community_QuestionAdapter extends RecyclerView.Adapter<Community_Qu
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
         if (List == null) return; // List가 null이면 종료
         CommunityDTOS.Community_QuestionDTO item = List.get(i);
-        Log.d("TAG", "aaaa: "+ List.size());
-
+        Log.d("TAG", "aaaa: "+ item.getDto().getANSWER_CONTENT());
         // 질문 정보를 ViewHolder에 바인딩
         holder.bind(item);
 
@@ -68,7 +67,7 @@ public class Community_QuestionAdapter extends RecyclerView.Adapter<Community_Qu
         }
         public void bind(CommunityDTOS.Community_QuestionDTO item) {
             binding.tvTile.setText(item.getTITLE());
-            binding.tvWriter.setText(item.getMEMBER_ID());
+            binding.tvWriter.setText(item.getName());
             binding.tvWriteTime.setText(item.getTIME());
             binding.tvContent.setText(item.getCONTENT());
             binding.tvAnswerContent.setText(item.getDto().getANSWER_CONTENT());

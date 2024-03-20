@@ -51,8 +51,8 @@ public class CommunityFragment extends Fragment {
 
             queList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
             }.getType());
-            Log.d("TAG", "qqqq: "+queList.size());
-            Log.d("TAG", "qqqq: "+result);
+            Log.d("TAG", "aaaa: "+queList.size());
+            Log.d("TAG", "aaaa: "+queList.get(0).getDto().getANSWER_CONTENT());
 
             binding.question.setAdapter(new Community_QuestionAdapter(inflater, queList, getContext()));
             binding.question.setLayoutManager((new LinearLayoutManager(getContext())));

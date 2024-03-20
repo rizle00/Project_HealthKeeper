@@ -24,6 +24,7 @@ public class BluetoothService extends Service {
     private Executor executor;
     private boolean mBound, sBound, active; // mBound = bluegatt연결상태, sBound = 서비스 연결상태
     private String deviceAddress;
+    boolean isPatient;
     private Context mContext;
     private NotificationManager notificationManager;
     private static final String CHANNEL_ID = "fore Channel";
@@ -35,6 +36,7 @@ public class BluetoothService extends Service {
     private BluetoothRepository repository;
     private BluetoothViewModel viewModel;
     private NotificationCompat.Builder builder;
+    private SharedPreferences pref;
 
 
     public BluetoothConnector getmBtConnector() {
@@ -45,10 +47,13 @@ public class BluetoothService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand: 서비스 들어옴");
-        bluetoothTask();
-        startForeground();
 
-       observe();
+        startForeground();
+        if (isPatient) {
+            bluetoothTask();
+            observe();
+        }
+
         return START_STICKY;
     }
 
@@ -165,6 +170,8 @@ public class BluetoothService extends Service {
         this.mBtConnector = new BluetoothConnector(mContext, adapter, repository, viewModel);
         mBound = mBtConnector.isConnected();
         active = true;
+        pref = getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
+        isPatient = pref.getString("role","").equals("patient");
 
         createNotificationChannel();
 
