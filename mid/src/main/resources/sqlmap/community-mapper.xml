@@ -21,11 +21,17 @@
 		</association>
 	</resultMap>
 	<!-- 질문과 답변 함께 조회하는 쿼리 -->
-	<select id="getQuestionWithAnswer" resultMap="queResult">
+	<select id="question" resultMap="queResult">
 		SELECT q.*, a.*
-		FROM question_table q
-				 LEFT JOIN answer_table a ON q.QUE_ID = a.QUE_ID
-		WHERE q.QUE_ID = #{QUE_ID}
+		 FROM(
+    SELECT row_number() over(ORDER BY time DESC) no , q.* 
+    FROM question q 
+) q 
+LEFT outer JOIN ANSWER a ON q.QUE_ID = a.QUE_ID
+		
+		<if test="number>0">
+where no &lt; #{number}
+</if>
 	</select>
 
 

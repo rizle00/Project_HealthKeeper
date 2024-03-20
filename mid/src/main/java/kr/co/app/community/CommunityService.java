@@ -26,7 +26,7 @@ public class CommunityService {
 		  return sql.selectList("comm.que4"); }
 	 
 	public List<QueVO>  list(String number){
-		return sql.selectList("comm.que", number);
+		return sql.selectList("comm.question", number);
 	}
 	public List<FaqVO>  faq(){
 		return sql.selectList("comm.faq");
