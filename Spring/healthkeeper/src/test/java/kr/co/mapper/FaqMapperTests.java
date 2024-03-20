@@ -46,18 +46,18 @@ public class FaqMapperTests {
 //	}
 	
 	// FAQ 게시판 수정테스트
-//	@Test
-//	public void faqupdate() {
-//		
-//		FaqVO vo = new FaqVO();
-//		
-//		vo.setFAQ_ID(10);
-//		vo.setTITLE("mapper Test 진행");
-//		vo.setCONTENT("mapper 수정테스트중입니다.");
-//		
-//		int result = mapper.faqupdate(vo);
-//		log.info("result: " + result);
-//	}
+	@Test
+	public void faqupdate() {
+		
+		FaqVO vo = new FaqVO();
+		
+		vo.setFAQ_ID(10);
+		vo.setTITLE("mapper Test 진행");
+		vo.setCONTENT("mapper 수정테스트중입니다.");
+		
+		int result = mapper.faqupdate(vo);
+		log.info("result: " + result);
+	}
 	
 	// FAQ 게시판 조회테스트
 //	@Test
