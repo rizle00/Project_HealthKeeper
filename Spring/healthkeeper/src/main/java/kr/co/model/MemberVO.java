@@ -48,4 +48,6 @@ public class MemberVO {
     // 회원 등급 ( 일반 , 관리자 )
     private String ROLE;
 
+    private String token;
+
 }

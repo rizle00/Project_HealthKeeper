@@ -11,7 +11,7 @@ import kr.co.model.FaqVO;
 
 @Service
 public class FaqServiceImpl implements FaqService{
-	
+
 	@Autowired
 	private FaqMapper mapper;
 

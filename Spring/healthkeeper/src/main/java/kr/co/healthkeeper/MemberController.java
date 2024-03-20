@@ -1,11 +1,10 @@
 package kr.co.healthkeeper;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.swing.plaf.nimbus.State;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
