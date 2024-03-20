@@ -9,6 +9,8 @@ drop table PATIENT;
 drop table QUESTION;
 drop table ADMIN;
 
+select doctor_name from member_hospitals where member_id = 1 and hospital_id =2;
+
 CREATE TABLE member (
     member_id NUMBER PRIMARY KEY,
     guardian_id NUMBER NULL ,

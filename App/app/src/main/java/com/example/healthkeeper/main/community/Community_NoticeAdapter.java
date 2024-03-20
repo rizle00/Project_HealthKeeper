@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.healthkeeper.common.CommonRepository;
 import com.example.healthkeeper.databinding.RecvCommunityNoticeBinding;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Community_NoticeAdapter extends RecyclerView.Adapter<Community_NoticeAdapter.ViewHolder> {
@@ -18,7 +18,7 @@ public class Community_NoticeAdapter extends RecyclerView.Adapter<Community_Noti
     List<CommunityDTOS.Community_NoticeDTO> list;
     Context context;
 
-    public Community_NoticeAdapter(LayoutInflater inflater, List<CommunityDTOS.Community_NoticeDTO> list, Context context){
+    public Community_NoticeAdapter(LayoutInflater inflater, CommonRepository repository, List<CommunityDTOS.Community_NoticeDTO> list, Context context){
         this.context=context;
         this.list=list;
         this.inflater=inflater;

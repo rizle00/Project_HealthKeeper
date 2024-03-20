@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter@Setter
 public class QueVO {
    private String QUE_ID, TITLE, CONTENT, TIME, MEMBER_ID, SECRET, CATEGORY_ID, READ_CNT;
-   private AnswerVO vo;
+   private AnswerVO answer;
 public String getQUE_ID() {
 	return QUE_ID;
 }

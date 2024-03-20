@@ -217,6 +217,7 @@ public class CommunityActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // 뒤로가기 버튼 눌렀을 때의 동작 구현
+        super.onBackPressed();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
