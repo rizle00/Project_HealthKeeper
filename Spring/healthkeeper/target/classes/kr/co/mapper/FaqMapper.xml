@@ -16,16 +16,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 공지사항 목록(페이징 유지처리) -->
-    <select id="faqlistPaging" resultType="kr.co.model.FaqVO">
+     <select id="faqlistPaging" resultType="kr.co.model.FaqVO">
     <![CDATA[
         SELECT FAQ_ID, TITLE, CONTENT
-        FROM (
-              SELECT ROW_NUMBER() OVER(ORDER BY FAQ_ID DESC) 
-              AS RN, FAQ_ID, TITLE, CONTENT
+        FROM(        
+              SELECT /*+INDEX_DESC(FAQ PK_FAQ) */ 
+              ROWNUM AS RN, FAQ_ID, TITLE, CONTENT
               FROM FAQ 
-              )
-              WHERE RN > (#{pageNum} -1) * #{amount} AND RN <= #{pageNum} * #{amount}
-              ]]>
+              WHERE ROWNUM <= #{pageNum} * #{amount}
+    ]]>
+    <![CDATA[
+        	  )
+        	WHERE RN > (#{pageNum} -1) * #{amount}
+        ]]>
+</select>
+	
+	<!-- 게시판 조회 -->
+	<select id="faqpage" resultType="kr.co.model.FaqVO">
+		SELECT * FROM FAQ
+		WHERE FAQ_ID = #{FAQ_ID}
 	</select>
 	
 	<!-- FAQ 게시판 수정 -->
@@ -35,6 +44,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		CONTENT = #{CONTENT}
 		WHERE FAQ_ID = #{FAQ_ID}
 	</update>
+	
+	<!-- FAQ 게시판 삭제 -->
+	<delete id="faqdelete">
+		DELETE FROM FAQ
+		WHERE FAQ_ID = #{FAQ_ID}
+	</delete>
 	
 	<!-- 공지사항 게시글 총 갯수 -->
     <select id="faqTotal" resultType="int">

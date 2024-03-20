@@ -20,18 +20,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 게시판 목록(페이징 유지처리) --> 
 	<select id="getlistPaging" resultType="kr.co.model.QsVO">
-     <![CDATA[
-        
-        SELECT FAQ_ID, TITLE, CONTENT 
-        UPDATEDATE FROM(
-        
-                SELECT /*+INDEX_DESC(FAQ PK_FAQ) */ ROWNUM  AS RN, FAQ_ID, TITLE, CONTENT
-                  
-                FROM FAQ WHERE ROWNUM <= #{pageNum} * #{amount}) 
-                
-        WHERE RN > (#{pageNum} -1) * #{amount}
-    
-    ]]>
+    <![CDATA[
+        SELECT QUE_ID, TITLE, CONTENT, MEMBER_ID, TIME, READ_CNT
+        FROM(        
+              SELECT /*+INDEX_DESC(QUESTION PK_QUESTION) */ 
+              ROWNUM AS RN, QUE_ID, TITLE, CONTENT, MEMBER_ID, TIME, READ_CNT
+              FROM QUESTION 
+              ORDER BY QUE_ID DESC
+              WHERE ROWNUM <= #{pageNum} * #{amount}
+    	]]>
+    		<if test="Keyword !=null">
+    			<include refid="qscriteria"></include>
+    		</if>
+        <![CDATA[
+        	  )
+        	WHERE RN > (#{pageNum} -1) * #{amount}
+        ]]>
     </select>
 	
 	<!-- 게시판 글 총 갯수 -->
