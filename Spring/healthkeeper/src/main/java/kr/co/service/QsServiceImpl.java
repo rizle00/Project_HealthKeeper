@@ -1,25 +1,40 @@
 package kr.co.service;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.co.mapper.QsMapper;
 import kr.co.model.CateGoryVO;
+import kr.co.model.FilesVO;
 import kr.co.model.QsCriteria;
 import kr.co.model.QsVO;
+import kr.co.util.FileUtils;
 
 @Service
 public class QsServiceImpl implements QsService{
 	
 	@Autowired
 	private QsMapper mapper;
+	
+	@Resource
+	private FileUtils fileUtils;
 
 	// 게시판 등록
 	@Override
-	public void qsregistr(QsVO qs) {
+	public void qsregistr(QsVO qs, MultipartHttpServletRequest qsRequest) throws Exception{
 		mapper.qsregistr(qs);
+		
+		List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(qs, qsRequest);
+		int size = list.size();
+		for(int i=0; i<size; i++) {
+			mapper.insertfile(list.get(i));
+		}
 	}
 
 	// 게시판 목록
@@ -73,6 +88,18 @@ public class QsServiceImpl implements QsService{
 	@Override
 	public CateGoryVO cate(int CATEGORY_ID) {
 		return mapper.cate(CATEGORY_ID);
+	}
+
+	// 게시판 첨부파일 조회
+	@Override
+	public List<FilesVO> fileList(int QUE_ID) {
+		return mapper.fileList(QUE_ID);
+	}
+
+	// 게시판 첨부파일 다운로드
+	@Override
+	public Map<String, Object> filedown(Map<String, Object> map) throws Exception{
+		return mapper.filedown(map);
 	}
 
 }

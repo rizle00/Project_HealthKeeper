@@ -41,7 +41,7 @@
 	<div class="form-group" style="border: 1px solid #dbdbdb;">
     	<c:forEach var="file" items="${fileList}">
         	<a href="#" onclick="fn_fileDown('${file.FILE_ID}'); return false;">
-        	${file.FILE_NAME}</a>(${file.FILE_SIZE} KB)<br>
+        	${file.NAME}</a>
     	</c:forEach>
 	</div>
 	
@@ -99,7 +99,7 @@
 	let form = $("#qsinfoForm");
 	let qform = $("#replyForm");
 	
-	// 공지사항 목록화면 이동 js 코드
+	// 게시판 목록화면 이동 js 코드
 	$("#qslist_btn").on("click", function(e){
 		form.find("#QUE_ID").remove();
 		form.attr("action", "/question/qslist");
@@ -112,17 +112,12 @@
     history.replaceState(null, null, window.location.pathname);
 });
 	
-	// 공지사항 수정화면 이동 js 코드
+	// 게시판 수정화면 이동 js 코드
 	$("#qsupdate_btn").on("click", function(e){
 		form.attr("action", "/question/qsupdate");
 		form.submit();
 	});	
 	
-	// 공지사항 첨부파일 다운로드 js 코드
-	function fn_fileDown(fileId) {
-        var url = "/notice/fileDown?FILE_ID=" + fileId;
-        window.location.href = url;
-    }
 	
 	// 댓글작성 js코드
 	$(".replyWriteBtn").on("click", function(){
@@ -162,6 +157,12 @@
         });
     }
 });
+	
+	// 게시판 첨부파일 다운로드 js 코드
+	function fn_fileDown(fileId) {
+        var url = "/question/fileDown?FILE_ID=" + fileId;
+        window.location.href = url;
+    }
 </script>	
 
 </body>

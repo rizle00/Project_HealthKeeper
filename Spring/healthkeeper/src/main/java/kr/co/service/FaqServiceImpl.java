@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.mapper.FaqMapper;
+import kr.co.model.FaqCriteria;
 import kr.co.model.FaqVO;
 
 @Service
@@ -16,8 +17,8 @@ public class FaqServiceImpl implements FaqService{
 
 	// FAQ 게시판 등록
 	@Override
-	public void faqregistr(FaqVO faqvo) {
-		mapper.faqregistr(faqvo);
+	public void faqregistr(FaqVO faq) {
+		mapper.faqregistr(faq);
 	}
 
 	// FAQ 게시판 목록
@@ -31,6 +32,18 @@ public class FaqServiceImpl implements FaqService{
 	@Override
 	public int faqupdate(FaqVO faqvo) {
 		return mapper.faqupdate(faqvo);
+	}
+
+	// FAQ 목록 페이징 처리
+	@Override
+	public List<FaqVO> faqlistPaging(FaqCriteria fcri) {
+		return mapper.faqlistPaging(fcri);
+	}
+
+	// FAQ 게시글 총 갯수
+	@Override
+	public int faqTotal() {
+		return mapper.faqTotal();
 	}
 
 
