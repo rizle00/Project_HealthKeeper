@@ -143,11 +143,11 @@ public class CommunityDTOS {
             this.ANS_ID = ANS_ID;
         }
 
-        public String getCONTENT() {
+        public String getANSWER_CONTENT() {
             return CONTENT;
         }
 
-        public void setCONTENT(String CONTENT) {
+        public void setANSWER_CONTENT(String CONTENT) {
             this.CONTENT = CONTENT;
         }
 
