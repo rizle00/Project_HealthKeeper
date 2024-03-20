@@ -12,4 +12,9 @@ public interface MemberService {
 	
 	// 아이디 확인
 	public int idchk(String email) throws Exception;
+
+	public int socialCheck(String social);
+
+	public MemberVO socialLogin(String social);
+
 }
