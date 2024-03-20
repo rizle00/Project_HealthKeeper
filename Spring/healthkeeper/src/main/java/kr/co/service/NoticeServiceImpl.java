@@ -26,18 +26,16 @@ public class NoticeServiceImpl implements NoticeService{
 	
 	// 공지사항 등록
 	@Override
-	public void notregistr(NoticeVO notice ) throws Exception {
+	public void notregistr(NoticeVO notice,MultipartHttpServletRequest notRequest) throws Exception {
 	    mapper.notregistr(notice);
+	  
+	        // 파일이 첨부된 경우에만 파일 정보를 처리합니다.
+	        List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(notice, notRequest);
+	        int size = list.size();
+	        for(int i = 0; i < size; i++) {
+	            mapper.insertFile(list.get(i));
+	        }
 	    
-	    // 파일 첨부를 선택적으로 처리하기 위해 파일 첨부 필드가 있는지 확인합니다.
-//	    if (notRequest.getFile("file") != null && !notRequest.getFile("file").isEmpty()) {
-//	        // 파일이 첨부된 경우에만 파일 정보를 처리합니다.
-//	        List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(notice, notRequest);
-//	        int size = list.size();
-//	        for(int i = 0; i < size; i++) {
-//	            mapper.insertFile(list.get(i));
-//	        }
-//	    }
 	}
 
 	// 공지사항 목록
@@ -85,22 +83,22 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	// 공지사항 첨부파일 조회
-//	@Override
-//	public List<FilesVO> selectFileList(int NOTICE_ID) {
-//		return mapper.selectFileList(NOTICE_ID);
-//	}
+	@Override
+	public List<FilesVO> selectFileList(int NOTICE_ID) {
+		return mapper.selectFileList(NOTICE_ID);
+	}
 
 	// 공지사항 첨부파일 다운로드
-//	@Override
-//	public Map<String, Object> selectFileInfo(Map<String, Object> map)throws Exception {
-//		return mapper.selectFileInfo(map);
-//	}
+	@Override
+	public Map<String, Object> selectFileInfo(Map<String, Object> map)throws Exception {
+		return mapper.selectFileInfo(map);
+	}
 
 	// 공지사항 첨부파일 삭제
-//	@Override
-//	public int deleteFile(int NOTICE_ID) throws Exception{
-//		return mapper.deleteFile(NOTICE_ID);
-//	}
+	@Override
+	public int deleteFile(int NOTICE_ID) throws Exception{
+		return mapper.deleteFile(NOTICE_ID);
+	}
 
 	// 공지사항 파일업로드 수정
 //	@Override

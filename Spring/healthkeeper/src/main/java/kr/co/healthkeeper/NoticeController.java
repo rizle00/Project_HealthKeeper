@@ -60,12 +60,14 @@ public class NoticeController {
 	
     // 공지사항 등록
     @PostMapping("/notregistr")
-    public String noticeRegistrPOST(NoticeVO notice, RedirectAttributes rttr)throws Exception {
+    public String noticeRegistrPOST(NoticeVO notice, RedirectAttributes rttr,
+    	MultipartHttpServletRequest notRequest)throws Exception {
     	
-    	service.notregistr(notice);
+    	service.notregistr(notice,notRequest);
     	rttr.addFlashAttribute("result", "registr success");
     	return "redirect:/notice/notlist";
     }
+    
     
     // 공지사항 조회
     @GetMapping("/notget")
@@ -78,8 +80,9 @@ public class NoticeController {
         model.addAttribute("ncri", ncri);
         
         // 공지사항 첨부파일 목록
-//    	List<FilesVO> fileList = service.selectFileList(NOTICE_ID);
-//    	model.addAttribute("fileList", fileList);
+    	List<FilesVO> fileList = service.selectFileList(NOTICE_ID);
+    	model.addAttribute("fileList", fileList);
+    
     	
     	// 공지사항 첨부파일 수정업로드
 //    	List<FilesVO> updatefile = service.updateFileList(NOTICE_ID);
@@ -100,8 +103,8 @@ public class NoticeController {
         model.addAttribute("ncri", ncri);
         
         // 공지사항 첨부파일 목록
-//    	List<FilesVO> fileList = service.selectFileList(NOTICE_ID);
-//    	model.addAttribute("fileList", fileList);
+    	List<FilesVO> fileList = service.selectFileList(NOTICE_ID);
+    	model.addAttribute("fileList", fileList);
     	
     	// 공지사항 첨부파일 수정업로드
 //    	List<FilesVO> updatefile = service.updateFileList(NOTICE_ID);
@@ -119,8 +122,8 @@ public class NoticeController {
         //String[] fileNames = request.getParameterValues("fileNameDel[]");
 
         // 첨부파일 삭제
-//        int NOTICE_ID = notice.getNOTICE_ID();
-//        service.deleteFile(NOTICE_ID);
+        //int NOTICE_ID = notice.getNOTICE_ID();
+        //service.deleteFile(NOTICE_ID);
 
 
         // 공지사항 수정
@@ -142,33 +145,41 @@ public class NoticeController {
     }
     
     // 공지사항 파일 다운로드
-//    @RequestMapping(value="/fileDown")
-//    public void fileDown(@RequestParam Map<String, Object> map, HttpServletResponse response) throws Exception {
-//        Map<String, Object> resultMap = service.selectFileInfo(map);
-//        String fileName = (String) resultMap.get("FILE_NAME");
-//
-//        // 파일을 저장했던 위치에서 첨부파일을 읽어 byte[]형식으로 변환한다.
-//        byte[] fileBytes = org.apache.commons.io.FileUtils.readFileToByteArray(new File("C:\\save\\file\\" + fileName));
-//
-//        // 파일명 인코딩
-//        String encodedFileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
-//
-//        // 파일 타입 지정
-//        String contentType = URLConnection.guessContentTypeFromName(fileName);
-//        if (contentType == null) {
-//            contentType = "application/octet-stream";
-//        }
-//
-//        // 파일 다운로드 설정
-//        response.setContentType(contentType);
-//        response.setContentLength(fileBytes.length);
-//        response.setHeader("Content-Disposition", "attachment; filename=\"" + encodedFileName + "\"");
-//
-//        // 파일 전송
-//        ServletOutputStream outputStream = response.getOutputStream();
-//        outputStream.write(fileBytes);
-//        outputStream.flush();
-//        outputStream.close();
-//    }
+    @RequestMapping(value="/fileDown")
+    public void fileDown(@RequestParam Map<String, Object> map, HttpServletResponse response) throws Exception {
+        Map<String, Object> resultMap = service.selectFileInfo(map);
+        String fileName = (String) resultMap.get("NAME");
+
+        // 파일을 저장했던 위치에서 첨부파일을 읽어 byte[]형식으로 변환한다.
+        byte[] fileBytes = org.apache.commons.io.FileUtils.readFileToByteArray(new File("C:\\save\\file\\" + fileName));
+
+        // 파일명 인코딩
+        String encodedFileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+
+        // 파일 타입 지정
+        String contentType = URLConnection.guessContentTypeFromName(fileName);
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        // 파일 다운로드 설정
+        response.setContentType(contentType);
+        response.setContentLength(fileBytes.length);
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + encodedFileName + "\"");
+
+        // 파일 전송
+        ServletOutputStream outputStream = response.getOutputStream();
+        outputStream.write(fileBytes);
+        outputStream.flush();
+        outputStream.close();
+    }
+    
+    // 첨부파일 삭제
+    @PostMapping("/deleteFile")
+    public String deleteFile(int NOTICE_ID) throws Exception {
+        // 파일 삭제 작업 수행
+       service.deleteFile(NOTICE_ID);
+       return "redirect:/notice/notget?NOTICE_ID="+ NOTICE_ID; // 파일 삭제 후 다시 조회 페이지로 리다이렉트
+    }
 
 }
