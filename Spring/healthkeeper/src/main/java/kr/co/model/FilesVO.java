@@ -11,14 +11,12 @@ public class FilesVO {
 	private int FILE_ID;
 	
 	// 파일 이름
-	private String FILE_NAME;
+	private String NAME;
 	
 	// 파일 경로
-	private String FILE_PATH;
-	
-	// 파일 크기
-	private long FILE_SIZE;
+	private String PATH;
 	
 	// 파일 등록일
-	private Date FILE_REGDATE;
+	private Date TIME;
+	
 }

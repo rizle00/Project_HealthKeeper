@@ -5,10 +5,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="kr.co.mapper.NoticeMapper">
  
  	<!-- 공지사항 등록 -->
- 	<insert id="notregistr" >
-    INSERT INTO NOTICE (TITLE, CONTENT, MEMBER_ID)
-    VALUES (#{TITLE, jdbcType=VARCHAR}, #{CONTENT, jdbcType=VARCHAR}, #{MEMBER_ID})
-</insert>
+ 	<insert id="notregistr" parameterType="kr.co.model.NoticeVO" useGeneratedKeys="true">
+    	<selectKey keyProperty="NOTICE_ID" resultType="int" order="AFTER">
+        	SELECT NOTICE_ID_SEQ.CURRVAL FROM DUAL
+    	</selectKey>
+    		INSERT INTO NOTICE (TITLE, CONTENT, MEMBER_ID)
+    		VALUES (#{TITLE, jdbcType=VARCHAR}, #{CONTENT, jdbcType=VARCHAR}, #{MEMBER_ID})
+	</insert>
  	
  	<!-- 공지사항 목록 -->
     <select id="getlist" resultType="kr.co.model.NoticeVO">
@@ -93,10 +96,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update> 
     
     <!-- 공지사항 파일첨부 -->
-    <!-- <insert id="insertFile" parameterType="hashMap">
-    	INSERT INTO FILES( FILE_ID, FILE_NAME, FILE_PATH, FILE_SIZE, NOTICE_ID )
-    	VALUES(FILES_SEQ.NEXTVAL,#{FILE_NAME},#{FILE_PATH},#{FILE_SIZE},#{NOTICE_ID, jdbcType=NUMERIC})
-    </insert> -->
+    <insert id="insertFile" parameterType="hashMap">
+    	INSERT INTO ATTACH_FILE(NAME, PATH, NOTICE_ID )
+    	VALUES(#{NAME},#{PATH}, #{NOTICE_ID, jdbcType=NUMERIC})
+    </insert>
     
     <!-- 공지사항 수정시 파일추가 -->
     <!-- <insert id="updateinsertFile" parameterType="hashMap">
@@ -104,17 +107,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     VALUES (FILES_SEQ.NEXTVAL, #{FILE_NAME}, #{FILE_PATH}, #{FILE_SIZE}, #{NOTICE_ID, jdbcType=NUMERIC})
 </insert> -->
     
-    <!--  공지사항 첨부파일 조회 
+    <!--  공지사항 첨부파일 조회  -->
     <select id="selectFileList" parameterType="int" resultType="kr.co.model.FilesVO">
     	SELECT FILE_ID, 
-           	   FILE_NAME,
-               FILE_PATH,
-               ROUND(FILE_SIZE/1024,1) AS FILE_SIZE,
-               FILE_REGDATE
-        FROM FILES
+           	   NAME,
+               PATH,
+               TIME
+        FROM ATTACH_FILE
         WHERE NOTICE_ID = #{NOTICE_ID}
         ORDER BY FILE_ID ASC
-	</select> -->
+	</select>
 	
 	<!-- 공지사항 첨부파일 조회 -->
     <!-- <select id="updateFileList" parameterType="int" resultType="kr.co.model.FilesVO">
@@ -126,18 +128,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM FILES
         WHERE NOTICE_ID = #{NOTICE_ID}
         ORDER BY FILE_ID ASC
-	</select>
+	</select> -->
 	
-	공지사항 첨부파일 다운
+	<!-- 공지사항 첨부파일 다운-->	
 	<select id="selectFileInfo" parameterType="hashMap" resultType="hashMap">
-		SELECT FILE_NAME
-		FROM FILES
+		SELECT NAME
+		FROM ATTACH_FILE
 		WHERE FILE_ID = #{FILE_ID}
 	</select>
 	
-	첨부파일 삭제
+	<!-- 첨부파일 삭제 -->
 	<delete id="deleteFile" parameterType="hashMap">
-		DELETE FROM FILES
+		DELETE FROM ATTACH_FILE
 		WHERE NOTICE_ID = #{NOTICE_ID}
-	</delete> -->
+	</delete>
+	
+	<!-- 첨부파일 수정 -->
+	<update id="updateFile" parameterType="hashMap">
+		update attach_file
+		set
+		wher
+	</update>
 </mapper>

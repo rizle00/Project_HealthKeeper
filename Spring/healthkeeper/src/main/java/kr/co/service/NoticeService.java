@@ -12,7 +12,7 @@ import kr.co.model.NoticeVO;
 public interface NoticeService {
 	
 	// 공지사항 등록
-	public void notregistr(NoticeVO notice) throws Exception;
+	public void notregistr(NoticeVO notice, MultipartHttpServletRequest notRequest) throws Exception;
 
 	// 공지사항 목록
 	public List<NoticeVO> getlist();
@@ -36,16 +36,16 @@ public interface NoticeService {
 	public int noticeViews(int NOTICE_ID);
 	
 	// 첨부파일 조회
-	//public List<FilesVO> selectFileList(int NOTICE_ID);
+	public List<FilesVO> selectFileList(int NOTICE_ID);
 	
 	// 첨부파일 수정조회
 	//public List<FilesVO> updateFileList(int NOTICE_ID);
 	
 	// 첨부파일 다운로드
-	//public Map<String,Object> selectFileInfo(Map<String, Object> map) throws Exception;
+	public Map<String,Object> selectFileInfo(Map<String, Object> map) throws Exception;
 	
 	// 첨부파일 삭제
-	//public int deleteFile(int NOTICE_ID) throws Exception;; 
+	public int deleteFile(int NOTICE_ID) throws Exception;; 
 	
 	
 }

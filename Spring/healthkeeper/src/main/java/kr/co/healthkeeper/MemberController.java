@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.model.MemberVO;
@@ -51,6 +52,43 @@ public class MemberController {
 			
 	    return "redirect:/main";
 	}
+	
+	// 아이디 중복검사 
+	@PostMapping("/memberIdChk")
+	@ResponseBody
+	public String memberIdchkPOST(String email) throws Exception{
+		
+		log.info("idcheck 진입");
+		
+		int result = memberService.idchk(email);
+		
+		log.info("결과 값 = " + result);
+		
+		if(result != 0) {
+			return "fail"; // 중복 이메일이 존재
+		}else {
+			return "success"; // 중복아이디 X
+		}
+	}
+	
+	// 아이디 중복검사 
+		@PostMapping("/memberIdChk2")
+		@ResponseBody
+		public String memberIdchk2POST(String email) throws Exception{
+			
+			log.info("idcheck 진입");
+			
+			int result = memberService.idchk(email);
+			
+			log.info("결과 값 = " + result);
+			
+			if(result != 0) {
+				return "fail"; // 중복 이메일이 존재
+			}else {
+				return "success"; // 중복아이디 X
+			}
+		}
+	
 	
 	// 로그인 페이지 이동코드
 	@GetMapping("/login")

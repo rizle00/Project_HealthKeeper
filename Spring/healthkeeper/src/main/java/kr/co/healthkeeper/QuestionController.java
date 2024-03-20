@@ -1,6 +1,13 @@
 package kr.co.healthkeeper;
 
+import java.io.File;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +18,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.model.CateGoryVO;
+import kr.co.model.FilesVO;
 import kr.co.model.QsCriteria;
 import kr.co.model.QsPageMakeDTO;
 import kr.co.model.QsReplyVO;
@@ -54,24 +63,21 @@ public class QuestionController {
 	@GetMapping("/qsregistr")
 	public void qsRegistrGET(Model model) throws Exception{
 		log.info("질문게시판 등록 페이지 진입");
-
 		
 		ObjectMapper objm = new ObjectMapper();
 		List list = service.catelist();
 		
 		String catelist = objm.writeValueAsString(list);
 		model.addAttribute("catelist", list);
-//		model.addAttribute("catelist", catelist);
 		
-		log.info("변경 전......." + list);
-		log.info("변경 후......." + catelist);
 	}
 	
 	// 질문게시판 등록
 	@PostMapping("/qsregistr")
-	public String qsRegistrPOST(QsVO qs, RedirectAttributes rttr, Model model) throws Exception {
+	public String qsRegistrPOST(QsVO qs, RedirectAttributes rttr, Model model,
+			MultipartHttpServletRequest qsRequet) throws Exception {
 		log.info("QsVO :" + qs);
-		service.qsregistr(qs);
+		service.qsregistr(qs,qsRequet);
 		rttr.addFlashAttribute("result", "registr success");
 		
 		
@@ -94,8 +100,11 @@ public class QuestionController {
 		vo.setCategory(service.cate(vo.getCATEGORY_ID()));
 		
 		model.addAttribute("pageInfo", vo);
-		
 		model.addAttribute("qcri", qcri);
+		
+		// 게시판 첨부파일 목록
+		List<FilesVO> fileList = service.fileList(QUE_ID);
+		model.addAttribute("fileList", fileList);
 		
 		//List<QsReplyVO> replyList = replyservice.readReply(vo.getQUE_ID());
 		//model.addAttribute("replyList", replyList);
@@ -199,4 +208,34 @@ public class QuestionController {
 //		
 //		return "redirect:/question/qsget";
 //	}
+	
+	// 질문게시판 첨부파일 다운로드
+	@RequestMapping(value="/fileDown")
+    public void fileDown(@RequestParam Map<String, Object> map, HttpServletResponse response) throws Exception {
+        Map<String, Object> resultMap = service.filedown(map);
+        String fileName = (String) resultMap.get("NAME");
+
+        // 파일을 저장했던 위치에서 첨부파일을 읽어 byte[]형식으로 변환한다.
+        byte[] fileBytes = org.apache.commons.io.FileUtils.readFileToByteArray(new File("C:\\save\\file\\" + fileName));
+
+        // 파일명 인코딩
+        String encodedFileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+
+        // 파일 타입 지정
+        String contentType = URLConnection.guessContentTypeFromName(fileName);
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        // 파일 다운로드 설정
+        response.setContentType(contentType);
+        response.setContentLength(fileBytes.length);
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + encodedFileName + "\"");
+
+        // 파일 전송
+        ServletOutputStream outputStream = response.getOutputStream();
+        outputStream.write(fileBytes);
+        outputStream.flush();
+        outputStream.close();
+    }
 }
