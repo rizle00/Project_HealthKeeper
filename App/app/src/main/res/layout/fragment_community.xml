@@ -127,7 +127,7 @@
                         app:cardCornerRadius="10dp"
                         android:backgroundTint="#FFFFFF"
                         android:elevation="20dp"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         >
 
                             <LinearLayout
@@ -153,7 +153,7 @@
                                     >
 
                                     <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/edt_tltleName"
+                                        android:id="@+id/edt_writerTltle"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:inputType="text"
@@ -179,7 +179,7 @@
                                 >
 
                                 <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/edt_tltleContent"
+                                    android:id="@+id/edt_writerContent"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:inputType="textMultiLine"

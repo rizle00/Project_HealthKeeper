@@ -34,6 +34,13 @@
 			where no &lt; #{number}
 		</if>
 	</select>
+	
+	
+	<insert id="newWrite">
+	INSERT INTO question (QUE_ID, TITLE, CONTENT, MEMBER_ID, SECRET, CATEGORY_ID, READ_CNT)
+      VALUES (#{QUE_ID}, #{TITLE}, #{CONTENT}, #{MEMBER_ID}, #{SECRET}, #{CATEGORY_ID}, #{READ_CNT})
+	
+</insert>
 
 
 
@@ -49,24 +56,28 @@
 	ON A.QUE_ID = #{params}
 </select>
 
+
+
 <select id="que4" resultType="que"> 질문게시판
 select  * from question
-
-
 </select> 
 
 <select id="que" resultType="que"><!--질문게시판  상세페이지-->
-	 	select * from (
-    SELECT row_number() over(ORDER BY time DESC) no , q.* FROM question q 
-)
- <if test="number>0">
-where no &lt; #{number}
-</if>
+		select * from (
+		  SELECT row_number() over(ORDER BY time DESC) no , q.* FROM question q 
+		)
+		 <if test="number>0">
+		where no &lt; #{number}
+		</if>
 </select>
+	
+	
 	
 <select id="faq" resultType="faq"><!--자주하는 질문   -->
         select * from faq
 </select>
+
+
 
 <select id="notice" resultType="notice"><!--공지사항   -->
         select * from notice
