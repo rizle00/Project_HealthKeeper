@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.mapper.QsAnswerMapper">
+	
+	<!-- 답글 조회 -->
+	<select id="readAnswer" resultType="kr.co.model.QsAnswerVO">
+		SELECT ANS_ID, CONTENT, TIME
+		FROM ANSWER
+		WHERE QUE_ID = #{QUE_ID}
+	</select>
+	
+	<!-- 답글 작성 -->
+	<insert id="writeAnswer">
+		INSERT INTO ANSWER (CONTENT, QUE_ID,ADMIN_ID)
+		VALUES(#{CONTENT},#{QUE_ID},#{ADMIN_ID})
+	</insert>
+	
+	<!-- 답글 삭제 -->
+	<delete id="deleteAnswer">
+		DELETE FROM ANSWER
+		WHERE QUE_ID = #{QUE_ID}
+	</delete>
+</mapper>

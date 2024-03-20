@@ -45,41 +45,37 @@
     	</c:forEach>
 	</div>
 	
-	<!-- 댓글 -->
-	<div id="reply">
-		<ol class="replyList">
-			<c:forEach items="${replyList}" var="replyList">
-				<li>
-					<p>
-					작성자 : ${replyList.WRITER}<br />
-					작성날짜 : <fmt:formatDate value="${replyList.REGDATE}" pattern="yyyy-MM-dd"/>
-					</p>
-					<p>${replyList.CONTENT}</p>
-					<div>
-					<button type="button" class="replyUpdateBtn" data-qrno="${replyList.QRNO}">수정</button>
-					<button type="button" class="replyDeleteBtn" data-qrno="${replyList.QRNO}">삭제</button>
-					</div>
-				</li>
-			</c:forEach>
-		</ol>
-	</div>
+	<!-- 게시물 끝 -->
+		<div id="answer">
+ 			<ol class="answerList">
+ 				<c:forEach items="${anlist}" var="anlist">
+ 			<li>
+  				<p>
+   					작성자 : ${anlist.ADMIN_ID}<br />
+   					작성 날짜 :  <fmt:formatDate value="${anlist.TIME}" pattern="yyyy-MM-dd" />
+  				</p>
+  
+  				<p>${anlist.CONTENT}</p>
+ 			</li>
+ 				</c:forEach>   
+ 			</ol>
+		</div>
 	
-	<form name="replyForm" method="post">
+	<section class="answerForm">
+		<form role="form" method="post" autocomplete="off">
   		<input type="hidden" id="QUE_ID" name="QUE_ID" value="${pageInfo.QUE_ID}" />
   		<input type="hidden" id="pageNum" name="pageNum" value="${qcri.pageNum}"> 
   		<input type="hidden" id="amount" name="amount" value="${qcri.amount}"> 
   		<input type="hidden" id="keyword" name="keyword" value="${qcri.keyword}"> 
   		<input type="hidden" id="type" name="type" value="${qcri.type}"> 
-
-  	<div> 
-    	<label for="writer">댓글 작성자</label><input type="text" id="writer" name="WRITER" />
-    <br/>
-    	<label for="content">댓글 내용</label><input type="text" id="content" name="CONTENT" />
-  	</div>
-  	<div>
- 	 	<button type="button" class="replyWriteBtn">작성</button>
-  	</div>
+  		
+  		<p><label for="admin_id">작성자</label><input type="text" id="admin_id" name="ADMIN_ID" /></p>
+ 		<p><label for="content">댓글 내용</label><textarea id="content" name="CONTENT"></textarea></p>
+ 		<p>
+  		<button type="button" class="ansSubmit">작성</button>
+  		
 	</form>
+	</section>
 	<hr>
 
 	<div class="btn_wrap">
@@ -120,11 +116,12 @@
 	
 	
 	// 댓글작성 js코드
-	$(".replyWriteBtn").on("click", function(){
-		  var formObj = $("form[name='replyForm']");
-		  formObj.attr("action", "/question/replyRegistr");
-		  formObj.submit();
-	});
+	 var formObj = $(".answerForm form[role='form']");
+        
+  $(".ansSubmit").click(function(){
+   formObj.attr("action", "/question/answerWrite");
+   formObj.submit();
+  });
 	
 	// 댓글수정 js코드
 	$(".replyUpdateBtn").on("click", function(e){
