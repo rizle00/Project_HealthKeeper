@@ -158,8 +158,8 @@ public class MemberController {
 
 		StringBuffer url = new StringBuffer("https://nid.naver.com/oauth2.0/authorize?response_type=code");
 		url.append("&client_id=").append(NAVER_CLIENT_ID);
-		url.append("&redirect_url").append(common.appURL(request)).append("/member/navercallback")
-				.append("&state=").append(state);
+		url.append("&state=").append(state);
+		url.append("&redirect_url=").append(common.appURL(request)).append("/member/navercallback");
 
 		return "redirect:" + url.toString();
 	}
