@@ -42,28 +42,33 @@
                             		<div class="form-group">
     									<label for="email_input">아이디</label>
     									<div class="input-group">
-                  						<input type="email" name="EMAIL" id="email_input" class="form-control" placeholder="아이디" value="${vo.EMAIL}">
-        									<div class="input-group-append">
-            									<button class="btn btn-outline-secondary" type="button" onclick="checkDuplicate()">중복 확인</button>
-        									</div>
+                  						<input type="email" name="EMAIL" id="patient_email" class="form-control" placeholder="아이디" value="${vo.EMAIL}">
     									</div>
-									</div>
+                  							<span class="email_input_re_1">사용가능한 이메일입니다.</span>
+                  							<span class="email_input_re_2">이메일이 존재합니다.</span>
+                  							<span class="final_id_ck">이메일을 입력해주세요.</span>
+									</div>                           
+                            		
                             		<div class="form-group">
                                 		<label for="name_input">이름</label>
                                 		<input type="text" name="NAME" id="patient_name" class="form-control" placeholder="이름" value="${vo.NAME}">
+                            			<span class="final_name_ck">이름을 입력해주세요.</span>
                             		</div>
+                            		
                             		<div class="form-group">
                                 		<label for="phone_input">전화번호</label>
                                 		<input type="text" name="PHONE" id="patient_phone" class="form-control" placeholder="전화번호" value="${vo.PHONE}">
+                            			<span class="final_phone_ck">휴대전화 번호를 입력해주세요.</span>
                             		</div>
                             		
                             		<div class="form-group">
                                 		<label for="birth_input">생년월일</label>
                                 		<input type="date" name="BIRTH" id="patient_birth" class="form-control" placeholder="생년월일">
+                            			<span class="final_date_ck">생년월일을 입력해주세요.</span>
                             		</div>
                             		
-                            		<div class="form-group naver">
-    									<input type="hidden" id="social" name="SOCIAL" value="${vo.SOCIAL}">
+                            		<div class="form-group">
+    									<input type="hidden" id="social" name="SOCIAL" value="x">
 									</div>
 									
 									<div class="form-group">
@@ -79,6 +84,7 @@
                                     </div>
                                 	</div>
                                 		<input type="text" name="ADDRESS_DETAIL" class="form-control" readonly="readonly" placeholder="나머지주소">
+                            			<span class="final_addr_ck">주소를 입력해주세요.</span>
                             		</div>
                             		
                             		<div class="form-group">
@@ -91,7 +97,9 @@
         								<input class="form-check-input" type="radio" name="GENDER" id="maleGender" value="여">
         								<label class="form-check-label" for="maleGender">여</label>
     								</div>
+    									<span class="final_gender_ck">성별을 입력해주세요.</span>
 									</div>
+										
 
 									<div class="form-group">
     									<label>혈액형</label>
@@ -111,6 +119,7 @@
         								<input class="form-check-input" type="radio" name="BLOOD" id="bloodTypeAB" value="AB">
         								<label class="form-check-label" for="bloodTypeAB">AB</label>
     								</div>
+										<span class="final_blood_ck">혈액형을 입력해주세요.</span>
 									</div>
 									
     								<div class="form-group">
@@ -118,7 +127,7 @@
 									</div>
 									
                             		<div class="text-center">
-                                		<button type="submit" id="join_button" name="join_button" class="btn btn-primary btn-lg">회원가입</button>
+                                		<button type="button" id="join_button" class="btn btn-primary btn-lg">회원가입</button>
                             		</div>
                         			</form>
                         		</div>
@@ -129,19 +138,22 @@
                         		<div class="form-group">
     								<label for="email_input">아이디</label>
     							<div class="input-group">
-    								<input type="email" name="EMAIL" id="email_input" class="form-control" placeholder="아이디" value="${vo.EMAIL}">
-        								<div class="input-group-append">
-            								<button class="btn btn-outline-secondary" type="button" onclick="checkDuplicate()">중복 확인</button>
-        								</div>
-    								</div>
-								</div>
-                            	<div class="form-group">
-                                	<label for="name_input">이름</label>
-                                	<input type="text" name="NAME" id="patient_name" class="form-control" placeholder="이름" value="${vo.NAME}">
-                            	</div>
-                            	<div class="form-group">
-                                	<label for="phone_input">전화번호</label>
-                                	<input type="text" name="PHONE" id="patient_phone" class="form-control" placeholder="전화번호" value="${vo.PHONE}">
+        							                  						<input type="email" name="EMAIL" id="patient_email" class="form-control" placeholder="아이디" value="${vo.EMAIL}">
+    									</div>
+                  							<span class="email_input_re_1">사용가능한 이메일입니다.</span>
+                  							<span class="email_input_re_2">이메일이 존재합니다.</span>
+                  							<span class="final_id_ck">이메일을 입력해주세요.</span>
+									</div>                           
+                            		
+                            		<div class="form-group">
+                                		<label for="name_input">이름</label>
+                                		<input type="text" name="NAME" id="patient_name" class="form-control" placeholder="이름" value="${vo.NAME}">
+                            			<span class="final_name_ck">이름을 입력해주세요.</span>
+                            		</div>
+                            		
+                            		<div class="form-group">
+                                		<label for="phone_input">전화번호</label>
+                                		<input type="text" name="PHONE" id="patient_phone" class="form-control" placeholder="전화번호" value="${vo.PHONE}">
                             	</div>
                             	
                             	<div class="form-group">
@@ -150,7 +162,7 @@
                             	</div>
                             	
                             	<div class="form-group">
-    								<input type="hidden" id="social" name="SOCIAL" value="${vo.SOCIAL}">
+    								<input type="hidden" id="social" name="SOCIAL" value="x">
 								</div>
 								
 								<div class="form-group">
@@ -167,7 +179,7 @@
                                 </div>
                                 <input type="text" name="ADDRESS_DETAIL" class="form-control" readonly="readonly" placeholder="나머지주소">
                             	</div>
-                            	<div class="form-group ">
+                            	<div class="form-group">
     									<label>성별</label>
     								<div class="form-check form-check-inline">
         								<input class="form-check-input" type="radio" name="GENDER" id="femaleGender" value="남">
@@ -202,7 +214,7 @@
     									<input type="hidden" id="role" name="ROLE" value="m">
 									</div>
                             	<div class="text-center">
-                                	<button type="submit" id="join_button" name="join_button" class="btn btn-primary btn-lg">회원가입</button>
+                                	<button type="button" name="join_button" class="btn btn-primary btn-lg">회원가입</button>
                             	</div>
                         	</form>
                         </div>
@@ -215,10 +227,7 @@
 </body>
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
+
 <script>
 /* 다음 주소 연동 */
 function execution_daum_address(){
@@ -269,31 +278,181 @@ function execution_daum_address(){
     }).open();    
 }
 // 아이디 중복검사 폼
-function checkDuplicate() {
-        var email = $('#email_input').val(); // 이메일 입력란의 값을 가져옴
-        $.ajax({
-            url: 'checkDuplicateEmail', // 중복 확인을 위한 서버의 URL
-            type: 'POST',
-            data: {email: email}, // 이메일 값을 서버로 전송
-            success: function(response) {
-                if (response === 'duplicate') {
-                    alert('중복된 이메일입니다.');
-                } else {
-                    alert('사용 가능한 이메일입니다.');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX 요청 실패: ' + status + ', ' + error);
-            }
-        });
-    }
+	$("#patient_email").on("propertychange change keyup paste input", function(){
+
+	console.log("keyup 테스트");	
+	
+	var email = $('.form-control').val();			// .id_input에 입력되는 값
+	var data = {email : email}				// '컨트롤에 넘길 데이터 이름' : '데이터(.id_input에 입력되는 값)'
+	
+	$.ajax({
+		type : "post",
+		url : "/member/memberIdChk",
+		data : data,
+		success : function(result){
+			if(result != 'fail'){
+				$('.email_input_re_1').css("display","inline-block");
+				$('.email_input_re_2').css("display","none");
+				
+			}else{
+				$('.email_input_re_2').css("display","inline-block");
+				$('.email_input_re_1').css("display","none");
+			}
+		} // success 종료
+	}); // ajax 종료
+
+});// function 종료
+
+//보호자 아이디 중복검사 폼
+$("#guardian_email").on("propertychange change keyup paste input", function(){
+
+console.log("keyup 테스트");	
+
+var email = $('#guardian_email').val();			// .id_input에 입력되는 값
+var data = {email : email}				// '컨트롤에 넘길 데이터 이름' : '데이터(.id_input에 입력되는 값)'
+
+$.ajax({
+	type : "post",
+	url : "/member/memberIdChk2",
+	data : data,
+	success : function(result){
+		if(result != 'fail'){
+			$('.gemail_input_re_1').css('display','inline-block');
+			$('.gemail_input_re_2').css('display','none');
+		}else{
+			$('.gemail_input_re_2').css('display','inline-block');
+			$('.gemail_input_re_1').css('display','none');
+		}
+	} // success 종료
+}); // ajax 종료
+
+});// function 종료
+
+// 유효성 검사 통과유무 변수선언
+	var idChk = false; // 아이디
+	var pwChk = false; // 비밀번호
+	var pwckChk = false; // 비밀번호 확인
+	var pwckcorCheck = false; // 비밀번호 일치여부확인 
+	var nameChk = false; // 이름
+	var phoneChk = false; // 전화번호
+	var dateChk = false; // 생년월일
+	var addrChk = false; // 주소
+	var genderChk = false; // 성별
+	var bloodChk = false; //혈액형
 
 // 회원가입 폼
-$(document).ready(function(){
-    // Change form action and submit for email-based login
-    $("#join_button").click(function(){
-        $("#patient_join_form").attr("action", "join"); // Adjust action URL for email-based login
-        $("#patient_join_form").submit();
+	$(document).ready(function(){
+    	$("#join_button").click(function(){
+    	
+    	// 입력값 변수
+    	var id = $("#patient_email").val(); 
+    	var pw = $("#patient_pw").val(); 
+    	var pwck = $("#patient_pw_chk").val(); 
+    	var name = $("#patient_name").val(); 
+    	var phone = $("#patient_phone").val(); 
+    	var date = $("#patient_pw_chk").val(); 
+    	var addr = $("[name=ADDRESS_DETAIL]").val(); 
+    	var gender = $("input[name='GENDER']:checked").val();
+    	var blood = $("input[name='BLOOD']:checked").val(); 
+       
+        
+        // 아이디 유효성 검사
+        if(id == ""){
+        	console.log(false)
+        	$('.final_id_ck').css('display','block');
+        	idChk = false;
+        }else{
+        	console.log(true)
+        	$('.final_id_ck').css('display','none');
+        	idChk = true;
+        }
+        
+        // 비밀번호 유효성 검사
+        if(pw == ""){
+        	$('.final_pw_ck').css('display','block');
+        	pwChk = false;
+        }else{
+        	$('.final_pw_ck').css('display','none');
+        	pwChk = true;
+        }
+        
+        // 비밀번호 확인 유효성 검사
+        if(pwck == ""){
+        	$('.final_pwck_ck').css('display','block');
+        	pwckChk = false;
+        }else{
+        	$('.final_pwck_ck').css('display','none');
+        	pwckChk = true;
+        }
+        
+        // 이름 유효성 검사
+        if(name == ""){
+        	$('.final_name_ck').css('display','block');
+        	nameChk = false;
+        }else{
+        	$('.final_name_ck').css('display','none');
+        	nameChk = true;
+        }
+        
+        // 전화번호 유효성 검사
+        if(phone == ""){
+        	$('.final_phone_ck').css('display','block');
+        	phoneChk = false;
+        }else{
+        	$('.final_phone_ck').css('display','none');
+        	phoneChk = true;
+        }
+        
+        // 생년월일 유효성 검사
+        if(date == ""){
+        	$('.final_date_ck').css('display','block');
+        	dateChk = false;
+        }else{
+        	$('.final_date_ck').css('display','none');
+        	dateChk = true;
+        }
+        
+        
+        // 주소 유효성 검사
+        if(addr == ""){
+        	$('.final_addr_ck').css('display','block');
+        	addrChk = false;
+        }else{
+        	$('.final_addr_ck').css('display','none');
+        	addrChk = true;
+        }
+        
+        // 성별 유효성 검사
+        if (!gender) {
+    		$('.final_gender_ck').css('display', 'block');
+    		genderChk = false;
+		}else {
+    		$('.final_gender_ck').css('display', 'none');
+    		genderChk = true;
+		}
+        
+     // 혈액형 유효성 검사
+       $("input[name='BLOOD']").on("click", function() {
+    if (!blood) {
+        $('.final_blood_ck').css('display', 'block');
+        bloodChk = false;
+    } else {
+        $('.final_blood_ck').css('display', 'none');
+        bloodChk = true;
+    }
+});
+
+
+        
+        /* 최종 유효성 검사 */
+        if(idChk&&pwChk&&pwckChk&&nameChk&&phoneChk&&dateChk&&addrChk&&genderChk&&bloodChk){
+        	$("#patient_join_form").attr("action", "/member/join");
+            $("#patient_join_form").submit();
+        }else{
+ 	       return false;
+        	
+        } 
+        
     });
 });
 
@@ -309,5 +468,26 @@ $(document).ready(function(){
         $(this).tab('show');
     });
 });
+
+/* 비밀번호 확인 일치 유효성 검사 */
+ 
+ $("#patient_pw_chk").on("propertychange change keyup paste input", function(){
+ 
+    var pw = $("#patient_pw").val();
+    var pwck = $("#patient_pw_chk").val();
+    $('.final_pwck_ck').css('display', 'none');
+ 
+    if(pw == pwck){
+        $('.pwck_input_re_1').css('display','block');
+        $('.pwck_input_re_2').css('display','none');
+        pwckcorCheck = true;
+    }else{
+        $('.pwck_input_re_1').css('display','none');
+        $('.pwck_input_re_2').css('display','block');
+        pwckcorCheck = false;
+    }        
+    
+});   
+
 </script>
 </html>
