@@ -33,14 +33,16 @@
 		<input name="TIME" readonly="readonly" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${pageInfo.TIME}"/>' >
 	</div>
 	<hr>
-	<%-- <span>파일 목록</span>
-	<div class="form-group" style="border: 1px solid #dbdbdb;">
-    	<c:forEach var="file" items="${fileList}">
-        	<a href="#" onclick="fn_fileDown('${file.FILE_ID}'); return false;">
-        	${file.FILE_NAME}</a>(${file.FILE_SIZE} KB)<br>
-    	</c:forEach>
-	</div> --%>
+	<span>파일 목록</span>
+<div class="form-group" style="border: 1px solid #dbdbdb;">
+    <c:forEach var="file" items="${fileList}">
+        <div>
+            <a href="#" onclick="fn_fileDown('${file.FILE_ID}'); return false;">${file.NAME}</a>
+        </div>
+    </c:forEach>
+</div>
 	<hr>
+	
 
 	<div class="btn_wrap">
 		<a class="btn" id="notlist_btn">목록 페이지</a> 
@@ -54,26 +56,26 @@
         <input type="hidden" name="keyword" value="${ncri.keyword }">  
 	</form>
 <script>
-	let form = $("#infoForm");
-	
-	// 공지사항 목록화면 이동 js 코드
-	$("#notlist_btn").on("click", function(e){
-		form.find("#NOTICE_BNO").remove();
-		form.attr("action", "/notice/notlist");
-		form.submit();
-	});
-	
-	// 공지사항 수정화면 이동 js 코드
-	$("#notmodify_btn").on("click", function(e){
-		form.attr("action", "/notice/notmodify");
-		form.submit();
-	});	
-	
-	// 공지사항 첨부파일 다운로드 js 코드
-	/* function fn_fileDown(fileId) {
-        var url = "/notice/fileDown?FILE_ID=" + fileId;
-        window.location.href = url;
-    } */
+let form = $("#infoForm");
+
+//공지사항 목록화면 이동 js 코드
+$("#notlist_btn").on("click", function(e){
+ form.find("#NOTICE_ID").remove();
+ form.attr("action", "/notice/notlist");
+ form.submit();
+});
+
+//공지사항 수정화면 이동 js 코드
+$("#notmodify_btn").on("click", function(e){
+ form.attr("action", "/notice/notmodify");
+ form.submit();
+});
+
+//공지사항 첨부파일 다운로드 js 코드
+function fn_fileDown(fileId) {
+ var url = "/notice/fileDown?FILE_ID=" + fileId;
+ window.location.href = url;
+} 
 </script>	
 </body>
 </html>

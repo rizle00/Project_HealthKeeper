@@ -1,15 +1,19 @@
 package kr.co.service;
 
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.co.model.CateGoryVO;
+import kr.co.model.FilesVO;
 import kr.co.model.QsCriteria;
 import kr.co.model.QsVO;
 
 public interface QsService {
 	
 	// 게시판 등록
-	public void qsregistr(QsVO qs);
+	public void qsregistr(QsVO qs, MultipartHttpServletRequest qsRequest) throws Exception;
 	
 	// 게시판 목록
 	public List<QsVO> getlist();
@@ -36,5 +40,11 @@ public interface QsService {
 	public List<CateGoryVO> catelist() throws Exception;
 	
 	public CateGoryVO cate(int CATEGORY_ID);
+	
+	// 게시판 첨부파일 조회
+	public List<FilesVO> fileList(int QUE_ID);
+	
+	// 게시판 첨부파일 다운로드
+	public Map<String, Object> filedown(Map<String, Object> map) throws Exception;
 
 }

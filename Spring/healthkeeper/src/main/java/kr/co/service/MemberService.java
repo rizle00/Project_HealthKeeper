@@ -9,4 +9,12 @@ public interface MemberService {
 	
 	// 로그인
 	public MemberVO memberlogin(MemberVO member) throws Exception;
+	
+	// 아이디 확인
+	public int idchk(String email) throws Exception;
+
+	public int socialCheck(String social);
+
+	public MemberVO socialLogin(String social);
+
 }

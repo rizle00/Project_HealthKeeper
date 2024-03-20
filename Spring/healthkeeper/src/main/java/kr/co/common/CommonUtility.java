@@ -15,6 +15,7 @@ import java.util.HashMap;
 @Service @PropertySource("classpath:info.properties")
 public class CommonUtility {
     public String requestAPI( String apiURL ) {
+
         try {
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
