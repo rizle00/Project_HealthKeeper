@@ -54,7 +54,7 @@ public class CommunityDTOS {
 
 
     public class Community_QuestionDTO{//질문 게시판
-      private String QUE_ID, TITLE, CONTENT, TIME, MEMBER_ID, SECRET, CATEGORY_ID, READ_CNT;
+      private String QUE_ID, TITLE, CONTENT, TIME, MEMBER_ID, SECRET, CATEGORY_ID, READ_CNT, Name;
       private AnswerVO answer;
         public String getQUE_ID() {
             return QUE_ID;
@@ -127,6 +127,14 @@ public class CommunityDTOS {
 
         public void setDto(AnswerVO answer) {
             this.answer = answer;
+        }
+
+        public String getName() {
+            return Name;
+        }
+
+        public void setName(String name) {
+            Name = name;
         }
     }
 
