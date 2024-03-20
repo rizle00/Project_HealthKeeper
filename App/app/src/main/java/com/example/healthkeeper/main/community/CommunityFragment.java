@@ -186,6 +186,45 @@ spinner = binding.spinnerCategory;
             }
         });
 
+        // 비밀글 선택 시
+        binding.radioButtonSecret.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 값이 "y"가 되도록 설정
+                String selectedValue = "y";
+                // 여기서는 선택된 값을 어떻게 활용할지에 대한 코드를 추가할 수 있습니다.
+            }
+        });
+
+        // 공개글 선택 시
+        binding.radioButtonPublic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 값이 "n"이 되도록 설정
+                String selectedValue = "n";
+                // 여기서는 선택된 값을 어떻게 활용할지에 대한 코드를 추가할 수 있습니다.
+            }
+        });
+
+
+        // 비밀글, 공개글 텍스트를 클릭하여 선택할 수 있도록 설정
+        binding.radioButtonSecret.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.radioButtonSecret.setChecked(true);
+                binding.radioButtonPublic.setChecked(false);
+            }
+        });
+
+        binding.radioButtonPublic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.radioButtonSecret.setChecked(false);
+                binding.radioButtonPublic.setChecked(true);
+            }
+        });
+
+
 //====================================================================================================
         binding.button1.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.pink));//버튼 기본색상 변경
         binding.button2.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.white));
@@ -255,6 +294,9 @@ spinner = binding.spinnerCategory;
 //            createque4(result, inflater);//질문게시판
         });
     }
+
+
+
 
     private void createque4(String result, LayoutInflater inflater) {
         // JSON 문자열을 파싱하여 리스트로 변환

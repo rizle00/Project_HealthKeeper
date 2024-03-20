@@ -192,6 +192,39 @@
                                     />
                                     <!-- android:inputType="textMultiLine":엔터키를 사용하여 아랫줄로 내려갈 수 있게 됨-->
 
+
+                                    <!-- RadioGroup to hold radio buttons -->
+                                    <RadioGroup
+                                        android:id="@+id/radioGroup"
+                                        android:layout_width="200dp"
+                                        android:layout_marginLeft="150dp"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <!-- RadioButton for Secret -->
+                                        <RadioButton
+                                            android:id="@+id/radioButton_secret"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="비밀글"
+                                            android:textStyle="italic"
+                                            android:textSize="11dp"
+                                            android:layout_weight="1"
+                                            android:checked="true" />
+
+                                        <!-- RadioButton for Public -->
+                                        <RadioButton
+                                            android:id="@+id/radioButton_public"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="공개글"
+                                            android:textStyle="italic"
+                                            android:textSize="11dp"
+                                            android:layout_weight="1" />
+
+                                    </RadioGroup>
+
+
                             </com.google.android.material.textfield.TextInputLayout>
                                 <Button
                                     android:id="@+id/save_new_write"
