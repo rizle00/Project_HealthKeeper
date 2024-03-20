@@ -47,7 +47,7 @@ body {
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/header.jsp"/>
-<form action="/question/qsregistr" method="post">
+<form action="/question/qsregistr" method="post" enctype="multipart/form-data">
 <h3 class="h1 mt-5 text-center" style="color: black;">질문게시판 등록</h3>
     <div class="container mt-5">
     <div class="input_wrap" >
@@ -74,33 +74,37 @@ body {
             <input class="form-control" name="MEMBER_ID">
         </div>
         
+        <div class="input_wrap">
+            <input type="file" name="file">
+        </div>
+        
         <button class="btn qsbtn">등록</button>
     </div>
 </form>
 <jsp:include page="/WEB-INF/views/include/footer.jsp"/>
 <script>
 	// 카테코리 출력 js 코드
-let catelist = JSON.parse('${catelist}');
+		let catelist = JSON.parse('${catelist}');
 
-let cate1Array = new Array();
-let cate1Obj = new Object();
-let cateSelect1 = $(".cate1");
+		let cate1Array = new Array();
+		let cate1Obj = new Object();
+		let cateSelect1 = $(".cate1");
 
-/* 카테고리 배열 초기화 메서드 */
-function makeCateArray(obj,array,catelist){
-    for(let i = 0; i < catelist.length; i++){
-        obj = new Object();
-        obj.name = catelist[i].name;
-        array.push(obj);                
-    }
-}
+	// 카테고리 배열 초기화 메서드
+	function makeCateArray(obj,array,catelist){
+    	for(let i = 0; i < catelist.length; i++){
+        	obj = new Object();
+        	obj.name = catelist[i].name;
+        	array.push(obj);                
+    	}
+	}
 
-/* 배열 초기화 */
-makeCateArray(cate1Obj,cate1Array,catelist);
+	// 배열 초기화
+		makeCateArray(cate1Obj,cate1Array,catelist);
 
-for(let i = 0; i < cate1Array.length; i++){
-    cateSelect1.append("<option value='"+cate1Array[i].category_ID+"'>" + cate1Array[i].name + "</option>");
-}
+		for(let i = 0; i < cate1Array.length; i++){
+    		cateSelect1.append("<option value='"+cate1Array[i].category_ID+"'>" + cate1Array[i].name + "</option>");
+		}
 </script>
 </body>
 </html>

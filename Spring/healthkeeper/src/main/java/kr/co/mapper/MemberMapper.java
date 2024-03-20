@@ -9,4 +9,11 @@ public interface MemberMapper {
 	
 	// 로그인
 	public MemberVO memberlogin(MemberVO member);
+	
+	// 아이디 확인
+	public int idchk(String email);
+
+	public int socialCheck(String social);
+
+	public MemberVO socialLogin(String social);
 }

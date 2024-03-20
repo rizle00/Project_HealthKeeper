@@ -45,16 +45,26 @@ public class MemberMapperTests {
 //	}
 	
 	// 로그인 테스트
+//	@Test
+//	public void memberlogin() {
+//		
+//		MemberVO member = new MemberVO();
+//		
+//		member.setEMAIL("bb3@bb.com");
+//		member.setPW("13");
+//		
+//		mapper.memberlogin(member);
+//		System.out.println("결과 값 : " + mapper.memberlogin(member));
+//		
+//	}
+	
+	// 아이디 중복검사 테스트
 	@Test
-	public void memberlogin() {
-		
-		MemberVO member = new MemberVO();
-		
-		member.setEMAIL("bb3@bb.com");
-		member.setPW("13");
-		
-		mapper.memberlogin(member);
-		System.out.println("결과 값 : " + mapper.memberlogin(member));
+	public void idchk() {
+		String id = "bb@bb.com";
+		String id1 = "bb22@bb22.com";
+		mapper.idchk(id);
+		mapper.idchk(id1);
 		
 	}
 }

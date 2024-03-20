@@ -38,9 +38,9 @@
         <c:forEach var="file" items="${fileList}" varStatus="var">
             <div>
                 <input type="hidden" id="FILE_ID_${var.index}" name="FILE_ID_${var.index}" value="${file.FILE_ID}">
-                <input type="hidden" id="FILE_NAME_${var.index}" name="FILE_NAME_${var.index}" value="${file.FILE_NAME}">
-                <a href="#" class="fileName">${file.FILE_NAME}</a>(${file.FILE_SIZE}KB)
-                <button class="fileDelBtn" type="button">삭제</button><br>
+                <input type="hidden" id="NAME_${var.index}" name="NAME_${var.index}" value="${file.NAME}">
+                <a href="#" class="fileName">${file.NAME}</a>
+                <button onclick="deleteFile('<c:out value="${pageInfo.NOTICE_ID}"/>')">삭제</button>
             </div>
         </c:forEach>
     </div>
@@ -68,22 +68,7 @@ $(document).ready(function() {
     $(".fileAdd_btn").on("click", function() {
         $(".fileIndex").append('<div><input type="file" name="file"></div>');
     });
-
-    // 파일 삭제 버튼 클릭 시 해당 파일 필드 제거 및 파일 삭제 목록에 추가
-    $(document).on("click", ".fileDelBtn", function() {
-        // 파일의 ID와 이름 가져오기
-        var fileId = $(this).siblings("input[type=hidden]").val();
-        var fileName = $(this).siblings("a").text();
-
-        // fileIdDel[]와 fileNameDel[]에 해당 파일의 ID와 이름 추가
-        $("#infoForm #fileIdDel").append("<input type='hidden' name='fileIdDel[]' value='" + fileId + "'>");
-        $("#infoForm #fileNameDel").append("<input type='hidden' name='fileNameDel[]' value='" + fileName + "'>");
-
-        // 해당 파일 필드 제거
-        $(this).parent().remove();
-    });
-    
-    
+});
 
     // 수정완료 버튼 클릭 시 폼 제출
     $("#notmodify_btn").on("click", function() {
@@ -118,13 +103,32 @@ $(document).ready(function() {
         }
     });
 
-    // 파일 삭제 시 확인 메시지 띄우기
-    $(document).on("click", ".fileDelBtn", function() {
-        if (!confirm("파일을 삭제하시겠습니까?")) {
-            return false; // 기본 동작 방지
-        }
-    });
-});
+  //공지사항 첨부파일 삭제 js 코드
+    function deleteFile(NOTICE_ID) {
+     if (confirm("이 파일을 삭제하시겠습니까?")) {
+         fetch("/notice/deleteFile", {
+             method: "POST",
+             headers: {
+                 "Content-Type": "application/x-www-form-urlencoded"
+             },
+             body: "NOTICE_ID=" + encodeURIComponent(NOTICE_ID)
+         })
+         .then(response => {
+             if (!response.ok) {
+                 throw new Error("파일 삭제 중 오류가 발생했습니다.");
+             }
+             return "파일 삭제 성공";
+         })
+         .then(successMessage => {
+             alert(successMessage); // 파일 삭제 성공 메시지 표시
+             location.reload(); // 필요한 경우 페이지 새로 고치기
+         })
+         .catch(error => {
+             alert(error.message); // 오류 메시지 표시
+         });
+     }
+    }
+
 </script>    
 </body>
 </html>

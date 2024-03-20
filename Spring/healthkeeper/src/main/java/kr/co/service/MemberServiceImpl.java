@@ -24,4 +24,17 @@ public class MemberServiceImpl implements MemberService{
 		return mapper.memberlogin(member);
 	}
 
-}
+	// 아이디 중복검사
+	@Override
+	public int idchk(String email) throws Exception {
+		return mapper.idchk(email);
+	}
+
+	public int socialCheck(String social){
+		return mapper.socialCheck(social);
+	}
+
+	public MemberVO socialLogin(String social){
+		return mapper.socialLogin(social);
+	}
+	}

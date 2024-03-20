@@ -13,15 +13,16 @@
         crossorigin="anonymous"></script>
 </head>
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
+
 <body>
     <a href="/faq/faqregistr">게시판 등록</a>
+    <form id="infoForm" action="/faq/faqupdate" method="get">
     <div id="faq">
         <h2>FAQ</h2>
         <ol class="qna-list accordion">
             <c:forEach items="${faqlist}" var="faq">
                 <li class="qna-item">
                     <div class="question-article">
-                        <input type="text" id="title_${faq.FAQ_ID}" value="<c:out value='${faq.TITLE}'/>" style="display: none;">
                         <a href="#" class="question btn-fold">
                             <strong class="blind">질문:</strong>
                             <span class="q">Q</span><span id="titleText_${faq.FAQ_ID}"><c:out value="${faq.TITLE}"/></span>
@@ -32,18 +33,36 @@
                         <div id="answer-cnt_${faq.FAQ_ID}">
                             <p><c:out value="${faq.CONTENT}"/></p>
                         </div>
-                        <form id="editForm_${faq.FAQ_ID}" style="display: none;" action="/faq/faqupdate" method="post">
-                            <input type="hidden" name="FAQ_ID" value="${faq.FAQ_ID}"/>
-                            <textarea name="editedContent"></textarea>
-                            <button type="submit">저장</button>
-                            <button type="button" onclick="cancelEdit('${faq.FAQ_ID}')">취소</button>
-                        </form>
-                        <button onclick="editItem('${faq.FAQ_ID}')">수정</button>
                     </div>
                 </li>
             </c:forEach>
         </ol>
     </div>
+     </form>
+    <!-- 번호페이지 구현 -->
+	<div class="pageInfo_wrap" >
+        <div class="pageInfo_area">
+        	<ul id="pageInfo" class="pageInfo">
+        	<!-- 이전페이지 버튼 -->
+                <c:if test="${fpageMake.prev}">
+                    <li class="pageInfo_btn previous"><a href="${fpageMake.startPage-1}">Previous</a></li>
+                </c:if>
+ 			<!-- 각 번호 페이지 버튼 -->
+                <c:forEach var="num" begin="${fpageMake.startPage}" end="${fpageMake.endPage}">
+                	<li class="pageInfo_btn ${fpageMake.fcri.pageNum == num ? "active":"" }"><a href="${num}">${num}</a></li>
+                </c:forEach>
+             <!-- 다음페이지 버튼 -->
+                <c:if test="${fpageMake.next}">
+                    <li class="pageInfo_btn next"><a href="${fpageMake.endPage + 1 }">Next</a></li>
+                </c:if> 
+            </ul>
+        </div>
+    </div>
+    <form id="moveForm" method="get">
+		<input type="hidden" name="pageNum" value="${fpageMake.fcri.pageNum }">
+        <input type="hidden" name="amount" value="${fpageMake.fcri.amount }">     
+    </form>
+   
 <script>
 // 글 목록을 접었다 폈다 하는 js코드
 $(function() {
@@ -62,44 +81,25 @@ $(function() {
     });
 });
 
-function editItem(faqId) {
-    var titleInput = document.getElementById("title_" + faqId);
-    var titleText = document.getElementById("titleText_" + faqId);
-    var titleLink = titleText.parentNode.querySelector('.btn-fold');
-    var answerCnt = document.getElementById("answer-cnt_" + faqId);
-    var editForm = document.getElementById("editForm_" + faqId);
-    var currentContent = answerCnt.innerText.trim();
+//페이지 이동 js 코드
+let moveForm = $("#moveForm");
 
-    // Set the current content in textarea
-    editForm.querySelector("textarea").value = currentContent;
+$(".pageInfo a").on("click", function(e){
 
-    // Hide answer content, display edit form
-    answerCnt.style.display = "none";
-    editForm.style.display = "block";
+    e.preventDefault();
+    moveForm.find("input[name='pageNum']").val($(this).attr("href"));
+    moveForm.attr("action", "/faq/faqlist");
+    moveForm.submit();
+    
+});
 
-    // Hide original title text and link
-    titleText.style.display = "none";
-    titleLink.style.display = "none";
+let form = $("#infoForm");
 
-    // Show title input for editing
-    titleInput.style.display = "block";
-}
-
-function cancelEdit(faqId) {
-    var titleInput = document.getElementById("title_" + faqId);
-    var titleText = document.getElementById("titleText_" + faqId);
-    var titleLink = titleText.parentNode.querySelector('.btn-fold');
-    var answerCnt = document.getElementById("answer-cnt_" + faqId);
-    var editForm = document.getElementById("editForm_" + faqId);
-
-    // Hide edit form, display answer content
-    answerCnt.style.display = "block";
-    editForm.style.display = "none";
-
-    // Show original title
-    titleInput.style.display = "block";
-    titleLink.style.display = "inline";
-}
+//게시판 수정화면 이동 js 코드
+$("#faqupdate_btn").on("click", function(e){
+ form.attr("action", "/faq/faqupdate");
+ form.submit();
+});
 </script>
 </body>
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />

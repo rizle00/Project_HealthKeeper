@@ -187,3 +187,49 @@ h2 {
 }
 .qna-item .answer-article {display:none; padding:20px 40px 20px; border:0; background:#fafafa; color:#666; font-size:16px; line-height:24px;}
 .qna-item .answer-article strong {font-weight:normal;}
+
+/* 페이지 정보 래퍼 */
+.pageInfo_wrap {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.pageInfo_area {
+    display: inline-block;
+}
+
+.pageInfo {
+    list-style: none;
+    padding: 0;
+}
+
+.pageInfo_btn {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: transparent;
+    text-decoration: none;
+    
+}
+
+.pageInfo_btn.previous,
+.pageInfo_btn.next {
+    font-weight: bold;
+}
+
+.pageInfo_btn:hover {
+    color: white;
+}
+
+.pageInfo_btn.active {
+    background-color: #95e2f1;
+    color: white;
+}
+
+.pageInfo_btn a { /* 링크에 대한 밑줄 제거 */
+    text-decoration: none;
+    color: black; /* 링크 텍스트의 색상을 검정색으로 변경 */
+}
