@@ -24,4 +24,11 @@ public class MemberServiceImpl implements MemberService{
 		return mapper.memberlogin(member);
 	}
 
+	public int socialCheck(String social){
+		return mapper.socialCheck(social);
+	}
+
+	public MemberVO socialLogin(String social){
+		return mapper.socialLogin(social);
+	}
 }

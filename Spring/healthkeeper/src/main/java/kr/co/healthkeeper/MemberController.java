@@ -2,9 +2,10 @@ package kr.co.healthkeeper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.nimbus.State;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import kr.co.common.CommonUtility;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,17 +14,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.co.common.CommonUtility;
 import kr.co.model.MemberVO;
 import kr.co.service.MemberService;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -152,14 +151,69 @@ public class MemberController {
 	}
 
 
-	@RequestMapping("naverlogin")
+	@RequestMapping("naverLogin")
 	public String naverLogin(HttpSession session, HttpServletRequest request){
 		String state = UUID.randomUUID().toString();
 		session.setAttribute("state",state);
 
 		StringBuffer url = new StringBuffer("https://nid.naver.com/oauth2.0/authorize?response_type=code");
 		url.append("&client_id=").append(NAVER_CLIENT_ID);
+		url.append("&state=").append(state);
+		url.append("&redirect_url=").append(common.appURL(request)).append("/member/navercallback");
 
-		return null;
+		return "redirect:" + url.toString();
 	}
+
+	@RequestMapping("/navercallback")
+	public String naverCallback(String code,HttpSession session,String state,Model model){
+		if(code ==null) return "redirect:/";
+
+		//토큰 발급 요청
+		StringBuffer url = new StringBuffer("https://nid.naver.com/oauth2.0/token?grant_type=authorization_code");
+		url.append("&client_id=").append(NAVER_CLIENT_ID)
+						.append("&cilent_secret=").append(NAVER_SECRET)
+				.append("&code=").append(code)
+				.append("&state=").append(state);
+		String response = common.requestAPI(url.toString());
+
+		HashMap<String,String> map = new Gson().fromJson(response, new TypeToken<HashMap<String, String>>(){}.getType());
+		String token = map.get("access_token");
+		String type = map.get("token_type");
+
+		response = common.requestAPI("https://openapi.naver.com/v1/nid/me",type+" "+token);
+		JSONObject json =  new JSONObject(response);
+
+		if(json.getString("resultcode").equals("00")){
+			MemberVO vo = new MemberVO();
+			String id = json.getString("id");
+			json = json.getJSONObject("response");
+			vo.setEMAIL(json.getString("email"));
+			vo.setGENDER(json.getString("gender"));
+			vo.setSOCIAL(id);
+			vo.setNAME(json.getString("name"));
+			vo.setPHONE(json.getString("mobile"));
+			if(memberService.socialCheck(json.getString("id"))==0){
+				return "redirect:/join";
+			}else {
+				memberService.socialLogin(id);
+			}
+
+		}
+		return redirectURL(session,model);
+	}
+	private String redirectURL(HttpSession session, Model model) {
+		if( session.getAttribute("redirect") == null ) {
+			return "redirect:/";
+		}else{
+			HashMap<String, Object> map
+					= (HashMap<String, Object>)session.getAttribute("redirect");
+			model.addAttribute("url", map.get("url"));
+			model.addAttribute("id", map.get("id"));
+			model.addAttribute("page", map.get("page"));
+
+			session.removeAttribute("redirect");
+			return "include/redirect";
+		}
+	}
+
 }
