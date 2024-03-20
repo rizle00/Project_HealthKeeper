@@ -34,11 +34,13 @@ public class CommunityService {
 	public List<NoticeVO> notice(){
 		return sql.selectList("comm.notice");
 	}
+	public List<CategoryVO> category(){
+		return sql.selectList("comm.category");
+	}
 
-
-	public List<QueVO> newWrite(String params) {
+	public int newWrite(QueVO vo) {
 		
-		return sql.selectList("comm.newWrite");
+		return sql.insert("comm.newWrite",  vo);
 	}
 	
 	

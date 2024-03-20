@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
@@ -24,6 +27,7 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,15 +38,15 @@ public class CommunityFragment extends Fragment {
     List<CommunityDTOS.Community_QuestionDTO> queList;
     List<CommunityDTOS.Community_NoticeDTO> notiList;
     List<CommunityDTOS.Community_faqDTO> faqList;
-    private CommonConn conn;
-
+    private Spinner spinner;
     CommonRepository repository;//스프링과 연결...
+    private CommunityDTOS.Community_QuestionDTO vo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCommunityBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
+spinner = binding.spinnerCategory;
         repository = new CommonRepository(((App) requireActivity().getApplication()).executorService);
 //        HashMap<String, Object> map = new HashMap<>();
 //        map.put("key", "test");
@@ -50,32 +54,15 @@ public class CommunityFragment extends Fragment {
 
 
         //=============================================================
-       CommonConn conn1 = new CommonConn("question/list");
-       conn1.addParamMap("params", 5);
-        repository.select(conn1).thenAccept(result -> {
-
-            queList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
-            }.getType());
-            Log.d("TAG", "aaaa: "+queList.size());
-            Log.d("TAG", "aaaa: "+queList.get(0).getDto().getANSWER_CONTENT());
-
-            binding.question.setAdapter(new Community_QuestionAdapter(inflater, queList, getContext()));
-            binding.question.setLayoutManager((new LinearLayoutManager(getContext())));
-
-            // queList에서 각 Community_QuestionDTO 객체의 id 값을 추출하여 리스트에 추가
+        createQuestion(inflater);
 
 
-
-//            createque4(result, inflater);//질문게시판
-        });
-
-
-      CommonConn conn2 = new CommonConn("faq/list");
+        CommonConn conn2 = new CommonConn("faq/list");
         repository.select(conn2).thenAccept(result ->{
             faqList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_faqDTO>>() {
             }.getType());
 
-            binding.faq.setAdapter(new Community_FaqAdapter(inflater,repository, faqList, getContext()));
+            binding.faq.setAdapter(new Community_FaqAdapter(inflater, faqList, getContext()));
             binding.faq.setLayoutManager((new LinearLayoutManager(getContext())));
         });
 
@@ -85,7 +72,7 @@ public class CommunityFragment extends Fragment {
             notiList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_NoticeDTO>>() {
             }.getType());
 
-            binding.notice.setAdapter(new Community_NoticeAdapter(inflater,repository, notiList, getContext()));
+            binding.notice.setAdapter(new Community_NoticeAdapter(inflater, notiList, getContext()));
             binding.notice.setLayoutManager((new LinearLayoutManager(getContext())));
         });
 
@@ -115,11 +102,37 @@ public class CommunityFragment extends Fragment {
         binding.tvNewWriting.setOnClickListener(new View.OnClickListener() {//글쓰기 버튼
             @Override
             public void onClick(View view) {
+                vo = new CommunityDTOS.Community_QuestionDTO();
                 // 입력 폼을 보이도록 설정
                 binding.tvNewWritingShow.setVisibility(View.VISIBLE);
                 // 입력 폼을 초기화
                 binding.edtWriterTltle.setText("");
                 binding.edtWriterContent.setText("");
+                radioButton();
+                 CommonConn reqCategory = new CommonConn("category");
+                 repository.select(reqCategory).thenAccept(result->{
+                   List<CommunityDTOS.CategoryVO> list = new Gson().fromJson(result,new TypeToken<List<CommunityDTOS.CategoryVO>>(){}.getType());
+                     List<String> categoryNames = new ArrayList<>();
+                     for (CommunityDTOS.CategoryVO category : list) {
+                         categoryNames.add("카테고리");
+                         categoryNames.add(category.getNAME());
+                     }
+                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categoryNames);
+                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                     spinner.setAdapter(adapter);
+                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                         @Override
+                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                             String selectedHospital = categoryNames.get(i);
+                             vo.setCATEGORY_ID(list.get(i-1).getCATEGORY_ID());
+                         }
+
+                         @Override
+                         public void onNothingSelected(AdapterView<?> adapterView) {
+                             vo.setCATEGORY_ID("12");
+                         }
+                     });
+                 });
 
                 // "글 저장" 버튼에 대한 클릭 리스너 설정
                 binding.saveNewWrite.setOnClickListener(new View.OnClickListener() {
@@ -137,33 +150,25 @@ public class CommunityFragment extends Fragment {
 
                             SharedPreferences pref = requireActivity().getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
                             //회원이름 불러오기, 메인화면에 있는 정보 가져오게해야함.
-                            String userName = pref.getString("user_name", "익명");//?????????????
+                            String id = pref.getString("user_id", "익명");//?????????????
                             // 서버로 전송할 데이터 맵 구성
-                            HashMap<String, Object> params = new HashMap<>();
-                            params.put("title", title);
-                            params.put("content", content);
-                            params.put("author", userName);
+
+
+                            vo.setTITLE(title);
+                            vo.setCONTENT(content);
+                            vo.setMEMBER_ID(id);
 
 
 
                             // 서버에 데이터 전송
-                            CommonConn conn1_1 = new CommonConn("question/newWrite");
-                            conn1_1.addParamMap("params", new Gson().toJson(params)); // 맵을 JSON 문자열로 변환하여 전송
-                            repository.select(conn1).thenAccept(result -> {
-                                queList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
-                                    }.getType());
-                                   Log.d("TAG", "size: "+queList.size());
-                                   Log.d("TAG", "MEMBER_ID: "+queList.get(0).getMEMBER_ID());
-                                   Log.d("TAG", "TITLE: "+queList.get(0).getTITLE());
-                                   Log.d("TAG", "CONTENTㅍ: "+queList.get(0).getCONTENT());
-                                binding.question.setAdapter(new Community_QuestionAdapter(inflater, queList, getContext()));
-                                binding.question.setLayoutManager((new LinearLayoutManager(getContext())));
-
-
+                            CommonConn write = new CommonConn("question/newWrite");
+                            write.addParamMap("params", new Gson().toJson(vo)); // 맵을 JSON 문자열로 변환하여 전송
+                            repository.select(write).thenAccept(result -> {
 
                                 if (result != null) {
                                     // 성공적으로 데이터가 전송되었을 때의 처리
                                     Toast.makeText(getContext(), "글이 성공적으로 등록되었습니다.", Toast.LENGTH_SHORT).show();
+                                    createQuestion(inflater);
                                 } else {
                                     // 전송 실패 시의 처리
                                     Toast.makeText(getContext(), "글 등록에 실패했습니다.", Toast.LENGTH_SHORT).show();
@@ -182,46 +187,16 @@ public class CommunityFragment extends Fragment {
             }
         });
 
-        // 비밀글 선택 시
-        binding.radioButtonSecret.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 값이 "y"가 되도록 설정
-                String selectedValue = "y";
-                // 여기서는 선택된 값을 어떻게 활용할지에 대한 코드를 추가할 수 있습니다.
-            }
-        });
 
-        // 공개글 선택 시
-        binding.radioButtonPublic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 값이 "n"이 되도록 설정
-                String selectedValue = "n";
-                // 여기서는 선택된 값을 어떻게 활용할지에 대한 코드를 추가할 수 있습니다.
-            }
-        });
-
-
-        // 비밀글, 공개글 텍스트를 클릭하여 선택할 수 있도록 설정
-        binding.radioButtonSecret.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.radioButtonSecret.setChecked(true);
-                binding.radioButtonPublic.setChecked(false);
-            }
-        });
-
-        binding.radioButtonPublic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.radioButtonSecret.setChecked(false);
-                binding.radioButtonPublic.setChecked(true);
-            }
-        });
 
 
 //====================================================================================================
+        initButton();
+
+        return view;
+    }
+
+    private void initButton() {
         binding.button1.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.pink));//버튼 기본색상 변경
         binding.button2.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.white));
         binding.button3.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.white));
@@ -266,10 +241,70 @@ public class CommunityFragment extends Fragment {
                 binding.scrollView.smoothScrollTo(0, binding.view3.getTop());
             }
         });
-
-        return view;
     }
 
+    private void radioButton() {
+        // 비밀글 선택 시
+        binding.radioButtonSecret.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 값이 "y"가 되도록 설정
+                String selectedValue = "y";
+                // 여기서는 선택된 값을 어떻게 활용할지에 대한 코드를 추가할 수 있습니다.
+                vo.setSECRET("y");
+            }
+        });
+
+        // 공개글 선택 시
+        binding.radioButtonPublic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 값이 "n"이 되도록 설정
+                String selectedValue = "n";
+                // 여기서는 선택된 값을 어떻게 활용할지에 대한 코드를 추가할 수 있습니다.
+                vo.setSECRET("n");
+            }
+        });
+
+
+        // 비밀글, 공개글 텍스트를 클릭하여 선택할 수 있도록 설정
+        binding.radioButtonSecret.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.radioButtonSecret.setChecked(true);
+                binding.radioButtonPublic.setChecked(false);
+            }
+        });
+
+        binding.radioButtonPublic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.radioButtonSecret.setChecked(false);
+                binding.radioButtonPublic.setChecked(true);
+            }
+        });
+    }
+
+    private void createQuestion(LayoutInflater inflater) {
+        CommonConn conn1 = new CommonConn("question/list");
+        conn1.addParamMap("params", 5);
+        repository.select(conn1).thenAccept(result -> {
+
+            queList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
+            }.getType());
+            Log.d("TAG", "aaaa: "+queList.size());
+            Log.d("TAG", "aaaa: "+queList.get(0).getDto().getANSWER_CONTENT());
+
+            binding.question.setAdapter(new Community_QuestionAdapter(inflater, queList, getContext()));
+            binding.question.setLayoutManager((new LinearLayoutManager(getContext())));
+
+            // queList에서 각 Community_QuestionDTO 객체의 id 값을 추출하여 리스트에 추가
+
+
+
+//            createque4(result, inflater);//질문게시판
+        });
+    }
 
 
 

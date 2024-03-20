@@ -1,9 +1,12 @@
 package kr.co.and;
 
 import com.google.gson.Gson;
-import kr.co.common.CommonUtility;
+import kr.co.model.DiseaseVO;
+import kr.co.model.HospitalVO;
+import kr.co.model.MemberHospitalVO;
 import kr.co.model.MemberVO;
-import kr.co.service.MemberService;
+import kr.co.service.AndMemberService;
+import kr.co.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,25 +14,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("and")
+@RequestMapping("/and")
 @Controller
-public class MemberController {
-	@Autowired private CommonUtility common;
-	@Autowired private BCryptPasswordEncoder pwEncoder;
+public class AndMemberController {
+	@Resource(name="commonUtil")private CommonUtil common;
+//	@Autowired
+	private BCryptPasswordEncoder pwEncoder = new BCryptPasswordEncoder();
 
 	@Autowired
-	private MemberService service;
+	private AndMemberService service;
 
 
 	@PostMapping("/andlogin")
 	public ResponseEntity<String> login(String email, String pw) {
 		System.out.println("요청");
 		MemberVO vo = service.login(email);
-		
+
 		System.out.println(email.toString() + pw.toString());
-		if (pwEncoder.matches(pw, vo.getPw())) {
+		if (pwEncoder.matches(pw, vo.getPW())) {
 //			dataHolder.setData(vo.getToken());
 			return ResponseEntity.ok(new Gson().toJson(vo));
 		} else {
@@ -48,14 +55,14 @@ public class MemberController {
 	public void join(String vo, String type) {
 		System.out.println(type + "으로 가입");
 		MemberVO info = new Gson().fromJson(vo, MemberVO.class);
-		info.setPw(pwEncoder.encode(info.getPw()));
+		info.setPW(pwEncoder.encode(info.getPW()));
 		if (type.equals("patient")) {
 			service.join(info);
 		} else {
-			String patient = info.getGuardian_id();
-			info.setGuardian_id(null);
+			String patient = info.getGUARDIAN_ID();
+			info.setGUARDIAN_ID(null);
 			service.join(info);
-			info.setGuardian_id(patient);
+			info.setGUARDIAN_ID(patient);
 			service.patientRegister(info);
 		}
 	}
@@ -85,7 +92,7 @@ public class MemberController {
 		}else {
 			String pw = UUID.randomUUID().toString();
 			pw= pw.substring(pw.lastIndexOf("-")+1);
-			find_info.setPw(pw);
+			find_info.setPW(pw);
 
 			if(service.resetpw(find_info)==1&&common.sendPassword(mail,pw))
 			return ResponseEntity.ok("success");
@@ -106,11 +113,52 @@ public class MemberController {
 	@PostMapping("/andmodify")
 	public ResponseEntity<String>  modify(String vo) {
 		MemberVO infoVO = new Gson().fromJson(vo, MemberVO.class);
-		infoVO.setPw(pwEncoder.encode(infoVO.getPw()));
+		infoVO.setPW(pwEncoder.encode(infoVO.getPW()));
 		if(service.modify(infoVO)==1) {
 			return ResponseEntity.ok("success");
 		}else {
 			return ResponseEntity.ok("fail");
 		}
 	}
+
+	@PostMapping("/member/disease")
+	public Integer disease(String params) {
+		System.out.println(params);
+		DiseaseVO vo = new Gson().fromJson(params, DiseaseVO.class);
+		System.out.println(vo.getDISEASE_NAME());
+		return service.insertDisease(vo);
+	}
+
+	@RequestMapping(value = "/member/hospitals", produces = "application/text;charset=utf-8")
+	public ResponseEntity<String> hospital(String name) {
+		List<HospitalVO> list = service.hospitalList(name);
+		System.out.println(list.size());
+
+		return ResponseEntity.ok(new Gson().toJson(list));}
+	@RequestMapping(value = "/member/doctors", produces = "application/text;charset=utf-8")
+	public ResponseEntity<String> doctors(String params) {
+
+		MemberHospitalVO vo = new Gson().fromJson(params, MemberHospitalVO.class);
+		List<String> list = service.doctorsList(vo);
+
+		System.out.println(list.size());
+
+		return ResponseEntity.ok(new Gson().toJson(list));}
+
+
+	@RequestMapping(value = "/member/condition", produces = "application/text;charset=utf-8")
+	public ResponseEntity<String> condition(String params) {
+		System.out.println(params);
+
+		HashMap<String, Object> map = service.condition(params);
+
+		System.out.println(map);
+
+		return ResponseEntity.ok(new Gson().toJson(map));}
+
+
+
+
+
 }
+

@@ -20,7 +20,11 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
+<!--	<beans:bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>-->
+
+
+
+
 	<context:component-scan base-package="kr.co" />
 	
 	
