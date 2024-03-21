@@ -43,7 +43,7 @@ public class CommunityFragment extends Fragment {
     List<CommunityDTOS.Community_QuestionDTO> queList;
     List<CommunityDTOS.Community_NoticeDTO> notiList;
     private Community_FaqAdapter faqAdapter;
-    List<CommunityDTOS.Community_faqDTO> faqList = new ArrayList<>();
+    private List<CommunityDTOS.Community_faqDTO> faqList;
     private Spinner spinner;
     CommonRepository repository;//스프링과 연결...
     private CommunityDTOS.Community_QuestionDTO vo;
@@ -53,7 +53,7 @@ public class CommunityFragment extends Fragment {
         binding = FragmentCommunityBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        initRecyclerView(inflater);
+
         initMoreButton();
 
 
@@ -72,8 +72,7 @@ public class CommunityFragment extends Fragment {
             faqList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_faqDTO>>() {
             }.getType());
 
-            binding.faq.setAdapter(new Community_FaqAdapter(inflater, faqList, getContext()));
-            binding.faq.setLayoutManager((new LinearLayoutManager(getContext())));
+            initRecyclerView(inflater);
         });
 
 
@@ -147,8 +146,7 @@ public class CommunityFragment extends Fragment {
                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            String selectedHospital = categoryNames.get(i);
-                            vo.setCATEGORY_ID(list.get(i - 1).getCATEGORY_ID());
+                            select[0] =i;
                         }
 
                         @Override
@@ -197,7 +195,6 @@ public class CommunityFragment extends Fragment {
 
                                     // 입력 폼 숨기기
                                     binding.tvNewWritingShow.setVisibility(View.GONE);
-                                    binding.tvNewWriting.setVisibility(View.VISIBLE);
                                 } else {
                                     // 전송 실패 시의 처리
                                     Toast.makeText(getContext(), "글 등록에 실패했습니다.", Toast.LENGTH_SHORT).show();
@@ -206,6 +203,10 @@ public class CommunityFragment extends Fragment {
 
                         }
                     }
+                });
+
+                binding.cancleNewWrite.setOnClickListener(v -> {
+                    binding.tvNewWritingShow.setVisibility(View.GONE);
                 });
             }
         });
@@ -374,42 +375,6 @@ public class CommunityFragment extends Fragment {
     }
 }
 
-    //private void createAnswer(String result, LayoutInflater inflater) {//질문게시판
-    // JSON 문자열을 파싱하여 리스트로 변환
-//        List<CommunityDTOS.Community_QuestionDTO> questionList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
-//        }.getType());
-//        List<CommunityDTOS.AnswerDTO> answerList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
-//        }.getType());
-
-//        Log.d("TAG", "createQues4: "+ questionList.size());
-//        // RecyclerView에 어댑터 설정
-//        binding.question.setAdapter(new Community_QuestionAdapter(inflater,answerList, questionList, getContext()));
-//        binding.question.setLayoutManager((new LinearLayoutManager(getContext())));
-}
-
-//
-//    public void createFaq(String result, LayoutInflater inflater) {//자주묻는게시판
-//        // JSON 문자열을 파싱하여 리스트로 변환
-//        List<CommunityDTOS.Community_faqDTO> list = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_faqDTO>>() {
-//        }.getType());
-//
-//        Log.d("TAG", "createFaq: "+list.get(0));
-//        // RecyclerView에 어댑터 설정
-//        Community_FaqAdapter recentBoardAdapter = new Community_FaqAdapter(inflater, repository, list, getContext());
-//        binding.faq.setAdapter(recentBoardAdapter);
-//        binding.faq.setLayoutManager(new LinearLayoutManager(getContext()));
-//    }
-//
-//    private void createNotice(String result, LayoutInflater inflater) {//공지사항
-//        // JSON 문자열을 파싱하여 리스트로 변환
-//        List<CommunityDTOS.Community_NoticeDTO> list = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_NoticeDTO>>() {
-//        }.getType());
-//        // RecyclerView에 어댑터 설정
-//        binding.notice.setAdapter(new Community_NoticeAdapter(inflater, repository, list, getContext()));
-//        binding.notice.setLayoutManager((new LinearLayoutManager(getContext())));
-//
-//
-//    }
 
 
 

@@ -4,25 +4,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.mapper.AndMemberMapper">
 
-	<resultMap id="alarmLogResultMap" type="kr.co.model.AlarmLogVO">
-		<!-- AlarmLog 테이블의 열을 매핑 -->
+	<resultMap id="alarmLogResult" type="kr.co.model.AlarmLogVO">
 		<id property="ALARM_ID" column="ALARM_ID"/>
 		<result property="TIME" column="TIME"/>
 		<result property="STATE" column="STATE"/>
 		<result property="MEMBER_ID" column="MEMBER_ID"/>
+		<result property="CATEGORY_ID" column="CATEGORY_ID"/>
 		<!-- AlarmTypeVO에 대한 매핑 -->
 		<association property="typeVO" javaType="kr.co.model.AlarmTypeVO">
-			<!-- AlarmTypeVO 테이블의 열을 매핑 -->
 			<id property="CATEGORY_ID" column="CATEGORY_ID"/>
 			<result property="TITLE" column="TITLE"/>
 			<result property="CONTENT" column="CONTENT"/>
 		</association>
 	</resultMap>
 
-<select id="alarmLog" resultType="alarmLogResultMap">
+<select id="alarmLog" resultMap="alarmLogResult">
 	select alarm_id, time, state , title,content From AlarmLog
 		left join ALARM_TYPE  using ( category_id)
-	where member_id = #{member_id};
+	where member_id = #{member_id} and state = 'n'
 </select>
 
 
@@ -86,6 +85,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertAlarmG">
 		insert into Alarmlog (MEMBER_ID, CATEGORY_ID) values (#{guardian_id}, #{CATEGORY_ID})
 	</insert>
+	<update id="updateAlarm">
+		UPDATE Alarmlog SET state='y' WHERE MEMBER_ID=#{member_id} and alarm_id=#{alarm_id}
+	</update>
 
 	<insert id="insertDisease">
 		insert into MEMBER_DISEASES (MEMBER_ID, DISEASE_NAME, DESCRIPTION) values (#{MEMBER_ID}, #{DISEASE_NAME}, #{DESCRIPTION})

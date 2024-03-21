@@ -187,6 +187,19 @@ public class AndMemberController {
 
 		return ResponseEntity.ok(new Gson().toJson(vo));}
 
+	@RequestMapping("/update/alarm")
+	public ResponseEntity<Integer> updateAlarm(String id, String alarm) {
+		System.out.println("알람로그");
+		System.out.println(id);
+		System.out.println(alarm);
+
+		HashMap<String, String> map = new HashMap<>();
+		map.put("member_id", id);
+		map.put("alarm_id",alarm);
+		System.out.println(new Gson().toJson(map));
+
+		return ResponseEntity.ok( service.updateAlarm(map));}
+
 
 }
 

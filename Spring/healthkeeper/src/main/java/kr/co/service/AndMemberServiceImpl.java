@@ -128,4 +128,9 @@ public class AndMemberServiceImpl implements AndMemberService {
     public List<AlarmLogVO> alarmLog(String params) {
         return mapper.alarmLog(params);
     }
+
+    @Override
+    public int updateAlarm(HashMap<String, String> map) {
+        return mapper.updateAlarm(map);
+    }
 }
