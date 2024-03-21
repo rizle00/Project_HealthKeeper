@@ -2,6 +2,7 @@ package com.example.healthkeeper.main.community;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -123,6 +124,7 @@ public class CommunityFragment extends Fragment {
 
                 // "글 저장" 버튼에 대한 클릭 리스너 설정
                 binding.saveNewWrite.setOnClickListener(new View.OnClickListener() {
+                    @SuppressLint("SuspiciousIndentation")
                     @Override
                     public void onClick(View v) {
                         // 사용자가 입력한 질문 제목과 내용 가져오기
