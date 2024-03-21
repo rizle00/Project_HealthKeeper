@@ -13,7 +13,7 @@ public interface AndMemberService {
 
     public MemberVO login(String email);
 
-    public String idcheck(String member_id) ;
+    public String idcheck(String email) ;
     public void join(MemberVO vo);
 
     public String findid(MemberVO vo);

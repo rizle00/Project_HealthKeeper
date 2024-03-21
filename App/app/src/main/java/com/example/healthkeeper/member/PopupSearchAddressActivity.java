@@ -68,7 +68,7 @@ public class PopupSearchAddressActivity extends AppCompatActivity {
                 webView.loadUrl("javascript:sample2_execDaumPostcode();");
             }
         });
-        webView.loadUrl("http://192.168.0.49/middle/and/address");
+        webView.loadUrl("http://192.168.0.46/main/and/address");
     }
   /*      { webView = binding.wvAddress;
 

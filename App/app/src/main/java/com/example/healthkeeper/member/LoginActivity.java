@@ -1,5 +1,6 @@
 package com.example.healthkeeper.member;
 
+import android.app.ProgressDialog;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -99,7 +100,6 @@ public class LoginActivity extends AppCompatActivity {
 
         conn.addParamMap("email", email);
         conn.addParamMap("pw", pw);
-
         conn.onExcute((isResult, data) -> {
             Log.d("로그인", "guardianlogin: " + data);
             MemberVO vo = new Gson().fromJson(data, MemberVO.class);

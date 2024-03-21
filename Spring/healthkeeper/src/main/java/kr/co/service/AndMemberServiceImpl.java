@@ -27,8 +27,8 @@ public class AndMemberServiceImpl implements AndMemberService {
     }
 
     @Override
-    public String idcheck(String member_id) {
-        return mapper.idcheck(member_id);
+    public String idcheck(String email) {
+        return mapper.idcheck(email);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.healthkeeper.common;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
@@ -48,6 +49,19 @@ public class CommonConn {
         }
     }
 
+    public void onPreExcute(ProgressDialog dialog) {
+
+            this.dialog = dialog;
+            dialog.setProgress(ProgressDialog.STYLE_SPINNER);
+            dialog.setTitle(context.getString(R.string.app_name));
+            dialog.setMessage("현재 데이터 로딩중");
+            dialog.setCancelable(false);
+            dialog.show();
+
+    }
+
+
+
     public void onExcute(appCallBack callBack){
 //        onPreExcute();
         CommonService service = CommonClient.getRetrofit().create(CommonService.class);
@@ -74,7 +88,7 @@ public class CommonConn {
 //        onPostExcute();
     }
 
-    private void onPostExcute() {
+    public void onPostExcute() {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();//다이얼로그 안보이게 처리
         }
