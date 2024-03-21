@@ -27,13 +27,22 @@ public class FirebaseController {
         System.out.println(params);
      RequestDTO dto = new Gson().fromJson(params, RequestDTO.class);
         TypeVO type = service.type(dto.getCATEGORY_ID());
-        MemberVO info = service.guardian(dto.getGuardian_id());
-        System.out.println(info.getNAME());
-        System.out.println(service.insertAlarm(dto));
-        firebaseCloudMessageService.sendMessageTo(
-                info.getToken(),
-                type.getTITLE(),
-                dto.getName()+"님의"+type.getCONTENT());
+
+        if(!dto.getGuardian_id().equals("")){
+
+            MemberVO info = service.guardian(dto.getGuardian_id());
+
+            service.insertAlarmG(dto);
+            firebaseCloudMessageService.sendMessageTo(
+                    info.getToken(),
+                    type.getTITLE(),
+                    dto.getName()+"님의"+type.getCONTENT());
+        }
+        service.insertAlarm(dto);
+
+//        System.out.println(info.getNAME());
+//        System.out.println(service.insertAlarm(dto));
+
         return ResponseEntity.ok().build();
     }
 }

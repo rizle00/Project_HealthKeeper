@@ -3,12 +3,8 @@ package kr.co.service;
 import java.util.List;
 import java.util.Map;
 
+import kr.co.model.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import kr.co.model.CateGoryVO;
-import kr.co.model.FilesVO;
-import kr.co.model.QsCriteria;
-import kr.co.model.QsVO;
 
 public interface QsService {
 	
@@ -25,26 +21,29 @@ public interface QsService {
 	public int getTotal(QsCriteria qcri);
 	
 	// 게시판 조회
-	public QsVO getpage(int QUE_ID);
+	public QsVO getpage(String QUE_ID);
 	
 	// 게시판 수정
 	public int update(QsVO qs);
 	
 	// 게시판 삭제
-	public int delete(int QUE_ID);
+	public int delete(String QUE_ID);
 	
 	// 게시판 조회수
-	public int qsViews(int QUE_ID);
+	public int qsViews(String QUE_ID);
 	
 	// 카테고리 리스트
 	public List<CateGoryVO> catelist() throws Exception;
 	
-	public CateGoryVO cate(int CATEGORY_ID);
+	public CateGoryVO cate(String CATEGORY_ID);
 	
 	// 게시판 첨부파일 조회
-	public List<FilesVO> fileList(int QUE_ID);
+	public List<FilesVO> fileList(String QUE_ID);
 	
 	// 게시판 첨부파일 다운로드
 	public Map<String, Object> filedown(Map<String, Object> map) throws Exception;
 
+   public MemberVO selectMember(String QUE_ID);
+
+	public QsVO selectQue(String QUE_ID);
 }
