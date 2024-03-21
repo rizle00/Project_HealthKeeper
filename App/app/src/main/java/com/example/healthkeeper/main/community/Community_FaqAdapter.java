@@ -19,7 +19,6 @@ public class Community_FaqAdapter extends RecyclerView.Adapter<Community_FaqAdap
     LayoutInflater inflater;
     List<CommunityDTOS.Community_faqDTO> List;
     Context context;
-    CommonRepository repository;
     private boolean[] isVisibleArray;// 각 아이템의 가시성을 저장하는 배열
 
     public Community_FaqAdapter(LayoutInflater inflater, List<CommunityDTOS.Community_faqDTO>  boardList, Context context){

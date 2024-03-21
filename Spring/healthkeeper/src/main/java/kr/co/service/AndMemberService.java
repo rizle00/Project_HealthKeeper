@@ -49,4 +49,6 @@ public interface AndMemberService {
     public List<MemberVO> memberList();
 
     public List<AlarmLogVO> alarmLog(String params);
+
+   public int updateAlarm(HashMap<String, String> map);
 }
