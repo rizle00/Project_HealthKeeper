@@ -84,11 +84,11 @@ public class Community_NoticeAdapter extends RecyclerView.Adapter<Community_Noti
         }
     }
 
-    // 추가된 모든 아이템을 리스트에 추가하는 메서드
-//    public void addAll(List<CommunityDTOS.Community_NoticeDTO> moreList) {
-//        int startPosition = List.size();
-//        List.addAll(moreList);
-//        isVisibleArray = Arrays.copyOf(isVisibleArray, List.size()); // isVisibleArray 배열 크기 조정
-//        notifyItemRangeInserted(startPosition, moreList.size());
-//    }
+//     추가된 모든 아이템을 리스트에 추가하는 메서드
+    public void addAll(List<CommunityDTOS.Community_NoticeDTO> moreList) {
+        int startPosition = List.size();
+        List.addAll(moreList);
+        isVisibleArray = Arrays.copyOf(isVisibleArray, List.size()); // isVisibleArray 배열 크기 조정
+        notifyItemRangeInserted(startPosition, moreList.size());
+    }
 }
