@@ -127,10 +127,10 @@ public class AlarmActivity extends AppCompatActivity {
                 String address = pref.getString("address","");
 
                 SendSMS(name,"01051760118", address);
-                if(!guardian_id.equals("")){
-                    createPush(name,guardian_id);
 
-                }
+                createPush(name,guardian_id);
+
+
 
                 timerStatus = TimerStatus.STOPPED;
             }

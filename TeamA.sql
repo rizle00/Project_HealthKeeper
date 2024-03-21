@@ -438,4 +438,5 @@ insert into emergency_type (title, content)
 values('체온 하락', '체온이 너무 낮습니다');--5
 
 commit;
- 
+ insert into category values(6,'카테고리 없음');
+ commit;

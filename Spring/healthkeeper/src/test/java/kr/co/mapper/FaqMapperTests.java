@@ -51,7 +51,7 @@ public class FaqMapperTests {
 		
 		FaqVO vo = new FaqVO();
 		
-		vo.setFAQ_ID(10);
+		vo.setFAQ_ID("10");
 		vo.setTITLE("mapper Test 진행");
 		vo.setCONTENT("mapper 수정테스트중입니다.");
 		

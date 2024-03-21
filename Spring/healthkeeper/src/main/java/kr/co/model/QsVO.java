@@ -7,7 +7,7 @@ import lombok.Data;
 public class QsVO {
 	
 	// 게시판 번호
-	private int QUE_ID;
+	private String QUE_ID;
 		
 	// 게시판 제목
 	private String TITLE;
@@ -19,16 +19,16 @@ public class QsVO {
 	private Date TIME;
 		
 	// 게시판 작성자
-	private int MEMBER_ID;
+	private String MEMBER_ID;
 	
 	// 게시판 카테고리
-	private int CATEGORY_ID;
+	private String CATEGORY_ID;
 	
 	private CateGoryVO category; // CategoryVO 객체
 		
 	// 게시판 조회수
 	private int READ_CNT;
-	private AnswerVO answer;
-	private String Name;
+	private QsAnswerVO answer;
+	private String Name, SECRET;
 
 }
