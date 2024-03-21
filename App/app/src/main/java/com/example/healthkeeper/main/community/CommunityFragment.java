@@ -2,6 +2,7 @@ package com.example.healthkeeper.main.community;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ import com.example.healthkeeper.bluetooth.ConditionVO;
 import com.example.healthkeeper.common.CommonConn;
 import com.example.healthkeeper.common.CommonRepository;
 import com.example.healthkeeper.databinding.FragmentCommunityBinding;
+import com.example.healthkeeper.main.LoginBeforeActivity;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
@@ -35,10 +38,12 @@ import java.util.List;
 
 public class CommunityFragment extends Fragment {
     FragmentCommunityBinding binding;
+    private boolean isMoreFaqShown = false;//더 보기 버튼 클릭 상태를 나타내는 변수
 
     List<CommunityDTOS.Community_QuestionDTO> queList;
     List<CommunityDTOS.Community_NoticeDTO> notiList;
-    List<CommunityDTOS.Community_faqDTO> faqList;
+    private Community_FaqAdapter faqAdapter;
+    List<CommunityDTOS.Community_faqDTO> faqList = new ArrayList<>();
     private Spinner spinner;
     CommonRepository repository;//스프링과 연결...
     private CommunityDTOS.Community_QuestionDTO vo;
@@ -47,6 +52,11 @@ public class CommunityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCommunityBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+        initRecyclerView(inflater);
+        initMoreButton();
+
+
         spinner = binding.spinnerCategory;
         repository = new CommonRepository(((App) requireActivity().getApplication()).executorService);
 //        HashMap<String, Object> map = new HashMap<>();
@@ -125,9 +135,10 @@ public class CommunityFragment extends Fragment {
                     List<CommunityDTOS.CategoryVO> list = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.CategoryVO>>() {
                     }.getType());
                     List<String> categoryNames = new ArrayList<>();
-                    categoryNames.add("카테고리");
-                    for (CommunityDTOS.CategoryVO category : list) {
+                    categoryNames.add("카테고리");            
 
+                    for (CommunityDTOS.CategoryVO category : list) {
+                        categoryNames.add("카테고리");
                         categoryNames.add(category.getNAME());
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categoryNames);
@@ -136,8 +147,8 @@ public class CommunityFragment extends Fragment {
                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            select[0] = i;
-                            Log.d("TAG", "onItemSelected: "+i);
+                            String selectedHospital = categoryNames.get(i);
+                            vo.setCATEGORY_ID(list.get(i - 1).getCATEGORY_ID());
                         }
 
                         @Override
@@ -149,6 +160,7 @@ public class CommunityFragment extends Fragment {
 
                 // "글 저장" 버튼에 대한 클릭 리스너 설정
                 binding.saveNewWrite.setOnClickListener(new View.OnClickListener() {
+                    @SuppressLint("SuspiciousIndentation")
                     @Override
                     public void onClick(View v) {
                         // 사용자가 입력한 질문 제목과 내용 가져오기
@@ -171,6 +183,8 @@ public class CommunityFragment extends Fragment {
                             vo.setCONTENT(content);
                             vo.setMEMBER_ID(id);
                             vo.setCATEGORY_ID(String.valueOf(select[0] - 1));
+
+
                             // 서버에 데이터 전송
                             CommonConn write = new CommonConn("question/newWrite");
                             write.addParamMap("params", new Gson().toJson(vo)); // 맵을 JSON 문자열로 변환하여 전송
@@ -202,6 +216,12 @@ public class CommunityFragment extends Fragment {
 
         return view;
     }
+
+
+
+
+
+
 
     private void initButton() {
         binding.button1.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.pink));//버튼 기본색상 변경
@@ -280,7 +300,10 @@ public class CommunityFragment extends Fragment {
             Log.d("TAG", "aaaa: " + queList.size());
             Log.d("TAG", "aaaa: " + queList.get(0).getDto().getANSWER_CONTENT());
 
-            binding.question.setAdapter(new Community_QuestionAdapter(inflater, queList, getContext()));
+            // RecyclerView 어댑터 설정을 여기서 수행
+            Community_QuestionAdapter questionAdapter = new Community_QuestionAdapter(inflater, queList, getContext());
+
+            binding.question.setAdapter(questionAdapter);
             binding.question.setLayoutManager((new LinearLayoutManager(getContext())));
 
             // queList에서 각 Community_QuestionDTO 객체의 id 값을 추출하여 리스트에 추가
@@ -303,6 +326,53 @@ public class CommunityFragment extends Fragment {
 
     }
 
+    private void initRecyclerView(LayoutInflater inflater) {
+        faqAdapter = new Community_FaqAdapter(inflater, getInitialFaqList(), requireContext());
+        binding.faq.setAdapter(faqAdapter);
+        binding.faq.setLayoutManager(new LinearLayoutManager(requireContext()));
+    }
+
+    private void initMoreButton() {
+        Button moreButton = binding.openFaq;
+        moreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isMoreFaqShown) {//"더보기" 눌리지 않은상태..
+                    // 나머지 아이템 추가
+                    faqAdapter.addAll(getMoreFaqList());
+                    binding.openFaq.setText("접기");
+                } else {
+                    // 추가된 아이템 숨기기
+                    faqAdapter.hideAll();
+                    moreButton.setText("더 보기");
+                }
+                isMoreFaqShown = !isMoreFaqShown;
+            }
+        });
+    }
+
+    private List<CommunityDTOS.Community_faqDTO> getInitialFaqList() {
+        // 초기에 표시할 아이템 리스트 반환 (4개의 아이템만 보여주도록 설정
+        List<CommunityDTOS.Community_faqDTO> initialList = new ArrayList<>();
+        // 초기에 표시할 아이템을 추가
+        for (int i = 0; i < Math.min(4, faqList.size()); i++){
+            initialList.add(faqList.get(i));
+            Log.d("TAG", "fff: "+ faqList.size());
+
+        }
+        return initialList;
+    }
+
+    private List<CommunityDTOS.Community_faqDTO> getMoreFaqList() {
+        // 더보기를 클릭했을 때 추가로 표시할 아이템 리스트 반환
+        List<CommunityDTOS.Community_faqDTO> moreList = new ArrayList<>();
+
+        for (int i = 4; i < faqList.size(); i++) { // 이미 표시된 아이템 이후부터 추가
+            moreList.add(faqList.get(i)); // faqList에서 아이템을 가져와서 추가
+        }
+        return moreList;
+    }
+}
 
     //private void createAnswer(String result, LayoutInflater inflater) {//질문게시판
     // JSON 문자열을 파싱하여 리스트로 변환

@@ -29,7 +29,8 @@ public class ScheduleFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentScheduleBinding.inflate(inflater, container, false);
         /*return binding.getRoot();*/
-        View rootView = binding.getRoot();
+        View view = binding.getRoot();
+
 
 
 
@@ -84,7 +85,7 @@ public class ScheduleFragment extends Fragment {
             Toast.makeText(getContext(), "Activity is null!", Toast.LENGTH_SHORT).show();
         }
 
-        return rootView;
+        return view;
     }
 
 
