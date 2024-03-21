@@ -32,5 +32,8 @@
     <context:component-scan base-package="kr.co.model"></context:component-scan>
     <context:component-scan base-package="kr.co.service"></context:component-scan>
     <context:component-scan base-package="kr.co.util"></context:component-scan>
-		
+    <context:component-scan base-package="kr.co.and"></context:component-scan>
+    <context:component-scan base-package="kr.co.common"></context:component-scan>
+    <context:component-scan base-package="kr.co.healthkeeper"></context:component-scan>
+
 </beans>

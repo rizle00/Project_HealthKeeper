@@ -39,6 +39,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="socialLogin" resultType="kr.co.model.MemberVO">
 		SELECT * FROM MEMBER WHERE SOCIAL = #{social}
 	</select>
+	
+	<select id="checkDuplicateEmail" resultType="Integer">
+		SELECT COUNT(*) FROM MEMBER WHERE EMAIL = #{email}
+	</select>
 
 
 </mapper>

@@ -16,7 +16,7 @@
   crossorigin="anonymous"></script>
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/${VERSION}/kakao.min.js"
 		integrity="${INTEGRITY_VALUE}" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css"><%--src="${pageContext.request.contextPath}/resources/js/reply.js"--%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css">
 </head>
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 <body>
@@ -76,7 +76,7 @@
 <script>
 	// 로그인 버튼 클릭메서드
 	$(".login_button").click(function(){
-		$("#login_form").attr("action", "/member/login");
+		$("#login_form").attr("action", "login");
 		$("#login_form").submit();
 	});
 

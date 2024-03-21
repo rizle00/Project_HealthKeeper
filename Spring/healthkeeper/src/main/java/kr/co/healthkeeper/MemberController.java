@@ -3,8 +3,7 @@ package kr.co.healthkeeper;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
+import kr.co.util.CommonUtil;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,21 +12,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import kr.co.common.CommonUtility;
 import kr.co.model.MemberVO;
 import kr.co.service.MemberService;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -35,18 +33,19 @@ import java.util.UUID;
 @PropertySource("classpath:info.properties") //카카오 앱 키 저장용
 @RequestMapping("/member/*")
 public class MemberController {
-	@Autowired
-	CommonUtility common;
+
+	@Resource(name="commonUtil")
+	CommonUtil common;
 
 	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired
 	private MemberService memberService;
 	
-	@Autowired
-	private BCryptPasswordEncoder pwEncoder;
+//	@Autowired
+	private BCryptPasswordEncoder pwEncoder = new BCryptPasswordEncoder();
 	
-	// 회원가입 페이지 이동 코드
+//	 회원가입 페이지 이동 코드
 	@GetMapping("/join")
 	public void memberjoinGET() {
 		log.info("회원가입 페이지 진입");
@@ -55,14 +54,16 @@ public class MemberController {
 	// 회원가입
 	@PostMapping("/join")
 	public String memberjoinPOST(MemberVO member) throws Exception {
-			
+		//일반 회원가입
+		if(member.getSOCIAL().equals("x")) {	
 		String rawPw = "";            // 인코딩 전 비밀번호
 	    String encodePw = "";        // 인코딩 후 비밀번호
-	        
 	    rawPw = member.getPW();          // 비밀번호 데이터 얻음
 	    encodePw = pwEncoder.encode(rawPw);        // 비밀번호 인코딩
 	    member.setPW(encodePw);            // 인코딩된 비밀번호 member객체에 다시 저장
-	        
+	    }else { //소셜 회원가입일때 비밀번호 null오류 방지
+	    	member.setPW("");
+	    }
 	    /* 회원가입 쿼리 실행 */
 	    memberService.memberjoin(member);
 			
@@ -70,7 +71,7 @@ public class MemberController {
 	}
 	
 	// 아이디 중복검사 
-	@PostMapping("/memberIdChk")
+	@RequestMapping("/memberIdChk")
 	@ResponseBody
 	public String memberIdchkPOST(String email) throws Exception{
 		
@@ -88,7 +89,7 @@ public class MemberController {
 	}
 	
 	// 아이디 중복검사 
-		@PostMapping("/memberIdChk2")
+		@RequestMapping("/memberIdChk2")
 		@ResponseBody
 		public String memberIdchk2POST(String email) throws Exception{
 			
@@ -146,7 +147,7 @@ public class MemberController {
 	}
 	
 	// 로그아웃
-	@GetMapping("/logout")
+	@RequestMapping("/logout")
 	public String logoutGET(HttpServletRequest request) throws Exception {
 		log.info("로그아웃 메서드 진입");
 		
@@ -154,6 +155,23 @@ public class MemberController {
 		session.invalidate(); // 세션 전체를 무효화하는 메서드, 세션 제거
 		
 		return "redirect:/main";
+	}
+	
+	
+	@RequestMapping("simplejoin")
+	public String simplejoin(Model model,HttpSession session) {
+		MemberVO vo= (MemberVO) session.getAttribute("vo");
+		model.addAttribute("vo",vo);
+		return "member/simplejoin";
+	}
+	
+	@RequestMapping("checkDuplicateEmail")
+	@ResponseBody
+	public String checkDuplicateEmail(String email) {
+		if(memberService.checkDuplicateEmail(email)>=1) {
+			return "duplicate";
+		}
+		else return "ok";
 	}
 
 	@Value("${KAKAO_REST_API}") private  String KAKAO_REST_API;
@@ -182,14 +200,23 @@ public class MemberController {
 		response = common.requestAPI("https://kapi.kakao.com/v2/user/me", token_type +" "+access_token);
 		json =  new JSONObject(response);
 		if(! json.isEmpty()) {
-			String social = String.valueOf(json.getLong("id"));
+			String id = String.valueOf(json.getLong("id"));
 			json = json.getJSONObject("kakao_account");
 
 			MemberVO vo = new MemberVO();
-			vo.setSOCIAL(social);
-			session.setAttribute("social",social);
+			vo.setSOCIAL(id);
+			if(memberService.socialCheck(id)==0){
+				session.setAttribute("vo",vo);
+				return "redirect:/member/simplejoin"; 
+			}else {
+				//로그인
+				MemberVO lvo=memberService.socialLogin(id);
+				session.setAttribute("member", lvo);
+				
+			}
+			
 		}
-		return "redirect:/main/member/join";
+		return "redirect:/main";
 	}
 
 
@@ -213,7 +240,7 @@ public class MemberController {
 		//토큰 발급 요청
 		StringBuffer url = new StringBuffer("https://nid.naver.com/oauth2.0/token?grant_type=authorization_code");
 		url.append("&client_id=").append(NAVER_CLIENT_ID)
-						.append("&cilent_secret=").append(NAVER_SECRET)
+						.append("&client_secret=").append(NAVER_SECRET)
 				.append("&code=").append(code)
 				.append("&state=").append(state);
 		String response = common.requestAPI(url.toString());
@@ -227,22 +254,31 @@ public class MemberController {
 
 		if(json.getString("resultcode").equals("00")){
 			MemberVO vo = new MemberVO();
-			String id = json.getString("id");
+			
 			json = json.getJSONObject("response");
+			String id= json.getString("id");
 			vo.setEMAIL(json.getString("email"));
 			vo.setGENDER(json.getString("gender"));
 			vo.setSOCIAL(id);
 			vo.setNAME(json.getString("name"));
 			vo.setPHONE(json.getString("mobile"));
-			if(memberService.socialCheck(json.getString("id"))==0){
-				return "redirect:/join";
+			//해당 소셜정보가 없는경우 회원가입
+			if(memberService.socialCheck(id)==0){
+				model.addAttribute("type","naver");
+				session.setAttribute("vo",vo);
+				return "redirect:/member/simplejoin"; 
 			}else {
-				memberService.socialLogin(id);
+				//로그인
+				MemberVO lvo=memberService.socialLogin(id);
+				session.setAttribute("member", lvo);
+				
 			}
-
+			
 		}
-		return redirectURL(session,model);
+		return "redirect:/main";
 	}
+	
+	
 	private String redirectURL(HttpSession session, Model model) {
 		if( session.getAttribute("redirect") == null ) {
 			return "redirect:/";
@@ -257,5 +293,8 @@ public class MemberController {
 			return "include/redirect";
 		}
 	}
+	
+	
+
 
 }

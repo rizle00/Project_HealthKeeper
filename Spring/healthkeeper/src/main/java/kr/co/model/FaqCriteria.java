@@ -11,9 +11,9 @@ public class FaqCriteria {
 	// 한 페이지 당 보여질 게시물 갯수
 	private int amount;
 	
-	//pageNum = 1, amount = 9
+	//pageNum = 1, amount = 10
     public FaqCriteria() {
-        this(1,6);
+        this(1,10);
     }
     
  // 생성자 => 원하는 pageNum, 원하는 amount
