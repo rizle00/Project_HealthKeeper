@@ -127,7 +127,7 @@
                         app:cardCornerRadius="10dp"
                         android:backgroundTint="#FFFFFF"
                         android:elevation="20dp"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         >
 
                             <LinearLayout
@@ -349,6 +349,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                        />
+                    <Button
+                        android:id="@+id/openNotice"
+                        android:layout_width="130dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_horizontal"
+                        android:backgroundTint="#FFFFFF"
+                        android:paddingBottom="3dp"
+                        android:text="더보기"
+                        android:textColor="#D75E87"
+                        android:textSize="14dp"
+                        android:textStyle="bold|italic" />
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 

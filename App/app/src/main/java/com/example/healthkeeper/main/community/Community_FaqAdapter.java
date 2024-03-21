@@ -77,8 +77,5 @@ public class Community_FaqAdapter extends RecyclerView.Adapter<Community_FaqAdap
     }
 
     // 모든 아이템을 숨기는 메서드
-    public void hideAll() {
-        Arrays.fill(isVisibleArray, false); // isVisibleArray 배열을 모두 false로 설정
-        notifyDataSetChanged();
-    }
+
 }
