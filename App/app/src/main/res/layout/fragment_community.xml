@@ -210,7 +210,7 @@
                                             android:textStyle="italic"
                                             android:textSize="11dp"
                                             android:layout_weight="1"
-                                            android:checked="true" />
+                                             />
 
                                         <!-- RadioButton for Public -->
                                         <RadioButton
@@ -220,7 +220,8 @@
                                             android:text="공개글"
                                             android:textStyle="italic"
                                             android:textSize="11dp"
-                                            android:layout_weight="1" />
+                                            android:layout_weight="1"
+                                            android:checked="true"/>
 
                                     </RadioGroup>
 

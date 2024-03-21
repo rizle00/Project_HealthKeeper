@@ -53,6 +53,9 @@
         <activity
                 android:name=".firebase.AlarmActivity"
                 android:exported="false"/>
+        <activity
+                android:name=".main.PushActivity"
+                android:exported="false"/>
 
         <service
                 android:name=".bluetooth.BluetoothService"
