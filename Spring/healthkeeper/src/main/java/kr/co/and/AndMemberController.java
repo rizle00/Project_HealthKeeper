@@ -30,7 +30,7 @@ public class AndMemberController {
 
 	@PostMapping("/andlogin")
 	public ResponseEntity<String> login(String email, String pw) {
-		System.out.println("요청");
+		System.out.println("로그인");
 		MemberVO vo = service.login(email);
 
 		System.out.println(email.toString() + pw.toString());
@@ -67,6 +67,7 @@ public class AndMemberController {
 
 	@PostMapping("/andfindid")
 	public ResponseEntity<String> findid(String vo) {
+		System.out.println("아이디찾기");
 		MemberVO find_info = new Gson().fromJson(vo, MemberVO.class);
 		return ResponseEntity.ok(service.findid(find_info));
 	}
