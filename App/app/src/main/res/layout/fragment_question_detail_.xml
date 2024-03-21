@@ -13,7 +13,7 @@
         android:id="@+id/button1"
         android:layout_margin="15dp"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:scaleType="fitXY"
         android:src="@drawable/write2"
 
@@ -161,6 +161,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+
       android:orientation="horizontal"
       >
 
@@ -174,7 +175,8 @@
               android:textColor="#FFFFFF"
               android:backgroundTint="#6AC4BB"
               android:textStyle="bold"
-              android:layout_margin="15dp"
+              android:layout_marginLeft="15dp"
+              android:layout_marginRight="5dp"
 
               />
 
@@ -188,7 +190,8 @@
               android:textColor="#FFFFFF"
               android:backgroundTint="#6AC4BB"
               android:textStyle="bold"
-              android:layout_margin="15dp"
+              android:layout_marginRight="15dp"
+              android:layout_marginLeft="5dp"
 
               />
     </LinearLayout>
