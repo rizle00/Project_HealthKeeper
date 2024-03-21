@@ -4,10 +4,7 @@ import kr.co.and.firebase.RequestDTO;
 import kr.co.and.firebase.TypeVO;
 import kr.co.mapper.AndMemberMapper;
 import kr.co.mapper.FaqMapper;
-import kr.co.model.DiseaseVO;
-import kr.co.model.HospitalVO;
-import kr.co.model.MemberHospitalVO;
-import kr.co.model.MemberVO;
+import kr.co.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +17,8 @@ public class AndMemberServiceImpl implements AndMemberService {
     @Autowired
     private AndMemberMapper mapper;
     @Override
-    public int insert(HashMap<String, Object> map) {
-        return mapper.insert(map);
+    public int insertCondition(ConditionVO vo) {
+        return mapper.insertCondition(vo);
     }
 
     @Override
@@ -108,9 +105,32 @@ public class AndMemberServiceImpl implements AndMemberService {
     public int insertAlarm(RequestDTO dto) {
         return mapper.insertAlarm(dto);
     }
+    public int insertAlarmG(RequestDTO dto) {
+        return mapper.insertAlarmG(dto);
+    }
 
     @Override
     public Integer insertDisease(DiseaseVO vo) {
         return mapper.insertDisease(vo);
+    }
+
+    @Override
+    public int updateToken(HashMap<String, String> map) {
+        return mapper.updateToken(map);
+    }
+
+    @Override
+    public List<MemberVO> memberList() {
+        return mapper.memberList();
+    }
+
+    @Override
+    public List<AlarmLogVO> alarmLog(String params) {
+        return mapper.alarmLog(params);
+    }
+
+    @Override
+    public int updateAlarm(HashMap<String, String> map) {
+        return mapper.updateAlarm(map);
     }
 }

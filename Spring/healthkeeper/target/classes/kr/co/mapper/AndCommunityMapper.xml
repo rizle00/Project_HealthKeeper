@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.mapper.AndCommunityMapper">
+	<resultMap id="queResult" type="kr.co.model.QsVO">
+		<id property="QUE_ID" column="QUE_ID"/>
+		<result property="TITLE" column="TITLE"/>
+		<result property="CONTENT" column="CONTENT"/>
+		<result property="TIME" column="TIME"/>
+		<result property="MEMBER_ID" column="MEMBER_ID"/>
+		<result property="SECRET" column="SECRET"/>
+		<result property="CATEGORY_ID" column="CATEGORY_ID"/>
+		<result property="READ_CNT" column="READ_CNT"/>
+		<result property="Name" column="Name"/>
+
+		<!-- 답변 VO 매핑 -->
+		<association property="answer" javaType="kr.co.model.QsAnswerVO">
+			<id property="ANS_ID" column="ANS_ID"/>
+			<result property="CONTENT" column="CONTENT"/>
+			<result property="QUE_ID" column="QUE_ID"/>
+			<result property="ADMIN_ID" column="ADMIN_ID"/>
+			<result property="TIME" column="TIME"/>
+		</association>
+	</resultMap>
+	<!-- 질문과 답변 함께 조회하는 쿼리 -->
+	<select id="list" resultMap="queResult">
+		SELECT q.*, a.*, m.name
+		FROM(
+		SELECT row_number() over(ORDER BY time DESC) no , q.*
+		FROM question q
+		) q
+		LEFT outer JOIN ANSWER a ON q.QUE_ID = a.QUE_ID
+		LEFT OUTER JOIN Member m on q.member_id = m.member_id
+		<if test="number>0">
+			where no &lt; #{number}
+		</if>
+	</select>
+	
+	
+	<insert id="newWrite">
+	INSERT INTO question ( TITLE, CONTENT, MEMBER_ID, SECRET, CATEGORY_ID)
+      VALUES ( #{TITLE}, #{CONTENT}, #{MEMBER_ID}, #{SECRET}, #{CATEGORY_ID})
+	
+</insert>
+
+	<select id="category" resultType="kr.co.model.CateGoryVO"><!--공지사항   -->
+		select * from category
+		where category_id &lt; 6
+	</select>
+
+
+
+<select id="faq" resultType="kr.co.model.FaqVO"><!--자주하는 질문   -->
+        select * from faq
+</select>
+
+
+
+<select id="notice" resultType="kr.co.model.NoticeVO"><!--공지사항   -->
+        select * from notice
+</select>
+	
+
+
+</mapper>

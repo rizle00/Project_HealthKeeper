@@ -5,15 +5,12 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import kr.co.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.co.mapper.QsMapper;
-import kr.co.model.CateGoryVO;
-import kr.co.model.FilesVO;
-import kr.co.model.QsCriteria;
-import kr.co.model.QsVO;
 import kr.co.util.FileUtils;
 
 @Service
@@ -57,7 +54,7 @@ public class QsServiceImpl implements QsService{
 
 	// 게시판 조회
 	@Override
-	public QsVO getpage(int QUE_ID) {
+	public QsVO getpage(String QUE_ID) {
 		return mapper.getpage(QUE_ID);
 	}
 
@@ -69,13 +66,13 @@ public class QsServiceImpl implements QsService{
 
 	// 게시판 삭제
 	@Override
-	public int delete(int QUE_ID) {
+	public int delete(String QUE_ID) {
 		return mapper.delete(QUE_ID);
 	}
 
 	// 게시판 조회수
 	@Override
-	public int qsViews(int QUE_ID) {
+	public int qsViews(String QUE_ID) {
 		return mapper.qsViews(QUE_ID);
 	}
 
@@ -86,13 +83,13 @@ public class QsServiceImpl implements QsService{
 	}
 
 	@Override
-	public CateGoryVO cate(int CATEGORY_ID) {
+	public CateGoryVO cate(String CATEGORY_ID) {
 		return mapper.cate(CATEGORY_ID);
 	}
 
 	// 게시판 첨부파일 조회
 	@Override
-	public List<FilesVO> fileList(int QUE_ID) {
+	public List<FilesVO> fileList(String QUE_ID) {
 		return mapper.fileList(QUE_ID);
 	}
 
@@ -100,6 +97,16 @@ public class QsServiceImpl implements QsService{
 	@Override
 	public Map<String, Object> filedown(Map<String, Object> map) throws Exception{
 		return mapper.filedown(map);
+	}
+
+	@Override
+	public MemberVO selectMember(String QUE_ID) {
+		return mapper.selectMember(QUE_ID);
+	}
+
+	@Override
+	public QsVO selectQue(String QUE_ID) {
+		return mapper.selectQue(QUE_ID);
 	}
 
 }
