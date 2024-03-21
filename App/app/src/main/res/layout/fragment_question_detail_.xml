@@ -9,17 +9,14 @@
     android:orientation="vertical">
 
 
-    <android.widget.Button
+    <ImageView
         android:id="@+id/button1"
-        android:layout_margin="10dp"
+        android:layout_margin="15dp"
         android:layout_width="match_parent"
-        android:layout_weight="0.8"
-        android:layout_height="0dp"
-        android:text="게   시   판"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:backgroundTint="#F898B8"
-        android:clickable="true"
+        android:layout_height="80dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/write2"
+
         />
 
     <RelativeLayout
@@ -33,7 +30,7 @@
             android:layout_centerVertical="true"
             android:textSize="20dp"
             android:textStyle="bold"
-
+            android:layout_marginLeft="20dp"
             android:text="게 시 판"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,6 +46,7 @@
             android:layout_width="100dp"
             android:backgroundTint="#F29B80"
             android:paddingBottom="2dp"
+            android:layout_marginRight="30dp"
             android:layout_height="35dp"/>
 
     </RelativeLayout>
@@ -142,7 +140,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"
+        android:layout_weight="7"
 
 
         >
@@ -152,6 +150,8 @@
             android:id="@+id/questionDetailList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1" />
 
 
