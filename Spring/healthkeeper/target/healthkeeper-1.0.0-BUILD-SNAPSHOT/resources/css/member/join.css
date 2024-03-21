@@ -1,0 +1,175 @@
+/* Body 설정 */
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+/* 섹션 설정 */
+section {
+    height: 100vh;
+}
+
+/* 폼 설정 */
+form {
+    width: 100%;
+}
+
+/* 컨테이너 설정 */
+.container {
+    max-width: 800px;
+}
+
+/* 카드 설정 */
+.card-registration {
+    border: none;
+    border-radius: 0;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 카드 바디 설정 */
+.card-body {
+    padding: 5rem;
+}
+
+/* 로고 설정 */
+.card-body .fa-cubes {
+    margin-right: 1rem;
+}
+
+/* 타이틀 설정 */
+.card-body .h1 {
+    font-size: 2.5rem;
+}
+
+/* 입력 필드 설정 */
+.form-control-lg {
+    border-radius: 0;
+}
+
+/* 버튼 설정 */
+.btn-primary {
+    border-radius: 0;
+}
+
+/* 이미지 설정 */
+.img-fluid {
+    width: 100%;
+    height: auto;
+}
+.form-check-input {
+    margin-top: 0.3rem !important;
+}
+
+.form-check-label {
+    margin-bottom: 0 !important;
+}
+
+/* 카드 헤더 */
+.card-header {
+    text-align: center !important;
+    padding: 20px !important;
+}
+
+/* 탭 링크 */
+.nav-tabs .nav-item {
+    flex: 1 !important;
+}
+
+.nav-tabs .nav-link {
+    color: #c8cfd6 !important;
+    font-family: Arial, sans-serif;
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    text-align: center !important;
+}
+
+/* 활성화된 탭 링크 */
+.nav-tabs .nav-link.active {
+    background-color: #373c41 !important;
+}
+
+/* 중복아이디 존재하지 않는경우 */
+.email_input_re_1{
+	color : green ;
+	display : none ;
+	margin-top: 12px ;
+}
+	/* 중복아이디 존재하는 경우 */
+.email_input_re_2{
+	color : red !important;
+	display : none !important;
+	margin-top: 12px !important;
+}
+
+/* 중복아이디 존재하지 않는경우 */
+.gemail_input_re_1{
+	color : green ;
+	display : none ;
+	margin-top: 12px ;
+}
+
+/* 중복아이디 존재하는 경우 */
+.gemail_input_re_2{
+	color : red ;
+	display : none ;
+	margin-top: 12px ;
+}
+
+/* 유효성 검사 문구 */
+
+.final_id_ck{
+    display: none;
+    color : red ;
+    margin-top: 3px;
+}
+.final_pw_ck{
+    display: none;
+    color : red ;
+     margin-top: 3px;
+}
+.final_pwck_ck{
+    display: none;
+    color : red ;
+    margin-top: 3px;
+}
+.final_name_ck{
+    display: none;
+    color : red ;
+    margin-top: 3px;
+}
+.final_phone_ck{
+    display: none;
+    color : red ;
+    margin-top: 3px;
+}
+.final_date_ck{
+    display: none;
+    color : red ;
+    margin-top: 3px;
+}
+.final_addr_ck{
+    display: none;
+    color : red ;
+   	margin-top: 3px;
+}
+.final_gender_ck{
+    display: none;
+    color : red ;
+    margin-top: 3px;
+}
+.final_blood_ck{
+    display: none;
+    color : red ;
+    margin-top: 3px;
+}
+
+/* 비밀번호 확인 일치 유효성검사 */
+.pwck_input_re_1{
+  color : green ;
+  display : none ;  
+}
+.pwck_input_re_2{
+  color : red ;
+  display : none ;  
+} 

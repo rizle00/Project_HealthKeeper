@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +24,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.model.CateGoryVO;
 import kr.co.model.FilesVO;
+import kr.co.model.QsAnswerVO;
 import kr.co.model.QsCriteria;
 import kr.co.model.QsPageMakeDTO;
-import kr.co.model.QsReplyVO;
 import kr.co.model.QsVO;
-import kr.co.service.QsReplyService;
+import kr.co.service.QsAnswerService;
 import kr.co.service.QsService;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/question/*")
@@ -41,8 +42,8 @@ public class QuestionController {
 	private QsService service;
 	
 	@Autowired
-	private QsReplyService replyservice;
-	
+	private QsAnswerService anservice;
+			
 	// log 메서드 사용 => consol창에 더 자세히 볼수있음
 	private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
 	
@@ -106,8 +107,9 @@ public class QuestionController {
 		List<FilesVO> fileList = service.fileList(QUE_ID);
 		model.addAttribute("fileList", fileList);
 		
-		//List<QsReplyVO> replyList = replyservice.readReply(vo.getQUE_ID());
-		//model.addAttribute("replyList", replyList);
+		// 댓글조회
+		List<QsAnswerVO> anlist = anservice.readAnswer(QUE_ID);
+		model.addAttribute("anlist",anlist);
 	}
 	
 	// 질문게시판 수정페이지 진입
@@ -141,74 +143,6 @@ public class QuestionController {
 		return "redirect:/question/qslist";
 	}
 	
-	// 질문게시판 댓글작성
-//	@PostMapping("/replyRegistr")
-//	public String replyRegistrPOST(QsReplyVO replyvo, QsCriteria qcri, RedirectAttributes rttr) {
-//		replyservice.registrReply(replyvo);
-//		
-//		rttr.addAttribute("QS_BNO", replyvo.getQUE_ID());
-//		rttr.addAttribute("pageNum", qcri.getPageNum());
-//		rttr.addAttribute("amount", qcri.getAmount());
-//		rttr.addAttribute("keyword", qcri.getKeyword());
-//		rttr.addAttribute("type", qcri.getType());
-//		
-//		return "redirect:/question/qsget";
-//	}
-	
-	// 질문게시판 댓글수정 페이지 진입
-//	@GetMapping("/replyupdate")
-//	public void replyUpdateGET(QsCriteria qcri, Model model,QsReplyVO replyvo){
-//		
-//		model.addAttribute("replyupdate", replyservice.selectReply(replyvo.getQRNO()));
-//		model.addAttribute("qcri", qcri);
-//		
-//	}
-	
-	// 질문게시판 댓글수정
-//	@PostMapping("/replyupdate")
-//	public String replyUpdatePOST(QsReplyVO replyvo, QsCriteria qcri, RedirectAttributes rttr){
-//		
-//		log.info("reply update");
-//		
-//		replyservice.updateReply(replyvo);
-//		
-//		rttr.addAttribute("QS_BNO", replyvo.getQUE_ID());
-//		rttr.addAttribute("QRNO", replyvo.getQRNO());
-//		rttr.addAttribute("pageNum", qcri.getPageNum());
-//		rttr.addAttribute("amount", qcri.getAmount());
-//		rttr.addAttribute("keyword", qcri.getKeyword());
-//		rttr.addAttribute("type", qcri.getType());
-//		
-//		return "redirect:/question/qsget";
-//		
-//	}
-	
-	// 질문게시판 댓글삭제 페이지 진입
-//	@GetMapping("/replydelete")
-//	public void replyDeleteGET(QsCriteria qcri, Model model, int QUE_ID){
-//			
-//		model.addAttribute("replydelete", replyservice.selectReply(QUE_ID));
-//		model.addAttribute("qcri", qcri);
-//			
-//	}
-	
-	
-	// 질문게시판 댓글삭제
-//	@PostMapping("/replydelete")
-//	public String replyDeletePOST(@RequestParam int QRNO, QsReplyVO replyvo, QsCriteria qcri, RedirectAttributes rttr) {
-//		
-//		replyservice.deleteReply(QRNO);
-//		
-//		rttr.addAttribute("QS_BNO", replyvo.getQUE_ID());
-//		rttr.addAttribute("QRNO", replyvo.getQRNO());
-//		rttr.addAttribute("pageNum", qcri.getPageNum());
-//		rttr.addAttribute("amount", qcri.getAmount());
-//		rttr.addAttribute("keyword", qcri.getKeyword());
-//		rttr.addAttribute("type", qcri.getType());
-//		
-//		return "redirect:/question/qsget";
-//	}
-	
 	// 질문게시판 첨부파일 다운로드
 	@RequestMapping(value="/fileDown")
     public void fileDown(@RequestParam Map<String, Object> map, HttpServletResponse response) throws Exception {
@@ -238,4 +172,20 @@ public class QuestionController {
         outputStream.flush();
         outputStream.close();
     }
+	
+	// 답글 작성
+	@PostMapping("/answerWrite")
+	public String answerWritePOST(int QUE_ID,QsAnswerVO anvo, QsCriteria qcri ,RedirectAttributes rttr) {
+		log.info("댓글작성 진입");
+		
+		anservice.writeAnswer(anvo);
+		
+		rttr.addAttribute("que_id", anvo.getQUE_ID());
+		rttr.addAttribute("pageNum", qcri.getPageNum());
+		rttr.addAttribute("amount", qcri.getAmount());
+		rttr.addAttribute("keyword", qcri.getKeyword());
+		rttr.addAttribute("type", qcri.getType());
+		
+		return "redirect:/question/qsget?QUE_ID="+ QUE_ID;
+	}
 }

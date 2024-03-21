@@ -1,7 +1,11 @@
 package kr.co.and;
 
 import com.google.gson.Gson;
-import kr.co.app.community.*;
+import kr.co.model.CateGoryVO;
+import kr.co.model.FaqVO;
+import kr.co.model.NoticeVO;
+import kr.co.model.QsVO;
+import kr.co.service.AndCommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,34 +18,16 @@ import java.util.List;
 public class CommunityController {
 	
 	@Autowired
-	private CommunityService service;
+	private AndCommunityService service;
 	
 	
-	@PostMapping(value = "question/answer", produces = "application/text;charset=utf-8")
-	public ResponseEntity<String> answer(String params) {
-		System.out.println(params);
-	List<AnswerVO>  result =	service.answer(params);
-		System.out.println(result.size());
-    String json = new Gson().toJson(result);
 
-		return ResponseEntity.ok(json);
-	} 
-
-	
-	  @PostMapping(value = "question/que4", produces ="application/text;charset=utf-8") 
-	  public ResponseEntity<String> list4(String params) {
-//		  System.out.println(params);
-		  List<QueVO> result = service.que4();
-	  System.out.println(result.size()); String json = new Gson().toJson(result);
-	  
-	  return ResponseEntity.ok(json); }
-	
 	
 	@PostMapping(value = "question/list", produces = "application/text;charset=utf-8")
 	public ResponseEntity<String> list(@RequestParam(defaultValue = "0") String params) {
 //		System.out.println(params);
 		
-	List<QueVO>  result =	service.list(params);
+	List<QsVO>  result =	service.list(params);
 	result.get(0).getQUE_ID();
 	result.get(0).getAnswer().getQUE_ID();
 	System.out.println("qqq"+result.size());
@@ -51,8 +37,30 @@ public class CommunityController {
     System.out.println(json);
 
 		return ResponseEntity.ok(json);
-	} 
-	
+	}
+
+
+	//자유게시판에서 글쓰기 insert!
+	@PostMapping(value="question/newWrite", produces = "applicateion/text;charset=utf-8")
+	public ResponseEntity<Integer> newWrite(String params){
+		QsVO vo = new Gson().fromJson(params, QsVO.class);
+
+
+		return ResponseEntity.ok(service.newWrite(vo));
+
+
+	}
+
+	@PostMapping(value="category", produces = "application/text;charset=utf-8")
+	public ResponseEntity<String> category(String params){
+//		System.out.println(params);
+		List<CateGoryVO> result = service.category();
+		String json = new Gson().toJson(result);
+
+		return ResponseEntity.ok(json);
+
+	}
+
 	@PostMapping(value="faq/list", produces = "application/text;charset=utf-8")
 	public ResponseEntity<String> faq(String params) {
 //		System.out.println(params);

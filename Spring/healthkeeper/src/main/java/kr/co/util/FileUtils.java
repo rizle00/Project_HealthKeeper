@@ -8,10 +8,10 @@ import java.util.Map;
 import java.util.UUID;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.co.model.NoticeVO;
 import kr.co.model.QsVO;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Component("fileUtils")
 public class FileUtils {

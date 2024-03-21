@@ -27,11 +27,22 @@ public class FaqServiceImpl implements FaqService{
 		return mapper.faqlist();
 	}
 
+	// FAQ 게시판 조회
+	@Override
+	public FaqVO faqpage(int FAQ_ID) {
+		return mapper.faqpage(FAQ_ID);
+	}
 	
 	// FAQ 게시판 수정
 	@Override
-	public int faqupdate(FaqVO faqvo) {
-		return mapper.faqupdate(faqvo);
+	public int faqupdate(FaqVO faq) {
+		return mapper.faqupdate(faq);
+	}
+	
+	// FAQ 게시판 삭제
+	@Override
+	public int faqdelete(int FAQ_ID) {
+		return mapper.faqdelete(FAQ_ID);
 	}
 
 	// FAQ 목록 페이징 처리
@@ -45,6 +56,5 @@ public class FaqServiceImpl implements FaqService{
 	public int faqTotal() {
 		return mapper.faqTotal();
 	}
-
 
 }
