@@ -23,14 +23,14 @@ public class BluetoothRepository {
 
     }
 
-    public void insertData(HashMap<String, Object> map) {
-        commonConn = new CommonConn("and/insertData", mContext);
+    public void insertData(ConditionVO vo) {
+        commonConn = new CommonConn("insertCondition", mContext);
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                String json = new Gson().toJson(map);
+                String json = new Gson().toJson(vo);
                 commonConn.addParamMap("params", json);
-                Log.d(TAG, "run: " + map);
+                Log.d(TAG, "run: " + vo);
                 commonConn.onExcute((isResult, data) -> {
 
                     Log.d("Common", "onResult: " + data);

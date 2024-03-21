@@ -14,7 +14,7 @@ public interface FaqMapper {
 	public List<FaqVO> faqlist();
 	
 	// FAQ 게시판 조회
-	public FaqVO faqpage(int FAQ_ID);
+	public FaqVO faqpage(String FAQ_ID);
 	
 	// FAQ 게시판 목록 (페이징 적용)
 	public List<FaqVO> faqlistPaging(FaqCriteria fcri);
@@ -23,7 +23,7 @@ public interface FaqMapper {
 	public int faqupdate(FaqVO faq);
 	
 	// FAQ 게시판 삭제
-	public int faqdelete(int FAQ_ID);
+	public int faqdelete(String FAQ_ID);
 	
 	// FAQ 게시글 총 갯수
 	public int faqTotal();

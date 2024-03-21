@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.healthkeeper.App;
 import com.example.healthkeeper.R;
+import com.example.healthkeeper.bluetooth.ConditionVO;
 import com.example.healthkeeper.common.CommonConn;
 import com.example.healthkeeper.common.CommonRepository;
 import com.example.healthkeeper.databinding.FragmentCommunityBinding;
@@ -42,7 +43,7 @@ public class CommunityFragment extends Fragment {
     List<CommunityDTOS.Community_QuestionDTO> queList;
     List<CommunityDTOS.Community_NoticeDTO> notiList;
     private Community_FaqAdapter faqAdapter;
-    List<CommunityDTOS.Community_faqDTO> faqList = new ArrayList<>();
+    private List<CommunityDTOS.Community_faqDTO> faqList;
     private Spinner spinner;
     CommonRepository repository;//스프링과 연결...
     private CommunityDTOS.Community_QuestionDTO vo;
@@ -52,7 +53,7 @@ public class CommunityFragment extends Fragment {
         binding = FragmentCommunityBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        initRecyclerView(inflater);
+
         initMoreButton();
 
 
@@ -71,8 +72,7 @@ public class CommunityFragment extends Fragment {
             faqList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_faqDTO>>() {
             }.getType());
 
-            binding.faq.setAdapter(new Community_FaqAdapter(inflater, faqList, getContext()));
-            binding.faq.setLayoutManager((new LinearLayoutManager(getContext())));
+            initRecyclerView(inflater);
         });
 
 
@@ -84,6 +84,20 @@ public class CommunityFragment extends Fragment {
             binding.notice.setAdapter(new Community_NoticeAdapter(inflater, notiList, getContext()));
             binding.notice.setLayoutManager((new LinearLayoutManager(getContext())));
         });
+
+//        CommonConn test = new CommonConn("insertCondition");
+//        ConditionVO vo2 = new ConditionVO();
+//        vo2.setCONDITION_ID("7");
+//        vo2.setCONDITION_PULSE("123");
+//        vo2.setCONDITION_TEMPERATURE("36");
+//        vo2.setMEMBER_ID("2");
+//
+//        vo2.setCONDITION_ACCIDENT("N");
+//
+//        test.addParamMap("params", new Gson().toJson(vo2));
+//        repository.insert(test).thenAccept(result -> {
+//            Log.d("TAG", "test: " + result);
+//        });
 
 
         binding.clickButton.setOnClickListener(new View.OnClickListener() {//read more를 누를시 전체 목록 나오게이동
@@ -107,6 +121,7 @@ public class CommunityFragment extends Fragment {
         binding.tvNewWriting.setOnClickListener(new View.OnClickListener() {//글쓰기 버튼
             @Override
             public void onClick(View view) {
+                final int[] select = {0};
                 vo = new CommunityDTOS.Community_QuestionDTO();
                 // 입력 폼을 보이도록 설정
                 binding.tvNewWritingShow.setVisibility(View.VISIBLE);
@@ -119,6 +134,8 @@ public class CommunityFragment extends Fragment {
                     List<CommunityDTOS.CategoryVO> list = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.CategoryVO>>() {
                     }.getType());
                     List<String> categoryNames = new ArrayList<>();
+                    categoryNames.add("카테고리");            
+
                     for (CommunityDTOS.CategoryVO category : list) {
                         categoryNames.add("카테고리");
                         categoryNames.add(category.getNAME());
@@ -129,8 +146,7 @@ public class CommunityFragment extends Fragment {
                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            String selectedHospital = categoryNames.get(i);
-                            vo.setCATEGORY_ID(list.get(i - 1).getCATEGORY_ID());
+                            select[0] =i;
                         }
 
                         @Override
@@ -164,6 +180,7 @@ public class CommunityFragment extends Fragment {
                             vo.setTITLE(title);
                             vo.setCONTENT(content);
                             vo.setMEMBER_ID(id);
+                            vo.setCATEGORY_ID(String.valueOf(select[0] - 1));
 
 
                             // 서버에 데이터 전송
@@ -175,20 +192,21 @@ public class CommunityFragment extends Fragment {
                                     // 성공적으로 데이터가 전송되었을 때의 처리
                                     Toast.makeText(getContext(), "글이 성공적으로 등록되었습니다.", Toast.LENGTH_SHORT).show();
                                     createQuestion(inflater);
+
+                                    // 입력 폼 숨기기
+                                    binding.tvNewWritingShow.setVisibility(View.GONE);
                                 } else {
                                     // 전송 실패 시의 처리
                                     Toast.makeText(getContext(), "글 등록에 실패했습니다.", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            // 입력 폼 초기화
-                            binding.edtWriterTltle.setText("");
-                            binding.edtWriterContent.setText("");
 
-                            // 입력 폼 숨기기
-                            binding.tvNewWritingShow.setVisibility(View.GONE);
-                            binding.tvNewWriting.setVisibility(View.VISIBLE);
                         }
                     }
+                });
+
+                binding.cancleNewWrite.setOnClickListener(v -> {
+                    binding.tvNewWritingShow.setVisibility(View.GONE);
                 });
             }
         });
@@ -258,9 +276,6 @@ public class CommunityFragment extends Fragment {
         binding.radioButtonSecret.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 값이 "y"가 되도록 설정
-                String selectedValue = "y";
-                // 여기서는 선택된 값을 어떻게 활용할지에 대한 코드를 추가할 수 있습니다.
                 vo.setSECRET("y");
             }
         });
@@ -269,9 +284,6 @@ public class CommunityFragment extends Fragment {
         binding.radioButtonPublic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 값이 "n"이 되도록 설정
-                String selectedValue = "n";
-                // 여기서는 선택된 값을 어떻게 활용할지에 대한 코드를 추가할 수 있습니다.
                 vo.setSECRET("n");
             }
         });
@@ -279,6 +291,7 @@ public class CommunityFragment extends Fragment {
     }
 
     private void createQuestion(LayoutInflater inflater) {
+        Log.d("TAG", "aaaa:질문 ");
         CommonConn conn1 = new CommonConn("question/list");
         conn1.addParamMap("params", 5);
         repository.select(conn1).thenAccept(result -> {
@@ -362,41 +375,6 @@ public class CommunityFragment extends Fragment {
     }
 }
 
-    //private void createAnswer(String result, LayoutInflater inflater) {//질문게시판
-        // JSON 문자열을 파싱하여 리스트로 변환
-//        List<CommunityDTOS.Community_QuestionDTO> questionList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
-//        }.getType());
-//        List<CommunityDTOS.AnswerDTO> answerList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
-//        }.getType());
-
-//        Log.d("TAG", "createQues4: "+ questionList.size());
-//        // RecyclerView에 어댑터 설정
-//        binding.question.setAdapter(new Community_QuestionAdapter(inflater,answerList, questionList, getContext()));
-//        binding.question.setLayoutManager((new LinearLayoutManager(getContext())));
-
-//
-//    public void createFaq(String result, LayoutInflater inflater) {//자주묻는게시판
-//        // JSON 문자열을 파싱하여 리스트로 변환
-//        List<CommunityDTOS.Community_faqDTO> list = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_faqDTO>>() {
-//        }.getType());
-//
-//        Log.d("TAG", "createFaq: "+list.get(0));
-//        // RecyclerView에 어댑터 설정
-//        Community_FaqAdapter recentBoardAdapter = new Community_FaqAdapter(inflater, repository, list, getContext());
-//        binding.faq.setAdapter(recentBoardAdapter);
-//        binding.faq.setLayoutManager(new LinearLayoutManager(getContext()));
-//    }
-//
-//    private void createNotice(String result, LayoutInflater inflater) {//공지사항
-//        // JSON 문자열을 파싱하여 리스트로 변환
-//        List<CommunityDTOS.Community_NoticeDTO> list = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_NoticeDTO>>() {
-//        }.getType());
-//        // RecyclerView에 어댑터 설정
-//        binding.notice.setAdapter(new Community_NoticeAdapter(inflater, repository, list, getContext()));
-//        binding.notice.setLayoutManager((new LinearLayoutManager(getContext())));
-//
-//
-//    }
 
 
 
