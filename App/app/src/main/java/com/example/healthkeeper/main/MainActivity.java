@@ -190,7 +190,9 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return true;
         } else if (id == R.id.menu_alam) {
-            // 처리 추가
+            Intent intent = new Intent(this, PushActivity.class);
+            startActivity(intent);
+            finish();
             return true;
         } else if (id == R.id.menu_bluetooth && !isPatient && active) {
             // 블루투스 버튼 클릭 했는데 서비스 o

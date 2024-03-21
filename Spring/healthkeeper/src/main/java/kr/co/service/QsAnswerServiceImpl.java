@@ -16,14 +16,14 @@ public class QsAnswerServiceImpl implements QsAnswerService{
 	
 	// 답글 조회
 	@Override
-	public List<QsAnswerVO> readAnswer(int QUE_ID) {
+	public List<QsAnswerVO> readAnswer(String QUE_ID) {
 		return mapper.readAnswer(QUE_ID);
 	}
 
 	// 답글 작성
 	@Override
-	public void writeAnswer(QsAnswerVO anvo) {
-		mapper.writeAnswer(anvo);
+	public int writeAnswer(QsAnswerVO anvo) {
+		return mapper.writeAnswer(anvo);
 	}
 
 }

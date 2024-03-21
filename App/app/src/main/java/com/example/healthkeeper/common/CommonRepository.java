@@ -15,14 +15,13 @@ public class CommonRepository {
     private final Executor executor;
     private CommonConn conn;
     //Future 또는 CompletableFuture를 사용하여 비동기 작업의 결과를 처리할 수 있습니다. 이를 사용하면 비동기 작업이 완료될 때까지 대기하거나 결과를 처리할 수 있습니다.
-    private final CompletableFuture<String> result;
 
     public CommonRepository(Executor executor) {
         this.executor = executor;
-        result = new CompletableFuture<>();
     }
 
     public CompletableFuture<String> insertData(String url, HashMap<String, Object> map) {
+        CompletableFuture<String> result = new CompletableFuture<>();
         conn = new CommonConn(url);
         executor.execute(new Runnable() {
             @Override
@@ -42,7 +41,7 @@ public class CommonRepository {
     }
 
     public CompletableFuture<String> selectData(String url, HashMap<String, Object> map) {
-
+        CompletableFuture<String> result = new CompletableFuture<>();
 
         conn = new CommonConn(url);
         executor.execute(new Runnable() {
@@ -65,8 +64,7 @@ public class CommonRepository {
 
     public CompletableFuture<String> select(CommonConn conn) {
 
-
-//        conn = new CommonConn(url, mContext);
+        CompletableFuture<String> result = new CompletableFuture<>();
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -87,8 +85,7 @@ public class CommonRepository {
 
     public CompletableFuture<String> insert(CommonConn conn) {
 
-
-//        conn = new CommonConn(url, mContext);
+        CompletableFuture<String> result = new CompletableFuture<>();
         executor.execute(new Runnable() {
             @Override
             public void run() {

@@ -291,11 +291,20 @@ public class LoginActivity extends AppCompatActivity {
 //        Intent intent = new Intent(this,MainActivity.class);
 //        startActivity(intent);
 //        finish();
+        if (vo.getToken().isEmpty()) {
+            CommonConn conn = new CommonConn("update/token", this);
+            conn.addParamMap("id", vo.getMember_id());
+            conn.addParamMap("token", preference.getString("token", ""));
+            conn.onExcute((isResult, data) -> {
+            });
+        } else{
+            editor.putString("token", vo.getToken());
+        }
         editor.putString("user_id", vo.getMember_id());
         editor.putString("user_name", vo.getName());
         editor.putString("role", vo.getRole());
+
         if (vo.getRole().equals("patient")) {
-            editor.putString("token", vo.getToken());
             editor.putString("guardian_id", vo.getGuardian_id());
             editor.putString("address", vo.getAddress() + " " + vo.getAddress_detail());
         }

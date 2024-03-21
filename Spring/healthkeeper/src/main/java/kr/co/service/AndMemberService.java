@@ -2,17 +2,14 @@ package kr.co.service;
 
 import kr.co.and.firebase.RequestDTO;
 import kr.co.and.firebase.TypeVO;
-import kr.co.model.DiseaseVO;
-import kr.co.model.HospitalVO;
-import kr.co.model.MemberHospitalVO;
-import kr.co.model.MemberVO;
+import kr.co.model.*;
 
 import java.util.HashMap;
 import java.util.List;
 
 public interface AndMemberService {
 
-    public int insert(HashMap<String, Object> map);
+    public int insertCondition(ConditionVO vo);
 
     public MemberVO login(String email);
 
@@ -43,6 +40,15 @@ public interface AndMemberService {
     public TypeVO type(String category_id);
 
     public int insertAlarm(RequestDTO dto);
+    public int insertAlarmG(RequestDTO dto);
 
     public Integer insertDisease(DiseaseVO vo);
+
+    public int updateToken(HashMap<String, String> map);
+
+    public List<MemberVO> memberList();
+
+    public List<AlarmLogVO> alarmLog(String params);
+
+   public int updateAlarm(HashMap<String, String> map);
 }

@@ -5,40 +5,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>FAQ 목록</title>
-    <link rel="stylesheet" href="/resources/css/faq/faqlist.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.js"
+<meta charset="UTF-8">
+<title>FAQ 목록</title>
+<link rel="stylesheet" href="/resources/css/faq/faqlist.css">
+<script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
         crossorigin="anonymous"></script>
 </head>
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 
 <body>
-    <a href="/faq/faqregistr">게시판 등록</a>
-    <form id="infoForm" action="/faq/faqupdate" method="get">
-    <div id="faq">
-        <h2>FAQ</h2>
-        <ol class="qna-list accordion">
-            <c:forEach items="${faqlist}" var="faq">
-                <li class="qna-item">
-                    <div class="question-article">
-                        <a href="#" class="question btn-fold">
-                            <strong class="blind">질문:</strong>
-                            <span class="q">Q</span><span id="titleText_${faq.FAQ_ID}"><c:out value="${faq.TITLE}"/></span>
-                        </a>
-                    </div>
-                    <div class="answer-article">
-                        <strong class="blind">답변</strong>
-                        <div id="answer-cnt_${faq.FAQ_ID}">
-                            <p><c:out value="${faq.CONTENT}"/></p>
-                        </div>
-                    </div>
-                </li>
-            </c:forEach>
-        </ol>
-    </div>
-     </form>
+   <div class="table_wrap">
+	<a href="/faq/faqregistr" class="top_btn">게시판 등록</a>
+	<table>
+		<thead>
+			<tr>
+				<th class="title_width" style="text-align: center; font-size: 26px;">자주묻는 질문</th>
+			</tr>
+		</thead>
+			<c:forEach items="${faqlist}" var="list">
+            <tr>
+                <td style="text-align: center;">
+    				<a class="move" href='<c:out value="${list.FAQ_ID}"/>'>
+        				<c:out value="${list.TITLE}"/>
+    				</a>
+				</td>
+            </tr>
+        </c:forEach>
+	</table>
+</div>
     <!-- 번호페이지 구현 -->
 	<div class="pageInfo_wrap" >
         <div class="pageInfo_area">
@@ -59,30 +54,42 @@
         </div>
     </div>
     <form id="moveForm" method="get">
-		<input type="hidden" name="pageNum" value="${fpageMake.fcri.pageNum }">
-        <input type="hidden" name="amount" value="${fpageMake.fcri.amount }">     
-    </form>
-   
+    	<input type="hidden" name="pageNum" value="${fpageMake.fcri.pageNum}">
+        <input type="hidden" name="amount" value="${fpageMake.fcri.amount}">     
+	</form>
 <script>
-// 글 목록을 접었다 폈다 하는 js코드
-$(function() {
-    $('.btn-fold').on('click', function() {
-        var $qnaItem = $(this).closest('.qna-item');
-        if (!$qnaItem.hasClass('on')) {
-            $('.qna-item').removeClass('on').find('.answer-article').hide();
-            var offsetTop = $(this).offset().top;
-            $('html,body').stop().animate({
-                scrollTop : offsetTop - 250
-            }, 300)
-            $qnaItem.addClass('on').find('.answer-article').slideDown(300);
-        } else {
-            $qnaItem.removeClass('on').find('.answer-article').slideUp(300);
-        }
-    });
-});
 
-//페이지 이동 js 코드
-let moveForm = $("#moveForm");
+ $(document).ready(function(){
+	 let result = '<c:out value="${result}"/>';
+	 checkAlert(result);
+	 function checkAlert(result){
+		 if(result ===''){
+			 return;
+		 }
+		 if(result === "faqregistr success"){
+			 alert("FAQ 게시글이 등록되었습니다.")
+		 }
+		 if(result === "faqupdate success"){
+	            alert("수정이 완료되었습니다.");
+	     }
+		 if(result === "faqdelete success"){
+	            alert("삭제가 완료되었습니다.");
+	     }
+	 } 
+ });
+
+//FAQ 게시판 목록페이지 이동 js 코드
+	let moveForm = $("#moveForm");
+	 
+ $(".move").on("click", function(e){
+     e.preventDefault();
+     
+     moveForm.append("<input type='hidden' name='FAQ_ID' value='"+ $(this).attr("href")+ "'>");
+     moveForm.attr("action", "/faq/faqget");
+     moveForm.submit();
+ });
+ 
+ // 페이지 이동 js 코드
 
 $(".pageInfo a").on("click", function(e){
 
@@ -92,8 +99,6 @@ $(".pageInfo a").on("click", function(e){
     moveForm.submit();
     
 });
-
-let form = $("#infoForm");
 
 //게시판 수정화면 이동 js 코드
 $("#faqupdate_btn").on("click", function(e){

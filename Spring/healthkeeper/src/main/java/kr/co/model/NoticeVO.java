@@ -8,7 +8,7 @@ import lombok.Data;
 public class NoticeVO {
 	
 	// 공지사항 번호
-	private int NOTICE_ID;
+	private String NOTICE_ID;
 	
 	// 공지사항 제목
 	private String TITLE;
@@ -20,10 +20,10 @@ public class NoticeVO {
 	private Date TIME;
 	
 	// 공지사항 작성자
-	private int MEMBER_ID;
+	private String MEMBER_ID;
 	
 	// 공지사항 조회수
-	private int READ_CNT;
+	private String READ_CNT;
 	
 	
 }

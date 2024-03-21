@@ -1,10 +1,7 @@
 package kr.co.and;
 
 import com.google.gson.Gson;
-import kr.co.model.DiseaseVO;
-import kr.co.model.HospitalVO;
-import kr.co.model.MemberHospitalVO;
-import kr.co.model.MemberVO;
+import kr.co.model.*;
 import kr.co.service.AndMemberService;
 import kr.co.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RequestMapping("/and")
@@ -123,7 +121,7 @@ public class AndMemberController {
 
 	@PostMapping("/member/disease")
 	public Integer disease(String params) {
-		System.out.println(params);
+		System.out.println("질병");
 		DiseaseVO vo = new Gson().fromJson(params, DiseaseVO.class);
 		System.out.println(vo.getDISEASE_NAME());
 		return service.insertDisease(vo);
@@ -131,13 +129,14 @@ public class AndMemberController {
 
 	@RequestMapping(value = "/member/hospitals", produces = "application/text;charset=utf-8")
 	public ResponseEntity<String> hospital(String name) {
+		System.out.println("병원");
 		List<HospitalVO> list = service.hospitalList(name);
 		System.out.println(list.size());
 
 		return ResponseEntity.ok(new Gson().toJson(list));}
 	@RequestMapping(value = "/member/doctors", produces = "application/text;charset=utf-8")
 	public ResponseEntity<String> doctors(String params) {
-
+		System.out.println("의사");
 		MemberHospitalVO vo = new Gson().fromJson(params, MemberHospitalVO.class);
 		List<String> list = service.doctorsList(vo);
 
@@ -148,7 +147,7 @@ public class AndMemberController {
 
 	@RequestMapping(value = "/member/condition", produces = "application/text;charset=utf-8")
 	public ResponseEntity<String> condition(String params) {
-		System.out.println(params);
+		System.out.println("실시간데이터");
 
 		HashMap<String, Object> map = service.condition(params);
 
@@ -156,8 +155,50 @@ public class AndMemberController {
 
 		return ResponseEntity.ok(new Gson().toJson(map));}
 
+	@RequestMapping(value = "/insertCondition", produces = "application/text;charset=utf-8")
+	public ResponseEntity<Integer> insertCondition(String params) {
+		System.out.println("컨디션");
+		System.out.println(params);
+		ConditionVO vo = new Gson().fromJson(params, ConditionVO.class);
 
 
+		System.out.println(vo);
+
+		return ResponseEntity.ok( service.insertCondition(vo));}
+	@RequestMapping( "/update/token")
+	public ResponseEntity<Integer> updateToken(String id, String token) {
+		System.out.println("토큰");
+
+		HashMap<String, String> map = new HashMap<>();
+		map.put("member_id", id);
+		map.put("token",token);
+
+		return ResponseEntity.ok(service.updateToken(map));}
+
+
+
+	@RequestMapping(value = "/member/alarmLog", produces = "application/text;charset=utf-8")
+	public ResponseEntity<String> alarmLog(String params) {
+		System.out.println("알람로그");
+
+		List<AlarmLogVO> vo = service.alarmLog(params);
+
+		System.out.println(new Gson().toJson(vo));
+
+		return ResponseEntity.ok(new Gson().toJson(vo));}
+
+	@RequestMapping("/update/alarm")
+	public ResponseEntity<Integer> updateAlarm(String id, String alarm) {
+		System.out.println("알람로그");
+		System.out.println(id);
+		System.out.println(alarm);
+
+		HashMap<String, String> map = new HashMap<>();
+		map.put("member_id", id);
+		map.put("alarm_id",alarm);
+		System.out.println(new Gson().toJson(map));
+
+		return ResponseEntity.ok( service.updateAlarm(map));}
 
 
 }

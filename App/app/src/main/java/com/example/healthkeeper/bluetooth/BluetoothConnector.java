@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.bluetooth.*;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -12,6 +13,8 @@ import org.jetbrains.annotations.NotNull;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.UUID;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class BluetoothConnector {
     private final static String TAG = BluetoothConnector.class.getSimpleName();
@@ -149,7 +152,7 @@ public class BluetoothConnector {
         }
     };
 
-    public HashMap<String, Object > handleData(BluetoothGattCharacteristic characteristic) {
+    public ConditionVO handleData(BluetoothGattCharacteristic characteristic) {
         // 데이터 추출 및 세팅
         final byte[] data = characteristic.getValue();
         HashMap<String, String> extractedData = new HashMap<>();
@@ -167,8 +170,9 @@ public class BluetoothConnector {
         return setLiveData(extractedData);
     }
 
-    private HashMap<String, Object> setLiveData(HashMap<String, String> extractedData) {
-        HashMap<String, Object > map = new HashMap<>();
+    private ConditionVO setLiveData(HashMap<String, String> extractedData) {
+
+
         String heart = extractedData.get("hr") != null ? extractedData.get("hr").toString() : "0";
         String temp = extractedData.get("tp") != null ? extractedData.get("tp").toString() : "0";
         String accident = extractedData.get("ac") != null ? extractedData.get("ac").toString() : "0";
@@ -180,14 +184,26 @@ public class BluetoothConnector {
         if (temperature <= 34.5 || temperature >= 39.5) {
             temperature = 0;
         }
+        SharedPreferences pref = mContext.getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
+        HashMap<String, Object > map = new HashMap<>();
         map.put("heart", heartRate);
         map.put("temp", temperature);
         map.put("accident", accident);
+        ConditionVO vo = new ConditionVO();
+        vo.setCONDITION_PULSE(String.valueOf(heartRate));
+        vo.setCONDITION_TEMPERATURE(String.valueOf(temperature));
+        vo.setMEMBER_ID(pref.getString("user_id",""));
+        if(accident.equals("0")){
+            accident = "N";
+        } else{
+            accident = "Y";
+        }
+        vo.setCONDITION_ACCIDENT(accident);
         viewModel.setHeartData(heartRate);
         viewModel.setTempData(temperature);
 //        viewModel.setAccidentData(accident);
         viewModel.setData(map);
-        return map;
+        return vo;
     }
 
 
