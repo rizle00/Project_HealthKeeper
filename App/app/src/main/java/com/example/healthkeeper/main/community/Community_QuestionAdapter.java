@@ -74,11 +74,11 @@ public class Community_QuestionAdapter extends RecyclerView.Adapter<Community_Qu
             binding.tvAnswerTime.setText(item.getDto().getTIME());
             Log.d("TAG", "qqqqqqq: "+item.getDto().getANSWER_CONTENT());
 // tvReadCnt 클릭 이벤트 처리
-            binding.tvReadCnt.setOnClickListener(new View.OnClickListener() {
+            binding.tvNewWrited.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // tvReadCnt를 클릭했을 때 tvReadCnt가 gone 상태로 변경
-                    binding.tvReadCnt.setVisibility(View.GONE);
+                    binding.tvNewWrited.setVisibility(View.GONE);
                     binding.imgMore.setVisibility(View.GONE);
                     binding.tvReadContent.setVisibility(View.VISIBLE);
                     binding.imgLess.setVisibility(View.VISIBLE);
@@ -93,11 +93,11 @@ public class Community_QuestionAdapter extends RecyclerView.Adapter<Community_Qu
             if (binding.tvAnswerContent.getVisibility() == View.VISIBLE) {
                 // tvAnswerContent가 이미 있는 경우
                 // tvReadCnt를 visible 상태로 변경
-                binding.tvReadCnt.setVisibility(View.VISIBLE);
+                binding.tvNewWrited.setVisibility(View.VISIBLE);
             } else {
                 // tvAnswerContent가 새롭게 만들어진 경우
                 // tvReadCnt를 gone 상태로 유지
-                binding.tvReadCnt.setVisibility(View.GONE);
+                binding.tvNewWrited.setVisibility(View.GONE);
             }
 
 
@@ -110,7 +110,7 @@ public class Community_QuestionAdapter extends RecyclerView.Adapter<Community_Qu
             binding.tvTile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    binding.tvReadCnt.setVisibility(View.GONE);
+                    binding.tvNewWrited.setVisibility(View.GONE);
                     binding.imgMore.setVisibility(View.GONE);
                     binding.tvReadContent.setVisibility(View.VISIBLE);
                     binding.imgLess.setVisibility(View.VISIBLE);
@@ -125,7 +125,7 @@ public class Community_QuestionAdapter extends RecyclerView.Adapter<Community_Qu
                 public void onClick(View view) {
                     binding.imgMore.setVisibility(View.GONE);
                     binding.tvReadContent.setVisibility(View.VISIBLE);
-                    binding.tvReadCnt.setVisibility(View.GONE);
+                    binding.tvNewWrited.setVisibility(View.GONE);
                     binding.imgLess.setVisibility(View.VISIBLE);
                     binding.imgAnswer.setVisibility(View.VISIBLE);
                     binding.tvAnswerTitle.setVisibility(View.VISIBLE);
@@ -143,10 +143,11 @@ public class Community_QuestionAdapter extends RecyclerView.Adapter<Community_Qu
                     binding.imgLess.setVisibility(View.GONE);
                     binding.imgMore.setVisibility(View.VISIBLE);
                     binding.tvReadContent.setVisibility(View.GONE);
+                    binding.tvNewWrited.setVisibility(View.GONE);
 
-                    /*새댓글  생기면 알려주고 한번  binding.clickContentOpen가 터치되면 Gone처리해야함!! */
                 }
             });
+                    /*새댓글  생기면 알려주고 한번  binding.clickContentOpen가 터치되면 Gone처리해야함!! */
 
         }
     }

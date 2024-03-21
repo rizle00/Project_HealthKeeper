@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import com.example.healthkeeper.R;
 import com.example.healthkeeper.common.CommonConn;
 import com.example.healthkeeper.common.CommonRepository;
 import com.example.healthkeeper.databinding.FragmentCommunityBinding;
+import com.example.healthkeeper.main.LoginBeforeActivity;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
@@ -35,10 +37,12 @@ import java.util.List;
 
 public class CommunityFragment extends Fragment {
     FragmentCommunityBinding binding;
+    private boolean isMoreFaqShown = false;//더 보기 버튼 클릭 상태를 나타내는 변수
 
     List<CommunityDTOS.Community_QuestionDTO> queList;
     List<CommunityDTOS.Community_NoticeDTO> notiList;
-    List<CommunityDTOS.Community_faqDTO> faqList;
+    private Community_FaqAdapter faqAdapter;
+    List<CommunityDTOS.Community_faqDTO> faqList = new ArrayList<>();
     private Spinner spinner;
     CommonRepository repository;//스프링과 연결...
     private CommunityDTOS.Community_QuestionDTO vo;
@@ -47,11 +51,15 @@ public class CommunityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCommunityBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-spinner = binding.spinnerCategory;
+
+        initRecyclerView(inflater);
+        initMoreButton();
+
+
+        spinner = binding.spinnerCategory;
         repository = new CommonRepository(((App) requireActivity().getApplication()).executorService);
 //        HashMap<String, Object> map = new HashMap<>();
 //        map.put("key", "test");
-
 
 
         //=============================================================
@@ -59,7 +67,7 @@ spinner = binding.spinnerCategory;
 
 
         CommonConn conn2 = new CommonConn("faq/list");
-        repository.select(conn2).thenAccept(result ->{
+        repository.select(conn2).thenAccept(result -> {
             faqList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_faqDTO>>() {
             }.getType());
 
@@ -68,18 +76,14 @@ spinner = binding.spinnerCategory;
         });
 
 
-      CommonConn conn3 = new CommonConn("notice/list");
-        repository.select(conn3).thenAccept(result ->{
+        CommonConn conn3 = new CommonConn("notice/list");
+        repository.select(conn3).thenAccept(result -> {
             notiList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_NoticeDTO>>() {
             }.getType());
 
             binding.notice.setAdapter(new Community_NoticeAdapter(inflater, notiList, getContext()));
             binding.notice.setLayoutManager((new LinearLayoutManager(getContext())));
         });
-
-
-
-
 
 
         binding.clickButton.setOnClickListener(new View.OnClickListener() {//read more를 누를시 전체 목록 나오게이동
@@ -110,30 +114,31 @@ spinner = binding.spinnerCategory;
                 binding.edtWriterTltle.setText("");
                 binding.edtWriterContent.setText("");
                 radioButton();
-                 CommonConn reqCategory = new CommonConn("category");
-                 repository.select(reqCategory).thenAccept(result->{
-                   List<CommunityDTOS.CategoryVO> list = new Gson().fromJson(result,new TypeToken<List<CommunityDTOS.CategoryVO>>(){}.getType());
-                     List<String> categoryNames = new ArrayList<>();
-                     for (CommunityDTOS.CategoryVO category : list) {
-                         categoryNames.add("카테고리");
-                         categoryNames.add(category.getNAME());
-                     }
-                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categoryNames);
-                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                     spinner.setAdapter(adapter);
-                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                         @Override
-                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                             String selectedHospital = categoryNames.get(i);
-                             vo.setCATEGORY_ID(list.get(i-1).getCATEGORY_ID());
-                         }
+                CommonConn reqCategory = new CommonConn("category");
+                repository.select(reqCategory).thenAccept(result -> {
+                    List<CommunityDTOS.CategoryVO> list = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.CategoryVO>>() {
+                    }.getType());
+                    List<String> categoryNames = new ArrayList<>();
+                    for (CommunityDTOS.CategoryVO category : list) {
+                        categoryNames.add("카테고리");
+                        categoryNames.add(category.getNAME());
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categoryNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(adapter);
+                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            String selectedHospital = categoryNames.get(i);
+                            vo.setCATEGORY_ID(list.get(i - 1).getCATEGORY_ID());
+                        }
 
-                         @Override
-                         public void onNothingSelected(AdapterView<?> adapterView) {
-                             vo.setCATEGORY_ID("12");
-                         }
-                     });
-                 });
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+                            vo.setCATEGORY_ID("12");
+                        }
+                    });
+                });
 
                 // "글 저장" 버튼에 대한 클릭 리스너 설정
                 binding.saveNewWrite.setOnClickListener(new View.OnClickListener() {
@@ -159,7 +164,6 @@ spinner = binding.spinnerCategory;
                             vo.setTITLE(title);
                             vo.setCONTENT(content);
                             vo.setMEMBER_ID(id);
-
 
 
                             // 서버에 데이터 전송
@@ -190,13 +194,17 @@ spinner = binding.spinnerCategory;
         });
 
 
-
-
 //====================================================================================================
         initButton();
 
         return view;
     }
+
+
+
+
+
+
 
     private void initButton() {
         binding.button1.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.pink));//버튼 기본색상 변경
@@ -268,23 +276,6 @@ spinner = binding.spinnerCategory;
             }
         });
 
-
-        // 비밀글, 공개글 텍스트를 클릭하여 선택할 수 있도록 설정
-        binding.radioButtonSecret.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.radioButtonSecret.setChecked(true);
-                binding.radioButtonPublic.setChecked(false);
-            }
-        });
-
-        binding.radioButtonPublic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.radioButtonSecret.setChecked(false);
-                binding.radioButtonPublic.setChecked(true);
-            }
-        });
     }
 
     private void createQuestion(LayoutInflater inflater) {
@@ -294,21 +285,21 @@ spinner = binding.spinnerCategory;
 
             queList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
             }.getType());
-            Log.d("TAG", "aaaa: "+queList.size());
-            Log.d("TAG", "aaaa: "+queList.get(0).getDto().getANSWER_CONTENT());
+            Log.d("TAG", "aaaa: " + queList.size());
+            Log.d("TAG", "aaaa: " + queList.get(0).getDto().getANSWER_CONTENT());
 
-            binding.question.setAdapter(new Community_QuestionAdapter(inflater, queList, getContext()));
+            // RecyclerView 어댑터 설정을 여기서 수행
+            Community_QuestionAdapter questionAdapter = new Community_QuestionAdapter(inflater, queList, getContext());
+
+            binding.question.setAdapter(questionAdapter);
             binding.question.setLayoutManager((new LinearLayoutManager(getContext())));
 
             // queList에서 각 Community_QuestionDTO 객체의 id 값을 추출하여 리스트에 추가
 
 
-
 //            createque4(result, inflater);//질문게시판
         });
     }
-
-
 
 
     private void createque4(String result, LayoutInflater inflater) {
@@ -317,12 +308,59 @@ spinner = binding.spinnerCategory;
         }.getType());
 
 
-        Log.d("TAG", "createQues4: "+ questionList.size());
+        Log.d("TAG", "createQues4: " + questionList.size());
         // RecyclerView에 어댑터 설정
 
 
     }
 
+    private void initRecyclerView(LayoutInflater inflater) {
+        faqAdapter = new Community_FaqAdapter(inflater, getInitialFaqList(), requireContext());
+        binding.faq.setAdapter(faqAdapter);
+        binding.faq.setLayoutManager(new LinearLayoutManager(requireContext()));
+    }
+
+    private void initMoreButton() {
+        Button moreButton = binding.openFaq;
+        moreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isMoreFaqShown) {//"더보기" 눌리지 않은상태..
+                    // 나머지 아이템 추가
+                    faqAdapter.addAll(getMoreFaqList());
+                    binding.openFaq.setText("접기");
+                } else {
+                    // 추가된 아이템 숨기기
+                    faqAdapter.hideAll();
+                    moreButton.setText("더 보기");
+                }
+                isMoreFaqShown = !isMoreFaqShown;
+            }
+        });
+    }
+
+    private List<CommunityDTOS.Community_faqDTO> getInitialFaqList() {
+        // 초기에 표시할 아이템 리스트 반환 (4개의 아이템만 보여주도록 설정
+        List<CommunityDTOS.Community_faqDTO> initialList = new ArrayList<>();
+        // 초기에 표시할 아이템을 추가
+        for (int i = 0; i < Math.min(4, faqList.size()); i++){
+            initialList.add(faqList.get(i));
+            Log.d("TAG", "fff: "+ faqList.size());
+
+        }
+        return initialList;
+    }
+
+    private List<CommunityDTOS.Community_faqDTO> getMoreFaqList() {
+        // 더보기를 클릭했을 때 추가로 표시할 아이템 리스트 반환
+        List<CommunityDTOS.Community_faqDTO> moreList = new ArrayList<>();
+
+        for (int i = 4; i < faqList.size(); i++) { // 이미 표시된 아이템 이후부터 추가
+            moreList.add(faqList.get(i)); // faqList에서 아이템을 가져와서 추가
+        }
+        return moreList;
+    }
+}
 
     //private void createAnswer(String result, LayoutInflater inflater) {//질문게시판
         // JSON 문자열을 파싱하여 리스트로 변환
@@ -335,7 +373,6 @@ spinner = binding.spinnerCategory;
 //        // RecyclerView에 어댑터 설정
 //        binding.question.setAdapter(new Community_QuestionAdapter(inflater,answerList, questionList, getContext()));
 //        binding.question.setLayoutManager((new LinearLayoutManager(getContext())));
-    }
 
 //
 //    public void createFaq(String result, LayoutInflater inflater) {//자주묻는게시판

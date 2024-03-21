@@ -6,7 +6,7 @@ import java.util.List;
 
 public class CommunityDTOS {
 
-  public class Community_faqDTO{//자주하는 질문 게시판
+  public static class Community_faqDTO{//자주하는 질문 게시판
       private  String FAQ_ID, TITLE, CONTENT, MEMBER_ID;
 
       public Community_faqDTO(String TITLE, String CONTENT, String MEMBER_ID) {

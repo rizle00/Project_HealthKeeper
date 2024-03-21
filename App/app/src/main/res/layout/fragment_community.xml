@@ -145,6 +145,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="제  목"
+                                    android:layout_marginLeft="10dp"
                                     android:textStyle="bold"
                                     android:textSize="15dp"
                                     />
@@ -171,6 +172,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="내용"
+                                    android:layout_marginLeft="10dp"
                                     android:textStyle="bold"
                                     android:textSize="15dp"
                                     />
@@ -226,19 +228,19 @@
 
 
                             </com.google.android.material.textfield.TextInputLayout>
+
                                 <Button
                                     android:id="@+id/save_new_write"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="35dp"
-                                    android:text="글 올리기"
-                                    android:paddingBottom="3dp"
-                                    android:textStyle="bold|italic"
+                                    android:layout_height="23dp"
                                     android:layout_gravity="right"
                                     android:layout_marginRight="30dp"
-                                    android:textSize="14dp"
-                                    android:textColor="#FAB348"
                                     android:backgroundTint="#FFFFFF"
-                                    />
+                                    android:paddingBottom="3dp"
+                                    android:text="글 올리기"
+                                    android:textColor="#FAB348"
+                                    android:textSize="14dp"
+                                    android:textStyle="bold|italic" />
                             </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -290,10 +292,25 @@
                     </RelativeLayout>
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/faq"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
                         />
+
+                    <Button
+                        android:id="@+id/openFaq"
+                        android:layout_width="130dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_horizontal"
+                        android:backgroundTint="#FFFFFF"
+                        android:paddingBottom="3dp"
+                        android:text="더보기"
+                        android:textColor="#D75E87"
+                        android:textSize="14dp"
+                        android:textStyle="bold|italic" />
+
 
                     <View
                         android:id="@+id/view3"
