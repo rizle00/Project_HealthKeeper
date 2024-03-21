@@ -25,23 +25,23 @@ import com.example.healthkeeper.R;
 import com.example.healthkeeper.common.CommonConn;
 import com.example.healthkeeper.common.CommonRepository;
 import com.example.healthkeeper.databinding.FragmentCommunityBinding;
-import com.example.healthkeeper.main.LoginBeforeActivity;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
 public class CommunityFragment extends Fragment {
     FragmentCommunityBinding binding;
     private boolean isMoreFaqShown = false;//더 보기 버튼 클릭 상태를 나타내는 변수
+    private boolean isMoreNoticeShown = false;//더 보기 버튼 클릭 상태를 나타내는 변수
 
     List<CommunityDTOS.Community_QuestionDTO> queList;
     List<CommunityDTOS.Community_NoticeDTO> notiList;
     private Community_FaqAdapter faqAdapter;
+    private Community_NoticeAdapter noticeAdapter;
     List<CommunityDTOS.Community_faqDTO> faqList = new ArrayList<>();
     private Spinner spinner;
     CommonRepository repository;//스프링과 연결...
@@ -52,8 +52,13 @@ public class CommunityFragment extends Fragment {
         binding = FragmentCommunityBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        initRecyclerView(inflater);
-        initMoreButton();
+        initRecyclerViewFaq(inflater);
+        getInitialFaqList();
+        initMoreButtonFaq();
+
+//        initRecyclerViewNotice(inflater);
+//        getInitialNoticeList();
+//        initMoreButtonNotice();
 
 
         spinner = binding.spinnerCategory;
@@ -201,11 +206,6 @@ public class CommunityFragment extends Fragment {
     }
 
 
-
-
-
-
-
     private void initButton() {
         binding.button1.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.pink));//버튼 기본색상 변경
         binding.button2.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.white));
@@ -314,27 +314,37 @@ public class CommunityFragment extends Fragment {
 
     }
 
-    private void initRecyclerView(LayoutInflater inflater) {
-        faqAdapter = new Community_FaqAdapter(inflater, getInitialFaqList(), requireContext());
+
+    //==============Faq====================================================================
+
+    private void initRecyclerViewFaq(LayoutInflater inflater) {
+        faqAdapter = new Community_FaqAdapter(LayoutInflater.from(requireContext()), getInitialFaqList(), requireContext());
         binding.faq.setAdapter(faqAdapter);
         binding.faq.setLayoutManager(new LinearLayoutManager(requireContext()));
     }
 
-    private void initMoreButton() {
+    private void initMoreButtonFaq() {
         Button moreButton = binding.openFaq;
         moreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isMoreFaqShown) {//"더보기" 눌리지 않은상태..
-                    // 나머지 아이템 추가
-                    faqAdapter.addAll(getMoreFaqList());
-                    binding.openFaq.setText("접기");
+                if (!isMoreFaqShown) {
+                    // "더 보기" 버튼이 클릭되었을 때
+                    faqAdapter.addAll(getMoreFaqList()); // 추가 아이템 표시
+                    binding.openFaq.setText("접기"); // 버튼 텍스트 변경
                 } else {
-                    // 추가된 아이템 숨기기
-                    faqAdapter.hideAll();
-                    moreButton.setText("더 보기");
+                    // "접기" 버튼이 클릭되었을 때
+
+                    binding.openFaq.setText("더 보기"); // 버튼 텍스트 변경
+                    // 최초 상태로 돌아감
+                    faqAdapter = new Community_FaqAdapter(LayoutInflater.from(requireContext()), getInitialFaqList(), requireContext());
+                    binding.faq.setAdapter(faqAdapter);
+                    binding.faq.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+                    binding.scrollView.smoothScrollTo(0, binding.view2.getTop());
+
                 }
-                isMoreFaqShown = !isMoreFaqShown;
+                isMoreFaqShown = !isMoreFaqShown; // 상태 변경
             }
         });
     }
@@ -343,9 +353,9 @@ public class CommunityFragment extends Fragment {
         // 초기에 표시할 아이템 리스트 반환 (4개의 아이템만 보여주도록 설정
         List<CommunityDTOS.Community_faqDTO> initialList = new ArrayList<>();
         // 초기에 표시할 아이템을 추가
-        for (int i = 0; i < Math.min(4, faqList.size()); i++){
+        for (int i = 0; i < Math.min(4, faqList.size()); i++) {
             initialList.add(faqList.get(i));
-            Log.d("TAG", "fff: "+ faqList.size());
+            Log.d("TAG", "fff: " + faqList.size());
 
         }
         return initialList;
@@ -360,44 +370,63 @@ public class CommunityFragment extends Fragment {
         }
         return moreList;
     }
+
+
+    //===========notice======================================================================
+
+//
+//    private void initRecyclerViewNotice(LayoutInflater inflater) {
+//        noticeAdapter = new Community_NoticeAdapter(LayoutInflater.from(requireContext()), getInitialNoticeList(), requireContext());
+//        binding.notice.setAdapter(noticeAdapter);
+//        binding.notice.setLayoutManager(new LinearLayoutManager(requireContext()));
+//    }
+//
+//    private void initMoreButtonNotice() {
+//        Button moreButton = binding.openNotice;
+//        moreButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (!isMoreNoticeShown) {
+//                    // "더 보기" 버튼이 클릭되었을 때
+//                    noticeAdapter.addAll(getMoreNoticeList()); // 추가 아이템 표시
+//                    binding.openNotice.setText("접기"); // 버튼 텍스트 변경
+//                } else {
+//                    // "접기" 버튼이 클릭되었을 때
+//
+//                    binding.openNotice.setText("더 보기"); // 버튼 텍스트 변경
+//                    // 최초 상태로 돌아감
+//                    noticeAdapter = new Community_NoticeAdapter(LayoutInflater.from(requireContext()), getInitialNoticeList(), requireContext());
+//                    binding.notice.setAdapter(faqAdapter);
+//                    binding.notice.setLayoutManager(new LinearLayoutManager(requireContext()));
+//
+//                    binding.scrollView.smoothScrollTo(0, binding.view3.getTop());
+//
+//                }
+//                isMoreNoticeShown = !isMoreNoticeShown; // 상태 변경
+//            }
+//        });
+//    }
+//
+//    private List<CommunityDTOS.Community_NoticeDTO> getInitialNoticeList() {
+//        // 초기에 표시할 아이템 리스트 반환 (4개의 아이템만 보여주도록 설정
+//        List<CommunityDTOS.Community_NoticeDTO> initialList = new ArrayList<>();
+//        // 초기에 표시할 아이템을 추가
+//        for (int i = 0; i < Math.min(4, notiList.size()); i++) {
+//            initialList.add(notiList.get(i));
+//            Log.d("TAG", "fff: " + notiList.size());
+//
+//        }
+//        return initialList;
+//    }
+//
+//    private List<CommunityDTOS.Community_NoticeDTO> getMoreNoticeList() {
+//        // 더보기를 클릭했을 때 추가로 표시할 아이템 리스트 반환
+//        List<CommunityDTOS.Community_NoticeDTO> moreList = new ArrayList<>();
+//
+//        for (int i = 4; i < notiList.size(); i++) { // 이미 표시된 아이템 이후부터 추가
+//            moreList.add(notiList.get(i)); // faqList에서 아이템을 가져와서 추가
+//        }
+//        return moreList;
+//    }
 }
-
-    //private void createAnswer(String result, LayoutInflater inflater) {//질문게시판
-        // JSON 문자열을 파싱하여 리스트로 변환
-//        List<CommunityDTOS.Community_QuestionDTO> questionList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
-//        }.getType());
-//        List<CommunityDTOS.AnswerDTO> answerList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
-//        }.getType());
-
-//        Log.d("TAG", "createQues4: "+ questionList.size());
-//        // RecyclerView에 어댑터 설정
-//        binding.question.setAdapter(new Community_QuestionAdapter(inflater,answerList, questionList, getContext()));
-//        binding.question.setLayoutManager((new LinearLayoutManager(getContext())));
-
-//
-//    public void createFaq(String result, LayoutInflater inflater) {//자주묻는게시판
-//        // JSON 문자열을 파싱하여 리스트로 변환
-//        List<CommunityDTOS.Community_faqDTO> list = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_faqDTO>>() {
-//        }.getType());
-//
-//        Log.d("TAG", "createFaq: "+list.get(0));
-//        // RecyclerView에 어댑터 설정
-//        Community_FaqAdapter recentBoardAdapter = new Community_FaqAdapter(inflater, repository, list, getContext());
-//        binding.faq.setAdapter(recentBoardAdapter);
-//        binding.faq.setLayoutManager(new LinearLayoutManager(getContext()));
-//    }
-//
-//    private void createNotice(String result, LayoutInflater inflater) {//공지사항
-//        // JSON 문자열을 파싱하여 리스트로 변환
-//        List<CommunityDTOS.Community_NoticeDTO> list = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_NoticeDTO>>() {
-//        }.getType());
-//        // RecyclerView에 어댑터 설정
-//        binding.notice.setAdapter(new Community_NoticeAdapter(inflater, repository, list, getContext()));
-//        binding.notice.setLayoutManager((new LinearLayoutManager(getContext())));
-//
-//
-//    }
-
-
-
-
