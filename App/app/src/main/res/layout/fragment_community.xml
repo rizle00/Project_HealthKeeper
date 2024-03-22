@@ -114,7 +114,7 @@
                         android:layout_width="100dp"
                         android:backgroundTint="#F29B80"
                         android:paddingBottom="2dp"
-                        android:layout_height="35dp"/>
+                        android:layout_height="40dp"/>
 
             </RelativeLayout>
 
@@ -199,7 +199,7 @@
                         <RadioGroup
                                 android:id="@+id/radioGroup"
                                 android:layout_width="200dp"
-                                android:layout_marginLeft="150dp"
+                                android:layout_marginLeft="120dp"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
 
@@ -232,31 +232,36 @@
                     <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:orientation="horizontal">
+                            android:layout_gravity="end"
+
+                            android:orientation="horizontal">
                     <Button
                             android:id="@+id/save_new_write"
-                            android:layout_width="wrap_content"
-                            android:layout_height="23dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="35dp"
                             android:layout_gravity="right"
                             android:layout_marginRight="30dp"
                             android:backgroundTint="#FFFFFF"
+                            android:layout_marginBottom="30dp"
                             android:paddingBottom="3dp"
                             android:text="글 올리기"
                             android:textColor="#FAB348"
-                            android:textSize="14dp"
+                            android:textSize="12dp"
                             android:textStyle="bold|italic"/>
                     <Button
                             android:id="@+id/cancle_new_write"
-                            android:layout_width="wrap_content"
-                            android:layout_height="23dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                            android:layout_height="35dp"
                             android:layout_gravity="right"
+                            android:layout_marginBottom="30dp"
                             android:layout_marginRight="30dp"
                             android:backgroundTint="#FFFFFF"
                             android:paddingBottom="3dp"
                             android:text="취소"
                             android:textColor="#FAB348"
-                            android:textSize="14dp"
+                            android:textSize="12dp"
                             android:textStyle="bold|italic"/>
                 </LinearLayout>
 
