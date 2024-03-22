@@ -51,6 +51,7 @@ public class CommunityFragment extends Fragment {
     private Spinner spinner;
     CommonRepository repository;//스프링과 연결...
     private CommunityDTOS.Community_QuestionDTO vo;
+   private final SharedPreferences pref = requireActivity().getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -142,8 +143,8 @@ public class CommunityFragment extends Fragment {
                             Toast.makeText(getContext(), "제목과 내용을 모두 입력해주세요", Toast.LENGTH_SHORT).show();
                         } else {
 
-                            SharedPreferences pref = requireActivity().getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
-                            //회원이름 불러오기, 메인화면에 있는 정보 가져오게해야함.
+
+                            //회원id 불러오기, 메인화면에 있는 정보 가져오게해야함.
                             String id = pref.getString("user_id", "익명");//?????????????
                             // 서버로 전송할 데이터 맵 구성
 
@@ -308,7 +309,7 @@ public class CommunityFragment extends Fragment {
             Log.d("TAG", "aaaa: " + queList.get(0).getDto().getANSWER_CONTENT());
 
             // RecyclerView 어댑터 설정을 여기서 수행
-            Community_QuestionAdapter questionAdapter = new Community_QuestionAdapter(inflater, queList, getContext());
+            Community_QuestionAdapter questionAdapter = new Community_QuestionAdapter(inflater, queList, getContext(), pref.getString("user_id","") );
 
             binding.question.setAdapter(questionAdapter);
             binding.question.setLayoutManager((new LinearLayoutManager(getContext())));

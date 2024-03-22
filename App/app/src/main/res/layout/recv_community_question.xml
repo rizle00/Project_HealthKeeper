@@ -71,7 +71,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 >
-
+                <ImageView android:layout_width="16dp"
+                           android:layout_height="16dp"
+                           android:src="@drawable/lock"
+                           android:layout_gravity="center"
+                           android:id="@+id/img_lock"/>
                 <TextView
                     android:id="@+id/tv_tile"
                     android:layout_width="0dp"
