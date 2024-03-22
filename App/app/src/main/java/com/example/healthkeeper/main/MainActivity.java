@@ -1,6 +1,5 @@
 package com.example.healthkeeper.main;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
@@ -8,7 +7,6 @@ import android.content.*;
 import android.os.IBinder;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,11 +36,7 @@ import com.example.healthkeeper.bluetooth.BluetoothViewModel;
 import com.example.healthkeeper.databinding.ActivityMainBinding;
 import com.example.healthkeeper.main.community.CommunityActivity;
 import com.example.healthkeeper.setting.SettingFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.normal.TedPermission;
 
 import java.util.List;
 
@@ -146,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
             if (!isPatient) {
                 if (active) {
 
-                    menu.getItem(1).setIcon(R.drawable.alarm_on);
+                    menu.getItem(1).setIcon(R.drawable.alarm_off);
                     if (!sBound) {// 서비스 바인드 풀렸을시
                         Intent intent = new Intent(MainActivity.this, BluetoothService.class);
                         bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
@@ -460,7 +454,7 @@ public class MainActivity extends AppCompatActivity {
 
                     btItem.setIcon(R.drawable.baseline_bluetooth_conn);
                 } else {
-                    btItem.setIcon(R.drawable.alarm_on);
+                    btItem.setIcon(R.drawable.alarm_off);
                 }
             }
 
