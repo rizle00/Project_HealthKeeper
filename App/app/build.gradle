@@ -28,8 +28,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
-    viewBinding{
-        enabled=true
+    viewBinding {
+        enabled = true
     }
     buildFeatures {
         dataBinding true
@@ -39,8 +39,8 @@ android {
 }
 
 dependencies {
-
-
+// 차트
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     /*토글버튼 쓰려고만듬ㅎ.ㅎ*/
     implementation 'com.google.android.material:material:1.11.0'
 
@@ -78,7 +78,7 @@ dependencies {
     implementation 'com.ms-square:expandableTextView:0.1.4'//
 
     implementation 'com.github.lakue119:LakuePagingButton:1.0.0'//Paging라이브러리
-   
+
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'

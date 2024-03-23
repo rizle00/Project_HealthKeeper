@@ -299,9 +299,9 @@ public class CommunityFragment extends Fragment {
 
     private void createQuestion(LayoutInflater inflater) {
         Log.d("TAG", "aaaa:질문 ");
-        CommonConn conn1 = new CommonConn("question/list");
-        conn1.addParamMap("params", 5);
-        repository.select(conn1).thenAccept(result -> {
+        CommonConn conn = new CommonConn("question/list");
+        conn.addParamMap("params", 5);
+        repository.select(conn).thenAccept(result -> {
 
             queList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
             }.getType());

@@ -115,7 +115,10 @@ public class Community_QuestionAdapter extends RecyclerView.Adapter<Community_Qu
                     binding.imgLock.setImageResource(R.drawable.unlock);
                     setAnswer();
                 }
-            } else binding.imgLock.setVisibility(View.GONE);
+            } else {
+                binding.imgLock.setVisibility(View.GONE);
+                setAnswer();
+            }
 
 
             binding.imgLess.setOnClickListener(new View.OnClickListener() {
