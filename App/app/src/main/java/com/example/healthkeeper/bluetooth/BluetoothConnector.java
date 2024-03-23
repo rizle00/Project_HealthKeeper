@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.charset.StandardCharsets;
@@ -229,3 +231,4 @@ public class BluetoothConnector {
 
 
 }
+

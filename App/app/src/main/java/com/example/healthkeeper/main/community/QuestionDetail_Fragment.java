@@ -1,6 +1,7 @@
 package com.example.healthkeeper.main.community;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -23,12 +24,16 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class QuestionDetail_Fragment extends Fragment {
     private static final String TAG = QuestionDetail_Fragment.class.getSimpleName();
     FragmentQuestionDetailBinding binding;
     private List<CommunityDTOS.Community_QuestionDTO> questionList;
     CommonRepository repository;
+
+    private final SharedPreferences pref = requireActivity().getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,13 +47,12 @@ public class QuestionDetail_Fragment extends Fragment {
             questionList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
             }.getType());
             Log.d(TAG, "onCreateView: "+questionList.size());
-            binding.questionDetailList.setAdapter(new Community_QuestionAdapter(inflater, questionList, getContext()));
+            binding.questionDetailList.setAdapter(new Community_QuestionAdapter(inflater, questionList, getContext(),pref.getString("user_id","") ));
             binding.questionDetailList.setLayoutManager((new LinearLayoutManager(getContext())));
             // queList에서 각 Community_QuestionDTO 객체의 id 값을 추출하여 리스트에 추가
 
 
 
-//            createque4(result, inflater);//질문게시판
         });
 
 

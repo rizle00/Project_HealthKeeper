@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 } else {
-                    menu.getItem(1).setIcon(R.drawable.alaram_off);
+                    menu.getItem(1).setIcon(R.drawable.alarm_off);
                 }
 
             } else {
@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                 unbindService(mServiceConnection);
                 sBound = false; // 바인드 상태 갱신
             }
-            item.setIcon(R.drawable.alaram_off);
+            item.setIcon(R.drawable.alarm_off);
             return true;
         } else if (id == R.id.menu_bluetooth && !isPatient && !active) {
             // 블루투스 버튼 클릭 했는데 서비스 o
