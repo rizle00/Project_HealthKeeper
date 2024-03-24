@@ -56,7 +56,9 @@
         <activity
                 android:name=".main.PushActivity"
                 android:exported="false"/>
-
+        <activity
+                android:name=".member.PopupResiterActivity"
+                android:exported="false"/>
         <service
                 android:name=".bluetooth.BluetoothService"
                 android:enabled="true"

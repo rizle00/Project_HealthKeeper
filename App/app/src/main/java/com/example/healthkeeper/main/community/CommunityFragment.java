@@ -51,13 +51,13 @@ public class CommunityFragment extends Fragment {
     private Spinner spinner;
     CommonRepository repository;//스프링과 연결...
     private CommunityDTOS.Community_QuestionDTO vo;
-   private final SharedPreferences pref = requireActivity().getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
+   private  SharedPreferences pref;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCommunityBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
+        pref =requireActivity().getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
 
         spinner = binding.spinnerCategory;
         repository = new CommonRepository(((App) requireActivity().getApplication()).executorService);
@@ -82,7 +82,7 @@ public class CommunityFragment extends Fragment {
             private void questionDetail_Fragment() {
                 QuestionDetail_Fragment QuestionDetailFragment = new QuestionDetail_Fragment();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, QuestionDetailFragment);
+                transaction.replace(R.id.community_container, QuestionDetailFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
 
@@ -109,7 +109,6 @@ public class CommunityFragment extends Fragment {
                     categoryNames.add("카테고리");
 
                     for (CommunityDTOS.CategoryVO category : list) {
-                        categoryNames.add("카테고리");
                         categoryNames.add(category.getNAME());
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categoryNames);
@@ -152,7 +151,7 @@ public class CommunityFragment extends Fragment {
                             vo.setTITLE(title);
                             vo.setCONTENT(content);
                             vo.setMEMBER_ID(id);
-                            vo.setCATEGORY_ID(String.valueOf(select[0] - 1));
+                            vo.setCATEGORY_ID(String.valueOf(select[0]));
 
 
                             // 서버에 데이터 전송

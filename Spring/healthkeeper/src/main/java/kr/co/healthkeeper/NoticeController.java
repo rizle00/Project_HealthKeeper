@@ -92,7 +92,7 @@ public class NoticeController {
                andService.insertAlarm(dto);
                if(list.get(i).getALARM().equals("y")){
                    firebaseCloudMessageService.sendMessageTo(
-                           list.get(i).getToken(),
+                           list.get(i).getTOKEN(),
                            type.getTITLE(),
                            type.getCONTENT()
 

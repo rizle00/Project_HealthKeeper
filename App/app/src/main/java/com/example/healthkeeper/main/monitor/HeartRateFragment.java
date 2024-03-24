@@ -94,8 +94,8 @@ public class HeartRateFragment extends Fragment {
     private void loadHeart() {
         repository = new CommonRepository(((App) requireActivity().getApplication()).executorService);
         CommonConn conn = new CommonConn("member/condition");
-//        conn.addParamMap("params", ((ConditionActivity) getActivity()).getUser_id());
-        conn.addParamMap("params",2);
+        conn.addParamMap("params", ((ConditionActivity) getActivity()).getUser_id());
+//        conn.addParamMap("params",2);
         repository.select(conn).thenAccept(result->{
             HashMap<String, Object> map = new Gson().fromJson(result, HashMap.class);
             Log.d("TAG", "loadHeart: "+(int)Double.parseDouble(map.get("CONDITION_PULSE").toString()));

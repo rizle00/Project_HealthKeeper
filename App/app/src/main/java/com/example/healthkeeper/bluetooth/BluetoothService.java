@@ -24,8 +24,8 @@ public class BluetoothService extends Service {
     private Executor executor;
     private boolean mBound, sBound, active; // mBound = bluegatt연결상태, sBound = 서비스 연결상태
     private String deviceAddress;
-    boolean isPatient;
-    private Context mContext;
+//    boolean isPatient;
+//    private Context mContext;
     private NotificationManager notificationManager;
     private static final String CHANNEL_ID = "fore Channel";
     private BTManger mBtManger;
@@ -37,6 +37,7 @@ public class BluetoothService extends Service {
     private BluetoothViewModel viewModel;
     private NotificationCompat.Builder builder;
     private SharedPreferences pref;
+    private boolean isPatient;
 
 
     public BluetoothConnector getmBtConnector() {
@@ -150,9 +151,9 @@ public class BluetoothService extends Service {
         return active;
     }
 
-    public void setContext(Context context) {
-        this.mContext = context;
-    }
+//    public void setContext(Context context) {
+//        this.mContext = context;
+//    }
 
     @Override
     public void onCreate() {
@@ -160,18 +161,18 @@ public class BluetoothService extends Service {
         super.onCreate();
         Log.d(TAG, "onCreate: 서비스 생성됨");
         this.executor = ((App) getApplication()).executorService;
-
         initRepository();
         initialize();
         // 뷰모델 초기화
         viewModel = ((App) getApplicationContext()).getSharedViewModel();
 
         observe();
-        this.mBtConnector = new BluetoothConnector(mContext, adapter, repository, viewModel);
-        mBound = mBtConnector.isConnected();
-        active = true;
         pref = getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
         isPatient = pref.getString("role","").equals("patient");
+       String id = pref.getString("user_id", "");
+        this.mBtConnector = new BluetoothConnector(getApplicationContext(), adapter, repository, viewModel, id);
+        mBound = mBtConnector.isConnected();
+        active = true;
 
         createNotificationChannel();
 
@@ -215,7 +216,7 @@ public class BluetoothService extends Service {
     }
 
     public void scan() {
-        mBtScanner = new BluetoothScanner(mContext);
+        mBtScanner = new BluetoothScanner(getApplicationContext());
         mBtScanner.startScan();
         deviceAddress = mBtScanner.getDeviceAddress();
     }

@@ -75,7 +75,7 @@ public class ConditionActivity extends AppCompatActivity {
 
     private void changeFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, fragment)
+                .replace(R.id.condition_container, fragment)
                 .commit();
     }
 

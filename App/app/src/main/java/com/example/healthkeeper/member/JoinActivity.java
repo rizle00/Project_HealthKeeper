@@ -8,10 +8,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -31,8 +28,8 @@ import java.util.regex.Pattern;
 public class JoinActivity extends AppCompatActivity {
     final String TAG = "member join";
     ActivityJoinBinding binding;
-
-
+// 주소 클릭 안됨
+   private final MemberVO vo = new MemberVO();
     private final int SEARCH_ADDRESS_ACTIVITY = 10000;
 
     @Override
@@ -40,10 +37,10 @@ public class JoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityJoinBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        binding.edtAddress.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), PopupSearchAddressActivity.class);
-            startActivityForResult(intent, SEARCH_ADDRESS_ACTIVITY);
-        });
+//        binding.edtAddress.setOnClickListener(v -> {
+//            Intent intent = new Intent(getApplicationContext(), PopupSearchAddressActivity.class);
+//            startActivityForResult(intent, SEARCH_ADDRESS_ACTIVITY);
+//        });
         /* 아이디 유효성 메소드 */
         usableIdCheck();
         /*아이디중복확인*/
@@ -139,25 +136,23 @@ public class JoinActivity extends AppCompatActivity {
         usableIdCheck();
         phonePattern();
 //        addressCheck();
-
+        SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
         int num = binding.tvWarningId.getVisibility() + binding.tvWarningPw.getVisibility()
                 + binding.tvWarningEmail.getVisibility() + binding.tvWarningPhone.getVisibility() + binding.tvWarningAddr.getVisibility();
         if (num == 40) {
             JoinTypeActivity jta = (JoinTypeActivity) JoinTypeActivity.joinTypeActivity;
             CommonConn conn = new CommonConn("andjoin", this);
-            MemberVO vo = new MemberVO();
+//            MemberVO vo = new MemberVO();
             vo.setPW(binding.edtUserPw.getText().toString());
             vo.setEMAIL(binding.edtEmail.getText().toString());
             vo.setPHONE(binding.edtUserPhone.getText().toString());
-            vo.setGUARDIAN_ID(binding.edtPatientId.getText().toString());
+//            vo.setGUARDIAN_ID(binding.edtPatientId.getText().toString());
             vo.setNAME(binding.edtUserName.getText().toString());
             vo.setADDRESS(binding.edtAddress.getText().toString());
             vo.setADDRESS_DETAIL(binding.edtAddressDetail.getText().toString());
             vo.setSOCIAL(getIntent().getStringExtra("social"));
-            vo.setROLE(getIntent().getStringExtra("type"));
-
-            SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
-            
+            vo.setROLE(preference.getString("role",""));
+            Log.d(TAG, "joinClick: "+getIntent().getStringExtra("type"));
             vo.setToken(preference.getString("token",  null));
             if(getIntent().getStringExtra("type").toString().equals("guardian")){
                 vo.setBLOOD(null);
@@ -176,10 +171,19 @@ public class JoinActivity extends AppCompatActivity {
             conn.onExcute((isResult, data) -> {
                 if(isResult){
 //                    token();
+                    Log.d(TAG, "가입 "+data);
+                    if(data.equals("1")){
+                        Toast.makeText(this, vo.getNAME()+"님 회원 가입 되었습니다", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        Toast.makeText(this, "가입에 실패했습니다", Toast.LENGTH_SHORT).show();
+                    }
+                    jta.finish();
+                    finish();
+
                 }
             });
-            jta.finish();
-            finish();
+
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("정보가 올바르지 않습니다");
@@ -222,6 +226,7 @@ public class JoinActivity extends AppCompatActivity {
         });
     }
 
+    // 패턴 확인 글자 입력시마다
     public void pwPattern() {
         binding.edtUserPw.addTextChangedListener(new TextWatcher() {
             @Override
@@ -251,7 +256,7 @@ public class JoinActivity extends AppCompatActivity {
         if (!user_pw.equals(binding.edtUserPwCheck.getText().toString())) {
             binding.tvWarningPw.setText("비밀번호가 일치하지 않습니다.");
             binding.tvWarningPw.setVisibility(View.VISIBLE);
-        } else if (user_pw.length() < 9) {
+        } else if (user_pw.length() < 8) {
             binding.tvWarningPw.setText("비밀번호를 8자 이상 입력해주세요");
             binding.tvWarningPw.setVisibility(View.VISIBLE);
         } else {
@@ -302,12 +307,15 @@ public class JoinActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(partner + " 등록")
                 .setMessage(partner + " 아이디를 입력해주세요")
                 .setView(edt).setPositiveButton("등록하기", (dialog, which) -> {
-                    conn.addParamMap("partner_id", edt.getText().toString());
+                    conn.addParamMap("email", edt.getText().toString());
                     conn.addParamMap("type",getIntent().getStringExtra("type"));
                     conn.onExcute((isResult, data) -> {
-                        if (data.equals("1")) {
+//                        if (data.equals("1")) {
+                        Log.d(TAG, "partnerCheck: "+data);
+                        if (!data.equals("0") ) {
                             binding.edtPatientId.setText(edt.getText().toString());
                             binding.btnGuardianFind.setText("취소");
+                            vo.setGUARDIAN_ID(data);// 이메일값으로 id 값 받아옴
                         } else {
                             AlertDialog builder1 = new AlertDialog.Builder(this).setMessage("존재하지 않는 회원입니다").show();
                         }
@@ -325,7 +333,7 @@ public class JoinActivity extends AppCompatActivity {
         conn.addParamMap("email", email);
 
         conn.onExcute((isResult, data) -> {
-
+            Log.d(TAG, "idDupCheck: "+data);
             if (data.equals("0")) {
                 binding.btnIdCheck.setVisibility(View.GONE);
                 binding.tvWarningId.setVisibility(View.GONE);
@@ -347,40 +355,5 @@ public class JoinActivity extends AppCompatActivity {
         }
     }
 
-    private void token(){
-        SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
-        String savedToken = preference.getString("token", null);
-        SharedPreferences.Editor editor = preference.edit();
-
-
-        // 이미 저장된 토큰이 있다면 getToken() 호출을 생략합니다.
-        // 새로운 토큰 추후에..
-//        if (savedToken != null) {
-//            Log.d(TAG, "Token already saved: " + savedToken);
-//            return; // 이미 저장된 토큰이 있으므로 더 이상 진행하지 않습니다.
-//        }
-
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                            return;
-                        }
-
-                        // Get new FCM registration token
-                        String token = task.getResult();
-                        CommonConn conn = new CommonConn("updateToken", JoinActivity.this);
-                        conn.addParamMap("token", token);
-                        conn.onExcute((isResult, data) -> {
-
-                        });
-
-                        Log.d(TAG, token);
-                    }
-                });
-        Log.d(TAG, "token: "+preference.getString("toke",""));
-    }
 
 }

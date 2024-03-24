@@ -3,7 +3,6 @@ package kr.co.service;
 import kr.co.and.firebase.RequestDTO;
 import kr.co.and.firebase.TypeVO;
 import kr.co.mapper.AndMemberMapper;
-import kr.co.mapper.FaqMapper;
 import kr.co.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,13 +26,13 @@ public class AndMemberServiceImpl implements AndMemberService {
     }
 
     @Override
-    public String idcheck(String email) {
+    public Integer idcheck(String email) {
         return mapper.idcheck(email);
     }
 
     @Override
-    public void join(MemberVO vo) {
-        mapper.join(vo);
+    public Integer join(MemberVO vo) {
+        return mapper.join(vo);
     }
 
     @Override
@@ -42,12 +41,12 @@ public class AndMemberServiceImpl implements AndMemberService {
     }
 
     @Override
-    public String findpw(MemberVO vo) {
+    public int findpw(MemberVO vo) {
         return mapper.findpw(vo);
     }
 
     @Override
-    public String socialIdCheck(String social) {
+    public int socialIdCheck(String social) {
         return mapper.socialIdCheck(social);
     }
 
@@ -57,8 +56,8 @@ public class AndMemberServiceImpl implements AndMemberService {
     }
 
     @Override
-    public String partnerCheck(String partner_id) {
-        return mapper.partnerCheck(partner_id);
+    public String partnerCheck(String email) {
+        return mapper.partnerCheck(email);
     }
 
     @Override
@@ -67,8 +66,8 @@ public class AndMemberServiceImpl implements AndMemberService {
     }
 
     @Override
-    public void patientRegister(MemberVO vo) {
-        mapper.patientRegister(vo);
+    public int patientRegister(HashMap<String, String> map) {
+       return mapper.patientRegister(map);
     }
 
     @Override

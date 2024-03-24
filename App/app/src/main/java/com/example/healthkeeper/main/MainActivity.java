@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         active = isForegroundServiceRunning(MainActivity.this, 2000);
         pref = getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
         isPatient = pref.getString("role", "").equals("patient");
+        Log.d(TAG, "환자 "+isPatient);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -176,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.menu_logout) {
-            SharedPreferences pref = getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
             SharedPreferences.Editor editor = pref.edit();
             editor.clear();
             Intent intent = new Intent(this, LoginBeforeActivity.class);
@@ -440,7 +440,7 @@ public class MainActivity extends AppCompatActivity {
             bluetoothService =
                     ((BluetoothService.LocalBinder) service).getService();
             sBound = true;
-            bluetoothService.setContext(MainActivity.this);
+//            bluetoothService.setContext(MainActivity.this);
             Log.d(TAG, "onServiceConnected: " + active);
             if (!active) {// 앱 처음 시작시 포그라운드 서비스를 실행하지 않았을때 포그라운드가 시행중이면 다시 시작x
                 ContextCompat.startForegroundService(MainActivity.this,
@@ -454,7 +454,7 @@ public class MainActivity extends AppCompatActivity {
 
                     btItem.setIcon(R.drawable.baseline_bluetooth_conn);
                 } else {
-                    btItem.setIcon(R.drawable.alarm_off);
+                    btItem.setIcon(R.drawable.alarm_on);
                 }
             }
 

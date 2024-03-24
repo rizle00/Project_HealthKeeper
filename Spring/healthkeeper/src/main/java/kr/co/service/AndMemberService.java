@@ -13,21 +13,21 @@ public interface AndMemberService {
 
     public MemberVO login(String email);
 
-    public String idcheck(String email) ;
-    public void join(MemberVO vo);
+    public Integer idcheck(String email) ;
+    public Integer join(MemberVO vo);
 
     public String findid(MemberVO vo);
-    public String findpw(MemberVO vo) ;
+    public int findpw(MemberVO vo) ;
 
-    public String socialIdCheck(String social);
+    public int socialIdCheck(String social);
 
     public MemberVO socialLogin(String social) ;
 
-    public String partnerCheck(String partner_id) ;
+    public String partnerCheck(String email) ;
 
     public int modify(MemberVO vo);
 
-    public void patientRegister(MemberVO vo) ;
+    public int patientRegister(HashMap<String, String> map) ;
 
     public int resetpw(MemberVO vo) ;
     public MemberVO guardian(String user_id) ;

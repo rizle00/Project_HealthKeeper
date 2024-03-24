@@ -32,9 +32,11 @@ public class AndMemberController {
 	public ResponseEntity<String> login(String email, String pw) {
 		System.out.println("로그인");
 		MemberVO vo = service.login(email);
-
+		System.out.println(vo.getPW());
+		System.out.println(pwEncoder.encode(pw.toString()));
 		System.out.println(email.toString() + pw.toString());
-		if (pwEncoder.matches(pw, vo.getPW())) {
+		if (pwEncoder.matches(pw, vo.getPW())) {// 인코딩이 제대로 안됨
+//		if (pw.equals(vo.getPW())) {
 //			dataHolder.setData(vo.getToken());
 			return ResponseEntity.ok(new Gson().toJson(vo));
 		} else {
@@ -43,30 +45,49 @@ public class AndMemberController {
 	}
 
 	@PostMapping(value = "/andidcheck")
-	public ResponseEntity<String> idcheck(String email) {
-		System.out.println("서비스" + service.idcheck(email));
-		String result = service.idcheck(email);
+	public ResponseEntity<Integer> idcheck(String email) {
+		System.out.println(" 중복체크" );
+		int result = service.idcheck(email);
 		return ResponseEntity.ok(result);
 	}
 
 	@RequestMapping("/andjoin") // 되었는지 안되었는지 정보 보내줘야겠다
-	public void join(String vo, String type) {
+	public ResponseEntity<Integer> join(String vo, String type) {
 		System.out.println(type + "으로 가입");
-		MemberVO info = new Gson().fromJson(vo, MemberVO.class);
-		info.setPW(pwEncoder.encode(info.getPW()));
-		info.setADDRESS("");
-		info.setADDRESS_DETAIL("");
-		info.setGUARDIAN_ID("");
-		info.setSOCIAL("");
-		if (type.equals("patient")) {
-			service.join(info);
+		MemberVO info = new Gson().fromJson(vo, MemberVO.class);// 입력정보
+		info.setPW(pwEncoder.encode(info.getPW()));// 인코딩이 제대로 안됨
+//		info.setADDRESS("");
+//		info.setADDRESS_DETAIL("");
+//		info.setGUARDIAN_ID("");
+//		info.setSOCIAL("");
+		System.out.println(info.getGUARDIAN_ID());// 환자일시 -> 보호자, 보호자일시 ->환자
+//		if(!info.getGUARDIAN_ID().isEmpty()){
+//			info.setGUARDIAN_ID(service.partnerCheck(info.getGUARDIAN_ID()));// 아이디값이 이메일
+//		}
+		if (type.equals("patient")) {// 보호자 그대로 입력해서 가입
+		 return 	ResponseEntity.ok(service.join(info));
 		} else {
-			String patient = info.getGUARDIAN_ID();
-			info.setGUARDIAN_ID("");
-			info.setBLOOD("");
-			service.join(info);
-			info.setGUARDIAN_ID(patient);
-			service.patientRegister(info);
+//			String patient = info.getGUARDIAN_ID();
+//			info.setGUARDIAN_ID("");
+//			info.setBLOOD("");
+			Integer result;
+			String member,guardian;
+			if(info.getGUARDIAN_ID() != null){
+				member = info.getGUARDIAN_ID();
+				info.setGUARDIAN_ID("");
+				result = service.join(info);
+				MemberVO temp = service.login(info.getEMAIL());
+				HashMap <String, String> map = new HashMap<>();// 가디언 아이디가 환자의 id 값, 환자의 정보를 업데이트\
+				map.put("MEMBER_ID", member);// 환자에게 업데이트
+				map.put("GUARDIAN_ID", temp.getMEMBER_ID());// 보호자의 정보를
+				System.out.println(new Gson().toJson(map));
+				service.patientRegister(map);
+			} else {
+				result = service.join(info);
+			}
+
+//
+			return ResponseEntity.ok(result);
 		}
 	}
 
@@ -79,7 +100,7 @@ public class AndMemberController {
 
 	@PostMapping(value = "/sociallogin", produces = "application/text;charset=utf-8")
 	public ResponseEntity<String> kakaologin(String social) {
-		if (service.socialIdCheck(social).equals("0")) {
+		if (service.socialIdCheck(social)==0) {
 			return ResponseEntity.ok("join");
 		} else {
 			String returnVO = new Gson().toJson(service.socialLogin(social));
@@ -91,7 +112,7 @@ public class AndMemberController {
 	@RequestMapping("/checkinfo")
 	public ResponseEntity<String> checkinfo(String vo,String mail) {
 		MemberVO find_info = new Gson().fromJson(vo, MemberVO.class);
-		if(service.findpw(find_info).equals("0")) {
+		if(service.findpw(find_info)==0) {
 			return ResponseEntity.ok("none");
 		}else {
 			String pw = UUID.randomUUID().toString();
@@ -105,8 +126,13 @@ public class AndMemberController {
 	}
 
 	@RequestMapping("partnercheck")
-	public ResponseEntity<String> partnerCheck(String partner_id) {
-		return ResponseEntity.ok(service.partnerCheck(partner_id));
+	public ResponseEntity<String> partnerCheck(String email) {
+		String result = service.partnerCheck(email);
+		System.out.println(result);
+		if (result == null) {
+			result = "0";
+		}
+		return ResponseEntity.ok(result);// 이메일에대한 아이디값 보내줌
 	}
 
 	@RequestMapping("/address")
@@ -174,9 +200,11 @@ public class AndMemberController {
 	@RequestMapping( "/update/token")
 	public ResponseEntity<Integer> updateToken(String id, String token) {
 		System.out.println("토큰");
+		System.out.println(id);
+		System.out.println(token);
 
 		HashMap<String, String> map = new HashMap<>();
-		map.put("member_id", id);
+		map.put("MEMBER_ID", id);
 		map.put("token",token);
 
 		return ResponseEntity.ok(service.updateToken(map));}

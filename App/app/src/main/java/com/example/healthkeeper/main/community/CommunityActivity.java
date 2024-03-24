@@ -121,7 +121,7 @@ public class CommunityActivity extends AppCompatActivity {
     }
 
     public void changeFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment)
+        getSupportFragmentManager().beginTransaction().replace(R.id.community_container, fragment)
                 .addToBackStack(null)
                 .commit();
     }
