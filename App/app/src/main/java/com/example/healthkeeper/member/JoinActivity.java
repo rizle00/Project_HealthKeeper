@@ -138,7 +138,7 @@ public class JoinActivity extends AppCompatActivity {
     public void joinClick() {
         usableIdCheck();
         phonePattern();
-        addressCheck();
+//        addressCheck();
 
         int num = binding.tvWarningId.getVisibility() + binding.tvWarningPw.getVisibility()
                 + binding.tvWarningEmail.getVisibility() + binding.tvWarningPhone.getVisibility() + binding.tvWarningAddr.getVisibility();
@@ -146,29 +146,28 @@ public class JoinActivity extends AppCompatActivity {
             JoinTypeActivity jta = (JoinTypeActivity) JoinTypeActivity.joinTypeActivity;
             CommonConn conn = new CommonConn("andjoin", this);
             MemberVO vo = new MemberVO();
-            vo.setPw(binding.edtUserPw.getText().toString());
-            vo.setEmail(binding.edtEmail.getText().toString());
-            vo.setPhone(binding.edtUserPhone.getText().toString());
-            vo.setGuardian_id(binding.edtPatientId.getText().toString());
-            vo.setName(binding.edtUserName.getText().toString());
-            vo.setAddress(binding.edtAddress.getText().toString());
-            vo.setGuardian_id(binding.edtPatientId.getText().toString());
-            vo.setAddress_detail(binding.edtAddressDetail.getText().toString());
-            vo.setSocial(getIntent().getStringExtra("social"));
-            vo.setRole(getIntent().getStringExtra("type"));
+            vo.setPW(binding.edtUserPw.getText().toString());
+            vo.setEMAIL(binding.edtEmail.getText().toString());
+            vo.setPHONE(binding.edtUserPhone.getText().toString());
+            vo.setGUARDIAN_ID(binding.edtPatientId.getText().toString());
+            vo.setNAME(binding.edtUserName.getText().toString());
+            vo.setADDRESS(binding.edtAddress.getText().toString());
+            vo.setADDRESS_DETAIL(binding.edtAddressDetail.getText().toString());
+            vo.setSOCIAL(getIntent().getStringExtra("social"));
+            vo.setROLE(getIntent().getStringExtra("type"));
 
             SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
             
             vo.setToken(preference.getString("token",  null));
             if(getIntent().getStringExtra("type").toString().equals("guardian")){
-                vo.setBlood(null);
+                vo.setBLOOD(null);
             }else{
-                vo.setBlood(binding.spnBloodType.getSelectedItem().toString());
+                vo.setBLOOD(binding.spnBloodType.getSelectedItem().toString());
             }
             if(binding.rgFemale.isChecked()){
-                vo.setGender("Female");
+                vo.setGENDER("Female");
             }else{
-                vo.setGender("Male");
+                vo.setGENDER("Male");
             }
 
             String voJson = new Gson().toJson(vo);

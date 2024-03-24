@@ -43,9 +43,9 @@ public class FindPwActivity extends AppCompatActivity {
         CommonConn conn = new CommonConn("checkinfo",this);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         MemberVO vo = new MemberVO();
-        vo.setName(binding.edtUserName.getText().toString());
-        vo.setEmail(binding.edtUserEmail.getText().toString());
-        vo.setPhone(binding.edtUserPhone.getText().toString());
+        vo.setNAME(binding.edtUserName.getText().toString());
+        vo.setEMAIL(binding.edtUserEmail.getText().toString());
+        vo.setPHONE(binding.edtUserPhone.getText().toString());
         String voJson = new Gson().toJson(vo);
         conn.addParamMap("vo",voJson);
         conn.addParamMap("mail",binding.edtMail.getText().toString());

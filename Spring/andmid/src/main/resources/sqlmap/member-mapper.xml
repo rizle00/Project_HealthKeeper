@@ -34,4 +34,6 @@
 <select id="socialLogin" resultType="member">
 	SELECT * FROM PROJECT_MEMBER WHERE SOCIAL = #{social}
 </select>
+
+
 </mapper>

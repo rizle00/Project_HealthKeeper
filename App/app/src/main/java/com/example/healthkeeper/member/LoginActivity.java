@@ -293,20 +293,20 @@ public class LoginActivity extends AppCompatActivity {
 //        finish();
         if (vo.getToken().isEmpty()) {
             CommonConn conn = new CommonConn("update/token", this);
-            conn.addParamMap("id", vo.getMember_id());
+            conn.addParamMap("id", vo.getMEMBER_ID());
             conn.addParamMap("token", preference.getString("token", ""));
             conn.onExcute((isResult, data) -> {
             });
         } else{
             editor.putString("token", vo.getToken());
         }
-        editor.putString("user_id", vo.getMember_id());
-        editor.putString("user_name", vo.getName());
-        editor.putString("role", vo.getRole());
+        editor.putString("user_id", vo.getMEMBER_ID());
+        editor.putString("user_name", vo.getNAME());
+        editor.putString("role", vo.getROLE());
 
-        if (vo.getRole().equals("patient")) {
-            editor.putString("guardian_id", vo.getGuardian_id());
-            editor.putString("address", vo.getAddress() + " " + vo.getAddress_detail());
+        if (vo.getROLE().equals("patient")) {
+            editor.putString("guardian_id", vo.getGUARDIAN_ID());
+            editor.putString("address", vo.getADDRESS() + " " + vo.getADDRESS_DETAIL());
         }
 
 
