@@ -291,7 +291,8 @@ public class LoginActivity extends AppCompatActivity {
 //        Intent intent = new Intent(this,MainActivity.class);
 //        startActivity(intent);
 //        finish();
-        if (vo.getToken().isEmpty()) {
+        Log.d("TAG", "loginSuccess: "+preference.getString("token", ""));
+        if (vo.getToken() == null) {
             CommonConn conn = new CommonConn("update/token", this);
             conn.addParamMap("id", vo.getMEMBER_ID());
             conn.addParamMap("token", preference.getString("token", ""));
@@ -303,6 +304,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("user_id", vo.getMEMBER_ID());
         editor.putString("user_name", vo.getNAME());
         editor.putString("role", vo.getROLE());
+        Log.d("TAG", "loginSuccess: "+vo.getROLE());
 
         if (vo.getROLE().equals("patient")) {
             editor.putString("guardian_id", vo.getGUARDIAN_ID());

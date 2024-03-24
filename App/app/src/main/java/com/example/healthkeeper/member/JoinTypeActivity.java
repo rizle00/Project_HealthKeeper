@@ -1,5 +1,6 @@
 package com.example.healthkeeper.member;
 
+import android.content.SharedPreferences;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -12,14 +13,17 @@ import com.example.healthkeeper.databinding.ActivityJoinTypeBinding;
 public class JoinTypeActivity extends AppCompatActivity {
     public static Activity joinTypeActivity;
     ActivityJoinTypeBinding binding;
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         joinTypeActivity = JoinTypeActivity.this;
         binding = ActivityJoinTypeBinding.inflate(getLayoutInflater());
-
-
+        pref = getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
+        editor = pref.edit();
         binding.llPatient.setOnClickListener(v -> {
+            editor.putString("role","patient");
             if(getIntent().getStringExtra("social")==null) {
                 Intent intent = new Intent(this,JoinActivity.class);
                 intent.putExtra("type", "patient");
@@ -35,6 +39,7 @@ public class JoinTypeActivity extends AppCompatActivity {
         });
 
         binding.llGuardian.setOnClickListener(v -> {
+            editor.putString("role","guardian");
             if(getIntent().getStringExtra("social")==null) {
                 Intent intent = new Intent(this, JoinActivity.class);
                 intent.putExtra("type", "guardian");
@@ -47,7 +52,7 @@ public class JoinTypeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        editor.apply();
         setContentView(binding.getRoot());
 
     }

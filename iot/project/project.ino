@@ -62,7 +62,7 @@ void loop() {
     int accident = svm >= 60? 1:0; // 예시에서는 SVM이 60 이상이면 사고로 판단
     
 
-  String dataString = "hr," + String(heartRate) + ",tp," + String(temp, 1) + ",ac," + String(svm);
+  String dataString = "hr," + String(heartRate) + ",tp," + String(temp, 1) + ",ac," + String(accident);
   // hr,65,tp,36.3,ac,1
   BTSerial.println(dataString);
     Serial.print("Temperature: "); Serial.println(temp);

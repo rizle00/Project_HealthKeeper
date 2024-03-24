@@ -26,15 +26,19 @@ public class BluetoothConnector {
     private boolean mConnectionState;
     private Context mContext;
     private BluetoothRepository repository;
+    private String id;
 
     BluetoothViewModel viewModel;
 
     // 생성자에서 컨텍스트 초기화
-    public BluetoothConnector(Context context, BluetoothAdapter adapter, BluetoothRepository repository, BluetoothViewModel viewModel) {
+    public BluetoothConnector(Context context, BluetoothAdapter adapter, BluetoothRepository repository, BluetoothViewModel viewModel, String id) {
         this.mContext = context;
         this.mBluetoothAdapter = adapter;
         this.repository = repository;
         this.viewModel = viewModel;
+        this.id = id;
+
+
     }
     public boolean isConnected() {
         return mConnectionState;
@@ -186,7 +190,7 @@ public class BluetoothConnector {
         if (temperature <= 34.5 || temperature >= 39.5) {
             temperature = 0;
         }
-        SharedPreferences pref = mContext.getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
+//        SharedPreferences pref = mContext.getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
         HashMap<String, Object > map = new HashMap<>();
         map.put("heart", heartRate);
         map.put("temp", temperature);
@@ -194,7 +198,7 @@ public class BluetoothConnector {
         ConditionVO vo = new ConditionVO();
         vo.setCONDITION_PULSE(String.valueOf(heartRate));
         vo.setCONDITION_TEMPERATURE(String.valueOf(temperature));
-        vo.setMEMBER_ID(pref.getString("user_id",""));
+        vo.setMEMBER_ID(id);
         if(accident.equals("0")){
             accident = "N";
         } else{

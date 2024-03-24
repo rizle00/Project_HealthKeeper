@@ -28,10 +28,11 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+         preference = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
         Log.d(TAG, "onCreate");
-//      String name =  preference.getString("user_name","Guest");
+      String name =  preference.getString("user_name","Guest");
         token();
-      String name = "a";
+//      String name = "a";
 
         new Handler().postDelayed(() -> {
             //로그인 체크
@@ -72,7 +73,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
 
                         // 토큰 미리 담아두기, 시점에따라 안들어갈수 있어서
                         String token = task.getResult();
-                        SharedPreferences preference = getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE);
+
 
                         SharedPreferences.Editor editor = preference.edit();
                         editor.putString("token", token);

@@ -37,15 +37,17 @@ public class FindIdActivity extends AppCompatActivity {
         String voJson = new Gson().toJson(vo);
         conn.addParamMap("vo",voJson);
         conn.onExcute((isResult, data) -> {
+                if(isResult){
+                    if(!data.equals("")){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("회원님의 아이디는 '"+data + "' 입니다").setPositiveButton("확인",(dialog, which) -> {
+                                    finish();
+                                })
+                                .show();
+                    }else{
+                        Toast.makeText(this, "해당 정보의 아이디는 없습니다",Toast.LENGTH_SHORT).show();
+                    }
 
-                if(!data.equals("")){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage("회원님의 아이디는 '"+data + "' 입니다").setPositiveButton("확인",(dialog, which) -> {
-                                finish();
-                            })
-                            .show();
-                }else{
-                    Toast.makeText(this, "해당 정보의 아이디는 없습니다",Toast.LENGTH_SHORT).show();
                 }
 
 

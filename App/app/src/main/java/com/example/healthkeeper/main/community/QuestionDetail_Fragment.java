@@ -33,30 +33,26 @@ public class QuestionDetail_Fragment extends Fragment {
     private List<CommunityDTOS.Community_QuestionDTO> questionList;
     CommonRepository repository;
 
-    private final SharedPreferences pref = requireActivity().getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
+    private SharedPreferences pref;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-               binding=FragmentQuestionDetailBinding.inflate(inflater, container, false);
-                View view=binding.getRoot();
-
+        binding = FragmentQuestionDetailBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+        pref = requireActivity().getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
         repository = new CommonRepository(((App) requireActivity().getApplication()).executorService);
 
         CommonConn conn = new CommonConn("question/list");
         repository.select(conn).thenAccept(result -> {
             questionList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
             }.getType());
-            Log.d(TAG, "onCreateView: "+questionList.size());
-            binding.questionDetailList.setAdapter(new Community_QuestionAdapter(inflater, questionList, getContext(),pref.getString("user_id","") ));
+            Log.d(TAG, "onCreateView: " + questionList.size());
+            binding.questionDetailList.setAdapter(new Community_QuestionAdapter(inflater, questionList, getContext(), pref.getString("user_id", "")));
             binding.questionDetailList.setLayoutManager((new LinearLayoutManager(getContext())));
             // queList에서 각 Community_QuestionDTO 객체의 id 값을 추출하여 리스트에 추가
 
 
-
         });
-
-
-
 
 
         binding.tvNewWriting.setOnClickListener(new View.OnClickListener() {
@@ -77,20 +73,20 @@ public class QuestionDetail_Fragment extends Fragment {
         });
 
 
-                binding.goHome.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                               MainActivity();
-                            }
-                        });
+        binding.goHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity();
+            }
+        });
 
-                binding.goCommunity.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getParentFragmentManager().popBackStack();//이전화면(CommunityActivity)으로 이동
+        binding.goCommunity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getParentFragmentManager().popBackStack();//이전화면(CommunityActivity)으로 이동
 
-                    }
-                });
+            }
+        });
 
 
         return view;
@@ -116,22 +112,17 @@ public class QuestionDetail_Fragment extends Fragment {
     }*/
 
 
-
-
-
-
-
-    private void MainActivity(){
-        Intent intent=new Intent(getActivity(), MainActivity.class);
+    private void MainActivity() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
         getActivity().finish();
 
     }
+
     public List<CommunityDTOS.Community_QuestionDTO> getcreateque() {
         return questionList;
 
     }
-
 
 
 }

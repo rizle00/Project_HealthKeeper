@@ -31,37 +31,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="login" resultType="kr.co.model.MemberVO">
 		SELECT * FROM MEMBER WHERE EMAIL = #{EMAIL}
 	</select>
-	<select id="idcheck" resultType="String">
+
+	<select id="idcheck" resultType="Integer">
 		SELECT COUNT(*) FROM MEMBER WHERE EMAIL = #{EMAIL}
-	</select>
+	</select>  <!-- 결과 스트링에서 인티저로 변경 -->
 	<insert id="join" >
 		INSERT INTO MEMBER (EMAIL, GUARDIAN_ID, PW, NAME, PHONE,  GENDER, BLOOD,  ADDRESS, ADDRESS_DETAIL, SOCIAL, TOKEN)
-		VALUES (#{EMAIL}, #{GUARDIAN_ID}, #{PW}, #{NAME}, #{PHONE}, #{GENDER}, #{BLOOD}, #{ADDRESS}, #{ADDRESS_DETAIL},#{SOCIAL}, #{TOKEN})
+		VALUES (#{EMAIL}, #{GUARDIAN_ID, jdbcType=VARCHAR}, #{PW}, #{NAME}, #{PHONE}, #{GENDER}, #{BLOOD, jdbcType=VARCHAR}, #{ADDRESS}, #{ADDRESS_DETAIL},#{SOCIAL, jdbcType=VARCHAR}, #{TOKEN, jdbcType=VARCHAR})
 	</insert>
 
 	<select id="findid" resultType="String">
 		SELECT EMAIL FROM MEMBER WHERE NAME = #{NAME} AND PHONE = #{PHONE}
 	</select>
-	<select id="findpw" resultType="String">
+	<select id="findpw" resultType="Integer">
 		SELECT COUNT(*) FROM MEMBER WHERE EMAIL=#{EMAIL} AND NAME = #{NAME} AND PHONE = #{PHONE}
 	</select>
 
 	<update id="resetpw">
 		UPDATE MEMBER SET PW = #{PW} WHERE EMAIL = #{EMAIL}
 	</update>
-	<select id= "socialIdCheck" resultType="String">
+	<select id= "socialIdCheck" resultType="Integer">
 		SELECT COUNT(*) FROM MEMBER WHERE SOCIAL = #{SOCIAL}
 	</select>
 	<select id="socialLogin" resultType="kr.co.model.MemberVO">
 		SELECT * FROM MEMBER WHERE SOCIAL = #{SOCIAL}
 	</select>
 	<select id="partnerCheck" resultType="String">
-		SELECT COUNT(*) FROM MEMBER WHERE EMAIL = #{partner_id}
+		SELECT member_id FROM MEMBER WHERE EMAIL = #{email}
 	</select>
+<!--	<update id="patientRegister">-->
+<!--		update member SET GUARDIAN_ID = (SELECT MEMBER_ID-->
+<!--										 FROM MEMBER-->
+<!--										 WHERE EMAIL = #{EMAIL}) where EMAIL = #{GUARDIAN_ID}-->
+<!--	</update>-->
 	<update id="patientRegister">
-		update member SET GUARDIAN_ID = (SELECT MEMBER_ID
-										 FROM MEMBER
-										 WHERE EMAIL = #{EMAIL}) where EMAIL = #{GUARDIAN_ID}
+		update member SET GUARDIAN_ID = #{GUARDIAN_ID , jdbcType=VARCHAR} where member_id = #{MEMBER_ID}
 	</update>
 
 	<update id="modify">
@@ -77,7 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM member WHERE member_id = #{GUARDIAN_ID}
 	</select>
 	<insert id="insertCondition">
-		insert into CONDITIONS (CONDITION_PULSE, CONDITION_TEMPERATURE, CONDITION_ACCIDENT, MEMBER_ID) values (#{CONDITION_PULSE}, #{CONDITION_TEMPERATURE},#{CONDITION_ACCIDENT}, #{MEMBER_ID})
+		insert into CONDITIONS (CONDITION_PULSE, CONDITION_TEMPERATURE, CONDITION_ACCIDENT, MEMBER_ID) values (#{CONDITION_PULSE, jdbcType=VARCHAR}, #{CONDITION_TEMPERATURE, jdbcType=VARCHAR},#{CONDITION_ACCIDENT, jdbcType=VARCHAR}, #{MEMBER_ID})
 	</insert>
 	<insert id="insertAlarm">
 		insert into Alarmlog (MEMBER_ID, CATEGORY_ID) values (#{MEMBER_ID}, #{CATEGORY_ID})

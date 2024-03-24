@@ -1,5 +1,6 @@
 package com.example.healthkeeper.main;
 
+import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +35,7 @@ public class LoginBeforeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBeforeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Log.d("TAG", "로그인전 ");
 //        _loginBeforeActivity = this;
 
 //        sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -129,9 +131,11 @@ public class LoginBeforeActivity extends AppCompatActivity {
                 // 로그인 성공 처리
                 // 이곳에서 로그인 후의 작업을 수행할 수 있습니다.
                 startActivity(new Intent(LoginBeforeActivity.this,MainActivity.class));
+                Log.d("TAG", "로그인성공 ");
             } else {
                 // 로그인 실패 또는 취소 처리
                 // 이곳에서 실패 또는 취소에 대한 작업을 수행할 수 있습니다.
+                Log.d("TAG", "로그인실패 ");
                 Toast.makeText(LoginBeforeActivity.this, "로그인에 실패했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
             }
         }

@@ -34,7 +34,7 @@ public class FirebaseController {
 
             service.insertAlarmG(dto);
             firebaseCloudMessageService.sendMessageTo(
-                    info.getToken(),
+                    info.getTOKEN(),
                     type.getTITLE(),
                     dto.getName()+"님의"+type.getCONTENT());
         }

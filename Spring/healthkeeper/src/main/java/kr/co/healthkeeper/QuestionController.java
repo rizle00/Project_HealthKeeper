@@ -209,7 +209,7 @@ public class QuestionController {
         andService.insertAlarm(dto);
         if(vo.getALARM().equals("y")){
             firebaseCloudMessageService.sendMessageTo(
-                    vo.getToken(),
+                    vo.getTOKEN(),
                     type.getTITLE(),
                     qsVo.getTITLE()+"의"+type.getCONTENT()
             );

@@ -47,7 +47,8 @@
             android:backgroundTint="#F29B80"
             android:paddingBottom="2dp"
             android:layout_marginRight="30dp"
-            android:layout_height="35dp"/>
+            android:layout_height="35dp"
+        android:visibility="gone"/>
 
     </RelativeLayout>
 

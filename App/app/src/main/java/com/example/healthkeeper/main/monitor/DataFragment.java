@@ -244,7 +244,7 @@ public class DataFragment extends Fragment {
                 return String.format("%02d:%02d:%02d", time / 10000, (time % 10000) / 100, time % 100);
             }
         });
-        chart.getXAxis().setLabelCount(CHART_SIZE, true);
+        chart.getXAxis().setLabelCount(48, true);
         chart.getXAxis().setTextColor(colorText);
         chart.getXAxis().setGridColor(colorGrid);
 
