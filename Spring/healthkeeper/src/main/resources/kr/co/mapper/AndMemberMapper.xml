@@ -29,31 +29,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM MEMBER
 	</select>
 	<select id="login" resultType="kr.co.model.MemberVO">
-		SELECT * FROM MEMBER WHERE EMAIL = #{email}
+		SELECT * FROM MEMBER WHERE EMAIL = #{EMAIL}
 	</select>
 	<select id="idcheck" resultType="String">
-		SELECT COUNT(*) FROM MEMBER WHERE EMAIL = #{email}
+		SELECT COUNT(*) FROM MEMBER WHERE EMAIL = #{EMAIL}
 	</select>
 	<insert id="join" >
-		INSERT INTO MEMBER (EMAIL, GUARDIAN_ID, PW, NAME, PHONE, BIRTH, GENDER, BLOOD,  ADDRESS, ADDRESS_DETAIL, SOCIAL, TOKEN)
-		VALUES (#{email}, #{guardian_id}, #{pw}, #{name}, #{phone}, #{birth}, #{gender}, #{blood}, #{address}, #{address_detail},#{social}, #{TOKEN})
+		INSERT INTO MEMBER (EMAIL, GUARDIAN_ID, PW, NAME, PHONE,  GENDER, BLOOD,  ADDRESS, ADDRESS_DETAIL, SOCIAL, TOKEN)
+		VALUES (#{EMAIL}, #{ }, #{PW}, #{NAME}, #{PHONE}, #{GENDER}, #{BLOOD}, #{ADDRESS}, #{ADDRESS_DETAIL},#{SOCIAL}, #{TOKEN})
 	</insert>
 
 	<select id="findid" resultType="String">
-		SELECT EMAIL FROM MEMBER WHERE NAME = #{name} AND PHONE = #{phone}
+		SELECT EMAIL FROM MEMBER WHERE NAME = #{NAME} AND PHONE = #{PHONE}
 	</select>
 	<select id="findpw" resultType="String">
-		SELECT COUNT(*) FROM MEMBER WHERE EMAIL=#{email} AND NAME = #{name} AND PHONE = #{phone}
+		SELECT COUNT(*) FROM MEMBER WHERE EMAIL=#{EMAIL} AND NAME = #{NAME} AND PHONE = #{PHONE}
 	</select>
 
 	<update id="resetpw">
-		UPDATE MEMBER SET PW = #{pw} WHERE EMAIL = #{email}
+		UPDATE MEMBER SET PW = #{PW} WHERE EMAIL = #{EMAIL}
 	</update>
 	<select id= "socialIdCheck" resultType="String">
-		SELECT COUNT(*) FROM MEMBER WHERE SOCIAL = #{social}
+		SELECT COUNT(*) FROM MEMBER WHERE SOCIAL = #{SOCIAL}
 	</select>
 	<select id="socialLogin" resultType="kr.co.model.MemberVO">
-		SELECT * FROM MEMBER WHERE SOCIAL = #{social}
+		SELECT * FROM MEMBER WHERE SOCIAL = #{SOCIAL}
 	</select>
 	<select id="partnerCheck" resultType="String">
 		SELECT COUNT(*) FROM MEMBER WHERE EMAIL = #{partner_id}
@@ -61,32 +61,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="patientRegister">
 		update member SET GUARDIAN_ID = (SELECT MEMBER_ID
 										 FROM MEMBER
-										 WHERE EMAIL = #{email}) where EMAIL = #{guardian_id}
+										 WHERE EMAIL = #{EMAIL}) where EMAIL = #{GUARDIAN_ID}
 	</update>
 
 	<update id="modify">
-		UPDATE MEMBER SET PW=#{pw} , NAME=#{name},PHONE=#{phone},ADDRESS=#{address} ,ADDRESS_DETAIL=#{address_detail}  WHERE MEMBER_ID=#{member_id}
+		UPDATE MEMBER SET PW=#{PW} , NAME=#{NAME},PHONE=#{PHONE},ADDRESS=#{ADDRESS} ,ADDRESS_DETAIL=#{ADDRESS_DETAIL}  WHERE MEMBER_ID=#{MEMBER_ID}
 	</update>
 	<update id="updateToken">
-		UPDATE MEMBER SET token=#{token} WHERE MEMBER_ID=#{member_id}
+		UPDATE MEMBER SET token=#{token} WHERE MEMBER_ID=#{MEMBER_ID}
 	</update>
 	<select id="type" resultType = "kr.co.and.firebase.TypeVO">
 		select * from alarm_type where category_id = #{category_id}
 	</select>
 	<select id="guardian" resultType="kr.co.model.MemberVO">
-		SELECT * FROM member WHERE member_id = #{guardian_id}
+		SELECT * FROM member WHERE member_id = #{GUARDIAN_ID}
 	</select>
 	<insert id="insertCondition">
 		insert into CONDITIONS (CONDITION_PULSE, CONDITION_TEMPERATURE, CONDITION_ACCIDENT, MEMBER_ID) values (#{CONDITION_PULSE}, #{CONDITION_TEMPERATURE},#{CONDITION_ACCIDENT}, #{MEMBER_ID})
 	</insert>
 	<insert id="insertAlarm">
-		insert into Alarmlog (MEMBER_ID, CATEGORY_ID) values (#{member_id}, #{CATEGORY_ID})
+		insert into Alarmlog (MEMBER_ID, CATEGORY_ID) values (#{MEMBER_ID}, #{CATEGORY_ID})
 	</insert>
 	<insert id="insertAlarmG">
-		insert into Alarmlog (MEMBER_ID, CATEGORY_ID) values (#{guardian_id}, #{CATEGORY_ID})
+		insert into Alarmlog (MEMBER_ID, CATEGORY_ID) values (#{GUARDIAN_ID}, #{CATEGORY_ID})
 	</insert>
 	<update id="updateAlarm">
-		UPDATE Alarmlog SET state='y' WHERE MEMBER_ID=#{member_id} and alarm_id=#{alarm_id}
+		UPDATE Alarmlog SET state='y' WHERE MEMBER_ID=#{MEMBER_ID} and alarm_id=#{alarm_id}
 	</update>
 
 	<insert id="insertDisease">
@@ -98,7 +98,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="doctors" resultType="String">
-		select doctor_name from member_hospitals where member_id =#{member_id} and hospital_id =#{hospital_id};
+		select doctor_name from member_hospitals where member_id =#{MEMBER_ID} and hospital_id =#{hospital_id};
 	</select>
 
 

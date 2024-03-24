@@ -109,19 +109,19 @@ public class SimpleJoinActivity extends AppCompatActivity {
             JoinTypeActivity jta = (JoinTypeActivity) JoinTypeActivity.joinTypeActivity;
             CommonConn conn = new CommonConn("andjoin", this);
             MemberVO vo = new MemberVO();
-            vo.setEmail(binding.edtEmail.getText().toString());
-            vo.setPhone(binding.edtUserPhone.getText().toString());
-            vo.setGuardian_id(binding.edtGuardianId.getText().toString());
-            vo.setName(binding.edtUserName.getText().toString());
-            vo.setSocial(getIntent().getStringExtra("social").toString());
-            vo.setAddress(binding.edtAddress.getText().toString());
-            vo.setAddress_detail(binding.edtAddressDetail.getText().toString());
+            vo.setEMAIL(binding.edtEmail.getText().toString());
+            vo.setPHONE(binding.edtUserPhone.getText().toString());
+            vo.setGUARDIAN_ID(binding.edtGuardianId.getText().toString());
+            vo.setNAME(binding.edtUserName.getText().toString());
+            vo.setSOCIAL(getIntent().getStringExtra("social").toString());
+            vo.setADDRESS(binding.edtAddress.getText().toString());
+            vo.setADDRESS_DETAIL(binding.edtAddressDetail.getText().toString());
 
-            vo.setBlood(binding.spnBloodType.getSelectedItem().toString());
+            vo.setBLOOD(binding.spnBloodType.getSelectedItem().toString());
             if (binding.rgFemale.isChecked()) {
-                vo.setGender("Female");
+                vo.setGENDER("Female");
             } else {
-                vo.setGender("Male");
+                vo.setGENDER("Male");
             }
             String voJson = new Gson().toJson(vo);
             conn.addParamMap("vo", voJson);

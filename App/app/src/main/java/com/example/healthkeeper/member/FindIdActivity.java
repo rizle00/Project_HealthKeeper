@@ -32,8 +32,8 @@ public class FindIdActivity extends AppCompatActivity {
         CommonConn conn = new CommonConn("andfindid",this);
 
         MemberVO vo = new MemberVO();
-        vo.setName(binding.edtUserName.getText().toString());
-        vo.setPhone(binding.edtUserPhone.getText().toString());
+        vo.setNAME(binding.edtUserName.getText().toString());
+        vo.setPHONE(binding.edtUserPhone.getText().toString());
         String voJson = new Gson().toJson(vo);
         conn.addParamMap("vo",voJson);
         conn.onExcute((isResult, data) -> {

@@ -54,11 +54,16 @@ public class AndMemberController {
 		System.out.println(type + "으로 가입");
 		MemberVO info = new Gson().fromJson(vo, MemberVO.class);
 		info.setPW(pwEncoder.encode(info.getPW()));
+		info.setADDRESS("");
+		info.setADDRESS_DETAIL("");
+		info.setGUARDIAN_ID("");
+		info.setSOCIAL("");
 		if (type.equals("patient")) {
 			service.join(info);
 		} else {
 			String patient = info.getGUARDIAN_ID();
-			info.setGUARDIAN_ID(null);
+			info.setGUARDIAN_ID("");
+			info.setBLOOD("");
 			service.join(info);
 			info.setGUARDIAN_ID(patient);
 			service.patientRegister(info);
@@ -106,7 +111,7 @@ public class AndMemberController {
 
 	@RequestMapping("/address")
 	public String address() {
-		return "daum";
+		return "address";
 	}
 	
 	@PostMapping("/andmodify")

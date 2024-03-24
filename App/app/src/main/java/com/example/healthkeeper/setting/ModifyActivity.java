@@ -54,12 +54,12 @@ public class ModifyActivity extends AppCompatActivity {
         if(num ==24){
             CommonConn conn = new CommonConn("andmodify",this);
             MemberVO vo = new MemberVO();
-            vo.setPw(binding.edtUserPw.getText().toString());
-            vo.setPhone(binding.edtUserPhone.getText().toString());
-            vo.setName(binding.edtUserName.getText().toString());
-            vo.setAddress(binding.edtAddress.getText().toString());
-            vo.setAddress_detail(binding.edtAddressDetail.getText().toString());
-            vo.setMember_id(getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE).getString("user_id",""));
+            vo.setPW(binding.edtUserPw.getText().toString());
+            vo.setPHONE(binding.edtUserPhone.getText().toString());
+            vo.setNAME(binding.edtUserName.getText().toString());
+            vo.setADDRESS(binding.edtAddress.getText().toString());
+            vo.setADDRESS_DETAIL(binding.edtAddressDetail.getText().toString());
+            vo.setMEMBER_ID(getSharedPreferences("PROJECT_MEMBER",MODE_PRIVATE).getString("user_id",""));
             String voJson = new Gson().toJson(vo);
             conn.addParamMap("vo",voJson);
             conn.onExcute((isResult, data) -> {
