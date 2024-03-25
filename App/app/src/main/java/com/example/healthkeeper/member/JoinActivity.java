@@ -37,10 +37,10 @@ public class JoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityJoinBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-//        binding.edtAddress.setOnClickListener(v -> {
-//            Intent intent = new Intent(getApplicationContext(), PopupSearchAddressActivity.class);
-//            startActivityForResult(intent, SEARCH_ADDRESS_ACTIVITY);
-//        });
+        binding.edtAddress.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), PopupSearchAddressActivity.class);
+            startActivityForResult(intent, SEARCH_ADDRESS_ACTIVITY);
+        });
         /* 아이디 유효성 메소드 */
         usableIdCheck();
         /*아이디중복확인*/

@@ -114,7 +114,7 @@ public class AndMemberController {
 		}else {
 			String pw = UUID.randomUUID().toString();
 			pw= pw.substring(pw.lastIndexOf("-")+1);
-			find_info.setPW(pw);
+			find_info.setPW(pwEncoder.encode(pw));
 
 			if(service.resetpw(find_info)==1&&common.sendPassword(mail,pw))
 			return ResponseEntity.ok("success");
