@@ -15,41 +15,36 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/header.jsp"/>
-<div id="notice_header" class="notice_header"> 
-    <!-- 스타일이 적용될 p 태그에 클래스 추가 -->
-    <p class="nh_title">
-        <!-- 스크린 리더를 위한 감춰진 텍스트 -->
-        <span class="blind">공지사항</span>
-        공지사항 <!-- 텍스트 내용 -->
-    </p> 
-</div>
-
-<div class="table_wrap">
-	<a href="/notice/notregistr" class="top_btn">게시판 등록</a>
-	<table>
-		<thead>
-			<tr>
-				<th class="bno_width">번호</th>
-				<th class="title_width">제목</th>
-				<th class="writer_width">작성자</th>
-				<th class="regdate_width">작성일</th>
-				<th class="views_width">조회수</th>
-			</tr>
-		</thead>
+<div class="not_table_wrap">
+	<div class="not_title">
+		<strong>공지사항</strong>
+		<p>공지사항을 안내해드립니다.</p>
+	</div>
+	
+	<div class="not_list_wrap">
+		<div class="not_list">
+			<div class="top">
+				<div class="bno">번호</div>
+				<div class="title">제목</div>
+				<div class="writer">작성자</div>
+				<div class="regdate">작성일</div>
+				<div class="views">조회수</div>
+			</div>
 			<c:forEach items="${notlist}" var="list">
-            	<tr>
-                	<td><c:out value="${list.NOTICE_ID}"/></td>
-                	<td>
-                		<a class="move" href='<c:out value="${list.NOTICE_ID}"/>'>
+				<div>
+					<div class="bno"><c:out value="${list.NOTICE_ID}"/></div>
+					<div class="title">
+						<a class="move" href='<c:out value="${list.NOTICE_ID}"/>'>
         					<c:out value="${list.TITLE}"/>
     					</a>
-                    </td>
-                	<td><c:out value="${list.MEMBER_ID}"/></td>
-                	<td><fmt:formatDate pattern="yyyy/MM/dd" value="${list.TIME}"/></td>
-                	<td><c:out value="${list.READ_CNT}"/></td>
-            	</tr>
-        	</c:forEach>
-	</table>
+					</div>
+					<div class="writer"><c:out value="${list.NAME}"/></div>
+					<div class="regdate"><fmt:formatDate pattern="yyyy/MM/dd" value="${list.TIME}"/></div>
+					<div class="views"><c:out value="${list.READ_CNT}"/></div>
+				</div>
+			</c:forEach>
+		</div>
+	</div>
 	<!-- 검색기능 구현 -->
 	<div class="search_wrap">
         <div class="search_area">
@@ -86,6 +81,11 @@
             </ul>
         </div>
     </div>
+    
+    <div class="bt_wrap">
+      <a href="/notice/notregistr" class="on">등록</a>
+    </div>
+    
 	<form id="moveForm" method="get">
 		<input type="hidden" name="pageNum" value="${npageMake.ncri.pageNum }">
         <input type="hidden" name="amount" value="${npageMake.ncri.amount }">
@@ -93,7 +93,6 @@
         <input type="hidden" name="type" value="${npageMake.ncri.type }">     
     </form>
 </div>
-<jsp:include page="/WEB-INF/views/include/footer.jsp"/>
 <script>
 	// 공지사항 등록시 알람창 js 코드
 	$(document).ready(function(){

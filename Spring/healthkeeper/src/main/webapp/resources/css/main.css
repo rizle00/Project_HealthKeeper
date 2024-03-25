@@ -237,7 +237,6 @@ sup {
 
 a {
   color: var(--bs-link-color);
-  text-decoration: underline;
 }
 a:hover {
   color: var(--bs-link-hover-color);
@@ -342,7 +341,7 @@ caption {
 
 th {
   text-align: inherit;
-  text-align: -webkit-match-parent;
+  text-align: center;
 }
 
 thead,

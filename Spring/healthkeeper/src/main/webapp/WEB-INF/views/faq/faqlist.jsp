@@ -15,6 +15,14 @@
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 
 <body>
+<div id="faq_header" class="faq_header"> 
+    <!-- 스타일이 적용될 p 태그에 클래스 추가 -->
+    <p class="fh_title">
+        <!-- 스크린 리더를 위한 감춰진 텍스트 -->
+        <span class="blind">FAQ</span>
+        FAQ <!-- 텍스트 내용 -->
+    </p> 
+</div>
    <div class="table_wrap">
 	<a href="/faq/faqregistr" class="top_btn">게시판 등록</a>
 	<table>

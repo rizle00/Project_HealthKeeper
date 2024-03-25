@@ -4,6 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.mapper.QsMapper">
 
+<!-- 공지사항 등록 -->
 	<insert id="qsregistr" parameterType="kr.co.model.QsVO" useGeneratedKeys="true">
 	<selectKey keyProperty="QUE_ID" resultType="int" order="AFTER">
         	SELECT QUESTION_ID_SEQ.CURRVAL FROM DUAL
@@ -15,27 +16,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 게시판 목록 -->
 	<select id="getlist" resultType="kr.co.model.QsVO">
 		SELECT * FROM QUESTION
-		ORDER BY QUE_ID DESC
 	</select>
 	
 	<!-- 게시판 목록(페이징 유지처리) --> 
 	<select id="getlistPaging" resultType="kr.co.model.QsVO">
     <![CDATA[
-        SELECT QUE_ID, TITLE, CONTENT, MEMBER_ID, TIME, READ_CNT
-        FROM(        
-              SELECT /*+INDEX_DESC(QUESTION PK_QUESTION) */ 
-              ROWNUM AS RN, QUE_ID, TITLE, CONTENT, MEMBER_ID, TIME, READ_CNT
-              FROM QUESTION 
-              ORDER BY QUE_ID DESC
-              WHERE ROWNUM <= #{pageNum} * #{amount}
-    	]]>
-    		<if test="Keyword !=null">
-    			<include refid="qscriteria"></include>
-    		</if>
-        <![CDATA[
-        	  )
-        	WHERE RN > (#{pageNum} -1) * #{amount}
-        ]]>
+    SELECT QUE_ID, TITLE, CONTENT, q.MEMBER_ID, TIME, READ_CNT, m.NAME, c.NAME CATEGORY_NAME
+    FROM (
+        SELECT /*+INDEX_DESC(QUESTION PK_QUESTION) */ 
+        ROWNUM AS RN, QUE_ID, TITLE, CONTENT, MEMBER_ID, TIME, READ_CNT, CATEGORY_ID
+        FROM QUESTION
+    	) q 
+    	LEFT OUTER JOIN MEMBER m ON q.MEMBER_ID = m.MEMBER_ID 
+    	LEFT OUTER JOIN CATEGORY c ON q.CATEGORY_ID = c.CATEGORY_ID
+    	WHERE RN <= #{pageNum} * #{amount}
+	]]>
+	<if test="Keyword != null">
+    	<include refid="qscriteria"></include>
+	</if>
+	<![CDATA[
+    	AND RN > (#{pageNum} -1) * #{amount}
+    	ORDER BY QUE_ID DESC
+	]]>
     </select>
 	
 	<!-- 게시판 글 총 갯수 -->
@@ -69,8 +71,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 게시판 조회 -->
 	<select id="getpage" resultType="kr.co.model.QsVO">
-		SELECT * FROM QUESTION
-		WHERE QUE_ID = #{QUE_ID}
+		SELECT Q.*, M.NAME AS NAME
+    	FROM QUESTION Q
+    	LEFT JOIN MEMBER M ON Q.MEMBER_ID = M.MEMBER_ID
+    	WHERE QUE_ID = #{QUE_ID}
 	</select>
 	
 	<!-- 게시판 조회수 -->
@@ -80,6 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		READ_CNT = READ_CNT + 1
 		WHERE QUE_ID = #{QUE_ID}
 	</update>
+	
 	
 	<!-- 게시판 수정 -->
 	<update id="update">

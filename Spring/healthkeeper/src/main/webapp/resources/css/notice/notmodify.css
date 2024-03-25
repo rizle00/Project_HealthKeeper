@@ -1,62 +1,153 @@
-/* styles.css */
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+*{
+	margin: 0 ;
+	padding: 0 ;
 }
 
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.move{
+	text-decoration: none !important;
+	color: inherit;
 }
 
-h1 {
-    color: #333;
+html{
+	font-size: 10px;
 }
 
-.input_wrap {
-    margin-bottom: 15px;
+/* 테이블 기본설정 */
+.not_table_wrap {
+	width : 1000px;
+	margin : 100px auto;
 }
 
-.input_wrap label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+.not_title{
+	margin-bottom: 30px;
 }
 
-.input_wrap input[type="text"],
-.input_wrap textarea {
-    width: calc(100% - 10px);
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.not_title strong{
+	font-size: 3rem !important;
 }
 
-.btn_wrap {
-    margin-top: 20px;
+.not_title p{
+	margin-top: 5px;
+	font-size: 1.4rem;
 }
 
-.btn_wrap .btn {
+.not_update {
+	border-top: 2px solid #000;
+}
+
+.not_update .title,
+.not_update .info{
+	padding: 15px;
+}
+
+.not_update .title{
+	border-top: 1px dashed #ddd;
+}
+
+.not_update .info{
+	border-top: 1px dashed #ddd;
+	border-bottom: 1px solid #000;
+	font-size: 0;
+}
+
+.not_update .title dl{
+	font-size: 0;
+}
+
+.not_update .info dl {
     display: inline-block;
-    padding: 10px 20px;
-    margin-right: 10px;
-    background-color: #007bff;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 4px;
-    cursor: pointer;
+    width: 50%;
+    vertical-align: middle;
 }
 
-.btn_wrap .btn:last-child {
-    margin-right: 0;
+
+.not_update .title dt,
+.not_update .title dd,
+.not_update .info dt,
+.not_update .info dd{
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 1.4rem;
 }
 
-.btn_wrap .btn:hover {
-    background-color: #0056b3;
+.not_update .title dt,
+.not_update .info dt{
+	width: 100px;
+}
+
+.not_update .info{
+	margin-left: 5px;
+}
+
+.not_update .title dd{
+	width: calc(100% - 100px);
+}
+
+.not_update .title input[type="text"]{
+	width: 80%;
+	margin-left: 4px;
+	box-sizing: border-box;
+}
+
+.not_update .title input[type="text"],
+.not_update .info input[type="text"],
+.not_update .info input[type="file"] {
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.not_update .info input[type="text"]{
+	width: 70%;
+	padding: 5px;
+	box-sizing: border-box;
+}
+
+.not_update .info input[type="file"]{
+	margin-top: 5px;
+}
+
+.not_update .content{
+	border-bottom: 1px solid #000;
+}
+
+.not_update .content textarea {
+	display: block;
+	width: 100%;
+	height: 300px;
+	padding: 15px;
+	box-sizing: border-box;
+	border: 0;
+	resize: vertical;
+}
+
+.bt_wrap {
+    margin-top: 30px ;
+    text-align: center;
+    font-size: 0;
+}
+
+.bt_wrap > button {
+    display: inline-block;
+    min-width: 80px;
+    margin-left: 10px !important;
+    padding: 10px;
+    border: 1px solid #000;
+    border-radius: 2px;
+    font-size: 1.4rem;
+}
+
+.bt_wrap a:first-child{
+	margin-left: 0 !important;
+}
+
+.bt_wrap .btn_qsbtn{
+	background: #000;
+	color: #fff !important;
+	text-decoration: none;
+} 
+
+.bt_wrap .cancel_btn{
+	color: #000 ;
+	text-decoration: none;
+	background-color: #fff;
 }

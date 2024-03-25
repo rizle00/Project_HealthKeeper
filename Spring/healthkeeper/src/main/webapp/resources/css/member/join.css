@@ -89,34 +89,34 @@ form {
     background-color: #373c41 !important;
 }
 
-/* 중복아이디 존재하지 않는경우 */
+/* 환자 중복아이디 존재하지 않는경우 */
 .email_input_re_1{
 	color : green ;
 	display : none ;
 	margin-top: 12px ;
 }
-	/* 중복아이디 존재하는 경우 */
+/* 환자 중복아이디 존재하는 경우 */
 .email_input_re_2{
-	color : red !important;
-	display : none !important;
-	margin-top: 12px !important;
+	color : red ;
+	display : none ;
+	margin-top: 12px ;
 }
 
-/* 중복아이디 존재하지 않는경우 */
+/* 보호자 중복아이디 존재하지 않는경우 */
 .gemail_input_re_1{
 	color : green ;
 	display : none ;
 	margin-top: 12px ;
 }
 
-/* 중복아이디 존재하는 경우 */
+/* 보호자 중복아이디 존재하는 경우 */
 .gemail_input_re_2{
 	color : red ;
 	display : none ;
 	margin-top: 12px ;
 }
 
-/* 유효성 검사 문구 */
+/* 환자 회원가입 유효성 검사 문구 */
 
 .final_id_ck{
     display: none;
@@ -164,7 +164,65 @@ form {
     margin-top: 3px;
 }
 
-/* 비밀번호 확인 일치 유효성검사 */
+/* 환자 비밀번호 확인 일치 유효성검사 */
+.pwck_input_re_1{
+  color : green ;
+  display : none ;  
+}
+.pwck_input_re_2{
+  color : red ;
+  display : none ;  
+} 
+
+/* 보호자 회원가입 유효성 검사 문구 */
+
+.gu_final_id_ck{
+    display: none;
+    color : red ;
+    margin-top: 3px;
+}
+.gu_final_pw_ck{
+    display: none;
+    color : red ;
+     margin-top: 3px;
+}
+.gu_final_pwck_ck{
+    display: none;
+    color : red ;
+    margin-top: 3px;
+}
+.gu_final_name_ck{
+    display: none;
+    color : red ;
+    margin-top: 3px;
+}
+.gu_final_phone_ck{
+    display: none;
+    color : red ;
+    margin-top: 3px;
+}
+.gu_final_date_ck{
+    display: none;
+    color : red ;
+    margin-top: 3px;
+}
+.gu_final_addr_ck{
+    display: none;
+    color : red ;
+   	margin-top: 3px;
+}
+.gu_final_gender_ck{
+    display: none;
+    color : red ;
+    margin-top: 3px;
+}
+.gu_final_blood_ck{
+    display: none;
+    color : red ;
+    margin-top: 3px;
+}
+
+/* 보호자 비밀번호 확인 일치 유효성검사 */
 .pwck_input_re_1{
   color : green ;
   display : none ;  
