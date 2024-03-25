@@ -225,99 +225,99 @@ public class MemberController {
 //		return "redirect:" + url.toString();
 //	}
 
-	@RequestMapping("kakaocallback")
-	public String kakaocallback(String code,HttpSession session, Model model){
-		if(code ==null) return "redirect:/main";
-
-		StringBuffer url = new StringBuffer("https://kauth.kakao.com/oauth/token?grant_type=authorization_code");
-		url	.append( "&client_id=" ).append( KAKAO_REST_API )
-				.append( "&code=" ).append( code );
-		String response = common.requestAPI(url.toString());
-		JSONObject json = new JSONObject(response);
-		String token_type = json.getString("token_type");
-		String access_token = json.getString("access_token");
-
-		response = common.requestAPI("https://kapi.kakao.com/v2/user/me", token_type +" "+access_token);
-		json =  new JSONObject(response);
-		if(! json.isEmpty()) {
-			String id = String.valueOf(json.getLong("id"));
-			json = json.getJSONObject("kakao_account");
-
-			MemberVO vo = new MemberVO();
-			vo.setSOCIAL(id);
-			if(memberService.socialCheck(id)==0){
-				session.setAttribute("vo",vo);
-				return "redirect:/member/simplejoin"; 
-			}else {
-				//로그인
-				MemberVO lvo=memberService.socialLogin(id);
-				session.setAttribute("member", lvo);
-				
-			}
-			
-		}
-		return "redirect:/main";
-	}
-
-
-	@RequestMapping("naverLogin")
-	public String naverLogin(HttpSession session, HttpServletRequest request){
-		String state = UUID.randomUUID().toString();
-		session.setAttribute("state",state);
-
-		StringBuffer url = new StringBuffer("https://nid.naver.com/oauth2.0/authorize?response_type=code");
-		url.append("&client_id=").append(NAVER_CLIENT_ID);
-		url.append("&state=").append(state);
-		url.append("&redirect_url=").append(common.appURL(request)).append("/member/navercallback");
-
-		return "redirect:" + url.toString();
-	}
-
-	@RequestMapping("/navercallback")
-	public String naverCallback(String code,HttpSession session,String state,Model model){
-		if(code ==null) return "redirect:/";
-
-		//토큰 발급 요청
-		StringBuffer url = new StringBuffer("https://nid.naver.com/oauth2.0/token?grant_type=authorization_code");
-		url.append("&client_id=").append(NAVER_CLIENT_ID)
-						.append("&client_secret=").append(NAVER_SECRET)
-				.append("&code=").append(code)
-				.append("&state=").append(state);
-		String response = common.requestAPI(url.toString());
-
-		HashMap<String,String> map = new Gson().fromJson(response, new TypeToken<HashMap<String, String>>(){}.getType());
-		String token = map.get("access_token");
-		String type = map.get("token_type");
-
-		response = common.requestAPI("https://openapi.naver.com/v1/nid/me",type+" "+token);
-		JSONObject json =  new JSONObject(response);
-
-		if(json.getString("resultcode").equals("00")){
-			MemberVO vo = new MemberVO();
-			
-			json = json.getJSONObject("response");
-			String id= json.getString("id");
-			vo.setEMAIL(json.getString("email"));
-			vo.setGENDER(json.getString("gender"));
-			vo.setSOCIAL(id);
-			vo.setNAME(json.getString("name"));
-			vo.setPHONE(json.getString("mobile"));
-			//해당 소셜정보가 없는경우 회원가입
-			if(memberService.socialCheck(id)==0){
-				model.addAttribute("type","naver");
-				session.setAttribute("vo",vo);
-				return "redirect:/member/simplejoin"; 
-			}else {
-				//로그인
-				MemberVO lvo=memberService.socialLogin(id);
-				session.setAttribute("member", lvo);
-				
-			}
-			
-		}
-		return "redirect:/main";
-	}
-	
+//	@RequestMapping("kakaocallback")
+//	public String kakaocallback(String code,HttpSession session, Model model){
+//		if(code ==null) return "redirect:/main";
+//
+//		StringBuffer url = new StringBuffer("https://kauth.kakao.com/oauth/token?grant_type=authorization_code");
+//		url	.append( "&client_id=" ).append( KAKAO_REST_API )
+//				.append( "&code=" ).append( code );
+//		String response = common.requestAPI(url.toString());
+//		JSONObject json = new JSONObject(response);
+//		String token_type = json.getString("token_type");
+//		String access_token = json.getString("access_token");
+//
+//		response = common.requestAPI("https://kapi.kakao.com/v2/user/me", token_type +" "+access_token);
+//		json =  new JSONObject(response);
+//		if(! json.isEmpty()) {
+//			String id = String.valueOf(json.getLong("id"));
+//			json = json.getJSONObject("kakao_account");
+//
+//			MemberVO vo = new MemberVO();
+//			vo.setSOCIAL(id);
+//			if(memberService.socialCheck(id)==0){
+//				session.setAttribute("vo",vo);
+//				return "redirect:/member/simplejoin";
+//			}else {
+//				//로그인
+//				MemberVO lvo=memberService.socialLogin(id);
+//				session.setAttribute("member", lvo);
+//
+//			}
+//
+//		}
+//		return "redirect:/main";
+//	}
+//
+//
+//	@RequestMapping("naverLogin")
+//	public String naverLogin(HttpSession session, HttpServletRequest request){
+//		String state = UUID.randomUUID().toString();
+//		session.setAttribute("state",state);
+//
+//		StringBuffer url = new StringBuffer("https://nid.naver.com/oauth2.0/authorize?response_type=code");
+//		url.append("&client_id=").append(NAVER_CLIENT_ID);
+//		url.append("&state=").append(state);
+//		url.append("&redirect_url=").append(common.appURL(request)).append("/member/navercallback");
+//
+//		return "redirect:" + url.toString();
+//	}
+//
+//	@RequestMapping("/navercallback")
+//	public String naverCallback(String code,HttpSession session,String state,Model model){
+//		if(code ==null) return "redirect:/";
+//
+//		//토큰 발급 요청
+//		StringBuffer url = new StringBuffer("https://nid.naver.com/oauth2.0/token?grant_type=authorization_code");
+//		url.append("&client_id=").append(NAVER_CLIENT_ID)
+//						.append("&client_secret=").append(NAVER_SECRET)
+//				.append("&code=").append(code)
+//				.append("&state=").append(state);
+//		String response = common.requestAPI(url.toString());
+//
+//		HashMap<String,String> map = new Gson().fromJson(response, new TypeToken<HashMap<String, String>>(){}.getType());
+//		String token = map.get("access_token");
+//		String type = map.get("token_type");
+//
+//		response = common.requestAPI("https://openapi.naver.com/v1/nid/me",type+" "+token);
+//		JSONObject json =  new JSONObject(response);
+//
+//		if(json.getString("resultcode").equals("00")){
+//			MemberVO vo = new MemberVO();
+//
+//			json = json.getJSONObject("response");
+//			String id= json.getString("id");
+//			vo.setEMAIL(json.getString("email"));
+//			vo.setGENDER(json.getString("gender"));
+//			vo.setSOCIAL(id);
+//			vo.setNAME(json.getString("name"));
+//			vo.setPHONE(json.getString("mobile"));
+//			//해당 소셜정보가 없는경우 회원가입
+//			if(memberService.socialCheck(id)==0){
+//				model.addAttribute("type","naver");
+//				session.setAttribute("vo",vo);
+//				return "redirect:/member/simplejoin";
+//			}else {
+//				//로그인
+//				MemberVO lvo=memberService.socialLogin(id);
+//				session.setAttribute("member", lvo);
+//
+//			}
+//
+//		}
+//		return "redirect:/main";
+//	}
+//
 	
 	private String redirectURL(HttpSession session, Model model) {
 		if( session.getAttribute("redirect") == null ) {

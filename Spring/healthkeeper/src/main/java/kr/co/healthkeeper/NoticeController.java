@@ -112,12 +112,11 @@ public class NoticeController {
     // 공지사항 조회
     @GetMapping("/notget")
     public void noticeGetPageGET(String NOTICE_ID, Model model, NotCriteria ncri)throws Exception {
-    public void noticeGetPageGET(int NOTICE_ID, NoticeVO vo,Model model, NotCriteria ncri)throws Exception {
 
     	// 공지사항 조회수
     	service.noticeViews(NOTICE_ID);
     	
-    	vo = service.getPage(NOTICE_ID);
+    	NoticeVO vo = service.getPage(NOTICE_ID);
     	vo.setMember(service.member(vo.getMEMBER_ID()));
     	
         model.addAttribute("pageInfo", vo);

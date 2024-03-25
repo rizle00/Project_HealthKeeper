@@ -32,9 +32,6 @@ public class AndMemberController {
 	public ResponseEntity<String> login(String email, String pw) {
 		System.out.println("로그인");
 		MemberVO vo = service.login(email);
-		System.out.println(vo.getPW());
-		System.out.println(pwEncoder.encode(pw.toString()));
-		System.out.println(email.toString() + pw.toString());
 		if (pwEncoder.matches(pw, vo.getPW())) {// 인코딩이 제대로 안됨
 //		if (pw.equals(vo.getPW())) {
 //			dataHolder.setData(vo.getToken());
