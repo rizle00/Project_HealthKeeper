@@ -60,7 +60,7 @@ public class PopupSearchAddressActivity extends AppCompatActivity {
     public void init_webView(){
         webView = binding.wvAddress;
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.addJavascriptInterface(new MyJavaScriptInterface(), "Android");
+        webView.addJavascriptInterface(new MyJavaScriptInterface(), "MysosoApp");
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
