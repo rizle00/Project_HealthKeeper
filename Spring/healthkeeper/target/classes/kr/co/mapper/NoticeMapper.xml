@@ -10,8 +10,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         	SELECT NOTICE_ID_SEQ.CURRVAL FROM DUAL
     	</selectKey>
     		INSERT INTO NOTICE (TITLE, CONTENT, MEMBER_ID)
-    		VALUES (#{TITLE, jdbcType=VARCHAR}, #{CONTENT, jdbcType=VARCHAR}, #{MEMBER_ID})
+    		VALUES (#{TITLE, jdbcType=VARCHAR}, #{CONTENT, jdbcType=VARCHAR}, #{member.MEMBER_ID})
 	</insert>
+	
+	<!-- 회원이름 -->
+	<select id="member" resultType="kr.co.model.MemberVO">
+		SELECT * FROM MEMBER
+		WHERE MEMBER_ID = #{ MEMBER_ID }
+	</select>
  	
  	<!-- 공지사항 목록 -->
     <select id="getlist" resultType="kr.co.model.NoticeVO">
@@ -22,19 +28,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 공지사항 목록(페이징 유지처리) -->
     <select id="getListPaging" resultType="kr.co.model.NoticeVO">
     <![CDATA[
-        SELECT NOTICE_ID, TITLE, CONTENT, MEMBER_ID, TIME, READ_CNT
+        SELECT NOTICE_ID, TITLE, CONTENT, n.MEMBER_ID, TIME, READ_CNT, m.NAME
         FROM (
               SELECT /*+INDEX_DESC(NOTICE PK_NOTICE) */ 
               ROWNUM AS RN, NOTICE_ID, TITLE, CONTENT, MEMBER_ID, TIME, READ_CNT
-              FROM NOTICE 
-              WHERE ROWNUM <= #{pageNum} * #{amount} 
+              FROM NOTICE
+              ) n
+              JOIN MEMBER m ON n.MEMBER_ID = m.MEMBER_ID 
+              WHERE RN <= #{pageNum} * #{amount} 
               ]]>
               <if test="keyword !=null">
                 <include refid="notcriteria"></include>
               </if>
     <![CDATA[
-              )
-        WHERE RN > (#{pageNum} -1) * #{amount}
+              
+        AND RN > (#{pageNum} -1) * #{amount}
     	      ]]>
 	</select>
     

@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import kr.co.mapper.QsMapper;
 import kr.co.model.CateGoryVO;
 import kr.co.model.FilesVO;
+import kr.co.model.MemberVO;
 import kr.co.model.QsCriteria;
 import kr.co.model.QsVO;
 import kr.co.util.FileUtils;
@@ -101,5 +102,6 @@ public class QsServiceImpl implements QsService{
 	public Map<String, Object> filedown(Map<String, Object> map) throws Exception{
 		return mapper.filedown(map);
 	}
+
 
 }

@@ -11,6 +11,10 @@ public class QsVO {
 		
 	// 게시판 제목
 	private String TITLE;
+	
+	private String NAME;
+	
+	private String CATEGORY_NAME;
 		
 	// 게시판 내용
 	private String CONTENT;
@@ -25,6 +29,7 @@ public class QsVO {
 	private int CATEGORY_ID;
 	
 	private CateGoryVO category; // CategoryVO 객체
+	
 		
 	// 게시판 조회수
 	private int READ_CNT;

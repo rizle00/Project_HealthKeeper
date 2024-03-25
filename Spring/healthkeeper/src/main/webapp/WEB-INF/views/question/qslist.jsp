@@ -15,41 +15,38 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/header.jsp"/>
-<div id="question_header" class="question_header"> 
-    <!-- 스타일이 적용될 p 태그에 클래스 추가 -->
-    <p class="question_title">
-        <!-- 스크린 리더를 위한 감춰진 텍스트 -->
-        <span class="blind">질문게시판</span>
-        질문게시판 <!-- 텍스트 내용 -->
-    </p> 
-</div>
-
-<div class="table_wrap">
-	<a href="/question/qsregistr" class="top_btn">게시판 등록</a>
-	<table>
-		<thead>
-			<tr>
-				<th class="bno_width">번호</th>
-				<th class="title_width">제목</th>
-				<th class="writer_width">작성자</th>
-				<th class="regdate_width">작성일</th>
-				<th class="views_width">조회수</th>
-			</tr>
-		</thead>
+<div class="qstable_wrap">
+	<div class="qs_title">
+		<strong>질문게시판</strong>
+		<p>질문을 빠르고 정확하게 안내해드립니다.</p>
+	</div>
+	
+	<div class="qs_list_wrap">
+		<div class="qs_list">
+			<div class="top">
+				<div class="bno">번호</div>
+				<div class="category">카테고리</div>
+				<div class="title">제목</div>
+				<div class="writer">작성자</div>
+				<div class="regdate">작성일</div>
+				<div class="views">조회수</div>
+			</div>
 			<c:forEach items="${qslist}" var="qslist">
-            	<tr>
-                	<td><c:out value="${qslist.QUE_ID}"/></td>
-                	<td>
-                		<a class="move" href='<c:out value="${qslist.QUE_ID}"/>'>
+				<div>
+					<div class="bno"><c:out value="${qslist.QUE_ID}"/></div>
+					<div class="category"><c:out value="${qslist.CATEGORY_NAME}"/></div>
+					<div class="title">
+						<a class="move" href='<c:out value="${qslist.QUE_ID}"/>'>
         					<c:out value="${qslist.TITLE}"/>
     					</a>
-                    </td>
-                	<td><c:out value="${qslist.MEMBER_ID}"/></td>
-                	<td><fmt:formatDate pattern="yyyy/MM/dd" value="${qslist.TIME}"/></td>
-                	<td><c:out value="${qslist.READ_CNT}"/></td>
-            	</tr>
-        	</c:forEach>
-	</table>
+					</div>
+					<div class="writer"><c:out value="${qslist.NAME}"/></div>
+					<div class="regdate"><fmt:formatDate pattern="yyyy/MM/dd" value="${qslist.TIME}"/></div>
+					<div class="views"><c:out value="${qslist.READ_CNT}"/></div>
+				</div>
+			</c:forEach>
+		</div>
+	</div>
 	<!-- 검색기능 구현 -->
 	<div class="search_wrap">
         <div class="search_area">
@@ -86,6 +83,11 @@
             </ul>
         </div>
     </div>
+    
+    <div class="bt_wrap">
+      <a href="/question/qsregistr" class="on">등록</a>
+    </div>
+    
 	<form id="moveForm" method="get">
 		<input type="hidden" name="pageNum" value="${qpageMake.qcri.pageNum }">
         <input type="hidden" name="amount" value="${qpageMake.qcri.amount }">
@@ -93,7 +95,6 @@
         <input type="hidden" name="type" value="${qpageMake.qcri.type }">
     </form>
 </div>
-<jsp:include page="/WEB-INF/views/include/footer.jsp"/>
 <script>
 	// 공지사항 등록, 수정, 삭제, 알람창 js 코드
 	$(document).ready(function(){

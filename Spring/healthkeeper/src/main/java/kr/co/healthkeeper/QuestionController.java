@@ -6,9 +6,9 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,9 +48,10 @@ public class QuestionController {
 	
 	// 질문게시판 목록페이지(페이징 적용)
 	@GetMapping("/qslist")
-	public void qsListGET(Model model, QsCriteria qcri) {
+	public void qsListGET(Model model,QsVO vo, QsCriteria qcri) {
 		
 		log.info("질문게시판 페이지 진입");
+		
 		model.addAttribute("qslist", service.getlistPaging(qcri));
 		
 		int total = service.getTotal(qcri);

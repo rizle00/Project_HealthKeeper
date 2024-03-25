@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.co.model.CateGoryVO;
 import kr.co.model.FilesVO;
+import kr.co.model.MemberVO;
 import kr.co.model.QsCriteria;
 import kr.co.model.QsVO;
 
@@ -40,6 +41,7 @@ public interface QsService {
 	public List<CateGoryVO> catelist() throws Exception;
 	
 	public CateGoryVO cate(int CATEGORY_ID);
+	
 	
 	// 게시판 첨부파일 조회
 	public List<FilesVO> fileList(int QUE_ID);

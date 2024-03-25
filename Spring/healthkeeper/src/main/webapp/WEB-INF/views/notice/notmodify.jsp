@@ -11,59 +11,62 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>수정 페이지</h1>
-<form id="notmodifyForm" action="/notice/notmodify" method="post" >
-    <div class="input_wrap">
-        <label>게시판 번호</label>
-        <input name="NOTICE_ID" readonly="readonly" value='<c:out value="${pageInfo.NOTICE_ID}"/>' >
-    </div>
-    <div class="input_wrap">
-        <label>게시판 제목</label>
-        <input name="TITLE" value='<c:out value="${pageInfo.TITLE}"/>' >
-    </div>
-    <div class="input_wrap">
-        <label>게시판 내용</label>
-        <textarea rows="3" name="CONTENT"><c:out value="${pageInfo.CONTENT}"/></textarea>
-    </div>
-    <div class="input_wrap">
-        <label>게시판 작성자</label>
-        <input name="MEMBER_ID" readonly="readonly" value='<c:out value="${pageInfo.MEMBER_ID}"/>' >
-    </div>
-    <div class="input_wrap">
-        <label>게시판 등록일</label>
-        <input name="TIME" readonly="readonly" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${pageInfo.TIME}"/>' >
-    </div>
-    <div class="fileIndex">
-        <!-- 기존 파일 목록 표시 -->
-        <c:forEach var="file" items="${fileList}" varStatus="var">
-            <div>
-                <input type="hidden" id="FILE_ID_${var.index}" name="FILE_ID_${var.index}" value="${file.FILE_ID}">
-                <input type="hidden" id="NAME_${var.index}" name="NAME_${var.index}" value="${file.NAME}">
-                <a href="#" class="fileName">${file.NAME}</a>
-                <button onclick="deleteFile('<c:out value="${pageInfo.NOTICE_ID}"/>')">삭제</button>
-            </div>
-        </c:forEach>
-    </div>
-    <div class="btn_wrap">
+<jsp:include page="/WEB-INF/views/include/header.jsp"/>
+	<form id="notmodifyForm" action="/notice/notmodify" method="post" >
+		<div class="not_table_wrap">
+		<div class="not_title">
+			<strong>공지사항</strong>
+			<p>공지사항을 안내해드립니다.</p>
+		</div>
+		
+		<div class="not_writer_wrap">
+			<div class="not_update">
+				<div class="title">
+					<dl>
+						<dt>제목</dt>
+						<dd><input type="text" name="TITLE" value='<c:out value="${pageInfo.TITLE}"/>'></dd>	
+					</dl>
+				</div>
+				
+				<div class="info">
+					<dl>
+						<dt>작성자</dt>
+						<dd><input type="text" name="member.MEMBER_ID" readonly="readonly" value='<c:out value="${pageInfo.member.NAME}"/>'></dd>	
+					</dl>
+					
+					<dl>
+						<dt>파일첨부</dt>
+						<dd>
+							<c:forEach var="file" items="${fileList}">
+        						<a href="#" onclick="fn_fileDown('${file.FILE_ID}'); return false;">
+        						${file.NAME}</a>
+    						</c:forEach>
+						</dd>	
+					</dl>
+				</div>
+				
+				<div class="content">
+					<textarea name="CONTENT"><c:out value="${pageInfo.CONTENT}"/></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bt_wrap">
         <a class="btn" id="notlist_btn">목록 페이지</a> 
         <a class="btn" id="notmodify_btn">수정완료</a>
         <a class="btn" id="notdelete_btn">삭제</a>
         <a class="btn" id="cancel_btn">수정취소</a>
-        <!-- 파일 추가 버튼 -->
-        <button type="button" class="fileAdd_btn">파일추가</button>
     </div>
-</form>
-<form id="infoForm" action="/notice/notmodify" method="get">
+	</form>
+	<form id="infoForm" action="/notice/notmodify" method="get">
     <input type="hidden" id="notice_id" name="NOTICE_ID" value='<c:out value="${pageInfo.NOTICE_ID}"/>'>
     <input type="hidden" name="pageNum" value='<c:out value="${ncri.pageNum}"/>'>
     <input type="hidden" name="amount" value='<c:out value="${ncri.amount}"/>'>
     <input type="hidden" name="type" value="${ncri.type }">
     <input type="hidden" name="keyword" value="${ncri.keyword }"> 
-    <!-- <input type="hidden" id="fileIdDel" name="fileIdDel[]" value=""> 
-    <input type="hidden" id="fileNameDel" name="fileNameDel[]" value=""> --> 
 </form>
 <script>
-$(document).ready(function() {
+	$(document).ready(function() {
     // 파일 추가 버튼 클릭 시 파일 입력 필드 추가
     $(".fileAdd_btn").on("click", function() {
         $(".fileIndex").append('<div><input type="file" name="file"></div>');
@@ -128,7 +131,6 @@ $(document).ready(function() {
          });
      }
     }
-
-</script>    
+</script>	
 </body>
 </html>

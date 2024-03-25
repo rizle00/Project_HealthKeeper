@@ -17,12 +17,12 @@
 <h1>조회 페이지</h1>
 
 	<div class="input_wrap">
-		<label>FAQ 게시판 제목</label>
+		<label>제목</label>
 		<input name="TITLE" readonly="readonly" value='<c:out value="${pageInfo.TITLE}"/>' >
 	</div>
 	
 	<div class="input_wrap">
-		<label>FAQ 게시판 내용</label>
+		<label>내용</label>
 		<textarea rows="3" name="CONTENT" readonly="readonly"><c:out value="${pageInfo.CONTENT}"/></textarea>
 	</div>
 		
