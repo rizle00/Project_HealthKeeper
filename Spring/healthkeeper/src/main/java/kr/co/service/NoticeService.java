@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.co.model.FilesVO;
+import kr.co.model.MemberVO;
 import kr.co.model.NotCriteria;
 import kr.co.model.NoticeVO;
 
@@ -34,6 +35,9 @@ public interface NoticeService {
 	
 	// 공지사항 조회수
 	public int noticeViews(String NOTICE_ID);
+	
+	// 공지사항 회원이름
+	public MemberVO member(int MEMBER_ID);
 	
 	// 첨부파일 조회
 	public List<FilesVO> selectFileList(String NOTICE_ID);

@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 import kr.co.and.firebase.FirebaseCloudMessageService;
 import kr.co.and.firebase.RequestDTO;
@@ -69,12 +71,15 @@ public class NoticeController {
     // 공지사항 등록
     @PostMapping("/notregistr")
     public String noticeRegistrPOST(NoticeVO notice, RedirectAttributes rttr,
-    	MultipartHttpServletRequest notRequest)throws Exception {
+    	MultipartHttpServletRequest notRequest,Model model)throws Exception {
     	
     	if(service.notregistr(notice,notRequest) != 0){
             createAlarm();
 
         }
+    	
+    	// 공지사항을 등록하고 , 멤버의 이름이 함께 저장되도록 함
+    	service.notregistr(notice,notRequest);
     	rttr.addFlashAttribute("result", "registr success");
     	return "redirect:/notice/notlist";
     }
@@ -107,27 +112,21 @@ public class NoticeController {
     // 공지사항 조회
     @GetMapping("/notget")
     public void noticeGetPageGET(String NOTICE_ID, Model model, NotCriteria ncri)throws Exception {
+    public void noticeGetPageGET(int NOTICE_ID, NoticeVO vo,Model model, NotCriteria ncri)throws Exception {
 
     	// 공지사항 조회수
     	service.noticeViews(NOTICE_ID);
     	
-        model.addAttribute("pageInfo", service.getPage(NOTICE_ID));
+    	vo = service.getPage(NOTICE_ID);
+    	vo.setMember(service.member(vo.getMEMBER_ID()));
+    	
+        model.addAttribute("pageInfo", vo);
         model.addAttribute("ncri", ncri);
         
         // 공지사항 첨부파일 목록
     	List<FilesVO> fileList = service.selectFileList(NOTICE_ID);
     	model.addAttribute("fileList", fileList);
     
-    	
-    	// 공지사항 첨부파일 수정업로드
-//    	List<FilesVO> updatefile = service.updateFileList(NOTICE_ID);
-//    	model.addAttribute("updatefile",updatefile);
-    	
-		/*
-		 * // 추가된 파일 목록을 모델에 추가 List<FilesVO> addedFileList =
-		 * service.getAddedFileList(NOTICE_BNO); model.addAttribute("addedFileList",
-		 * addedFileList);
-		 */
     }
     
     // 공지사항 수정페이지 이동

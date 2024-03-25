@@ -7,51 +7,65 @@
 <head>
 <meta charset="UTF-8">
 <title>수정 페이지</title>
-<link rel="stylesheet" href="/resources/css/question/qsget.css">
+<link rel="stylesheet" href="/resources/css/question/qsupdate.css">
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>수정 페이지</h1>
+<jsp:include page="/WEB-INF/views/include/header.jsp"/>
 	<form id="qsupdateForm" action="/question/qsupdate" method="post">
-	<div class="input_wrap">
-		<label>공지사항 번호</label>
-		<input name="QUE_ID" readonly="readonly" value='<c:out value="${pageInfo.QUE_ID}"/>' >
-	</div>
-	<div class="input_wrap">
-        <label>질문</label>
-        <input name="category.NAME" readonly="readonly" value='<c:out value="${pageInfo.category.NAME}"/>' >
-    </div>
-	<div class="input_wrap">
-		<label>공지사항 제목</label>
-		<input name="TITLE" value='<c:out value="${pageInfo.TITLE}"/>' >
-	</div>
-	<div class="input_wrap">
-		<label>공지사항 내용</label>
-		<textarea rows="3" name="CONTENT" ><c:out value="${pageInfo.CONTENT}"/></textarea>
-	</div>
-	<div class="input_wrap">
-		<label>공지사항 작성자</label>
-		<input name="MEMBER_ID" readonly="readonly" value='<c:out value="${pageInfo.MEMBER_ID}"/>' >
-	</div>
-	<div class="input_wrap">
-		<label>공지사항 등록일</label>
-		<input name="TIME" readonly="readonly" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${pageInfo.TIME}"/>' >
-	</div>
-	<hr>
-	<span>파일 목록</span>
-	<div class="form-group" style="border: 1px solid #dbdbdb;">
-    	<c:forEach var="file" items="${fileList}">
-        	<a href="#" onclick="fn_fileDown('${file.FILE_ID}'); return false;">
-        	${file.FILE_NAME}</a>(${file.FILE_SIZE} KB)<br>
-    	</c:forEach>
-	</div>
-	<hr>
-
-	<div class="btn_wrap">
-		<a class="btn" id="qslist_btn">목록 페이지</a> 
-		<a class="btn" id="qsupdate_btn">수정완료</a>
-		<a class="btn" id="qsdelete_btn">삭제</a>
-		<a class="btn" id="cancel_btn">수정취소</a>
+		<div class="qstable_wrap">
+		<div class="qs_title">
+			<strong>질문게시판</strong>
+			<p>질문을 빠르고 정확하게 안내해드립니다.</p>
+		</div>
+		
+		<div class="qs_writer_wrap">
+			<div class="qs_update">
+				<div class="category">
+					<dl>
+						<dt>카테고리</dt>
+						<dd>
+							<input name="category.NAME" readonly="readonly" value='<c:out value="${pageInfo.category.NAME}"/>' >
+						</dd>	
+					</dl>
+				</div>
+				
+				<div class="title">
+					<dl>
+						<dt>제목</dt>
+						<dd><input type="text" name="TITLE" value='<c:out value="${pageInfo.TITLE}"/>'></dd>	
+					</dl>
+				</div>
+				
+				<div class="info">
+					<dl>
+						<dt>작성자</dt>
+						<dd><input type="text" name="NAME" readonly="readonly" value='<c:out value="${pageInfo.NAME}"/>'></dd>	
+					</dl>
+					
+					<dl>
+						<dt>파일첨부</dt>
+						<dd>
+							<c:forEach var="file" items="${fileList}">
+        						<a href="#" onclick="fn_fileDown('${file.FILE_ID}'); return false;">
+        						${file.NAME}</a>
+    						</c:forEach>
+						</dd>	
+					</dl>
+				</div>
+				
+				<div class="content">
+					<textarea name="CONTENT"><c:out value="${pageInfo.CONTENT}"/></textarea>
+				</div>
+			</div>
+			
+			<div class="bt_wrap">
+    			<a class="btn" id="qslist_btn">목록 페이지</a> 
+				<a class="btn" id="qsupdate_btn">수정완료</a>
+				<a class="btn" id="qsdelete_btn">삭제</a>
+				<a class="btn" id="cancel_btn">수정취소</a>
+			</div>
+		</div>
 	</div>
 	</form>
 	<form id="infoForm" action="/question/qsupdate" method="get">

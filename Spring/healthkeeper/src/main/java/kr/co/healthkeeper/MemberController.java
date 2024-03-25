@@ -5,11 +5,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import kr.co.util.CommonUtil;
 import org.json.JSONObject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +31,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 @Controller
-@PropertySource("classpath:info.properties") //카카오 앱 키 저장용
+//@PropertySource("classpath:info.properties") //카카오 앱 키 저장용
 @RequestMapping("/member/*")
 public class MemberController {
 
@@ -174,16 +175,55 @@ public class MemberController {
 		else return "ok";
 	}
 
-	@Value("${KAKAO_REST_API}") private  String KAKAO_REST_API;
-	@Value("${NAVER_CLIENT_ID}") private String NAVER_CLIENT_ID;
-	@Value("${NAVER_SECRET}") private String NAVER_SECRET;
-	@RequestMapping("kakaoLogin")
-	public String kakaoLogin(HttpServletRequest request){
-		StringBuffer url = new StringBuffer("https://kauth.kakao.com/oauth/authorize?response_type=code");
-		url.append("&client_id=").append(KAKAO_REST_API);
-		url.append("&redirect_uri=").append(common.appURL(request)).append("/member/kakaocallback");//https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code
-		return "redirect:" + url.toString();
-	}
+//	@Value("${KAKAO_REST_API}") private  String KAKAO_REST_API;
+//	@Value("${NAVER_CLIENT_ID}") private String NAVER_CLIENT_ID;
+//	@Value("${NAVER_SECRET}") private String NAVER_SECRET;
+//	@RequestMapping("kakaoLogin")
+//	public String kakaoLogin(HttpServletRequest request){
+//		StringBuffer url = new StringBuffer("https://kauth.kakao.com/oauth/authorize?response_type=code");
+//		url.append("&client_id=").append(KAKAO_REST_API);
+//		url.append("&redirect_uri=").append(common.appURL(request)).append("/member/kakaocallback");//https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code
+//		return "redirect:" + url.toString();
+//	}
+//
+//	@RequestMapping("kakaocallback")
+//	public String kakaocallback(String code,HttpSession session, Model model){
+//		if(code ==null) return "redirect:/main";
+//
+//		StringBuffer url = new StringBuffer("https://kauth.kakao.com/oauth/token?grant_type=authorization_code");
+//		url	.append( "&client_id=" ).append( KAKAO_REST_API )
+//				.append( "&code=" ).append( code );
+//		String response = common.requestAPI(url.toString());
+//		JSONObject json = new JSONObject(response);
+//		String token_type = json.getString("token_type");
+//		String access_token = json.getString("access_token");
+//
+//		response = common.requestAPI("https://kapi.kakao.com/v2/user/me", token_type +" "+access_token);
+//		json =  new JSONObject(response);
+//		if(! json.isEmpty()) {
+//			String social = String.valueOf(json.getLong("id"));
+//			json = json.getJSONObject("kakao_account");
+//
+//			MemberVO vo = new MemberVO();
+//			vo.setSOCIAL(social);
+//			session.setAttribute("social",social);
+//		}
+//		return "redirect:/main/member/join";
+//	}
+//
+//
+//	@RequestMapping("naverLogin")
+//	public String naverLogin(HttpSession session, HttpServletRequest request){
+//		String state = UUID.randomUUID().toString();
+//		session.setAttribute("state",state);
+//
+//		StringBuffer url = new StringBuffer("https://nid.naver.com/oauth2.0/authorize?response_type=code");
+//		url.append("&client_id=").append(NAVER_CLIENT_ID);
+//		url.append("&state=").append(state);
+//		url.append("&redirect_url=").append(common.appURL(request)).append("/member/navercallback");
+//
+//		return "redirect:" + url.toString();
+//	}
 
 	@RequestMapping("kakaocallback")
 	public String kakaocallback(String code,HttpSession session, Model model){
@@ -296,5 +336,56 @@ public class MemberController {
 	
 	
 
+//	@RequestMapping("/navercallback")
+//	public String naverCallback(String code,HttpSession session,String state,Model model){
+//		if(code ==null) return "redirect:/";
+//
+//		//토큰 발급 요청
+//		StringBuffer url = new StringBuffer("https://nid.naver.com/oauth2.0/token?grant_type=authorization_code");
+//		url.append("&client_id=").append(NAVER_CLIENT_ID)
+//						.append("&cilent_secret=").append(NAVER_SECRET)
+//				.append("&code=").append(code)
+//				.append("&state=").append(state);
+//		String response = common.requestAPI(url.toString());
+//
+//		HashMap<String,String> map = new Gson().fromJson(response, new TypeToken<HashMap<String, String>>(){}.getType());
+//		String token = map.get("access_token");
+//		String type = map.get("token_type");
+//
+//		response = common.requestAPI("https://openapi.naver.com/v1/nid/me",type+" "+token);
+//		JSONObject json =  new JSONObject(response);
+//
+//		if(json.getString("resultcode").equals("00")){
+//			MemberVO vo = new MemberVO();
+//			String id = json.getString("id");
+//			json = json.getJSONObject("response");
+//			vo.setEMAIL(json.getString("email"));
+//			vo.setGENDER(json.getString("gender"));
+//			vo.setSOCIAL(id);
+//			vo.setNAME(json.getString("name"));
+//			vo.setPHONE(json.getString("mobile"));
+//			if(memberService.socialCheck(json.getString("id"))==0){
+//				return "redirect:/join";
+//			}else {
+//				memberService.socialLogin(id);
+//			}
+//
+//		}
+//		return redirectURL(session,model);
+//	}
+//	private String redirectURL(HttpSession session, Model model) {
+//		if( session.getAttribute("redirect") == null ) {
+//			return "redirect:/";
+//		}else{
+//			HashMap<String, Object> map
+//					= (HashMap<String, Object>)session.getAttribute("redirect");
+//			model.addAttribute("url", map.get("url"));
+//			model.addAttribute("id", map.get("id"));
+//			model.addAttribute("page", map.get("page"));
+//
+//			session.removeAttribute("redirect");
+//			return "include/redirect";
+//		}
+//	}
 
 }

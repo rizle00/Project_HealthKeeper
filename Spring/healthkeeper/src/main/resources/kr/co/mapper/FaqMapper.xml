@@ -23,11 +23,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
               SELECT /*+INDEX_DESC(FAQ PK_FAQ) */ 
               ROWNUM AS RN, FAQ_ID, TITLE, CONTENT
               FROM FAQ 
-              WHERE ROWNUM <= #{pageNum} * #{amount}
+              WHERE RN <= #{pageNum} * #{amount}
     ]]>
     <![CDATA[
         	  )
-        	WHERE RN > (#{pageNum} -1) * #{amount}
+        	AND RN > (#{pageNum} -1) * #{amount}
         ]]>
 </select>
 	

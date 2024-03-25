@@ -22,6 +22,11 @@ public class NoticeVO {
 	// 공지사항 작성자
 	private String MEMBER_ID;
 	
+	// 공지사항 이름
+	private MemberVO member;
+	
+	private String NAME;
+	
 	// 공지사항 조회수
 	private String READ_CNT;
 	

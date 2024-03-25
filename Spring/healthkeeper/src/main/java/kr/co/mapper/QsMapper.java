@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import kr.co.model.*;
+import kr.co.model.CateGoryVO;
+import kr.co.model.FilesVO;
+import kr.co.model.MemberVO;
+import kr.co.model.QsCriteria;
+import kr.co.model.QsVO;
 
 public interface QsMapper {
 	
@@ -36,6 +41,8 @@ public interface QsMapper {
 	
 	// 게시판 카테고리 id
 	public CateGoryVO cate(String CATEGORY_ID);
+	
+
 	
 	// 게시판 파일첨부
 	public void insertfile(Map<String, Object> map) throws Exception;

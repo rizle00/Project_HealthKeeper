@@ -7,6 +7,8 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 import kr.co.and.firebase.FirebaseCloudMessageService;
 import kr.co.and.firebase.RequestDTO;
@@ -37,6 +39,29 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/question/*")
 public class QuestionController {
+	
+	@Autowired
+	private QsService service;
+	
+	@Autowired
+	private QsAnswerService anservice;
+			
+	// log 메서드 사용 => consol창에 더 자세히 볼수있음
+	private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
+	
+	// 질문게시판 목록페이지(페이징 적용)
+	@GetMapping("/qslist")
+	public void qsListGET(Model model,QsVO vo, QsCriteria qcri) {
+		
+		log.info("질문게시판 페이지 진입");
+		
+		model.addAttribute("qslist", service.getlistPaging(qcri));
+		
+		int total = service.getTotal(qcri);
+		QsPageMakeDTO qpageMake = new QsPageMakeDTO(qcri, total);
+		model.addAttribute("qpageMake", qpageMake);
+	}
+	
 
     @Autowired
     private QsService service;

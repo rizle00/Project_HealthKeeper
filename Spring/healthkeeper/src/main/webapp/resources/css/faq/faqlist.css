@@ -1,27 +1,68 @@
-/* Table Styles */
+/* 공지사항 목록 페이지 전체 스타일 */
 body {
 	font-family: Arial, sans-serif;
+	background-color: #f8f9fa;
 	margin: 0;
-	padding: 0;
+}
+
+h1 {
+	text-align: center;
+	margin-top: 30px;
+	color: #007bff;
+}
+
+.faq_header {
+	background-color: #f2f2f2; /* 배경색 설정 */
+	padding: 20px; /* 내부 여백 설정 */
+	border-radius: 10px; /* 테두리 둥글게 만들기 */
+	text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.fh_title {
+	font-size: 24px; /* 글꼴 크기 설정 */
+	font-family: Arial, sans-serif; /* 글꼴 설정 */
+	color: #333; /* 글자 색상 설정 */
+}
+
+/* 스크린 리더를 위한 감춰진 텍스트 */
+.blind {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
 }
 
 .table_wrap {
-	margin: 20px auto;
+	max-width: 55%;
+	margin: 0 auto;
 	padding: 20px;
-	border: 1px solid #ccc;
+	margin-bottom: 6%;
+	background-color: #fff;
 	border-radius: 8px;
-	width: 60%;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .top_btn {
-	display: inline-block;
-	padding: 10px 20px;
-	background-color: #4CAF50;
-	color: white;
-	text-decoration: none;
+	display: block;
+	width: 140px;
+	margin: 0 auto 20px;
+	padding: 10px;
+	font-size: 16px;
+	text-align: center;
+	background-color: #007bff;
+	color: #fff;
+	border: none;
 	border-radius: 5px;
-	margin-bottom: 20px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.top_btn:hover {
+	background-color: #0056b3;
 }
 
 table {
@@ -30,77 +71,12 @@ table {
 }
 
 th, td {
-	border: 1px solid #ddd;
-	padding: 8px;
+	padding: 12px 15px;
+	border-bottom: 1px solid #ddd;
 	text-align: left;
 }
 
 th {
-	background-color: #f2f2f2;
-}
-
-.move {
-	text-decoration: none;
+	background-color: #f0f0f0;
 	color: #333;
-}
-
-.move:hover {
-	color: #4CAF50;
-}
-
-/* 페이지 정보 래퍼 */
-.pageInfo_wrap {
-	margin-top: 30px;
-	text-align: center;
-}
-
-.pageInfo_area {
-	display: inline-block;
-}
-
-.pageInfo {
-	list-style: none;
-	padding: 0;
-}
-
-.pageInfo_btn {
-	display: inline-block;
-	margin: 0 5px;
-	padding: 8px 12px;
-	font-size: 16px;
-	border-radius: 5px;
-	transition: background-color 0.3s, color 0.3s;
-	background-color: transparent;
-	text-decoration: none;
-}
-
-.pageInfo_btn.previous, .pageInfo_btn.next {
-	font-weight: bold;
-}
-
-.pageInfo_btn:hover {
-	color: white;
-}
-
-.pageInfo_btn.active {
-	background-color: #95e2f1;
-	color: white;
-}
-
-.pageInfo_btn a { /* 링크에 대한 밑줄 제거 */
-	text-decoration: none;
-	color: black; /* 링크 텍스트의 색상을 검정색으로 변경 */
-}
-
-/* Alert Styles */
-.alert {
-	padding: 15px;
-	margin-bottom: 20px;
-	border-radius: 4px;
-}
-
-.alert-success {
-	background-color: #d4edda;
-	border-color: #c3e6cb;
-	color: #155724;
 }

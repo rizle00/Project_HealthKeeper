@@ -31,99 +31,99 @@ html{
 	font-size: 1.4rem;
 }
 
-.qs_writer {
+.qs_update {
 	border-top: 2px solid #000;
 }
 
-.qs_writer .category,
-.qs_writer .title,
-.qs_writer .info{
+.qs_update .category,
+.qs_update .title,
+.qs_update .info{
 	padding: 15px;
 }
 
-.qs_writer .title{
+.qs_update .title{
 	border-top: 1px dashed #ddd;
 }
 
-.qs_writer .info{
+.qs_update .info{
 	border-top: 1px dashed #ddd;
 	border-bottom: 1px solid #000;
 	font-size: 0;
 }
 
-.qs_writer .title dl,
-.qs_writer .category dl{
+.qs_update .title dl,
+.qs_update .category dl{
 	font-size: 0;
 }
 
-.qs_writer .info dl {
+.qs_update .info dl {
     display: inline-block;
     width: 50%;
     vertical-align: middle;
 }
 
-.qs_writer .category dt,
-.qs_writer .category dd,
-.qs_writer .title dt,
-.qs_writer .title dd,
-.qs_writer .info dt,
-.qs_writer .info dd{
+.qs_update .category dt,
+.qs_update .category dd,
+.qs_update .title dt,
+.qs_update .title dd,
+.qs_update .info dt,
+.qs_update .info dd{
 	display: inline-block;
 	vertical-align: middle;
 	font-size: 1.4rem;
 }
 
-.qs_writer .category dt,
-.qs_writer .title dt,
-.qs_writer .info dt{
+.qs_update .category dt,
+.qs_update .title dt,
+.qs_update .info dt{
 	width: 100px;
 }
 
-.qs_writer .info{
+.qs_update .info{
 	margin-left: 5px;
 }
 
-.qs_writer .title dd,
-.qs_writer .category dd{
+.qs_update .title dd,
+.qs_update .category dd{
 	width: calc(100% - 100px);
 }
 
-.qs_writer .title input[type="text"]{
+.qs_update .title input[type="text"]{
 	width: 80%;
 	margin-left: 4px;
 	box-sizing: border-box;
 }
 
-.qs_writer .title input[type="text"],
-.qs_writer .info input[type="text"],
-.qs_writer .info input[type="file"] {
+.qs_update .title input[type="text"],
+.qs_update .info input[type="text"],
+.qs_update .info input[type="file"] {
     padding: 10px;
     box-sizing: border-box;
 }
 
-.qs_writer .category{
-	width: 50%;
+.qs_update .category input[name="category.NAME"]{
+	width: 25%;
 	padding: 5px;
 	margin-top: 5px;
 	margin-left: 7px;
 	box-sizing: border-box;
 }
 
-.qs_writer .info input[type="text"]{
+.qs_update .info input[type="text"]{
 	width: 70%;
 	padding: 5px;
 	box-sizing: border-box;
 }
 
-.qs_writer .info input[type="file"]{
+.qs_update .info input[type="file"]{
 	margin-top: 5px;
 }
 
-.qs_writer .content{
+.qs_update .content{
 	border-bottom: 1px solid #000;
 }
 
-.qs_writer .content textarea {
+.qs_update .content textarea {
 	display: block;
 	width: 100%;
 	height: 300px;

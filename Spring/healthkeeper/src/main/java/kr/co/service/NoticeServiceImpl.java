@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.co.mapper.NoticeMapper;
 import kr.co.model.FilesVO;
+import kr.co.model.MemberVO;
 import kr.co.model.NotCriteria;
 import kr.co.model.NoticeVO;
 import kr.co.util.FileUtils;
@@ -37,7 +38,7 @@ public class NoticeServiceImpl implements NoticeService{
 	        }
 	    return result;
 	}
-
+	
 	// 공지사항 목록
 	@Override
 	public List<NoticeVO> getlist() {
@@ -99,6 +100,17 @@ public class NoticeServiceImpl implements NoticeService{
 	public int deleteFile(String NOTICE_ID) throws Exception{
 		return mapper.deleteFile(NOTICE_ID);
 	}
+
+	
+	// 공지사항 회원이름
+	@Override
+	public MemberVO member(int MEMBER_ID) {
+		return mapper.member(MEMBER_ID);
+	}
+
+	
+
+	
 
 	// 공지사항 파일업로드 수정
 //	@Override
