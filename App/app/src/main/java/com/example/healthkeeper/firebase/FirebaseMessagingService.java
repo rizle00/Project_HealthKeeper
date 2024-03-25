@@ -46,7 +46,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Log.d(TAG, "onMessageReceived: " + remoteMessage.getNotification().getTitle());
+        Log.d(TAG, "fire: " + remoteMessage.getNotification().getTitle());
         title = remoteMessage.getNotification().getTitle();
         msg = remoteMessage.getNotification().getBody();
         Intent intent = new Intent(this, MainActivity.class);

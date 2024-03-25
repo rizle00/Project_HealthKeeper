@@ -62,7 +62,7 @@ public class PushActivity extends AppCompatActivity implements PushAdapter.OnDat
         repository = new CommonRepository(((App) getApplication()).executorService);
 
         pref = getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
-        loadAlarmLog();
+        loadAlarmLog(pref.getString("user_id",""));
 
     }
     private SpannableString getColoredSpanned(String text, int color) {
@@ -71,9 +71,9 @@ public class PushActivity extends AppCompatActivity implements PushAdapter.OnDat
         return spannableString;
     }
 
-    private void loadAlarmLog() {
+    private void loadAlarmLog(String id) {
         conn = new CommonConn("member/alarmLog");
-        conn.addParamMap("params", 2);
+        conn.addParamMap("params", id);
 //        conn.addParamMap("params", pref.getString("user_id",""));
         repository.select(conn).thenAccept(result -> {
             list = new Gson().fromJson(result, new TypeToken<List<AlarmLogVO>>() {

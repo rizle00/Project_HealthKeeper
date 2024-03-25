@@ -53,7 +53,7 @@ public class NoticeServiceImpl implements NoticeService{
 
 	// 공지사항 조회
 	@Override
-	public NoticeVO getPage(String NOTICE_ID) {
+	public NoticeVO getPage(int NOTICE_ID) {
 		return mapper.getPage(NOTICE_ID);
 	}
 
@@ -67,7 +67,7 @@ public class NoticeServiceImpl implements NoticeService{
 
 	// 공지사항 삭제
 	@Override
-	public int notdelete(String NOTICE_ID) {
+	public int notdelete(int NOTICE_ID) {
 		return mapper.notdelete(NOTICE_ID);
 	}
 
@@ -79,13 +79,13 @@ public class NoticeServiceImpl implements NoticeService{
 
 	// 공지사항 조회수
 	@Override
-	public int noticeViews(String NOTICE_ID) {
+	public int noticeViews(int NOTICE_ID) {
 		return mapper.noticeViews(NOTICE_ID);
 	}
 
 	// 공지사항 첨부파일 조회
 	@Override
-	public List<FilesVO> selectFileList(String NOTICE_ID) {
+	public List<FilesVO> selectFileList(int NOTICE_ID) {
 		return mapper.selectFileList(NOTICE_ID);
 	}
 
@@ -97,14 +97,14 @@ public class NoticeServiceImpl implements NoticeService{
 
 	// 공지사항 첨부파일 삭제
 	@Override
-	public int deleteFile(String NOTICE_ID) throws Exception{
+	public int deleteFile(int NOTICE_ID) throws Exception{
 		return mapper.deleteFile(NOTICE_ID);
 	}
 
 	
 	// 공지사항 회원이름
 	@Override
-	public MemberVO member(String MEMBER_ID) {
+	public MemberVO member(int MEMBER_ID) {
 		return mapper.member(MEMBER_ID);
 	}
 

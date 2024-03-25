@@ -17,13 +17,13 @@ public interface FaqService {
 	public List<FaqVO> faqlistPaging(FaqCriteria fcri);
 	
 	// FAQ 게시판 조회
-	public FaqVO faqpage(String FAQ_ID);
+	public FaqVO faqpage(int FAQ_ID);
 	
 	// FAQ 게시판 수정
 	public int faqupdate(FaqVO faq);
 	
 	// FAQ 게시판 삭제
-	public int faqdelete(String FAQ_ID);
+	public int faqdelete(int FAQ_ID);
 	
 	// FAQ 게시글 총 갯수
 	public int faqTotal();

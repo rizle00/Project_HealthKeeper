@@ -31,7 +31,7 @@ public class AndMemberController {
 	@PostMapping("/andlogin")
 	public ResponseEntity<String> login(String email, String pw) {
 		System.out.println("로그인");
-		MemberVO vo = service.login(email);
+		AndMemberVO vo = service.login(email);
 		if (pwEncoder.matches(pw, vo.getPW())) {// 인코딩이 제대로 안됨
 //		if (pw.equals(vo.getPW())) {
 //			dataHolder.setData(vo.getToken());
@@ -51,7 +51,7 @@ public class AndMemberController {
 	@RequestMapping("/andjoin") // 되었는지 안되었는지 정보 보내줘야겠다
 	public ResponseEntity<Integer> join(String vo, String type) {
 		System.out.println(type + "으로 가입");
-		MemberVO info = new Gson().fromJson(vo, MemberVO.class);// 입력정보
+		AndMemberVO info = new Gson().fromJson(vo, AndMemberVO.class);// 입력정보
 		info.setPW(pwEncoder.encode(info.getPW()));// 인코딩이 제대로 안됨
 //		info.setADDRESS("");
 //		info.setADDRESS_DETAIL("");
@@ -73,7 +73,7 @@ public class AndMemberController {
 				member = info.getGUARDIAN_ID();
 				info.setGUARDIAN_ID("");
 				result = service.join(info);
-				MemberVO temp = service.login(info.getEMAIL());
+				AndMemberVO temp = service.login(info.getEMAIL());
 				HashMap <String, String> map = new HashMap<>();// 가디언 아이디가 환자의 id 값, 환자의 정보를 업데이트\
 				map.put("MEMBER_ID", member);// 환자에게 업데이트
 				map.put("GUARDIAN_ID", temp.getMEMBER_ID());// 보호자의 정보를
@@ -91,7 +91,7 @@ public class AndMemberController {
 	@PostMapping("/andfindid")
 	public ResponseEntity<String> findid(String vo) {
 		System.out.println("아이디찾기");
-		MemberVO find_info = new Gson().fromJson(vo, MemberVO.class);
+		AndMemberVO find_info = new Gson().fromJson(vo, AndMemberVO.class);
 		return ResponseEntity.ok(service.findid(find_info));
 	}
 
@@ -108,7 +108,7 @@ public class AndMemberController {
 
 	@RequestMapping("/checkinfo")
 	public ResponseEntity<String> checkinfo(String vo,String mail) {
-		MemberVO find_info = new Gson().fromJson(vo, MemberVO.class);
+		AndMemberVO find_info = new Gson().fromJson(vo, AndMemberVO.class);
 		if(service.findpw(find_info)==0) {
 			return ResponseEntity.ok("none");
 		}else {
@@ -139,13 +139,20 @@ public class AndMemberController {
 	
 	@PostMapping("/andmodify")
 	public ResponseEntity<String>  modify(String vo) {
-		MemberVO infoVO = new Gson().fromJson(vo, MemberVO.class);
+		AndMemberVO infoVO = new Gson().fromJson(vo, AndMemberVO.class);
 		infoVO.setPW(pwEncoder.encode(infoVO.getPW()));
 		if(service.modify(infoVO)==1) {
 			return ResponseEntity.ok("success");
 		}else {
 			return ResponseEntity.ok("fail");
 		}
+	}
+
+	@PostMapping("/member/guardian")
+	public ResponseEntity<String>  guardian(String params) {
+		AndMemberVO vo = service.guardian(params);
+		System.out.println("가디언"+new Gson().toJson(vo));
+		return ResponseEntity.ok(new Gson().toJson(vo));
 	}
 
 	@PostMapping("/member/disease")
@@ -210,7 +217,7 @@ public class AndMemberController {
 
 	@RequestMapping(value = "/member/alarmLog", produces = "application/text;charset=utf-8")
 	public ResponseEntity<String> alarmLog(String params) {
-		System.out.println("알람로그");
+		System.out.println("알람로그"+params);
 
 		List<AlarmLogVO> vo = service.alarmLog(params);
 

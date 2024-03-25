@@ -30,7 +30,7 @@ public class NoticeMapperTests {
          
          vo.setTITLE("공지사항 Mapper 테스트.");
          vo.setCONTENT("공지사항 Mapper 테스트중입니다.");
-         vo.setMEMBER_ID("2");
+//         vo.setMEMBER_ID("2");
          
          mapper.notregistr(vo);
      }

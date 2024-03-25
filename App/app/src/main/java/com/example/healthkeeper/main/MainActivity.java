@@ -422,7 +422,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onChanged(String data) {
                         Log.d(TAG, "onChanged: " + data);
                         if ("off".equals(data)) {
-                            Toast.makeText(MainActivity.this, "기기 연결이 해제되었습니다", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MainActivity.this, "기기 연결이 해제되었습니다", Toast.LENGTH_SHORT).show();
                         } else if ("on".equals(data)) {
                             Toast.makeText(MainActivity.this, "기기가 연결되었습니다", Toast.LENGTH_SHORT).show();
                         }

@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.co.and.AndMemberVO;
 import kr.co.and.firebase.FirebaseCloudMessageService;
 import kr.co.and.firebase.RequestDTO;
 import kr.co.and.firebase.TypeVO;
@@ -87,13 +88,13 @@ public class NoticeController {
     private void createAlarm() throws IOException {
 
         firebaseCloudMessageService = new FirebaseCloudMessageService();
-        List<MemberVO> list = andService.memberList();
+        List<AndMemberVO> list = andService.memberList();
         TypeVO type = andService.type("13");
         RequestDTO dto = new RequestDTO();
         for(int i = 0; i<list.size(); i++){
            if(!list.get(i).getROLE().equals("admin")){
                dto.setCATEGORY_ID("13");
-               dto.setMember_id(list.get(i).getMEMBER_ID());
+               dto.setMEMBER_ID(String.valueOf(list.get(i).getMEMBER_ID()));
                andService.insertAlarm(dto);
                if(list.get(i).getALARM().equals("y")){
                    firebaseCloudMessageService.sendMessageTo(
@@ -111,7 +112,7 @@ public class NoticeController {
 
     // 공지사항 조회
     @GetMapping("/notget")
-    public void noticeGetPageGET(String NOTICE_ID, Model model, NotCriteria ncri)throws Exception {
+    public void noticeGetPageGET(int NOTICE_ID, Model model, NotCriteria ncri)throws Exception {
 
     	// 공지사항 조회수
     	service.noticeViews(NOTICE_ID);
@@ -130,7 +131,7 @@ public class NoticeController {
     
     // 공지사항 수정페이지 이동
     @GetMapping("/notmodify")
-    public void noticeModifyGET(String NOTICE_ID, Model model, NotCriteria ncri) {
+    public void noticeModifyGET(int NOTICE_ID, Model model, NotCriteria ncri) {
         
         model.addAttribute("pageInfo", service.getPage(NOTICE_ID));
         model.addAttribute("ncri", ncri);
@@ -170,7 +171,7 @@ public class NoticeController {
     
     // 공지사항 삭제
     @PostMapping("/notdelete")
-    public String notDeletePOST(String NOTICE_ID, RedirectAttributes rttr) {
+    public String notDeletePOST(int NOTICE_ID, RedirectAttributes rttr) {
         
         service.notdelete(NOTICE_ID);
         rttr.addFlashAttribute("result", "notdelete success");
@@ -209,7 +210,7 @@ public class NoticeController {
     
     // 첨부파일 삭제
     @PostMapping("/deleteFile")
-    public String deleteFile(String NOTICE_ID) throws Exception {
+    public String deleteFile(int NOTICE_ID) throws Exception {
         // 파일 삭제 작업 수행
        service.deleteFile(NOTICE_ID);
        return "redirect:/notice/notget?NOTICE_ID="+ NOTICE_ID; // 파일 삭제 후 다시 조회 페이지로 리다이렉트

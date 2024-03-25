@@ -55,7 +55,7 @@ public class FaqController {
 	
 	// FAQ 게시판 조회
 	@GetMapping("/faqget")
-	public void faqgetGET(String FAQ_ID, Model model, FaqCriteria fcri) {
+	public void faqgetGET(int FAQ_ID, Model model, FaqCriteria fcri) {
 		model.addAttribute("pageInfo", service.faqpage(FAQ_ID));
 		model.addAttribute("fcri", fcri);
 	}
@@ -63,7 +63,7 @@ public class FaqController {
 	
 	// FAQ 수정페이지 이동
 	@GetMapping("/faqupdate")
-	public void faqupdateGET(String FAQ_ID, Model model, FaqCriteria fcri) {
+	public void faqupdateGET(int FAQ_ID, Model model, FaqCriteria fcri) {
 		model.addAttribute("pageInfo", service.faqpage(FAQ_ID));
 		model.addAttribute("fcri",fcri);
 	}
@@ -79,7 +79,7 @@ public class FaqController {
 	
 	// FAQ 공지사항 삭제
 	@PostMapping("/faqdelete")
-	public String faqdeletePOST(String FAQ_ID, RedirectAttributes rttr) {
+	public String faqdeletePOST(int FAQ_ID, RedirectAttributes rttr) {
 		
 		service.faqdelete(FAQ_ID);
 		

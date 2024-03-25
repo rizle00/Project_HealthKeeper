@@ -309,6 +309,14 @@ public class LoginActivity extends AppCompatActivity {
         if (vo.getROLE().equals("patient")) {
             editor.putString("guardian_id", vo.getGUARDIAN_ID());
             editor.putString("address", vo.getADDRESS() + " " + vo.getADDRESS_DETAIL());
+            CommonConn conn = new CommonConn("member/guardian", this);
+            conn.addParamMap("params", vo.getGUARDIAN_ID());
+            conn.onExcute((isResult, data) -> {
+                editor.putString("guardian", data);
+                Log.d("TAG", "guardian: "+data);
+                editor.apply();
+            });
+
         }
 
 

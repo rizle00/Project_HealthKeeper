@@ -6,7 +6,7 @@ import lombok.Data;
 public class FaqVO {
 
 	// FAQ id
-	private String FAQ_ID;
+	private int FAQ_ID;
 	
 	// FAQ 게시판 제목
 	private String TITLE;

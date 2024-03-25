@@ -22,25 +22,25 @@ public interface NoticeService {
 	public List<NoticeVO> getListPaging(NotCriteria ncri);
 	
 	// 공지사항 조회
-	public NoticeVO getPage(String NOTICE_ID);
+	public NoticeVO getPage(int NOTICE_ID);
 	
 	// 공지사항 수정
 	public int notmodify(NoticeVO notice) throws Exception;
 	
 	// 공지사항 삭제
-	public int notdelete(String NOTICE_ID);
+	public int notdelete(int NOTICE_ID);
 	
 	// 공지사항 총 갯수
 	public int getTotal(NotCriteria ncri);
 	
 	// 공지사항 조회수
-	public int noticeViews(String NOTICE_ID);
+	public int noticeViews(int NOTICE_ID);
 	
 	// 공지사항 회원이름
-	public MemberVO member(String MEMBER_ID);
+	public MemberVO member(int MEMBER_ID);
 	
 	// 첨부파일 조회
-	public List<FilesVO> selectFileList(String NOTICE_ID);
+	public List<FilesVO> selectFileList(int NOTICE_ID);
 	
 	// 첨부파일 수정조회
 	//public List<FilesVO> updateFileList(int NOTICE_ID);
@@ -49,7 +49,7 @@ public interface NoticeService {
 	public Map<String,Object> selectFileInfo(Map<String, Object> map) throws Exception;
 	
 	// 첨부파일 삭제
-	public int deleteFile(String NOTICE_ID) throws Exception;;
+	public int deleteFile(int NOTICE_ID) throws Exception;;
 	
 	
 }

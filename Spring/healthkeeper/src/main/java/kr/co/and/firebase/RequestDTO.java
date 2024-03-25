@@ -7,7 +7,7 @@ import lombok.Setter;
 @Data
 public class RequestDTO {
     private String CATEGORY_ID;
-    private String member_id;
+    private String MEMBER_ID;
     private String name;
-    private String guardian_id;
+    private String GUARDIAN_ID;
 }

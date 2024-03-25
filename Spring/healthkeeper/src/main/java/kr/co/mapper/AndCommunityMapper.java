@@ -1,5 +1,9 @@
 package kr.co.mapper;
 
+import kr.co.and.AndCategoryVO;
+import kr.co.and.AndFaqVO;
+import kr.co.and.AndNoticeVO;
+import kr.co.and.AndQuestionVO;
 import kr.co.model.*;
 
 import java.util.List;
@@ -7,13 +11,13 @@ import java.util.List;
 public interface AndCommunityMapper {
 
 
-    public List<QsVO> list(String number);
+    public List<AndQuestionVO> list(String number);
 
-    public List<FaqVO> faq();
+    public List<AndFaqVO> faq();
 
-    public List<NoticeVO> notice();
+    public List<AndNoticeVO> notice();
 
-    public List<CateGoryVO> category();
+    public List<AndCategoryVO> category();
 
-    public int newWrite(QsVO vo);
+    public int newWrite(AndQuestionVO vo);
 }

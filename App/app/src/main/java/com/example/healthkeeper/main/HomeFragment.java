@@ -91,7 +91,6 @@ public class HomeFragment extends Fragment {
                 public void onClick(View v) {
 
                     permission.checkCallPermission(callPermissionListener);
-                    showDialogEmergency();
                 }
             });
 
