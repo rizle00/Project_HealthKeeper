@@ -1,116 +1,160 @@
-/* 조회 페이지 스타일 */
-body {
-    font-family: 'Noto Sans KR', Arial, sans-serif;
-    background-color: #f6f6f6;
-    margin: 0;
-    padding: 0;
+*{
+	margin: 0 ;
+	padding: 0 ;
 }
 
-.container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.qs_file_list a{
+	text-decoration: none !important;
+	color: inherit ;
 }
 
-h1 {
-    color: #333;
-    text-align: center;
-    margin-top: 20px;
+html{
+	font-size: 10px;
 }
 
-.input_wrap {
-    margin-bottom: 20px;
+/* 테이블 기본설정 */
+.gstable_wrap {
+	width : 1000px;
+	margin : 100px auto;
 }
 
-.input_wrap label {
+.qs_title{
+	margin-bottom: 30px;
+}
+
+.qs_title strong{
+	font-size: 3rem !important;
+}
+
+.qs_title p{
+	margin-top: 5px;
+	font-size: 1.4rem;
+}
+
+.qs_get {
+	width: 100%;
+	border-top: 2px solid #000;
+	font-size: 1.4rem;
+}
+
+.qs_get .title{
+	padding: 20px 15px;
+	border-bottom: 1px dashed #ddd;
+	font-size: 2rem;
+}
+
+.qs_get .qs_info{
+	padding: 15px;
+	border-bottom: 1px solid #999;
+	font-size: 0;
+}
+
+.qs_get .qs_info dl{
+	position : relative;
+	display: inline-block;
+	padding: 0 20px;
+}
+
+.qs_get .qs_info dl:first-child{
+	padding-left: 0;
+}
+
+.qs_get .qs_info dl::before{
+	content: "";
+	position: absolute;
+	top:1px;
+	left: 0;
+	display: block;
+	width: 1px;
+	height: 13px;
+	background: #ddd;	
+}
+
+.qs_get .qs_info dl:first-child::before{
+	display: none;
+}
+
+.qs_get .qs_info dl dt,
+.qs_get .qs_info dl dd{
+	display: inline-block;
+	font-size: 1.4rem;
+}
+
+.qs_get .qs_info dl dt{
+	display: inline-block;
+}
+
+.qs_get .qs_info dl dd{
+	margin-left: 10px;
+	color: #777;
+}
+
+.qs_get .qs_content{
+	padding: 15px;
+	border-bottom: 1px solid #000;
+	line-height: 160%;
+	font-size: 1.4rem;
+}
+
+.qs_file_list {
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.qs_file_list dl {
+    margin-bottom: 10px;
+}
+
+.qs_file_list dt {
     font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
+    display: inline; /* dt 요소를 인라인으로 표시하여 다음 dd 요소와 같은 줄에 나타나도록 설정 */
 }
 
-.input_wrap input,
-.input_wrap textarea {
-    width: calc(100% - 22px);
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #555;
-    margin-top: 5px;
+.qs_file_list dd {
+    margin-left: 10px; /* 파일 이름과 파일 크기 사이의 간격 조정 */
+    display: inline; /* dd 요소를 인라인으로 표시하여 첨부 파일들이 옆으로 나열되도록 설정 */
 }
 
-.input_wrap textarea {
-    resize: vertical;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group a {
-    color: #007bff;
+.qs_file_list a {
     text-decoration: none;
 }
 
-.btn_wrap {
-    margin-top: 20px;
-    text-align: center;
+.qs_file_list a:hover {
+    text-decoration: underline;
 }
 
-.btn_wrap .btn {
+.file_size {
+    color: #666; /* 파일 크기의 색상 지정 */
+    font-size: 0.9em; /* 파일 크기의 폰트 크기 조정 */
+}
+
+.qs_btn_wrap {
+    margin-top: 30px ;
+    text-align: center;
+    font-size: 0;
+}
+
+.qs_btn_wrap a {
     display: inline-block;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    min-width: 80px;
+    margin-left: 10px !important;
+    padding: 10px;
+    border: 1px solid #000;
+    border-radius: 2px;
+    font-size: 1.4rem;
 }
 
-.btn_wrap .btn:hover {
-    background-color: #0056b3;
+.qs_btn_wrap a:first-child{
+	margin-left: 0 !important;
 }
 
-hr {
-    margin: 30px 0;
-    border: 0;
-    border-top: 1px solid #ccc;
+.qs_btn_wrap a.list_btn{
+	background: #000;
+	color: #fff !important;
+	text-decoration: none;
+} 
+
+.qs_btn_wrap a.update_btn{
+	color: #000 ;
+	text-decoration: none;
 }
-
-@media (max-width: 768px) {
-    .container {
-        padding: 0 10px;
-    }
-}
-
- /* 댓글 리스트 스타일 */
-    #reply {
-        margin-top: 20px !important;
-    }
-
-    .replyList {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    .replyList li {
-        border: 1px solid #ccc;
-        margin-bottom: 10px;
-        padding: 10px;
-    }
-
-    .replyList li p {
-        margin: 0;
-    }
-
-    .replyList li p:first-child {
-        font-weight: bold;
-    }

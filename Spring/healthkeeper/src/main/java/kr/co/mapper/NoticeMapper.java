@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.co.model.FilesVO;
+import kr.co.model.MemberVO;
 import kr.co.model.NotCriteria;
 import kr.co.model.NoticeVO;
 
@@ -36,6 +37,9 @@ public interface NoticeMapper {
 	
 	// 공지사항 조회수
 	public int noticeViews(String NOTICE_ID);
+	
+	// 공지사항 회원이름
+	public MemberVO member(int MEMBER_ID);
 	
 	// 공지사항 파일첨부
 	public void insertFile(Map<String, Object> map) throws Exception;
