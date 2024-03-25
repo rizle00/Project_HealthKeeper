@@ -39,7 +39,7 @@ public interface NoticeMapper {
 	public int noticeViews(String NOTICE_ID);
 	
 	// 공지사항 회원이름
-	public MemberVO member(int MEMBER_ID);
+	public MemberVO member(String MEMBER_ID);
 	
 	// 공지사항 파일첨부
 	public void insertFile(Map<String, Object> map) throws Exception;

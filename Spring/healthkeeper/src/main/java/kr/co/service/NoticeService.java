@@ -37,7 +37,7 @@ public interface NoticeService {
 	public int noticeViews(String NOTICE_ID);
 	
 	// 공지사항 회원이름
-	public MemberVO member(int MEMBER_ID);
+	public MemberVO member(String MEMBER_ID);
 	
 	// 첨부파일 조회
 	public List<FilesVO> selectFileList(String NOTICE_ID);

@@ -104,7 +104,7 @@ public class NoticeServiceImpl implements NoticeService{
 	
 	// 공지사항 회원이름
 	@Override
-	public MemberVO member(int MEMBER_ID) {
+	public MemberVO member(String MEMBER_ID) {
 		return mapper.member(MEMBER_ID);
 	}
 

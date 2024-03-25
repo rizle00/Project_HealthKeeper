@@ -27,6 +27,8 @@
 
 	<context:component-scan base-package="kr.co" />
 	
+	<context:component-scan base-package="kr.co.healthkeeper" />
+	
 	
 	
 </beans:beans>
