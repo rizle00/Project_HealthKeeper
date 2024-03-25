@@ -7,7 +7,7 @@ import lombok.Data;
 public class QsVO {
 	
 	// 게시판 번호
-	private String QUE_ID;
+	private int QUE_ID;
 		
 	// 게시판 제목
 	private String TITLE;

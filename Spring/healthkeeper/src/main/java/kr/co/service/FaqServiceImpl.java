@@ -29,7 +29,7 @@ public class FaqServiceImpl implements FaqService{
 
 	// FAQ 게시판 조회
 	@Override
-	public FaqVO faqpage(String FAQ_ID) {
+	public FaqVO faqpage(int FAQ_ID) {
 		return mapper.faqpage(FAQ_ID);
 	}
 	
@@ -41,7 +41,7 @@ public class FaqServiceImpl implements FaqService{
 	
 	// FAQ 게시판 삭제
 	@Override
-	public int faqdelete(String FAQ_ID) {
+	public int faqdelete(int FAQ_ID) {
 		return mapper.faqdelete(FAQ_ID);
 	}
 

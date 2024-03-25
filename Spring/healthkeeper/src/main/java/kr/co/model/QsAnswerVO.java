@@ -8,7 +8,7 @@ import lombok.Data;
 public class QsAnswerVO {
 	
 	// 댓글 id
-	private String ANS_ID;
+	private int ANS_ID;
 	
 	// 댓글 내용
 	private String CONTENT;

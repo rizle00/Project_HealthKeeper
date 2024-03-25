@@ -10,7 +10,11 @@ public class PermissionUtils {
         TedPermission.create()
                 .setPermissionListener(permissionListener)
                 .setDeniedMessage("Denied Permission.")
-                .setPermissions(Manifest.permission.POST_NOTIFICATIONS, Manifest.permission.SEND_SMS)
+                .setPermissions(Manifest.permission.POST_NOTIFICATIONS, Manifest.permission.SEND_SMS,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.BLUETOOTH_SCAN,
+                        Manifest.permission.BLUETOOTH_CONNECT,
+                        Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
                 .check();
     }
 

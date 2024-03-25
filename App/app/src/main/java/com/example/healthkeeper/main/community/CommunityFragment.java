@@ -95,6 +95,7 @@ public class CommunityFragment extends Fragment {
             public void onClick(View view) {
                 final int[] select = {0};
                 vo = new CommunityDTOS.Community_QuestionDTO();
+                vo.setSECRET("n");
                 // 입력 폼을 보이도록 설정
                 binding.tvNewWritingShow.setVisibility(View.VISIBLE);
                 // 입력 폼을 초기화
@@ -301,11 +302,11 @@ public class CommunityFragment extends Fragment {
         CommonConn conn = new CommonConn("question/list");
         conn.addParamMap("params", 5);
         repository.select(conn).thenAccept(result -> {
-
+            Log.d("TAG", "ans: "+result);
             queList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
             }.getType());
             Log.d("TAG", "aaaa: " + queList.size());
-            Log.d("TAG", "aaaa: " + queList.get(0).getDto().getANSWER_CONTENT());
+            Log.d("TAG", "aaaa: " + queList.get(0).getAnswer().getCONTENT());
 
             // RecyclerView 어댑터 설정을 여기서 수행
             Community_QuestionAdapter questionAdapter = new Community_QuestionAdapter(inflater, queList, getContext(), pref.getString("user_id","") );

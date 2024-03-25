@@ -30,7 +30,7 @@ public class FileUtils {
 	    Map<String, Object> listMap = null;
 	    
 	    // NoticeVO에서 NOTICE_BNO 가져오기
-	    String  NOTICE_ID = notice.getNOTICE_ID();
+	    int  NOTICE_ID = notice.getNOTICE_ID();
 	    
 	    File file = new File(PATH);
 	    if(!file.exists()) {
@@ -70,7 +70,7 @@ public class FileUtils {
 	    Map<String, Object> listMap = null;
 	    
 	    // QsVO에서 QUE_ID 가져오기
-	    String QUE_ID = qs.getQUE_ID();
+	    int QUE_ID = qs.getQUE_ID();
 	    
 	    File file = new File(PATH);
 	    if(!file.exists()) {

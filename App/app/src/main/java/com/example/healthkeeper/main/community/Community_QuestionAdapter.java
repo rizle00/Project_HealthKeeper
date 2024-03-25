@@ -46,7 +46,7 @@ public class Community_QuestionAdapter extends RecyclerView.Adapter<Community_Qu
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
         if (List == null) return; // List가 null이면 종료
         CommunityDTOS.Community_QuestionDTO item = List.get(i);
-        Log.d("TAG", "aaaa: " + item.getDto().getANSWER_CONTENT());
+        Log.d("TAG", "aaaa: " + item.getAnswer().getCONTENT());
         // 질문 정보를 ViewHolder에 바인딩
         holder.bind(item);
 
@@ -74,10 +74,15 @@ public class Community_QuestionAdapter extends RecyclerView.Adapter<Community_Qu
             binding.tvWriter.setText(item.getName());
             binding.tvWriteTime.setText(item.getTIME());
             binding.tvContent.setText(item.getCONTENT());
-            binding.tvAnswerContent.setText(item.getDto().getANSWER_CONTENT());
-            binding.tvAnswerTime.setText(item.getDto().getTIME());
+            binding.tvAnswerContent.setText(item.getAnswer().getCONTENT());
+            binding.tvAnswerTime.setText(item.getAnswer().getTIME());
+//            if("".equals(item.getAnswer().getTIME())){
+//                binding.okAnswer.setVisibility(View.GONE);
+//                binding.tvAnswerContent.setVisibility(View.GONE);
+//                binding.imgView.setVisibility(View.GONE);
+//            }
 
-            Log.d("TAG", "qqqqqqq: " + item.getDto().getANSWER_CONTENT());
+                Log.d("TAG", "qqqqqqq: " + item.getAnswer().getCONTENT());
 // tvReadCnt 클릭 이벤트 처리
             binding.tvNewWrited.setOnClickListener(new View.OnClickListener() {
                 @Override

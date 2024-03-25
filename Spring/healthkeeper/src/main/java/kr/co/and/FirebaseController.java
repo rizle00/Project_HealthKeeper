@@ -22,16 +22,17 @@ public class FirebaseController {
     @Autowired
     private AndMemberService service;
 
-    @PostMapping("/api/fcm")
+    @PostMapping("and/api/fcm")
     public ResponseEntity pushEmergency(String params) throws IOException {
         System.out.println(params);
      RequestDTO dto = new Gson().fromJson(params, RequestDTO.class);
         TypeVO type = service.type(dto.getCATEGORY_ID());
+        System.out.println(new Gson().toJson(type));
 
-        if(!dto.getGuardian_id().equals("")){
+        if(!dto.getGUARDIAN_ID().equals("")){
 
-            MemberVO info = service.guardian(dto.getGuardian_id());
-
+            AndMemberVO info = service.guardian(dto.getGUARDIAN_ID());
+            System.out.println(new Gson().toJson(info));
             service.insertAlarmG(dto);
             firebaseCloudMessageService.sendMessageTo(
                     info.getTOKEN(),

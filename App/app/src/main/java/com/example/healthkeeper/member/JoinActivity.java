@@ -312,7 +312,7 @@ public class JoinActivity extends AppCompatActivity {
                     conn.onExcute((isResult, data) -> {
 //                        if (data.equals("1")) {
                         Log.d(TAG, "partnerCheck: "+data);
-                        if (!data.equals("0") ) {
+                        if (!"0".equals(data) ) {
                             binding.edtPatientId.setText(edt.getText().toString());
                             binding.btnGuardianFind.setText("취소");
                             vo.setGUARDIAN_ID(data);// 이메일값으로 id 값 받아옴

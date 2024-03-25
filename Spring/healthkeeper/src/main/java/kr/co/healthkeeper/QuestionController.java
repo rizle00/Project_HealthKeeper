@@ -210,7 +210,7 @@ public class QuestionController {
         TypeVO type = andService.type("14");
         RequestDTO dto = new RequestDTO();
         dto.setCATEGORY_ID("14");
-        dto.setMember_id(vo.getMEMBER_ID());
+        dto.setMEMBER_ID(String.valueOf(vo.getMEMBER_ID()));
         andService.insertAlarm(dto);
         if(vo.getALARM().equals("y")){
             firebaseCloudMessageService.sendMessageTo(

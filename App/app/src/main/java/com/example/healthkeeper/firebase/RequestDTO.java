@@ -9,22 +9,14 @@ public class RequestDTO {
 
     private String CATEGORY_ID;
     private String name;
-    private String guardian_id;
-    private String member_id;
+    private String GUARDIAN_ID;
+    private String MEMBER_ID;
 
-    public String getMember_id() {
-        return member_id;
-    }
-
-    public void setMember_id(String member_id) {
-        this.member_id = member_id;
-    }
-
-    public String getCategory_id() {
+    public String getCATEGORY_ID() {
         return CATEGORY_ID;
     }
 
-    public void setCategory_id(String CATEGORY_ID) {
+    public void setCATEGORY_ID(String CATEGORY_ID) {
         this.CATEGORY_ID = CATEGORY_ID;
     }
 
@@ -36,11 +28,19 @@ public class RequestDTO {
         this.name = name;
     }
 
-    public String getGuardian_id() {
-        return guardian_id;
+    public String getGUARDIAN_ID() {
+        return GUARDIAN_ID;
     }
 
-    public void setGuardian_id(String guardian_id) {
-        this.guardian_id = guardian_id;
+    public void setGUARDIAN_ID(String GUARDIAN_ID) {
+        this.GUARDIAN_ID = GUARDIAN_ID;
+    }
+
+    public String getMEMBER_ID() {
+        return MEMBER_ID;
+    }
+
+    public void setMEMBER_ID(String MEMBER_ID) {
+        this.MEMBER_ID = MEMBER_ID;
     }
 }

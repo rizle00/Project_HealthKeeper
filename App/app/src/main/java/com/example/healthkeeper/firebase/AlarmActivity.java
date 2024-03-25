@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,13 +14,15 @@ import com.example.healthkeeper.App;
 import com.example.healthkeeper.R;
 import com.example.healthkeeper.bluetooth.BluetoothRepository;
 import com.example.healthkeeper.databinding.ActivityAlarmBinding;
+import com.example.healthkeeper.member.MemberVO;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.concurrent.Executor;
 
 public class AlarmActivity extends AppCompatActivity {
     ActivityAlarmBinding binding;
-    private final long timeCount = 60*1000;
+    private final long timeCount = 10*1000;
     private enum TimerStatus {
         STARTED,
         STOPPED
@@ -46,14 +49,14 @@ public class AlarmActivity extends AppCompatActivity {
         if(!getIntent().getType().isEmpty()){ // 인텐트가 있을때만 시행
             type = getIntent().getType();
             content = getIntent().getStringExtra("content");
-            text = getIntent().getStringExtra("texts");
+            text = getIntent().getStringExtra("text");
             initViews();
             startTimer();
-        } else finish();
+        } else this.finish();
 
         btn_stop.setOnClickListener(view -> {
             stopTimer();
-            finish();
+            this.finish();
 
         });
     }
@@ -125,8 +128,13 @@ public class AlarmActivity extends AppCompatActivity {
                 String guardian_id = pref.getString("guardian_id","");
                 String name = pref.getString("user_name","");
                 String address = pref.getString("address","");
-
-                SendSMS(name,"01051760118", address);
+                String json = pref.getString("guardian","");
+                Log.d("TAG", "num: "+json);
+                MemberVO vo = new Gson().fromJson(json,MemberVO.class);
+                String number = vo.getPHONE().replace("-","");
+                Log.d("TAG", "num: "+number);
+                SendSMS(name,number, "\n119에 신고 되었습니다");
+                SendSMS(name,"01051760118", "\n주소 : "+address);
 
                 createPush(name,guardian_id);
 
@@ -142,16 +150,16 @@ public class AlarmActivity extends AppCompatActivity {
 
         RequestDTO dto = new RequestDTO();
         // 타입, 멤버 id,네임?, 가디언
-        dto.setMember_id(pref.getString("user_id",""));
+        dto.setMEMBER_ID(pref.getString("user_id",""));
         dto.setName(name);
-        dto.setGuardian_id(id);
-        dto.setCategory_id(type);
+        dto.setGUARDIAN_ID(id);
+        dto.setCATEGORY_ID(type);
         repository.insertAlarm(dto);
 //        notificationManager.cancel(getIntent().getIntExtra("notifyId",0));
 
     }
-    public void SendSMS(String name,String number, String address){// 문자보내기
-        String msg = name+"님의"+text+"\n주소 : "+address;
+    public void SendSMS(String name,String number, String content){// 문자보내기
+        String msg = name+"님의"+text+content;
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(number,null, msg,null,null);
         Toast.makeText(AlarmActivity.this,"문자 신고가 발송되었습니다", Toast.LENGTH_SHORT).show();

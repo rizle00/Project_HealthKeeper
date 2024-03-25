@@ -147,13 +147,6 @@ public class CommunityDTOS {
         }
 
 
-        public AnswerVO getDto() {
-            return answer;
-        }
-
-        public void setDto(AnswerVO answer) {
-            this.answer = answer;
-        }
 
         public String getName() {
             return Name;
@@ -165,8 +158,6 @@ public class CommunityDTOS {
     }
 
     public class AnswerVO{
-      private String  ANS_ID, CONTENT, QUE_ID, ADMIN_ID, TIME;
-
         public String getANS_ID() {
             return ANS_ID;
         }
@@ -175,11 +166,11 @@ public class CommunityDTOS {
             this.ANS_ID = ANS_ID;
         }
 
-        public String getANSWER_CONTENT() {
+        public String getCONTENT() {
             return CONTENT;
         }
 
-        public void setANSWER_CONTENT(String CONTENT) {
+        public void setCONTENT(String CONTENT) {
             this.CONTENT = CONTENT;
         }
 
@@ -206,6 +197,10 @@ public class CommunityDTOS {
         public void setTIME(String TIME) {
             this.TIME = TIME;
         }
+
+        private String  ANS_ID, CONTENT, QUE_ID, ADMIN_ID, TIME;
+
+
     }
 
 

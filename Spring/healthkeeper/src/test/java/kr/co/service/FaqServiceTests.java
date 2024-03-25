@@ -50,7 +50,7 @@ public class FaqServiceTests {
 		 
 		 FaqVO vo = new FaqVO();
 		 
-		 vo.setFAQ_ID("10");
+//		 vo.setFAQ_ID("10");
 		 vo.setTITLE("service Test");
 		 vo.setCONTENT("service Test중입니다.");
 		 

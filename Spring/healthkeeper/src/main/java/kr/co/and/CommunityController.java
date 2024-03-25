@@ -28,12 +28,12 @@ public class CommunityController {
 	public ResponseEntity<String> list(@RequestParam(defaultValue = "0") String params) {
 		System.out.println("질문");
 		
-	List<QsVO>  result =	service.list(params);
+	List<AndQuestionVO>  result =	service.list(params);
 	System.out.println("질문"+result.size());
 	
 
     String json = new Gson().toJson(result);
-    System.out.println(json);
+    System.out.println("123답변"+json);
 
 		return ResponseEntity.ok(json);
 	}
@@ -43,7 +43,7 @@ public class CommunityController {
 	@PostMapping("question/newWrite")
 	public ResponseEntity<Integer> newWrite(String params){
 		System.out.println("글쓰기");
-		QsVO vo = new Gson().fromJson(params, QsVO.class);
+		AndQuestionVO vo = new Gson().fromJson(params, AndQuestionVO.class);
 		System.out.println("글쓰기"+params);
 
 		return ResponseEntity.ok(service.newWrite(vo));
@@ -54,7 +54,7 @@ public class CommunityController {
 	@PostMapping(value="category", produces = "application/text;charset=utf-8")
 	public ResponseEntity<String> category(){
 		System.out.println("카테고리");
-		List<CateGoryVO> result = service.category();
+		List<AndCategoryVO> result = service.category();
 		System.out.println("카테고리"+result.size());
 		String json = new Gson().toJson(result);
 
@@ -65,7 +65,7 @@ public class CommunityController {
 	@PostMapping(value="faq/list", produces = "application/text;charset=utf-8")
 	public ResponseEntity<String> faq() {
 		System.out.println("faq");
-	List<FaqVO>  result =	service.faq();
+	List<AndFaqVO>  result =	service.faq();
 		System.out.println("faq"+result.size());
     String json = new Gson().toJson(result);
 
@@ -75,7 +75,7 @@ public class CommunityController {
 	@PostMapping(value="notice/list", produces = "application/text;charset=utf-8")
 	public ResponseEntity<String> notice(){
 		System.out.println("공지");
-		List<NoticeVO> result = service.notice();
+		List<AndNoticeVO> result = service.notice();
 		System.out.println("공지"+result.size());
 		 String json = new Gson().toJson(result);
 

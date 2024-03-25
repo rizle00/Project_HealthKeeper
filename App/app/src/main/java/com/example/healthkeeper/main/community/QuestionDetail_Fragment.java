@@ -44,6 +44,7 @@ public class QuestionDetail_Fragment extends Fragment {
 
         CommonConn conn = new CommonConn("question/list");
         repository.select(conn).thenAccept(result -> {
+            Log.d(TAG, "ansdddd: "+result);
             questionList = new Gson().fromJson(result, new TypeToken<List<CommunityDTOS.Community_QuestionDTO>>() {
             }.getType());
             Log.d(TAG, "onCreateView: " + questionList.size());

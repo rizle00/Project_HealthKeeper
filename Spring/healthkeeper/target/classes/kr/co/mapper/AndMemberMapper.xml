@@ -25,10 +25,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </select>
 
 
-	<select id="memberList" resultType="kr.co.model.MemberVO">
+	<select id="memberList" resultType="kr.co.and.AndMemberVO">
 		SELECT * FROM MEMBER
 	</select>
-	<select id="login" resultType="kr.co.model.MemberVO">
+	<select id="login" resultType="kr.co.and.AndMemberVO">
 		SELECT * FROM MEMBER WHERE EMAIL = #{EMAIL}
 	</select>
 
@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id= "socialIdCheck" resultType="Integer">
 		SELECT COUNT(*) FROM MEMBER WHERE SOCIAL = #{SOCIAL}
 	</select>
-	<select id="socialLogin" resultType="kr.co.model.MemberVO">
+	<select id="socialLogin" resultType="kr.co.and.AndMemberVO">
 		SELECT * FROM MEMBER WHERE SOCIAL = #{SOCIAL}
 	</select>
 	<select id="partnerCheck" resultType="String">
@@ -77,7 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="type" resultType = "kr.co.and.firebase.TypeVO">
 		select * from alarm_type where category_id = #{category_id}
 	</select>
-	<select id="guardian" resultType="kr.co.model.MemberVO">
+	<select id="guardian" resultType="kr.co.and.AndMemberVO">
 		SELECT * FROM member WHERE member_id = #{GUARDIAN_ID}
 	</select>
 	<insert id="insertCondition">
@@ -108,13 +108,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="condition" resultType="HashMap">
 		SELECT CONDITION_PULSE, condition_time, CONDITION_TEMPERATURE
-		FROM CONDITIONS
-		WHERE member_id = #{id}
-		  AND condition_time = (
-			SELECT MAX(condition_time)
-			FROM CONDITIONS
-			WHERE member_id = #{id}
-		)
+		FROM CONDITIONS c
+		    inner join( select * from member where guardian_id = #{id}) m
+		        on c.member_id = m.member_id
+		WHERE
+			condition_time = (
+				SELECT MAX(condition_time)
+				FROM CONDITIONS
+				WHERE member_id = 86
+			)
 	</select>
 
 

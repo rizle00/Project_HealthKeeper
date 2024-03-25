@@ -1,5 +1,6 @@
 package kr.co.service;
 
+import kr.co.and.AndMemberVO;
 import kr.co.and.firebase.RequestDTO;
 import kr.co.and.firebase.TypeVO;
 import kr.co.mapper.AndMemberMapper;
@@ -21,7 +22,7 @@ public class AndMemberServiceImpl implements AndMemberService {
     }
 
     @Override
-    public MemberVO login(String email) {
+    public AndMemberVO login(String email) {
         return mapper.login(email);
     }
 
@@ -31,17 +32,17 @@ public class AndMemberServiceImpl implements AndMemberService {
     }
 
     @Override
-    public Integer join(MemberVO vo) {
+    public Integer join(AndMemberVO vo) {
         return mapper.join(vo);
     }
 
     @Override
-    public String findid(MemberVO vo) {
+    public String findid(AndMemberVO vo) {
         return mapper.findid(vo);
     }
 
     @Override
-    public int findpw(MemberVO vo) {
+    public int findpw(AndMemberVO vo) {
         return mapper.findpw(vo);
     }
 
@@ -51,7 +52,7 @@ public class AndMemberServiceImpl implements AndMemberService {
     }
 
     @Override
-    public MemberVO socialLogin(String social) {
+    public AndMemberVO socialLogin(String social) {
         return mapper.socialLogin(social);
     }
 
@@ -61,7 +62,7 @@ public class AndMemberServiceImpl implements AndMemberService {
     }
 
     @Override
-    public int modify(MemberVO vo) {
+    public int modify(AndMemberVO vo) {
         return  mapper.modify(vo);
     }
 
@@ -71,12 +72,12 @@ public class AndMemberServiceImpl implements AndMemberService {
     }
 
     @Override
-    public int resetpw(MemberVO vo) {
+    public int resetpw(AndMemberVO vo) {
         return mapper.resetpw(vo);
     }
 
     @Override
-    public MemberVO guardian(String user_id) {
+    public AndMemberVO guardian(String user_id) {
         return mapper.guardian(user_id);
     }
 
@@ -119,7 +120,7 @@ public class AndMemberServiceImpl implements AndMemberService {
     }
 
     @Override
-    public List<MemberVO> memberList() {
+    public List<AndMemberVO> memberList() {
         return mapper.memberList();
     }
 
