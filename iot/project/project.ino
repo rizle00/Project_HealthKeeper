@@ -65,8 +65,8 @@ void loop() {
   String dataString = "hr," + String(heartRate) + ",tp," + String(temp, 1) + ",ac," + String(accident);
   // hr,65,tp,36.3,ac,0  정상
   // hr,65,tp,36.3,ac,1  낙상
-  //hr,170,tp,36.3,ac,0  맥박높음
-  
+  // hr,180,tp,36.3,ac,0  맥박높음 
+
 
   BTSerial.println(dataString);
     Serial.print("Temperature: "); Serial.println(temp);

@@ -67,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        active = isForegroundServiceRunning(MainActivity.this, 2000);
         pref = getSharedPreferences("PROJECT_MEMBER", MODE_PRIVATE);
         isPatient = pref.getString("role", "").equals("patient");
+        active = isForegroundServiceRunning(MainActivity.this, 2000);
         Log.d(TAG, "환자 "+isPatient);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -139,17 +139,18 @@ public class MainActivity extends AppCompatActivity {
         if (selectedItem == R.id.nav_home) {
             getMenuInflater().inflate(R.menu.toolbar_home, menu);
             if (!isPatient) {
-                if (active) {
-
-                    menu.getItem(1).setIcon(R.drawable.alarm_off);
-                    if (!sBound) {// 서비스 바인드 풀렸을시
-                        Intent intent = new Intent(MainActivity.this, BluetoothService.class);
-                        bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
-
-                    }
-                } else {
-                    menu.getItem(1).setIcon(R.drawable.alarm_off);
-                }
+                menu.getItem(1).setVisible(false);
+//                if (active) {
+//
+//                    menu.getItem(1).setIcon(R.drawable.alarm_off);
+//                    if (!sBound) {// 서비스 바인드 풀렸을시
+//                        Intent intent = new Intent(MainActivity.this, BluetoothService.class);
+//                        bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
+//
+//                    }
+//                } else {
+//                    menu.getItem(1).setIcon(R.drawable.alarm_off);
+//                }
 
             } else {
                 // 포그라운드 서비스 작동중일시, 블루투스버튼
@@ -178,7 +179,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.menu_logout) {
             SharedPreferences.Editor editor = pref.edit();
-            editor.clear();
+
+            editor.clear().apply();// apply 가 없음
             Intent intent = new Intent(this, LoginBeforeActivity.class);
             startActivity(intent);
             finish();
@@ -263,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
 
         confirmButton.setOnClickListener(v -> {
             Intent callIntent = new Intent(Intent.ACTION_CALL);
-            callIntent.setData(Uri.parse("tel:긴급전화번호"));
+            callIntent.setData(Uri.parse("tel:119"));
             startActivity(callIntent);
 
             alertDialog.dismiss();

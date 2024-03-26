@@ -52,11 +52,10 @@ public class AlarmActivity extends AppCompatActivity {
             text = getIntent().getStringExtra("text");
             initViews();
             startTimer();
-        } else this.finish();
+        } else finish();
 
         btn_stop.setOnClickListener(view -> {
             stopTimer();
-            this.finish();
 
         });
     }
@@ -110,6 +109,7 @@ public class AlarmActivity extends AppCompatActivity {
         stopAlarmSound();
 //        notificationManager.cancel(getIntent().getIntExtra("notifyId",0));
         Toast.makeText(AlarmActivity.this,"알람이 종료되었습니다", Toast.LENGTH_SHORT).show();
+        finish();
     }
     private void startCountDownTimer() {// 타이머 시작
 
@@ -138,7 +138,7 @@ public class AlarmActivity extends AppCompatActivity {
 
                 createPush(name,guardian_id);
 
-
+                stopTimer();
 
                 timerStatus = TimerStatus.STOPPED;
             }

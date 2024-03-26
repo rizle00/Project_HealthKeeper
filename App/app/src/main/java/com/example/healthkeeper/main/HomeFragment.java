@@ -136,7 +136,7 @@ public class HomeFragment extends Fragment {
                 public void onClick(View v) {
 
                     Intent callIntent = new Intent(Intent.ACTION_CALL);
-                    callIntent.setData(Uri.parse("tel:긴급전화번호"));
+                    callIntent.setData(Uri.parse("tel:119"));// 전화번호 지정
                     startActivity(callIntent);
                     alertDialog.dismiss();
                 }
