@@ -72,7 +72,7 @@ public class TemperatureFragment extends Fragment {
         });
         if(MainActivity.isPatient){
             BluetoothViewModel sharedViewModel = ((App) requireActivity().getApplicationContext()).getSharedViewModel();
-            sharedViewModel.getHeartLiveData().observe(getViewLifecycleOwner(), data -> {
+            sharedViewModel.getTempLiveData().observe(getViewLifecycleOwner(), data -> {
                 currentState(data);
 
                 textView.setText(String.valueOf(data));

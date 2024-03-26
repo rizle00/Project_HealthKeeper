@@ -24,6 +24,7 @@ public class JoinTypeActivity extends AppCompatActivity {
         editor = pref.edit();
         binding.llPatient.setOnClickListener(v -> {
             editor.putString("role","patient");
+            editor.apply();
             if(getIntent().getStringExtra("social")==null) {
                 Intent intent = new Intent(this,JoinActivity.class);
                 intent.putExtra("type", "patient");
@@ -40,6 +41,7 @@ public class JoinTypeActivity extends AppCompatActivity {
 
         binding.llGuardian.setOnClickListener(v -> {
             editor.putString("role","guardian");
+            editor.apply();
             if(getIntent().getStringExtra("social")==null) {
                 Intent intent = new Intent(this, JoinActivity.class);
                 intent.putExtra("type", "guardian");
@@ -52,7 +54,7 @@ public class JoinTypeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        editor.apply();
+
         setContentView(binding.getRoot());
 
     }

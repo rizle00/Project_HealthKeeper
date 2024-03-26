@@ -51,13 +51,13 @@
 
 
 <select id="faq" resultType="kr.co.and.AndFaqVO"><!--자주하는 질문   -->
-        select * from faq
+        select * from faq order by faq_id desc
 </select>
 
 
 
 <select id="notice" resultType="kr.co.and.AndNoticeVO"><!--공지사항   -->
-        select * from notice
+        select * from notice order by notice_id desc
 </select>
 	
 

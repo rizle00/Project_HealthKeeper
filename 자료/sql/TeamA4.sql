@@ -62,5 +62,18 @@ select alarm_id, time, state , title,content From AlarmLog
     update member set phone='010-3206-7276' where member_id =95;
     
     commit;
-    select * from member where member_id = 56;
-    
+    select * from member where member_id = 95;
+    select * from question order by que_id desc;
+    update QUESTION set  secret = 'n' where que_id = 393;
+        commit;
+    insert into ANSWER (que_id, content, admin_id) values (397,'요즘 날씨가 따뜻해져서 나들이를 다니는 것이 기분 좋은데, 특히 공원에서 산책하는 것을 즐깁니다. 나무 사이로 비치는 햇빛과 바람에 스며드는 시원함이 정말 상쾌하죠. ',2);
+    update faq set content = ' 대통령은 국가의 안위에 관계되는 중대한 교전상태에 있어서 국가를 보위하기 위하여 긴급한 조치가 필요하고 국회의 집회가 불가능한 때에 한하여 법률의 효력을 가지는 명령을 발할 수 있다.' where faq_id = 26;
+    select * from member order by member_id desc;
+    ALTER table member
+modify column role  SET DEFAULT 'patient';
+delete from member where member_id in(96,97,98);
+commit;
+select * from QUESTION order by que_id desc;
+update notice set content = '대통령은 국가의 안위에 관계되는 중대한 교전상태에 있어서 국가를 보위하기 위하여 긴급한 조치가 필요하고 국회의 집회가 불가능한 때에 한하여 법률의 효력을 가지는 명령을 발할 수 있다.' where notice_id = 68;
+update faq set content = '요즘 날씨가 따뜻해져서 나들이를 다니는 것이 기분 좋은데, 특히 공원에서 산책하는 것을 즐깁니다. 나무 사이로 비치는 햇빛과 바람에 스며드는 시원함이 정말 상쾌하죠. 함께하는 가족과의 소중한 시간도 이렇게 만족스럽습니다.' where faq_id = 24;
+commit;

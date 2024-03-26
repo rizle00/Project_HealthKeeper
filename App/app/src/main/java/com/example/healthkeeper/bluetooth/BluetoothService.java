@@ -249,6 +249,7 @@ public class BluetoothService extends Service {
                 double temp = (double) data.get("temp");
                 String accident = (String) data.get("accident");
                 handleAccidentDetected(heart, temp, accident);
+                Log.d(TAG, "alarm: "+data);
             }
 
         });
@@ -256,7 +257,7 @@ public class BluetoothService extends Service {
     }
 
     private void handleAccidentDetected(Integer heart, Double temp, String accident) {
-
+        Log.d(TAG, "alarm: "+heart);
         //7 -> 낙상 8-> 맥박상승 9 -> 맥박하락 10 -> 체온상승 11-> 체온하락
         if (heart != 0 && temp != 0) {
             //앱 노티 용
@@ -288,7 +289,7 @@ public class BluetoothService extends Service {
 //                        .setContentIntent(getPendingIntent(intent));
 //                notificationManager.notify(1001, builder.build());
 
-                this.startActivity(intent);
+//                startActivity(intent);
                 startActivity(intent);
             } else {
                 if (heart > 160) {
@@ -301,7 +302,7 @@ public class BluetoothService extends Service {
 //                    builder.setContentText(contents[1])
 //                            .setContentIntent(getPendingIntent(intent));
 //                    notificationManager.notify(1002, builder.build());
-                    startActivity(intent);
+//                    startActivity(intent);
                 } else if (heart < 60) {
                     //심박이 낮음
                     intent.setType("9");
@@ -311,7 +312,7 @@ public class BluetoothService extends Service {
 //                    builder.setContentText(contents[2])
 //                            .setContentIntent(getPendingIntent(intent));
 //                    notificationManager.notify(1003, builder.build());
-                    startActivity(intent);
+//                    startActivity(intent);
                 }
                 if (temp > 37.5) {
                     //체온이높음
@@ -322,7 +323,7 @@ public class BluetoothService extends Service {
 //                    builder.setContentText(contents[3])
 //                            .setContentIntent(getPendingIntent(intent));
 //                    notificationManager.notify(1004, builder.build());
-                    startActivity(intent);
+//                    startActivity(intent);
                 } else if (temp < 35.5) {
                     //체온이 낮음
                     intent.setType("11");
@@ -332,9 +333,11 @@ public class BluetoothService extends Service {
 //                    builder.setContentText(contents[4])
 //                            .setContentIntent(getPendingIntent(intent));
 //                    notificationManager.notify(1005, builder.build());
-                    startActivity(intent);
+
                 }
+                startActivity(intent);
             }
+
         }
     }
 

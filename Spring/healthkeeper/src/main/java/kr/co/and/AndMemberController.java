@@ -28,7 +28,7 @@ public class AndMemberController {
 	private AndMemberService service;
 
 
-	@PostMapping("/andlogin")
+	@PostMapping(value = "/andlogin", produces = "application/text;charset=utf-8" )
 	public ResponseEntity<String> login(String email, String pw) {
 		System.out.println("로그인");
 		AndMemberVO vo = service.login(email);
