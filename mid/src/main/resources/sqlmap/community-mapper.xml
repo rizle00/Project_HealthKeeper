@@ -23,7 +23,7 @@
 	</resultMap>
 	<!-- 질문과 답변 함께 조회하는 쿼리 -->
 	<select id="question" resultMap="queResult">
-		SELECT q.*, a.*, m.name
+		SELECT , q.*, a.*, m.name
 		FROM(
 		SELECT row_number() over(ORDER BY time DESC) no , q.*
 		FROM question q
