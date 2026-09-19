@@ -1,0 +1,7 @@
+# Copy to each server module's src/main/resources/info.properties.
+# Supply newly issued values locally; never commit the populated file.
+KAKAO_REST_API=
+NAVER_CLIENT_ID=
+NAVER_SECRET=
+EMAIL=
+EMAIL_PW=

@@ -20,7 +20,10 @@ public class JDBCTests {
 	public void testConnection() {
 		
 		try(Connection con = 
-				DriverManager.getConnection(System.getenv("DB_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"))){
+				DriverManager.getConnection(
+						System.getenv("DB_URL"),
+						System.getenv("DB_USER"),
+						System.getenv("DB_PASSWORD"))){
 			System.out.println(con);
 		} catch (Exception e) {
 			fail(e.getMessage());

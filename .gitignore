@@ -101,3 +101,13 @@ Project02_Last/app/src/main/res/values/key_social.xml
 mid/src/main/resources/info.properties
 Spring/healthkeeper/src/main/resources/info.properties
 Spring/healthkeeper/target/classes/info.properties
+
+# Server credentials and generated output (all modules)
+info.properties
+db.properties
+firebase_key.json
+serviceAccountKey.json
+target/
+.env
+.env.*
+!.env.example
