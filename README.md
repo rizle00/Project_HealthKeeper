@@ -16,6 +16,42 @@
 
 기술 목록은 [Android 설정](App/app/build.gradle), [Spring 설정](Spring/healthkeeper/pom.xml), [센서 코드](iot/project/project.ino), [발표자료](자료/health.pptx)에서 확인할 수 있습니다. 의존성 선언이나 화면·코드가 남아 있다는 사실과 현재 동작 검증은 구분합니다.
 
+## 사용자 흐름
+
+환자와 보호자의 화면 이용 흐름입니다. [발표자료의 로그인·회원가입·앱 화면](자료/health.pptx), [심박 화면의 환자·보호자 분기](App/app/src/main/java/com/example/healthkeeper/main/monitor/HeartRateFragment.java), [알림 이력 조회](App/app/src/main/java/com/example/healthkeeper/main/PushActivity.java)를 바탕으로 역할별 경로를 나눴습니다. 환자·보호자 연결과 기기·서버 설정이 필요한 흐름이며, 현재 실행을 재현한 결과는 아닙니다.
+
+```mermaid
+flowchart LR
+    A["로그인·역할 선택"] --> B["환자 앱"]
+    A --> E["보호자 앱"]
+    B --> C["센서 기기 연결"]
+    C --> D["체온·심박 화면 확인"]
+    E --> F["연결 환자 상태 조회"]
+    E --> G["알림 이력 확인"]
+```
+
+## 데이터 전달 구조
+
+아래 화살표는 코드에 남은 데이터 전달 경계입니다. 위 사용자 흐름과 구분하며, 실제 통신 성공이나 배포 구성을 보증하지 않습니다.
+
+```mermaid
+flowchart LR
+    S["심박·온도·가속도 센서"] --> B["HM10 BLE"]
+    B -->|"GATT 수신"| A["Android 앱"]
+    A -->|"측정값·알림 요청"| W["Spring API"]
+    W -->|"저장·조회"| D[("Oracle DB")]
+    W -->|"전송 호출"| F["FCM"]
+    F -.->|"수신 경로·현재 미검증"| G["보호자 앱"]
+```
+
+센서·GATT·저장·알림 호출의 근거는 아래 **주요 흐름과 구현 근거**에 연결했습니다. Spring 내부의 Controller·Service·MyBatis 계층은 한 노드로 묶었습니다. 이상 상태 처리 분기와 FCM 호출 코드가 있다는 뜻이지, 의료적 진단이나 알림 도착을 입증하는 그림은 아닙니다.
+
+## 당시 앱 화면
+
+<img src="docs/assets/healthkeeper-heart-presentation.png" alt="당시 발표자료에 포함된 Android 심박 화면. 현재 심박수 0 BPM으로 표시됨" width="280">
+
+**당시 발표자료 화면, 현재 실행 검증 아님.** [발표자료 29번 슬라이드](자료/health.pptx)의 내장 이미지 `ppt/media/image92.png`를 변형 없이 공개용으로 복사했습니다. 화면은 `0 BPM` 표시 상태로, 실제 측정값 수신이나 측정 정확도를 입증하지 않습니다. 이미지 전체를 직접 확인했으며 이름·계정·기기 ID·주소·서버 주소·로그인 정보가 보이지 않는 화면을 골랐습니다.
+
 ## 주요 흐름과 구현 근거
 
 1. **장치 → Android:** 센서 코드에 `hr,65,tp,36.3,ac,0` 형식의 전송 예시가 있습니다. [BluetoothConnector](App/app/src/main/java/com/example/healthkeeper/bluetooth/BluetoothConnector.java)는 GATT 특성 값을 UTF-8 문자열로 읽고 `hr`·`tp`·`ac`를 심박·체온·낙상 관련 값으로 매핑하는 구조입니다.
